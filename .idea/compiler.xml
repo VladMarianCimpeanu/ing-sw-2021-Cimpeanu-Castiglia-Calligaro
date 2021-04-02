@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="AM17" />
         <module name="runME" />
+        <module name="ing-sw-2021-Cimpeanu-Castiglia-Calligaro" />
       </profile>
     </annotationProcessing>
   </component>
