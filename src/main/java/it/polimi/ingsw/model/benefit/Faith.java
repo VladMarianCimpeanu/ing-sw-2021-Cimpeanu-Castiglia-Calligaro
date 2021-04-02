@@ -1,4 +1,7 @@
 package it.polimi.ingsw.model.benefit;
 
-public class Faith {
+import it.polimi.ingsw.model.Player;
+
+public class Faith implements Benefit {
+
 }
