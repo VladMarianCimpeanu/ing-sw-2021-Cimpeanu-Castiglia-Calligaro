@@ -24,9 +24,9 @@ public class Player {
     }
 
 
-    public ArrayList<LeaderCard> getLeaderCards(){     //non dovrebbe ritornare la lista delle LC
+    public ArrayList<LeaderCard> getLeaderCards(){
         return null;
-    }   //should return the list of LeaderCards?
+    }
 
     public Dashboard getDashboard() {
         return dashboard;
@@ -38,9 +38,9 @@ public class Player {
     public String getNickName(){return null;}
     /**
      * turn the state of a Leader Card(already owned by the player) to rejected
-     * @param leadercard
+     * @param leaderCard
      */
-    public void discardLeaderCard(LeaderCard leadercard){
+    public void discardLeaderCard(LeaderCard leaderCard){
 
     }
 

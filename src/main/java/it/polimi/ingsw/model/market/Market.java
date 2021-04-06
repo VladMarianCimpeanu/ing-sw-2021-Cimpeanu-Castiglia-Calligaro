@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.market;
 
+import it.polimi.ingsw.model.MarketStrategy;
 import it.polimi.ingsw.model.benefit.Benefit;
 import it.polimi.ingsw.model.exceptions.OutOfBoundColumnsException;
 import it.polimi.ingsw.model.exceptions.OutOfBoundRowException;

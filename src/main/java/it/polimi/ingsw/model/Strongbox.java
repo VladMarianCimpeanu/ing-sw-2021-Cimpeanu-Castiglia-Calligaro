@@ -9,6 +9,10 @@ public class Strongbox {
     private Map<Resource, Integer> content;
     private Map<Resource, Integer> lastProduced;
 
+    public Strongbox(){
+
+    }
+
     /**
      *
      * @param resource

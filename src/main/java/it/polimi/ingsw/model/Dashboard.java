@@ -16,6 +16,19 @@ public class Dashboard {
     private ArrayList<Discount> discounts;
     private ArrayList<ExtraProduction> extraProductions;
 
+    public Dashboard(Strongbox strongbox, WarehouseDepot warehouseDepot){
+        this.strongbox = strongbox;
+        this.warehouseDepot = warehouseDepot;
+        discounts = new ArrayList<Discount>();
+        extraProductions = new ArrayList<ExtraProduction>();
+        developmentDecks = new ArrayList<Stack<DevelopmentCard>>();
+        //Creates 3 stack of DevelopmentCard
+        for(int i = 0; i < 2; i++){
+            Stack<DevelopmentCard> deck = new Stack<DevelopmentCard>();
+            developmentDecks.add(deck);
+        }
+    }
+
     /**
      *
      * @return an ArrayList of 3 developmentCard Decks
@@ -26,7 +39,7 @@ public class Dashboard {
 
     /**
      * Get the upper developmentCard in each Deck
-     * @return an ArrayList of 3 developmentCards
+     * @return an ArrayList of 3 (or less) developmentCards
      */
     public ArrayList<DevelopmentCard> getActivableDevCards(){
         return null;
@@ -41,14 +54,15 @@ public class Dashboard {
     }
 
     /**
-     * Add a developmentCard in a deck
-     * This method automatically check if you have discounts and use them
+     * Buy a development card using resources in warehouse depot and strongbox,
      * @param cardToAdd
      * @param deckPosition: between 1 and 3
+     * @param discounts array of discounts
      * @throws WrongLevelException level of the card on top of the selected deck isn't 1 below the level of cardToAdd
      * @throws InvalidDeckPositionException if deckPosition isn't an integer between 1 and 3
+     * @throws NotEnoughResourcesException if the cost of the card can't be afforded
      */
-    public void addDevelopmentCard(DevelopmentCard cardToAdd, int deckPosition) throws WrongLevelException, InvalidDeckPositionException {
+    public void addDevelopmentCard(DevelopmentCard cardToAdd, int deckPosition, ArrayList<Discount> discounts) throws WrongLevelException, InvalidDeckPositionException, NotEnoughResourcesException {
 
     }
 
@@ -71,20 +85,21 @@ public class Dashboard {
     /**
      * Activate the production effect of the upper card in the selected deck
      * @param deckPosition: between 1 and 3
-     * @throws InvalidDeckPositionException if deckPosition isn't an integer between 1 and 3
+     * @throws InvalidDeckPositionException if deckPosition isn't an integer between 1 and 3 or the position is empty
+     * @throws NotEnoughResourcesException if the cost of the card can't be afforded
      * @return faith points quantity
      */
-    public int activateProduction(int deckPosition) throws InvalidDeckPositionException {
+    public int activateProduction(int deckPosition) throws InvalidDeckPositionException, NotEnoughResourcesException {
         return 0;
     }
 
     /**
      * Activate the extra production of the selected card
      * @param extraPosition: between 1 and 2
-     * @throws InvalidExtraPositionException if extraPosition isn't an integer between 1 and 2
+     * @throws InvalidExtraPositionException if extraPosition isn't an integer between 1 and 2 or the position is empty
      * @return faith points quantity
      */
-    public int activateExtraProduction(int extraPosition) throws InvalidExtraPositionException {
+    public int activateExtraProduction(int extraPosition, Resource resourceOut) throws InvalidExtraPositionException {
         return 0;
     }
 
@@ -129,4 +144,19 @@ public class Dashboard {
 
     }
 
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public WarehouseDepot getWarehouseDepot() {
+        return warehouseDepot;
+    }
 }

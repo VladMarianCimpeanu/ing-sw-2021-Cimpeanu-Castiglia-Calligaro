@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.market;
 
+import it.polimi.ingsw.model.MarketStrategy;
 import it.polimi.ingsw.model.benefit.Benefit;
 
 import java.util.Stack;
@@ -11,6 +12,7 @@ public abstract class Marble {
      * @return benefit obtained through strategy
      */
     public abstract Benefit getBenefit(Stack<MarketStrategy> marketStrategies);
+
     public boolean isWhite(){
         return false;
     }

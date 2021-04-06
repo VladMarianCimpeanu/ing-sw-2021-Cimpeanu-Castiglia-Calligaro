@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.benefit.Benefit;
 import it.polimi.ingsw.model.benefit.Resource;
 
 import java.nio.file.NoSuchFileException;
@@ -9,7 +10,7 @@ import java.util.Map;
 public class DevelopmentCard {
 
     private Map<Resource, Integer> ResourceIn;
-    private Map<Resource, Integer> ResourceOut;
+    private Map<Benefit, Integer> ResourceOut;
     private Map<Resource, Integer> ResourceCost;
     private int level;
     private Color color;
@@ -47,10 +48,10 @@ public class DevelopmentCard {
     }
 
     /**
-     * get information about resources produced by this card
-     * @return Map containing resources that this card should produce
+     * get information about resources and faith points produced by this card
+     * @return Map containing resources and faith points that this card should produce
      */
-    public Map<Resource, Integer> getResourceOut() {
+    public Map<Benefit, Integer> getBenefitsOut() {
         return null; //TO DO
     }
 
