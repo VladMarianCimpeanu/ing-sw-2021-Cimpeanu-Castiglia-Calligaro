@@ -14,7 +14,14 @@ public class Player {
     private ArrayList<MarketStrategy> marketStrategies;
     private Game game;
 
-    public Player(Identity identity, int victoryPoints, int faithPoints){ }
+    public Player(Identity identity, Game game){
+        this.identity = identity;
+        this.game = game;
+        dashboard = new Dashboard(new WarehouseDepot(), new Strongbox());
+        leaderCards = new ArrayList<>();
+        victoryPoints = 0;
+
+    }
 
     /**
      *turns the state of a LeaderCard(already owned by the player) to active
@@ -85,5 +92,7 @@ public class Player {
      */
     public void passStrategiesToMarket(){}
 
-
+    public int getVictoryPoints() {
+        return 0;
+    }
 }

@@ -12,10 +12,17 @@ public class WarehouseDepot {
     private int firstQuantity;
     private int secondQuantity;
     private int thirdQuantity;
-    private int firstMax;
-    private int secondMax;
-    private int thirdMax;
+    private final int firstMax = 1;
+    private final int secondMax = 2;
+    private final int thirdMax = 3 ;
     private ArrayList<ExtraSlot> extraSlotList;
+
+    public WarehouseDepot() {
+        firstQuantity = 0;
+        secondQuantity = 0;
+        thirdQuantity = 0;
+        extraSlotList = new ArrayList<ExtraSlot>();
+    }
 
     /**
      *
@@ -50,13 +57,15 @@ public class WarehouseDepot {
 
     /**
      * Add resources in a shelf
-     * @param shelf: integer between 1 and 3
+     * @param shelf integer between 1 and 3
      * @param quantity must be less or equal than shelf
+     * @param resource specific resource to be added to the specific shelf
      * @throws InvalidShelfPosition if shelf isn't an integer between 1 and 3
-     * @throws NotEnoughSpaceException if you try to put in a shelf more resources than its capacity
+     * @throws ExistingResourceException if the selected resource already exists in another shelf
+     * @throws InvalidResourceException if the selected resource is different from the resources already stored at the same shelf
      */
-    public void addResource(int shelf, int quantity) throws InvalidShelfPosition, NotEnoughSpaceException {
-
+    public int addResource(int shelf, int quantity, Resource resource) throws InvalidShelfPosition, ExistingResourceException,  InvalidResourceException{
+        return 0;
     }
 
     /**
@@ -84,8 +93,7 @@ public class WarehouseDepot {
      * @throws NotEnoughResourcesException if the extra slot contains less resources of those you requested
      * @throws MissingExtraSlot if there isn't an extra slot for the requested resource
      */
-    private void removeExtraResource(Resource resource, int quantity) throws NotEnoughResourcesException, MissingExtraSlot {
-
+    private void removeExtraResource(Resource resource, int quantity) throws MissingExtraSlot {
     }
 
     /**
@@ -95,8 +103,8 @@ public class WarehouseDepot {
      * @throws NotEnoughSpaceException if the extra slot cannot contain all the resources
      * @throws MissingExtraSlot if there isn't an extra slot for the requested resource
      */
-    public void addExtraResource(Resource resource, int quantity) throws NotEnoughSpaceException, MissingExtraSlot {
-
+    public int addExtraResource(Resource resource, int quantity)  throws MissingExtraSlot {
+        return 0;
     }
 
     /**
@@ -123,5 +131,17 @@ public class WarehouseDepot {
      */
     public int getResourceQuantity(Resource resource){
         return 0;
+    }
+
+    /**
+     * It moves a specified quantity of resources from a specified a shelf to an extra slot.
+     * @param shelf the specified shelf from which resources are supposed to be moved: the first shelf starts with 1
+     * @param quantity quantity of resources to be moved : if quantity is higher than the actual quantity on the shelf, it will be considered to move all the resources that are on the shelf.
+     * @throws InvalidShelfPosition
+     * @throws NotEnoughSpaceException
+     * @throws MissingExtraSlot
+     */
+    public void moveFromShelfToSlot(int shelf, int quantity) throws InvalidShelfPosition,  NotEnoughSpaceException, MissingExtraSlot{
+
     }
 }

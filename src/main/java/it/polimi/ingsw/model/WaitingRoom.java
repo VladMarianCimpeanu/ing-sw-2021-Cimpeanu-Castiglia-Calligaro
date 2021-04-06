@@ -4,8 +4,10 @@ import it.polimi.ingsw.model.exceptions.ExistingNicknameException;
 import it.polimi.ingsw.model.exceptions.InvalidGameModeException;
 import it.polimi.ingsw.model.exceptions.InvalidNicknameException;
 import it.polimi.ingsw.model.exceptions.NoSuchUserException;
+import it.polimi.ingsw.model.exceptions.EmptyException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class WaitingRoom {
@@ -14,7 +16,9 @@ public class WaitingRoom {
     private ArrayList<Identity> waitingUsers;
 
     public WaitingRoom(){
-        // TO DO
+        Identities = new HashMap<Identity, Game>();
+        waitingUsers = new ArrayList<Identity>();
+        gameMode = 4;
     }
 
     /**
@@ -35,7 +39,7 @@ public class WaitingRoom {
      * @throws NoSuchUserException
      * @throws NullPointerException
      */
-    public void removeUser(String nickname) throws NoSuchUserException, NullPointerException {
+    public void removeUser(String nickname) throws NoSuchUserException, NullPointerException, EmptyException{
         // TO DO
     }
 
@@ -57,6 +61,18 @@ public class WaitingRoom {
      * it creates a game with the users in the waiting room and the settings chosen by the host.
      */
     private void createGame(){
+
+    }
+
+    public ArrayList<Identity> getWaitingUsers() {
+        return null; // TO DO
+    }
+
+    public Map<Identity, Game> getIdentities() {
+        return Identities;
+    }
+
+    public void addIdentity(Identity identity, Game game){
 
     }
 }

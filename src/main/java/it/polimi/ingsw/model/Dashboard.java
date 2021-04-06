@@ -29,6 +29,9 @@ public class Dashboard {
         }
     }
 
+    public Dashboard(WarehouseDepot warehouseDepot, Strongbox strongbox) {
+
+    }
     /**
      *
      * @return an ArrayList of 3 developmentCard Decks

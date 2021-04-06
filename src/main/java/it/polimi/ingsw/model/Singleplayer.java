@@ -7,8 +7,8 @@ import java.util.Stack;
 
 public class Singleplayer extends Game{
     private ArrayList<ActionToken> availableActionTokens;
-    public Singleplayer(ArrayList<Player> players){
-        super(players);
+    public Singleplayer(ArrayList<Identity> identities){
+        super(identities);
     }
 
     @Override

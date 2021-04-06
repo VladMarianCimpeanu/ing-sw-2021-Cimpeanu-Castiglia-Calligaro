@@ -10,11 +10,13 @@ public abstract class Game {
     private ArrayList<Player> players;
     private Market market;
     private DevelopmentCardSet developmentCardSet;
-    protected FaithPath faithPath;  //protected? since the different instantiation in multiplayer and singleplayer
+    protected FaithPath faithPath;  //protected? since the different instantiation in multiplayer and single player
 
-    public Game(ArrayList<Player> players){ }
+    public Game(ArrayList<Identity> identities){
+
+    }
     /**
-     * assign leadercards to the players inside the game
+     * assign leader cards to the players inside the game
      * (called before the first turn)
      */
     private void distributeLeaderCards(){ }

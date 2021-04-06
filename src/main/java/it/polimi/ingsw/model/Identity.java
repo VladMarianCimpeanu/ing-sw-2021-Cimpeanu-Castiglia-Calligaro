@@ -1,15 +1,16 @@
 package it.polimi.ingsw.model;
 
 public class Identity {
-    private String Nickname;
+    private String nickname;
     private boolean online;
 
     public Identity(String nickname){
-
+        this.nickname = nickname;
+        online = true;
     }
 
     public String getNickname() {
-        return Nickname;
+        return nickname;
     }
 
     public boolean isOnline() {
