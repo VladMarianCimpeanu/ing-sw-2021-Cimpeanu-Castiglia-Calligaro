@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.leaderCards.LeaderCard;
 import it.polimi.ingsw.model.market.Market;
 
@@ -10,13 +11,23 @@ public abstract class Game {
     private ArrayList<Player> players;
     private Market market;
     private DevelopmentCardSet developmentCardSet;
-    protected FaithPath faithPath;  //protected? since the different instantiation in multiplayer and single player
+    protected FaithPath faithPath;
 
     public Game(ArrayList<Identity> identities){
-
+        //Reading LeaderCards somehow
+        //Reading DevelopmentCards to create developmentCardSet
+        ArrayList<LeaderCard> lc = new ArrayList<>();
+        players = new ArrayList<>();
+        for(int i = 0; i<4; i++) {
+            ArrayList<LeaderCard> lc_p = new ArrayList<>();
+            for(int j = 0; j<4; j++)
+                lc_p.add(lc.get(4*i+j));
+            players.add(new Player(identities.get(i), this, lc_p, new Dashboard(new Strongbox(), new WarehouseDepot())));
+        }
+        market = new Market();
     }
     /**
-     * assign leader cards to the players inside the game
+     * assign leadercards to the players inside the game
      * (called before the first turn)
      */
     private void distributeLeaderCards(){ }

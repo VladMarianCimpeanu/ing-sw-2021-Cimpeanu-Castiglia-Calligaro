@@ -11,7 +11,11 @@ public abstract class LeaderCard {
     private ArrayList<Requirement> requirements;
     private int victoryPointsAmount;
 
-    public LeaderCard(){}
+    public LeaderCard(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount){
+        this.requirements = requirements;
+        this.resource = resource;
+        this.victoryPointsAmount = victoryPointsAmount;
+    }
 
     /**
      *  turn the state of the leadercard into active

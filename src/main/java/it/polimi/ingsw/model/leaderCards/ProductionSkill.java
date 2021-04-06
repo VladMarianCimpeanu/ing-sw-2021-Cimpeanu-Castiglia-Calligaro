@@ -3,10 +3,13 @@ package it.polimi.ingsw.model.leaderCards;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.benefit.Resource;
 
-public class ProductionSkill extends LeaderCard{
-    //
+import java.util.ArrayList;
 
-    public ProductionSkill(){super();}
+public class ProductionSkill extends LeaderCard{
+    public ProductionSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount) {
+        super(requirements, resource, victoryPointsAmount);
+    }
+
 
     /**
      * add ExtraProduction object to Dashboard's related ArrayList

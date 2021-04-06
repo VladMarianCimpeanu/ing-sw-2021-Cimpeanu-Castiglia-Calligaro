@@ -295,7 +295,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move black cross can handle negative steps")
-    void moveBlackCrossBackward() {
+    void moveBlackCrossBackward()  {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.moveBlackCross(-1);

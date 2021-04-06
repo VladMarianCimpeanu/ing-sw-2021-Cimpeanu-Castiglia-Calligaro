@@ -29,9 +29,6 @@ public class Dashboard {
         }
     }
 
-    public Dashboard(WarehouseDepot warehouseDepot, Strongbox strongbox) {
-
-    }
     /**
      *
      * @return an ArrayList of 3 developmentCard Decks
@@ -47,6 +44,12 @@ public class Dashboard {
     public ArrayList<DevelopmentCard> getActivableDevCards(){
         return null;
     }
+
+
+    public Strongbox getStrongbox() {
+        return strongbox;
+    }
+
 
     /**
      *
@@ -139,7 +142,7 @@ public class Dashboard {
 
     }
 
-    private boolean checkResources(Map<Resource,Integer> resources){
+    public boolean checkResources(Map<Resource,Integer> resources){
         return true;
     }
 

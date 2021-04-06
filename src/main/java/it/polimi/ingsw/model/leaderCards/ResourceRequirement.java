@@ -11,10 +11,14 @@ public class ResourceRequirement implements Requirement{
     private int numberResources;
     private Resource resource;
 
-    public ResourceRequirement(int numberResources, Resource resource){}
+    public ResourceRequirement(int numberResources, Resource resource){
+        this.numberResources = numberResources;
+        this.resource = resource;
+    }
 
     @Override
     public boolean isSatisfied(Dashboard dashboard) {
-        return false;
+        if(dashboard == null) return false;
+        return dashboard.checkResRequirement(numberResources, resource);
     }
 }

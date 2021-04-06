@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.leaderCards;
 
+import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Dashboard;
 
 /**
@@ -8,9 +9,13 @@ import it.polimi.ingsw.model.Dashboard;
 public class DevelopmentRequirement implements Requirement{
     private int numberCards;
     private int levelCard;
-    private String color;
+    private Color color;
 
-    public DevelopmentRequirement(int numberCards, int levelCard, String color){}
+    public DevelopmentRequirement(int numberCards, int levelCard, Color color){
+        this.numberCards = numberCards;
+        this.levelCard = levelCard;
+        this.color = color;
+    }
 
     @Override
     public boolean isSatisfied(Dashboard dashboard) {

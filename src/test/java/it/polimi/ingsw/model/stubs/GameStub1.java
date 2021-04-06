@@ -1,0 +1,39 @@
+package it.polimi.ingsw.model.stubs;
+
+import it.polimi.ingsw.model.DevelopmentCardSet;
+import it.polimi.ingsw.model.FaithPath;
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.market.Market;
+
+public class GameStub1 extends Game {
+    private FaithPathStub1 faithpath;
+    private MarketStub1 market;
+    private DevelopmentCardSetStub1 developmentCardSet;
+    public GameStub1() {
+        super(null);
+        faithpath = new FaithPathStub1();
+        market = new MarketStub1();
+        developmentCardSet = new DevelopmentCardSetStub1();
+    }
+
+    public GameStub1(DevelopmentCardSetStub1 developmentCardSet){
+        super(null);
+        faithpath = new FaithPathStub1();
+        market = new MarketStub1();
+        this.developmentCardSet = developmentCardSet;
+    }
+    @Override
+    public Market getMarket(){
+        return market;
+    }
+    @Override
+    public FaithPath getFaithPath() {
+        return faithPath;
+    }
+    @Override
+    public boolean isGameEnded() {
+        return false;
+    }
+    @Override
+    public DevelopmentCardSet getDevelopmentCardSet() { return developmentCardSet; }
+}

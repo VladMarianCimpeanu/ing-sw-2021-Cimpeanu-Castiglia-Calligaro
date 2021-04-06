@@ -14,7 +14,6 @@ public class Market {
     private Marble outerMarble;
     private ArrayList<Marble> selectedMarbles; //this array is update every time a row/column selection occurs
     public Market(){
-
     }
 
     /**

@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.Player;
 public class PlayerStub2 extends Player {
     private int victoryPointsTest;
     public PlayerStub2(Identity identity, Game game) {
-        super(identity, game);
+        super(identity, game, null, null);
         victoryPointsTest = 0;
     }
 

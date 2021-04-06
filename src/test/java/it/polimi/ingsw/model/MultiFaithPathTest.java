@@ -33,7 +33,7 @@ class MultiFaithPathTest {
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
         assertThrows( NoSuchPlayerException.class,
-                () -> path.assignVictoryPoints(new Player(new Identity("not Playing"), null)));
+                () -> path.assignVictoryPoints(new Player(new Identity("not Playing"), null, null, null)));
         assertEquals(0, currPlayers.get(0).getVictoryPoints());
         assertEquals(0, currPlayers.get(1).getVictoryPoints());
         assertEquals(0, currPlayers.get(2).getVictoryPoints());

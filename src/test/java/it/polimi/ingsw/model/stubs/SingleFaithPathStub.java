@@ -15,7 +15,7 @@ public class SingleFaithPathStub extends SingleFaithPath {
     }
 
     @Override
-    public void moveBlackCross(int steps) throws InvalidStepsException {
+    public void moveBlackCross(int steps)  {
         this.cross += steps;
     }
 }
