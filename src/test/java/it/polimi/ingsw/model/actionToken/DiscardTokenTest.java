@@ -1,24 +1,31 @@
 package it.polimi.ingsw.model.actionToken;
 
 import it.polimi.ingsw.model.Color;
+import it.polimi.ingsw.model.Identity;
+import it.polimi.ingsw.model.exceptions.InvalidReadException;
+import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.stubs.DevelopmentCardSetStub;
 import it.polimi.ingsw.model.stubs.SingleplayerStub;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DiscardTokenTest {
-    DevelopmentCardSetStub set;
-    SingleplayerStub single;
+    static DevelopmentCardSetStub set;
+    static SingleplayerStub single;
 
 
     @BeforeAll
-    void init() throws NoSuchFileException {
+    static void init() throws IOException, InvalidReadException, NoSuchPlayerException {
         set = new DevelopmentCardSetStub();
-        single = new SingleplayerStub(set, null);
+        ArrayList<Identity> identities = new ArrayList<>();
+        identities.add(new Identity("Test"));
+        single = new SingleplayerStub(set, null, identities);
     }
 
     @Test
@@ -48,7 +55,6 @@ class DiscardTokenTest {
         set.blueLevelTwo = 10;
         DiscardToken token = new DiscardToken(Color.BLUE);
         token.triggerEffect(single);
-
         assertTrue(set.blueLevelOne == 0 && set.blueLevelTwo == 8);
     }
 

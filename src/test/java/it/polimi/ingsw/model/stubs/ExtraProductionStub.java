@@ -35,7 +35,7 @@ public class ExtraProductionStub extends ExtraProduction {
     public Map<Benefit, Integer> getResourceOut(Resource resourceOut) {
         HashMap<Benefit, Integer> map = new HashMap<Benefit, Integer>();
         map.put(resourceOut,1);
-        map.put(new Faith(),1);
+        map.put(Faith.giveFaith(),1);
 
         return map;
     }

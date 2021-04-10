@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.stubs.GameStub2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,7 +54,7 @@ class WaitingRoomTest {
 
     @Test
     @DisplayName("Checking addUser can discard logRequests from users with a nickname already used by an other player ONLINE")
-    void addExistingPlayer() throws InvalidGameModeException {
+    void addExistingPlayer() throws InvalidGameModeException, IOException, InvalidReadException, NoSuchPlayerException {
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setGameMode(4);
         Identity identityTest = new Identity("Player ONLINE");
@@ -68,7 +69,7 @@ class WaitingRoomTest {
 
     @Test
     @DisplayName("Checking addUser can accept logRequests from users had lost the connection during the game")
-    void addDisconnectedPlayer() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException {
+    void addDisconnectedPlayer() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, IOException, InvalidReadException, NoSuchPlayerException {
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setGameMode(4);
         Identity identityTest = new Identity("Player OFFLINE");

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
@@ -35,6 +36,7 @@ public class SingleFaithPath extends FaithPath{
         triggerPopePosition.add(9);
 
         // initializing players' position
+        playersPosition = new HashMap<>();
         playersPosition.put(player, 0);
         blackCross = 0;
     }
@@ -43,7 +45,7 @@ public class SingleFaithPath extends FaithPath{
      * It moves the blackCross the specified steps
      * @param steps the blackCross has to be moved
      */
-    public void moveBlackCross(int steps) {
+    public void moveBlackCross(int steps)  {
 
     }
 

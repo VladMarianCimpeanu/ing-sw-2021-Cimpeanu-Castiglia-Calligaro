@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.stubs;
 
-import it.polimi.ingsw.model.DevelopmentCardSet;
-import it.polimi.ingsw.model.FaithPath;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Singleplayer;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exceptions.InvalidReadException;
+import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SingleplayerStub extends Singleplayer {
@@ -12,8 +12,8 @@ public class SingleplayerStub extends Singleplayer {
     private FaithPath faithPath;
     public boolean shuffled;
 
-    public SingleplayerStub(DevelopmentCardSet developmentCardSet, FaithPath faithPath) {
-        super(null);
+    public SingleplayerStub(DevelopmentCardSet developmentCardSet, FaithPath faithPath, ArrayList<Identity> identities) throws IOException, InvalidReadException, NoSuchPlayerException {
+        super(identities);
         this.developmentCardSet = developmentCardSet;
         this.faithPath = faithPath;
         shuffled = false;

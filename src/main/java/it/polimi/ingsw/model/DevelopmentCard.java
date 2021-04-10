@@ -3,20 +3,29 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.benefit.Benefit;
 import it.polimi.ingsw.model.benefit.Resource;
 
-import java.nio.file.NoSuchFileException;
+import java.util.HashMap;
 import java.util.Map;
 
 
 public class DevelopmentCard {
 
-    private Map<Resource, Integer> ResourceIn;
-    private Map<Benefit, Integer> ResourceOut;
-    private Map<Resource, Integer> ResourceCost;
-    private int level;
-    private Color color;
-    private int victoryPointsAmount;
+    private  Map<Resource, Integer> resourceIn;
+    private  Map<Benefit, Integer> resourceOut;
+    private  Map<Resource, Integer> resourceCost;
+    private  int level;
+    private  Color color;
+    private  int victoryPointsAmount;
 
-    public DevelopmentCard(String filePathCard) throws NoSuchFileException {
+    public DevelopmentCard(int victoryPointsAmount, int level, Color color, Map<Resource, Integer> resourceCost, Map<Resource, Integer> resourceIn, Map<Benefit, Integer> resourceOut )  {
+        this.victoryPointsAmount = victoryPointsAmount;
+        this.level = level;
+        this.color = color;
+        this.resourceCost = resourceCost;
+        this.resourceIn = resourceIn;
+        this.resourceOut = resourceOut;
+    }
+
+    public DevelopmentCard(String Path){
 
     }
     /**
@@ -24,7 +33,7 @@ public class DevelopmentCard {
      * @return number of victory points
      */
     public int getVictoryPoints(){
-        return victoryPointsAmount; //TO DO
+        return victoryPointsAmount;
     }
 
     /**
@@ -44,7 +53,7 @@ public class DevelopmentCard {
     }
 
     public Map<Resource, Integer> getResourceIn() {
-        return null; //TO DO
+        return new HashMap<>(resourceIn);
     }
 
     /**
@@ -52,7 +61,7 @@ public class DevelopmentCard {
      * @return Map containing resources and faith points that this card should produce
      */
     public Map<Benefit, Integer> getBenefitsOut() {
-        return null; //TO DO
+        return new HashMap<>(resourceOut);
     }
 
     /**
@@ -60,7 +69,7 @@ public class DevelopmentCard {
      * @return Map containing resources that this card needs to be purchased
      */
     public Map<Resource, Integer> getResourceCost() {
-        return null; //TO DO
+        return new HashMap<>(resourceCost);
     }
 
 }

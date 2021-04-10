@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.stubs.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static it.polimi.ingsw.model.Color.YELLOW;
@@ -43,7 +44,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("(Try to)Discard a LeaderCard not satisfying requirements")
-    void discardLeaderCardException() {
+    void discardLeaderCardException() throws IOException, InvalidReadException, NoSuchPlayerException {
         ArrayList<LeaderCard> cards = new ArrayList<>();
         cards.add(new LeaderCardStub1(false));
         Player player = new Player(null, new GameStub1(), cards, null);
@@ -57,7 +58,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("Discard a LeaderCard satisfying requirements")
-    void discardLeaderCard() throws RequirementException {
+    void discardLeaderCard() throws RequirementException, IOException, InvalidReadException, NoSuchPlayerException {
         ArrayList<LeaderCard> cards = new ArrayList<>();
         cards.add(new LeaderCardStub1(true));
         cards.add(new LeaderCardStub1(true));
@@ -74,7 +75,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("Everything about goToMarket")
-    void goToMarket() throws InvalidDirectionSelection, OutOfBoundRowException, OutOfBoundColumnsException {
+    void goToMarket() throws InvalidDirectionSelection, OutOfBoundRowException, OutOfBoundColumnsException, IOException, InvalidReadException, NoSuchPlayerException {
         Player player = new Player(null, new GameStub1(), null, null);
         assertThrows(InvalidDirectionSelection.class, () ->{
             player.goToMarket("Illegal String", 1);
@@ -108,7 +109,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("Add a non relevant value of faithPoints to the calling player")
-    void addFaithPoint() {
+    void addFaithPoint() throws IOException, InvalidReadException, NoSuchPlayerException {
         GameStub1 game = new GameStub1();
         Player player = new Player(null, game, null, null );
         int fp = 2;
@@ -145,7 +146,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("(Try to) Buy a DevelopmentCard not satisfying requirements")
-    void buyDevelopmentCardRequirementException() {
+    void buyDevelopmentCardRequirementException() throws IOException, InvalidReadException, NoSuchPlayerException {
         GameStub1 game = new GameStub1();
         DashboardStub1 db = new DashboardStub1(false);
         Player player = new Player(null, game, null, db);
@@ -160,7 +161,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("(Try to) Buy a DevelopmentCard from an empty Deck")
-    void buyDevelopmentCardNoCardException(){
+    void buyDevelopmentCardNoCardException() throws IOException, InvalidReadException, NoSuchPlayerException {
         GameStub1 game = new GameStub1(new DevelopmentCardSetStub1(0));
         DashboardStub1 db = new DashboardStub1();
         Player player = new Player(null, game, null, db);
@@ -175,7 +176,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("Buy a DevelopmentCard satisfying requirements")
-    void buyDevelopmentCard() throws RequirementException, NoCardException, WrongLevelException {
+    void buyDevelopmentCard() throws RequirementException, NoCardException, WrongLevelException, IOException, InvalidReadException, NoSuchPlayerException {
         GameStub1 game = new GameStub1();
         DashboardStub1 db = new DashboardStub1(true);
         Player player = new Player(null, game, null, db);
@@ -187,7 +188,7 @@ class PlayerTest {
     }
 
     @Test
-    void passStrategiesToMarket() {
+    void passStrategiesToMarket() throws IOException, InvalidReadException, NoSuchPlayerException {
         Player player = new Player(null, new GameStub1(), null, null);
         player.passStrategiesToMarket();
         MarketStub1 market = (MarketStub1) player.getGame().getMarket();

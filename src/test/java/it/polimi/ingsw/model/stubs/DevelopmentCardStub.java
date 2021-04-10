@@ -42,7 +42,7 @@ public class DevelopmentCardStub extends DevelopmentCard {
     public Map<Benefit, Integer> getBenefitsOut() {
         HashMap<Benefit, Integer> map = new HashMap<Benefit, Integer>();
         map.put(out,1);
-        map.put(new Faith(),1);
+        map.put(Faith.giveFaith(),1);
 
         return map;
     }

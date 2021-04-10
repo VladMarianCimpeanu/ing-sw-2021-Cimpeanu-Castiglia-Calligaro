@@ -8,7 +8,7 @@ import java.nio.file.NoSuchFileException;
 import java.util.Map;
 
 public class DevelopmentCardStub1 extends DevelopmentCard{
-    public DevelopmentCardStub1() throws NoSuchFileException {
+    public DevelopmentCardStub1() {
         super(null);        //?
     }
 

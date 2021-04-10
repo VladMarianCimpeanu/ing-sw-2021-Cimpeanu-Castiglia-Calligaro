@@ -14,6 +14,6 @@ public class Red extends Marble{
      */
     @Override
     public Benefit getBenefit(Stack<MarketStrategy> marketStrategies) {
-        return new Faith();
+        return Faith.giveFaith();
     }
 }

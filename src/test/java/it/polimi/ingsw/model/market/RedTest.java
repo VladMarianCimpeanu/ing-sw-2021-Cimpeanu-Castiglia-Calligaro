@@ -19,7 +19,7 @@ class RedTest {
 
         Red red = new Red();
         Benefit result = red.getBenefit(strategyStack);
-        assertTrue(result.equals(new Faith()));
+        assertTrue(result.equals(Faith.giveFaith()));
     }
 
     @Test

@@ -30,8 +30,7 @@ class ExtraProductionTest {
     void checkFaithPointsOut(){
         ExtraProduction extra = new ExtraProduction(Resource.SERVANT);
         Map<Benefit,Integer> result = extra.getResourceOut(Resource.SHIELD);
-
-        assertTrue(result.get(new Faith()) == 1);
+        assertTrue(result.get(Faith.giveFaith()) == 1);
     }
 
     @Test

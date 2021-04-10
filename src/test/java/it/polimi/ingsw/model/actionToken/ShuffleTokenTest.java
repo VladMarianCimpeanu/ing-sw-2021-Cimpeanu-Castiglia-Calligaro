@@ -1,37 +1,45 @@
 package it.polimi.ingsw.model.actionToken;
 
+import it.polimi.ingsw.model.Identity;
+import it.polimi.ingsw.model.exceptions.InvalidReadException;
+import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.stubs.SingleFaithPathStub;
 import it.polimi.ingsw.model.stubs.SingleplayerStub;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShuffleTokenTest {
-    SingleFaithPathStub faithPath;
-    SingleplayerStub singleplayer;
+    static SingleFaithPathStub faithPath;
+    static SingleplayerStub singleplayer;
 
     @BeforeAll
-    void init(){
+    static void init() throws IOException, InvalidReadException, NoSuchPlayerException {
         faithPath = new SingleFaithPathStub();
-        singleplayer = new SingleplayerStub(null, faithPath);
+        ArrayList<Identity> identities = new ArrayList<>();
+        identities.add(new Identity("Test"));
+        singleplayer = new SingleplayerStub(null, faithPath, identities);
     }
 
     @Test
-    void faithPath(){
+    void faithPath() throws NoSuchPlayerException {
         faithPath.cross = 2;
 
-        FaithForwardToken token = new FaithForwardToken();
+        ShuffleToken token = new ShuffleToken();
         token.triggerEffect(singleplayer);
-
+        System.out.println(faithPath.cross);
         assertTrue(faithPath.cross == 3);
     }
 
     @Test
-    void shuffled(){
+    void shuffled() throws NoSuchPlayerException {
         singleplayer.shuffled = false;
 
-        FaithForwardToken token = new FaithForwardToken();
+        ShuffleToken token = new ShuffleToken();
         token.triggerEffect(singleplayer);
 
         assertTrue(singleplayer.shuffled);

@@ -3,20 +3,22 @@ package it.polimi.ingsw.model.stubs;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.DevelopmentCard;
 import it.polimi.ingsw.model.DevelopmentCardSet;
+import it.polimi.ingsw.model.exceptions.InvalidReadException;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 
 public class DevelopmentCardSetStub1 extends DevelopmentCardSet {
     private Color color;
     private int level;
     private int quantity;
-    public DevelopmentCardSetStub1() {
+    public DevelopmentCardSetStub1() throws IOException, InvalidReadException {
         super();
         color = null;
         level = -1;
         quantity = 4;
     }
-    public DevelopmentCardSetStub1(int quantity) {
+    public DevelopmentCardSetStub1(int quantity) throws IOException, InvalidReadException {
         super();
         color = null;
         level = -1;
@@ -31,7 +33,7 @@ public class DevelopmentCardSetStub1 extends DevelopmentCardSet {
     }
 
     @Override
-    public DevelopmentCard peekCard(Color color, int level) throws NoSuchFileException {
+    public DevelopmentCard peekCard(Color color, int level) {
         return new DevelopmentCardStub1();
     }
 

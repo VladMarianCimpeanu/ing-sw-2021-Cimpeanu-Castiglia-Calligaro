@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.model.exceptions.NoCardException;
 import it.polimi.ingsw.model.exceptions.WrongLevelException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.NoSuchFileException;
+import java.io.IOException;
 
 import static it.polimi.ingsw.model.Color.YELLOW;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +19,7 @@ class DevelopmentCardSetTest {
      * @throws WrongLevelException trying to use wrong levels
      */
     @Test
-    void peekCard() throws WrongLevelException, NoSuchFileException {
+    void peekCard() throws WrongLevelException, IOException, InvalidReadException, NoCardException {
         DevelopmentCardSet set = new DevelopmentCardSet();
         DevelopmentCard cardOnTop = set.peekCard(YELLOW, 1);
         assertTrue(cardOnTop.getColor() == YELLOW);
@@ -41,7 +41,7 @@ class DevelopmentCardSetTest {
      */
 
     @Test
-    void drawCard() throws WrongLevelException, NoCardException, NoSuchFileException {
+    void drawCard() throws WrongLevelException, NoCardException, IOException, InvalidReadException {
         DevelopmentCardSet set = new DevelopmentCardSet();
         DevelopmentCard cardOnTop = set.drawCard(YELLOW, 1);
         assertTrue(cardOnTop.getColor() == YELLOW);
@@ -62,7 +62,7 @@ class DevelopmentCardSetTest {
 
     @Test
     @DisplayName("Illegal levels")
-    void getAvailableQuantityException(){
+    void getAvailableQuantityException() throws IOException, InvalidReadException {
         DevelopmentCardSet set = new DevelopmentCardSet();
         assertThrows(WrongLevelException.class, () -> {
             set.getAvailableQuantity(YELLOW, -1);

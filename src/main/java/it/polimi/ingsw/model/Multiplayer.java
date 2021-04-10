@@ -1,12 +1,14 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Multiplayer extends Game {
-    public Multiplayer(ArrayList<Identity> identities) throws InvalidStepsException, NoSuchPlayerException {
+    public Multiplayer(ArrayList<Identity> identities) throws InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         super(identities);
         faithPath = new MultiFaithPath(getPlayers());
         for (int i = 0; i < 4; i++)

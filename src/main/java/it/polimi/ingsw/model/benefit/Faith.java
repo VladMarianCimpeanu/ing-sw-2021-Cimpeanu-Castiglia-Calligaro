@@ -1,7 +1,17 @@
 package it.polimi.ingsw.model.benefit;
 
-import it.polimi.ingsw.model.Player;
 
 public class Faith implements Benefit {
+    private static Faith instance = null;
 
+    private Faith(){
+    }
+    public static Faith giveFaith(){
+        if (instance == null) instance = new Faith();
+        return instance;
+    }
+    @Override
+    public String toString() {
+        return "FAITH";
+    }
 }

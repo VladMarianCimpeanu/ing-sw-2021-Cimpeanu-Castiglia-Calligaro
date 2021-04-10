@@ -1,9 +1,12 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.actionToken.ActionToken;
+import it.polimi.ingsw.model.exceptions.InvalidReadException;
+import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,19 +16,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class SingleplayerTest {
     private Singleplayer game;
     @BeforeEach
-    void init(){
+    void init() throws IOException, InvalidReadException, NoSuchPlayerException {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity(""));
         game = new Singleplayer(identities);  //better creating stub because of not handling null cases
     }
 
     @Test
-    void drawToken() {
+    void drawToken() throws NoSuchPlayerException {
         //assuming the card draw out is placed at the bottom of the current set of ActionTokens
-        ActionToken top = game.getAvailableActionTokens().get(0);
         int pre_size = game.getAvailableActionTokens().size();
+        ActionToken top = game.getAvailableActionTokens().get(pre_size - 1);
         game.drawToken();
-        assertTrue(top == game.getAvailableActionTokens().get(game.getAvailableActionTokens().size()-1));
+        assertTrue(top == game.getAvailableActionTokens().get(0));
         assertTrue(pre_size == game.getAvailableActionTokens().size());
     }
 
