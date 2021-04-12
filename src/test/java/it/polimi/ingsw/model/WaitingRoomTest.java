@@ -17,7 +17,7 @@ class WaitingRoomTest {
 
     @Test
     @DisplayName("Checking addUser can handle normal operations")
-    void addUser() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException {
+    void addUser() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setGameMode(4);
         waitingRoom.addUser("First to log!");
@@ -33,7 +33,7 @@ class WaitingRoomTest {
 
     @Test
     @DisplayName("Checking addUser resets autonomously after adding the last user")
-    void addLastUser() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException {
+    void addLastUser() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setGameMode(2);
         waitingRoom.addUser("First to log!");
@@ -43,7 +43,7 @@ class WaitingRoomTest {
 
     @Test
     @DisplayName("Checking addUser can discard logRequests from users with a nickname already used by an other user")
-    void addExistingUser() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException {
+    void addExistingUser() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setGameMode(4);
         waitingRoom.addUser("First to log!");
@@ -64,12 +64,12 @@ class WaitingRoomTest {
         waitingRoom.addIdentity(identityTest, gameTest);
         assertThrows(ExistingNicknameException.class,
                 () -> waitingRoom.addUser("Player ONLINE"));
-        assertEquals(1, waitingRoom.getWaitingUsers().size());
+        assertEquals(0, waitingRoom.getWaitingUsers().size());
     }
 
     @Test
     @DisplayName("Checking addUser can accept logRequests from users had lost the connection during the game")
-    void addDisconnectedPlayer() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, IOException, InvalidReadException, NoSuchPlayerException {
+    void addDisconnectedPlayer() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setGameMode(4);
         Identity identityTest = new Identity("Player OFFLINE");
@@ -117,7 +117,7 @@ class WaitingRoomTest {
 
     @Test
     @DisplayName("Checking removeUser can handle not existing users")
-    void removeNotExistingUser() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException {
+    void removeNotExistingUser() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setGameMode(4);
         waitingRoom.addUser("I am here");
@@ -128,7 +128,7 @@ class WaitingRoomTest {
 
     @Test
     @DisplayName("Checking removeUser can work with correct inputs")
-    void removeUserTest() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, EmptyException, NoSuchUserException {
+    void removeUserTest() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, EmptyException, NoSuchUserException, InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         WaitingRoom waitingRoom = new WaitingRoom();
             waitingRoom.setGameMode(4);
             waitingRoom.addUser("First");
@@ -191,7 +191,7 @@ class WaitingRoomTest {
 
     @Test
     @DisplayName("Checking game mode can not be set to a value smaller than the number of users in the waiting room")
-    void pushAwayUsers() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException {
+    void pushAwayUsers() throws InvalidGameModeException, InvalidNicknameException, ExistingNicknameException, InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setGameMode(3);
         waitingRoom.addUser("First");

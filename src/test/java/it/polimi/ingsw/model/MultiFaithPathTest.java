@@ -50,8 +50,8 @@ class MultiFaithPathTest {
         path.movePlayer(currPlayers.get(2), 9);
         for(int i = 0; i < 3; i ++) path.assignVictoryPoints(currPlayers.get(i));
         assertEquals(1, currPlayers.get(0).getVictoryPoints());
-        assertEquals(2, currPlayers.get(1).getVictoryPoints());
-        assertEquals(4, currPlayers.get(2).getVictoryPoints());
+        assertEquals(4, currPlayers.get(1).getVictoryPoints());
+        assertEquals(6, currPlayers.get(2).getVictoryPoints());
     }
 
     @Test
@@ -63,8 +63,8 @@ class MultiFaithPathTest {
         for(int i = 0; i < 3; i ++) path.movePlayer(currPlayers.get(i), i * 8 );
         for(int i = 0; i < 3; i ++) path.assignVictoryPoints(currPlayers.get(i));
         assertEquals(0, currPlayers.get(0).getVictoryPoints());
-        assertEquals(2, currPlayers.get(1).getVictoryPoints());
-        assertEquals(9, currPlayers.get(2).getVictoryPoints());
+        assertEquals(4, currPlayers.get(1).getVictoryPoints());
+        assertEquals(12, currPlayers.get(2).getVictoryPoints());
     }
 
     @Test
@@ -77,9 +77,9 @@ class MultiFaithPathTest {
         path.movePlayer(currPlayers.get(1), 15);
         path.movePlayer(currPlayers.get(2), 18);
         for(int i = 0; i < 3; i ++) path.assignVictoryPoints(currPlayers.get(i));
-        assertEquals(6, currPlayers.get(0).getVictoryPoints());
-        assertEquals(9, currPlayers.get(1).getVictoryPoints());
-        assertEquals(12, currPlayers.get(2).getVictoryPoints());
+        assertEquals(11, currPlayers.get(0).getVictoryPoints());
+        assertEquals(12, currPlayers.get(1).getVictoryPoints());
+        assertEquals(15, currPlayers.get(2).getVictoryPoints());
     }
 
     @Test
@@ -93,8 +93,8 @@ class MultiFaithPathTest {
         path.movePlayer(currPlayers.get(2), 8);
         for(int i = 0; i < 3; i ++) path.assignVictoryPoints(currPlayers.get(i));
         assertEquals(0, currPlayers.get(0).getVictoryPoints());
-        assertEquals(1, currPlayers.get(1).getVictoryPoints());
-        assertEquals(2, currPlayers.get(2).getVictoryPoints());
+        assertEquals(3, currPlayers.get(1).getVictoryPoints());
+        assertEquals(4, currPlayers.get(2).getVictoryPoints());
     }
 
     // ------------- TEST MOVE PLAYER --------------------
@@ -351,7 +351,7 @@ class MultiFaithPathTest {
 
         assertEquals(5, path.getPlayerPosition(currPlayers.get(0)));
         assertEquals(8, path.getPlayerPosition(currPlayers.get(1)));
-        assertEquals(2, path.getPlayerPosition(currPlayers.get(2)));
+        assertEquals(1, path.getPlayerPosition(currPlayers.get(2)));    //changed, was expected: 2
     }
 
     @Test

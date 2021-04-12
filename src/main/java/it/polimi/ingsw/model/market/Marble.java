@@ -14,6 +14,6 @@ public abstract class Marble {
     public abstract Benefit getBenefit(Stack<MarketStrategy> marketStrategies);
 
     public boolean isWhite(){
-        return false;
+        return this instanceof White;
     }
 }

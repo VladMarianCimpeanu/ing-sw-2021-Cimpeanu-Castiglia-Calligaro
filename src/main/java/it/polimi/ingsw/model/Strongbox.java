@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.benefit.Resource;
 import it.polimi.ingsw.model.exceptions.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Strongbox {
@@ -10,7 +11,8 @@ public class Strongbox {
     private Map<Resource, Integer> lastProduced;
 
     public Strongbox(){
-
+        content = new HashMap<>();
+        lastProduced = new HashMap<>();
     }
 
     /**
@@ -19,7 +21,8 @@ public class Strongbox {
      * @return quantity of selected resources in stock
      */
     public int getResourceQuantity(Resource resource){
-    return 0;
+        if(!content.containsKey(resource)) return 0;
+        return content.get(resource);
     }
 
     /**
@@ -31,7 +34,10 @@ public class Strongbox {
      * @throws NegativeQuantityException
      */
     public void addResource(Resource resource, int quantity) throws NegativeQuantityException{
-
+        if(resource == null) return;
+        if(quantity < 0) throw new NegativeQuantityException();
+        if(lastProduced.containsKey(resource)) lastProduced.put(resource, lastProduced.get(resource)+quantity);
+        else lastProduced.put(resource, quantity);
     }
 
     /**
@@ -41,14 +47,19 @@ public class Strongbox {
      * @throws NegativeQuantityException
      */
     public void removeResource(Resource resource, int quantity) throws NegativeQuantityException{
-
+        if(resource == null) return;
+        if(quantity < 0) throw new NegativeQuantityException();
+        if(content.get(resource) == quantity) content.remove(resource);
+        else content.put(resource, content.get(resource)-quantity);
     }
 
     /**
      * Finalize previous productions, adding the resources in the strongbox
      */
     public void addProduced(){
-
+        for(Map.Entry<Resource, Integer> couple :lastProduced.entrySet())
+            content.put(couple.getKey(), couple.getValue());
+        lastProduced.clear();
     }
 
 }

@@ -1,0 +1,262 @@
+[
+  {
+    "type" : "buycard",
+    "resource" : "SERVANT",
+    "victoryPoints" : "2",
+    "type_req" : "development",
+    "requirements" :
+  [
+    {
+      "numberCards" : 1,
+      "levelCard" : 0,
+      "Color" : "YELLOW"
+    },
+    {
+      "numberCards" : 1,
+      "levelCard" : 0,
+      "Color" : "GREEN"
+    }
+  ]
+  }
+, {
+  "type" : "buycard",
+  "resource" : "SHIELD",
+  "victoryPoints" : "2",
+  "type_req" : "development",
+  "requirements" :
+  [
+    {
+      "numberCards" : 1,
+      "levelCard" : 0,
+      "Color" : "BLUE"
+    },
+    {
+      "numberCards" : 1,
+      "levelCard" : 0,
+      "Color" : "PURPLE"
+    }
+  ]
+},
+  {
+    "type" : "buycard",
+    "resource" : "STONE",
+    "victoryPoints" : "2",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "Color" : "GREEN"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "Color" : "BLUE"
+      }
+    ]
+},
+  {
+    "type" : "buycard",
+    "resource" : "COIN",
+    "victoryPoints" : "2",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "Color" : "YELLOW"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "Color" : "PURPLE"
+      }
+    ]
+},
+  {
+    "type" : "depot",
+    "resource" : "STONE",
+    "victoryPoints" : "3",
+    "type_req" : "resource",
+    "requirements" :
+    [
+      {
+        "numberResource" : 5,
+        "resource" : "COIN"
+      }
+    ]
+  },
+  {
+    "type" : "depot",
+    "resource" : "SERVANT",
+    "victoryPoints" : "3",
+    "type_req" : "resource",
+    "requirements" :
+    [
+      {
+        "numberResource" : 5,
+        "resource" : "STONE"
+      }
+    ]
+  },
+  {
+    "type" : "depot",
+    "resource" : "SHIELD",
+    "victoryPoints" : "3",
+    "type_req" : "resource",
+    "requirements" :
+    [
+      {
+        "numberResource" : 5,
+        "resource" : "SERVANT"
+      }
+    ]
+  },
+  {
+    "type" : "depot",
+    "resource" : "COIN",
+    "victoryPoints" : "3",
+    "type_req" : "resource",
+    "requirements" :
+    [
+      {
+        "numberResource" : 5,
+        "resource" : "SHIELD"
+      }
+    ]
+  },
+  {
+    "type" : "market",
+    "resource" : "SERVANT",
+    "victoryPoints" : "5",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 2,
+        "levelCard" : 0,
+        "Color" : "YELLOW"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "Color" : "BLUE"
+      }
+    ]
+  },
+  {
+    "type" : "market",
+    "resource" : "SHIELD",
+    "victoryPoints" : "5",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 2,
+        "levelCard" : 0,
+        "Color" : "GREEN"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "Color" : "PURPLE"
+      }
+    ]
+  },
+  {
+    "type" : "market",
+    "resource" : "STONE",
+    "victoryPoints" : "5",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 2,
+        "levelCard" : 0,
+        "Color" : "BLUE"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "Color" : "YELLOW"
+      }
+    ]
+  },
+  {
+    "type" : "market",
+    "resource" : "COIN",
+    "victoryPoints" : "5",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 2,
+        "levelCard" : 0,
+        "Color" : "PURPLE"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "Color" : "GREEN"
+      }
+    ]
+  },
+  {
+  "type" : "production",
+  "resource" : "SHIELD",
+  "victoryPoints" : "4",
+  "type_req" : "development",
+  "requirements" :
+  [
+    {
+      "numberCards" : 1,
+      "levelCard" : 2,
+      "Color" : "YELLOW"
+    }
+  ]
+},
+  {
+    "type" : "production",
+    "resource" : "SERVANT",
+    "victoryPoints" : "4",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 2,
+        "Color" : "BLUE"
+      }
+    ]
+  },
+  {
+    "type" : "production",
+    "resource" : "STONE",
+    "victoryPoints" : "4",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 2,
+        "Color" : "PURPLE"
+      }
+    ]
+  },
+  {
+    "type" : "production",
+    "resource" : "COIN",
+    "victoryPoints" : "4",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 2,
+        "Color" : "GREEN"
+      }
+    ]
+  }
+]

@@ -22,15 +22,22 @@ public class ExtraSlot {
      * @return
      */
     public Resource getResource(){
-        return null;
+        return resourceExtra;
     }
 
     /**
      * Put a resource in the slot
      * @param quantity
      */
-    public int addResource(int quantity) {
-        return 0;
+    public int addResource(int quantity){
+        if(quantity < 0) return 0;
+        this.quantity += quantity;
+        int remain = 0;
+        if(this.quantity > 2) {
+            remain = this.quantity-2;
+            this.quantity = 2;
+        }
+        return remain;
     }
 
     /**
@@ -38,6 +45,14 @@ public class ExtraSlot {
      * @param quantity
      */
     public int removeResource(int quantity) {
+        if(quantity < 0) return 0;
+        int remain = 0;
+        if(quantity > this.quantity){
+            remain = quantity-this.quantity;
+            this.quantity = 0;
+            return remain;
+        }
+        this.quantity -= quantity;
         return 0;
     }
 
@@ -46,6 +61,6 @@ public class ExtraSlot {
      * @return
      */
     public int getQuantity(){
-        return 0;
+        return quantity;
     }
 }

@@ -27,13 +27,13 @@ public class SingleFaithPath extends FaithPath{
         popeMeeting[18] = 0;
         for(index = 5; index < 9; index ++ ) popeMeeting[index] = 2;
         for(index = 12; index < 17 ; index ++ ) popeMeeting[index] = 3;
-        for(index = 19; index < 24; index ++ ) popeMeeting[index] = 4;
+        for(index = 19; index < 25; index ++ ) popeMeeting[index] = 4;
 
         // initializing triggerPopePosition
         triggerPopePosition = new Stack<Integer>();
         triggerPopePosition.add(24);
         triggerPopePosition.add(16);
-        triggerPopePosition.add(9);
+        triggerPopePosition.add(8);
 
         // initializing players' position
         playersPosition = new HashMap<>();
@@ -46,12 +46,28 @@ public class SingleFaithPath extends FaithPath{
      * @param steps the blackCross has to be moved
      */
     public void moveBlackCross(int steps)  {
-
+        if(steps <= 0) return;
+        steps += blackCross;
+        for(int i = blackCross+1; i <= steps && i<25; i++) {
+            blackCross = i;
+            if (blackCross == triggerPopePosition.peek()) assignPapalPoints();
+            if (blackCross == 24){
+                //end game
+            }
+        }
     }
 
     @Override
     public void movePlayer(Player player, int steps) throws NoSuchPlayerException, InvalidStepsException {
-
+        if(steps < 0) throw new InvalidStepsException("Negative numbers of steps are not allowed. Number found is: "+steps);
+        if(player == null) throw new NoSuchPlayerException();
+        if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
+        int pre_steps = playersPosition.get(player);
+        for(int i = pre_steps+1; i<=pre_steps+steps && i < 25; i++) {
+            playersPosition.put(player, i);
+            if (i == triggerPopePosition.peek())
+                assignPapalPoints();
+        }
     }
 
     /**
@@ -59,33 +75,56 @@ public class SingleFaithPath extends FaithPath{
      * @param player specified player that has not to be moved
      */
     @Override
-    public void moveOpponents(Player player) {
-
+    public void moveOpponents(Player player) throws NoSuchPlayerException {
+        if(player == null) throw new NoSuchPlayerException();
+        if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
+        if(!playersPosition.containsKey(player)) return;
+        moveBlackCross(1);
     }
 
     @Override
     public void assignVictoryPoints(Player player) throws NoSuchPlayerException {
-
+        if(player == null) throw new NoSuchPlayerException();
+        if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
+        player.addVictoryPoints(getVictoryPoints(playersPosition.get(player)));
     }
 
     @Override
     public int getPlayerPosition(Player player) throws NoSuchPlayerException{
-        return 0;
+        if(player == null) throw new NoSuchPlayerException();
+        if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
+        return playersPosition.get(player);
     }
 
     public int getBlackCrossPosition() {
-        return 0;
+        return blackCross;
     }
 
     @Override
     public Map<Player, Integer> getAllPositions() {
-        return null;
+        return playersPosition;
     }
 
     /**
      * this method increases victory points of each player placed in a pope position meeting
      */
     private void assignPapalPoints(){
+        for (Player p : playersPosition.keySet())
+            p.addVictoryPoints(popeMeeting[playersPosition.get(p)]);
 
+        switch(triggerPopePosition.peek()){
+            case 8:
+                for(int index = 0; index < 9; index ++ ) popeMeeting[index] = 0;
+                break;
+            case 16:
+                for(int index = 0; index < 17 ; index ++ ) popeMeeting[index] = 0;
+                break;
+            case 24:
+                for(int index = 0; index < 25; index ++ ) popeMeeting[index] = 0;
+                break;
+            default:
+                break;
+        }
+        triggerPopePosition.pop();
     }
 }

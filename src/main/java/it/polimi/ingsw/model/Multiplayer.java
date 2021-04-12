@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Multiplayer extends Game {
     public Multiplayer(ArrayList<Identity> identities) throws InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         super(identities);
+        if(getPlayers() == null) return;
         faithPath = new MultiFaithPath(getPlayers());
         for (int i = 0; i < 4; i++)
             faithPath.movePlayer(getPlayers().get(i), i / 2);

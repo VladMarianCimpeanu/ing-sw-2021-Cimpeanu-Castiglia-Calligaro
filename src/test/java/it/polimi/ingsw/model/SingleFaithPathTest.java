@@ -61,7 +61,7 @@ class SingleFaithPathTest {
         SingleFaithPath path = new SingleFaithPath(player);
         path.movePlayer(player, 9);
         path.assignVictoryPoints(player);
-        assertEquals(4, player.getVictoryPoints());
+        assertEquals(6, player.getVictoryPoints());
     }
 
     @Test
@@ -71,7 +71,7 @@ class SingleFaithPathTest {
         SingleFaithPath path = new SingleFaithPath(player);
         path.movePlayer(player, 8);
         path.assignVictoryPoints(player);
-        assertEquals(2, player.getVictoryPoints());
+        assertEquals(4, player.getVictoryPoints());
     }
 
     // ------------- TEST MOVE PLAYER --------------------
@@ -95,7 +95,7 @@ class SingleFaithPathTest {
         path.movePlayer(player, 2);
         assertThrows(InvalidStepsException.class,
                 () -> path.movePlayer(player, -1));
-        assertEquals(0, path.getPlayerPosition(player));
+        assertEquals(2, path.getPlayerPosition(player));
     }
 
     @Test
@@ -290,7 +290,7 @@ class SingleFaithPathTest {
         path.moveBlackCross(7);
         path.moveOpponents(player);
 
-        assertEquals(2, player.getVictoryPoints());
+        assertEquals(0, player.getVictoryPoints());
     }
 
     @Test

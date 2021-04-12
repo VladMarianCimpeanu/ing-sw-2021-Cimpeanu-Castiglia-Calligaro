@@ -1,5 +1,8 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.model.leaderCards.*;
+
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -8,8 +11,11 @@ import java.util.ArrayList;
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws IOException {
         System.out.println( "Hello World!" );
+
     }
+
+
 }
+

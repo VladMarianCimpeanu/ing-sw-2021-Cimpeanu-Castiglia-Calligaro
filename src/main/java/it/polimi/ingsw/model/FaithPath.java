@@ -8,6 +8,7 @@ import java.util.Map;
 
 public abstract class FaithPath {
 
+
     // each index correspond to a cell of the FaithPath track: each victoryPoints' element is the amount of victory points that the cell offers at the end of the game
     private static int[] victoryPoints;
 
@@ -25,7 +26,6 @@ public abstract class FaithPath {
         for (; cell < 21; cell ++ ) victoryPoints[cell] = 12;
         for (; cell < 24; cell ++ ) victoryPoints[cell] = 16;
         victoryPoints[cell] = 20;
-
     }
 
     /**
@@ -42,7 +42,7 @@ public abstract class FaithPath {
      * @param player specified player that has not to be moved
      * @throws NoSuchPlayerException
      */
-    public abstract void moveOpponents(Player player) throws NoSuchPlayerException;
+    public abstract void moveOpponents(Player player) throws NoSuchPlayerException, InvalidStepsException;
 
     /**
      * it adds the amount of victory points earned to the specific player at the end of the game
@@ -58,7 +58,7 @@ public abstract class FaithPath {
      * @return amount of points that a player should earn in that position.
      */
     protected int getVictoryPoints(int position) {
-        return 0;
+        return victoryPoints[position];
     }
 
     public abstract int getPlayerPosition(Player player) throws NoSuchPlayerException;

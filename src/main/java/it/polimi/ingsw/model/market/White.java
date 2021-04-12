@@ -13,6 +13,8 @@ public class White extends Marble {
      */
     @Override
     public Benefit getBenefit(Stack<MarketStrategy> marketStrategies) {
-        return null;
+        if(marketStrategies == null) return null;
+        if(marketStrategies.empty()) return null;
+        return marketStrategies.pop().getResource();
     }
 }
