@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class JsonToLeaderCard {
-    private static ArrayList<LeaderCard> leaderCardsSet;
+    private static ArrayList<LeaderCard> leaderCardsSet = null;
     private JsonToLeaderCard(){
     }
 
     public static ArrayList<LeaderCard> readLeaderCards() throws IOException {
         if(leaderCardsSet == null)
             leaderCardsSet = parseLeaderCards();
-        return leaderCardsSet;
+        return new ArrayList<>(leaderCardsSet);
     }
 
     private static ArrayList<LeaderCard> parseLeaderCards() throws IOException {
         ArrayList<LeaderCard> cards = new ArrayList<>();
-        File file = new File("C:\\Users\\Nicola\\Documents\\GitHub\\ing-sw-2021-Cimpeanu-Castiglia-Calligaro\\src\\main\\java\\leadercards.json");
+        File file = new File("src/jsonSources/leaderCards.json");
         InputStream in = new FileInputStream(file);
         JsonReader reader = new JsonReader(new InputStreamReader(in));
 
