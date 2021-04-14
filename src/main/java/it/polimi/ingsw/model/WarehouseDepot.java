@@ -26,7 +26,7 @@ public class WarehouseDepot {
         firstQuantity = 0;
         secondQuantity = 0;
         thirdQuantity = 0;
-        extraSlotList = new ArrayList<ExtraSlot>();
+        extraSlotList = new ArrayList<>();
     }
 
     /**
@@ -229,7 +229,7 @@ public class WarehouseDepot {
      * @return
      */
     public ArrayList<ExtraSlot> getExtraSlotList(){
-        return extraSlotList;
+        return new ArrayList<>(extraSlotList);
     }
 
     /**

@@ -59,10 +59,6 @@ public class DashboardStub1 extends Dashboard {
         testresource = resource;
         return true;
     }
-    @Override
-    public void addDiscount(Discount discount){
-        this.discount = discount;
-    }
 
     public Discount getDiscount() {
         return discount;
@@ -107,7 +103,7 @@ public class DashboardStub1 extends Dashboard {
     }
 
     @Override
-    public void addDevelopmentCard(DevelopmentCard cardToAdd, int deckPosition, ArrayList<Discount> discounts){
+    public void addDevelopmentCard(DevelopmentCard cardToAdd, int deckPosition){
         cardAdded = 1;
     }
 

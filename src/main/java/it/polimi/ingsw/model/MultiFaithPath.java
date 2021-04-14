@@ -16,7 +16,7 @@ public class MultiFaithPath extends FaithPath{
     //Map containing Players' positions in the track
     private Map<Player, Integer> playersPosition;
 
-    private boolean someone_end;
+    private boolean someoneEnd;
 
     public MultiFaithPath(ArrayList<Player> players){
         super();
@@ -32,7 +32,7 @@ public class MultiFaithPath extends FaithPath{
         for(index = 19; index < 25; index ++ ) popeMeeting[index] = 4;
 
         // initializing triggerPopePosition
-        triggerPopePosition = new Stack<Integer>();
+        triggerPopePosition = new Stack<>();
         triggerPopePosition.push(24);
         triggerPopePosition.push(16);
         triggerPopePosition.push(8);
@@ -41,7 +41,7 @@ public class MultiFaithPath extends FaithPath{
         playersPosition = new HashMap<>();
         for(Player player : players) playersPosition.put(player, 0);
 
-        someone_end = false;
+        someoneEnd = false;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class MultiFaithPath extends FaithPath{
             playersPosition.put(player, i);
             if (i == triggerPopePosition.peek())
                 assignPapalPoints();
-            if(i == 24) someone_end = true;
+            if(i == 24) someoneEnd = true;
         }
     }
 
@@ -66,7 +66,7 @@ public class MultiFaithPath extends FaithPath{
             if(p == player) continue;
             int pre_steps  = playersPosition.get(p);
             playersPosition.put(p, pre_steps+1);
-            if(playersPosition.get(p) == 24) someone_end = true;
+            if(playersPosition.get(p) == 24) someoneEnd = true;
         }
         for (Player p: playersPosition.keySet())
             if(playersPosition.get(p) == triggerPopePosition.peek()) assignPapalPoints();

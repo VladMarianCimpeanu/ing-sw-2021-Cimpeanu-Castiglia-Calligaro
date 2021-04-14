@@ -24,7 +24,7 @@ public class DevelopmentCardStub extends DevelopmentCard {
     }
 
     public DevelopmentCardStub(int id, int level) throws NoSuchFileException {
-        this(id,1, Resource.SHIELD, Resource.SERVANT);
+        this(id,level, Resource.SHIELD, Resource.SERVANT);
     }
 
     public DevelopmentCardStub(int id) throws NoSuchFileException {
@@ -33,14 +33,14 @@ public class DevelopmentCardStub extends DevelopmentCard {
 
     @Override
     public Map<Resource, Integer> getResourceIn() {
-        HashMap<Resource, Integer> map = new HashMap<Resource, Integer>();
+        HashMap<Resource, Integer> map = new HashMap<>();
         map.put(in,2);
         return map;
     }
 
     @Override
     public Map<Benefit, Integer> getBenefitsOut() {
-        HashMap<Benefit, Integer> map = new HashMap<Benefit, Integer>();
+        HashMap<Benefit, Integer> map = new HashMap<>();
         map.put(out,1);
         map.put(Faith.giveFaith(),1);
 
@@ -49,7 +49,7 @@ public class DevelopmentCardStub extends DevelopmentCard {
 
     @Override
     public Map<Resource, Integer> getResourceCost() {
-        HashMap<Resource, Integer> map = new HashMap<Resource, Integer>();
+        HashMap<Resource, Integer> map = new HashMap<>();
         map.put(Resource.COIN,3);
         return map;
     }

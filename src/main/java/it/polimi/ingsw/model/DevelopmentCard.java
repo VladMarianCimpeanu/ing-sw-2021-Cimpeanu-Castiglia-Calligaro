@@ -25,7 +25,7 @@ public class DevelopmentCard {
         this.resourceOut = resourceOut;
     }
 
-    public DevelopmentCard(String Path){
+    public DevelopmentCard(String path){
 
     }
     /**

@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Strongbox {
-    private Map<Resource, Integer> content;
-    private Map<Resource, Integer> lastProduced;
+    private final Map<Resource, Integer> content;
+    private final Map<Resource, Integer> lastProduced;
 
     public Strongbox(){
         content = new HashMap<>();
@@ -46,11 +46,18 @@ public class Strongbox {
      * @param quantity
      * @throws NegativeQuantityException
      */
-    public void removeResource(Resource resource, int quantity) throws NegativeQuantityException{
-        if(resource == null) return;
+    public int removeResource(Resource resource, int quantity) throws NegativeQuantityException{
+        if(resource == null) throw new NullPointerException();
         if(quantity < 0) throw new NegativeQuantityException();
-        if(content.get(resource) == quantity) content.remove(resource);
-        else content.put(resource, content.get(resource)-quantity);
+        if(content.get(resource) >= quantity) {
+            int resourceAmount = quantity - content.get(resource);
+            content.remove(resource);
+            return resourceAmount;
+        }
+        else {
+            content.put(resource, content.get(resource)-quantity);
+            return 0;
+        }
     }
 
     /**

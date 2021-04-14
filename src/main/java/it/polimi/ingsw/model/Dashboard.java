@@ -1,32 +1,39 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.benefit.Benefit;
 import it.polimi.ingsw.model.benefit.Faith;
 import it.polimi.ingsw.model.benefit.Resource;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
 public class Dashboard {
     //Array of 3 stacks
-    private ArrayList<Stack<DevelopmentCard>> developmentDecks;
-    private Strongbox strongbox;
-    private WarehouseDepot warehouseDepot;
-    private ArrayList<Discount> discounts;
-    private ArrayList<ExtraProduction> extraProductions;
+    private final ArrayList<Stack<DevelopmentCard>> developmentDecks;
+    private final Strongbox strongbox;
+    private final WarehouseDepot warehouseDepot;
+    private final ArrayList<ExtraProduction> extraProductions;
+    //This stack is used to store resources that have to be used
+    private ArrayList<Resource> resourcesToPay;
+    private Map<Benefit, Integer> benefitsToProduce;
+    private boolean isProducing;
 
     public Dashboard(Strongbox strongbox, WarehouseDepot warehouseDepot){
         this.strongbox = strongbox;
         this.warehouseDepot = warehouseDepot;
-        discounts = new ArrayList<Discount>();
-        extraProductions = new ArrayList<ExtraProduction>();
-        developmentDecks = new ArrayList<Stack<DevelopmentCard>>();
+        extraProductions = new ArrayList<>();
+        developmentDecks = new ArrayList<>();
+        resourcesToPay = new ArrayList<>();
+        benefitsToProduce = new HashMap<>();
         //Creates 3 stack of DevelopmentCard
-        for(int i = 0; i < 2; i++){
-            Stack<DevelopmentCard> deck = new Stack<DevelopmentCard>();
+        for(int i = 0; i < 3; i++){
+            Stack<DevelopmentCard> deck = new Stack<>();
             developmentDecks.add(deck);
         }
+        isProducing = false;
     }
 
     /**
@@ -34,7 +41,16 @@ public class Dashboard {
      * @return an ArrayList of 3 developmentCard Decks
      */
     public ArrayList<Stack<DevelopmentCard>> getDevelopmentDecks() {
-        return developmentDecks;
+        ArrayList<Stack<DevelopmentCard>> copyDecks = new ArrayList<>();
+        for(Stack<DevelopmentCard> deck : developmentDecks){
+            Stack<DevelopmentCard> tempStack = new Stack<>();
+            for(int index = 0;index < deck.size(); index ++){
+                tempStack.push(deck.elementAt(index));
+            }
+            copyDecks.add(tempStack);
+        }
+        return copyDecks;
+
     }
 
     /**
@@ -42,127 +58,331 @@ public class Dashboard {
      * @return an ArrayList of 3 (or less) developmentCards
      */
     public ArrayList<DevelopmentCard> getActivableDevCards(){
-        return null;
+        ArrayList<DevelopmentCard> cardsOnTop = new ArrayList<>();
+        for(Stack<DevelopmentCard> developmentDeck : developmentDecks){
+            if(developmentDeck.size() > 0) cardsOnTop.add(developmentDeck.lastElement());
+        }
+        return cardsOnTop;
     }
 
+    /**
+     * this method checks if a development card with the specified level can be placed in the dashboard.
+     * @param level specified level of the development card
+     * @return true if the card is placeable, else false
+     */
+    public boolean isDevCardPlaceable(int level) throws WrongLevelException {
+        if(level < 1 || level > 3) throw new WrongLevelException();
+        for(Stack<DevelopmentCard> devDeck : developmentDecks) {
+            if ((devDeck.isEmpty() && level == 1 )||(!devDeck.isEmpty() && devDeck.lastElement().getLevel() == level - 1)) return true;
+        }
+        return false;
+    }
 
     public Strongbox getStrongbox() {
         return strongbox;
     }
-
 
     /**
      *
      * @return extraProductions(max 2)
      */
     public ArrayList<ExtraProduction> getExtraProductions() {
-        return extraProductions;
+        return new ArrayList<>(extraProductions);
     }
 
     /**
-     * Buy a development card using resources in warehouse depot and strongbox,
-     * @param cardToAdd
+     * Add the specified card to one of the dashboard's decks specified. The card must be placed over a card that is 1 level lower.
+     * @param cardToAdd specified card that have to be placed
      * @param deckPosition: between 1 and 3
-     * @param discounts array of discounts
      * @throws WrongLevelException level of the card on top of the selected deck isn't 1 below the level of cardToAdd
      * @throws InvalidDeckPositionException if deckPosition isn't an integer between 1 and 3
-     * @throws NotEnoughResourcesException if the cost of the card can't be afforded
      */
-    public void addDevelopmentCard(DevelopmentCard cardToAdd, int deckPosition, ArrayList<Discount> discounts) throws WrongLevelException, InvalidDeckPositionException, NotEnoughResourcesException {
-
+    public void addDevelopmentCard(DevelopmentCard cardToAdd, int deckPosition) throws InvalidDeckPositionException, WrongLevelException {
+        if (deckPosition < 1 || deckPosition > 3) throw new InvalidDeckPositionException();
+        else if (cardToAdd == null) throw new NullPointerException();
+        else if ((developmentDecks.get(deckPosition - 1).isEmpty() && cardToAdd.getLevel() != 1 ) || (!developmentDecks.get(deckPosition - 1).isEmpty() && developmentDecks.get(deckPosition - 1).lastElement().getLevel() != cardToAdd.getLevel() - 1))
+            throw new WrongLevelException();
+        else {
+            developmentDecks.get(deckPosition - 1).push(cardToAdd);
+        }
     }
 
     /**
      * Add the extra production provided by a leaderCard effect
-     * @param extraProd
+     * @param extraProd specified extra production that is added to dashboard.
      */
     public void addExtraProduction(ExtraProduction extraProd) {
-
+        if (extraProd == null) throw new NullPointerException();
+        else extraProductions.add(extraProd);
     }
 
     /**
-     * Add the discount provided by a leaderCard effect
-     * @param discount
+     * this method selects the extra Production way of producing benefits: this method do not produce anything, it verifies
+     * that this production can be actually be performed, and than memorize this choice.
+     * @param extraProduction is the index position in which the extra production that has to perform is stored in extraProductionList .
+     * @param resourceOut is the resource that is supposed to be produced at the end of the production.
+     * @throws NotEnoughResourcesException if the dashboard can not find resources needed for the production.
+     * @throws ProductionStartedException if a resource has already been spent for another production selected before, and it has not finished yet.
      */
-    public void addDiscount(Discount discount) {
-
+    public void selectExtraProduction(int extraProduction, Resource resourceOut) throws NotEnoughResourcesException, ProductionStartedException {
+        if(isProducing) throw new ProductionStartedException();
+        if(extraProduction < 0 || extraProduction >= extraProductions.size()) throw new IndexOutOfBoundsException();
+        if(resourceOut == null) throw new NullPointerException();
+        resourcesToPay = new ArrayList<>();
+        benefitsToProduce.clear();
+        Map<Resource, Integer> resourceCost = new HashMap<>();
+        resourceCost.put(extraProductions.get(extraProduction).getResourceIn(), 1);
+        if(checkResources(resourceCost)){
+            resourcesToPay.add(extraProductions.get(extraProduction).getResourceIn());
+            benefitsToProduce.put(resourceOut, 1);
+            benefitsToProduce.put(Faith.giveFaith(), 1);
+        }
+        else throw new NotEnoughResourcesException();
     }
 
     /**
-     * Activate the production effect of the upper card in the selected deck
-     * @param deckPosition: between 1 and 3
-     * @throws InvalidDeckPositionException if deckPosition isn't an integer between 1 and 3 or the position is empty
-     * @throws NotEnoughResourcesException if the cost of the card can't be afforded
-     * @return faith points quantity
+     * this method selects the base Production way of producing benefits: this method do not produce anything, it verifies
+     * that this production can be actually be performed, and than memorize this choice.
+     * @param resourceCost are the resources chosen to be spent during the production.
+     * @param resourceOut is the resource that is supposed to be produced at the end of the production.
+     * @throws NotEnoughResourcesException if the dashboard can not find resources needed for the production.
+     * @throws ResourceCostException if the Map of resources is not composed by 2 resources.
+     * @throws ProductionStartedException if a resource has already been spent for another production selected before, and it has not finished yet.
      */
-    public int activateProduction(int deckPosition) throws InvalidDeckPositionException, NotEnoughResourcesException {
-        return 0;
+    public void selectBaseProduction(Map<Resource, Integer> resourceCost, Resource resourceOut) throws NotEnoughResourcesException, ResourceCostException, ProductionStartedException {
+        if(isProducing) throw new ProductionStartedException();
+        if(resourceOut == null || resourceCost == null) throw new NullPointerException();
+        if (resourceCost.size() == 2){
+            for(Resource res : Resource.values()){
+                if(resourceCost.containsKey(res) && resourceCost.get(res) != 1) throw new ResourceCostException();
+            }
+        }
+        if (resourceCost.size() > 2 || resourceCost.size() == 0) throw new ResourceCostException();
+        if (resourceCost.size() == 1 && !resourceCost.containsValue(2)) throw new ResourceCostException();
+        if (checkResources(resourceCost)) {
+            resourcesToPay = new ArrayList<>();
+            benefitsToProduce.clear();
+            for (Resource resource : Resource.values()) {
+                if (resourceCost.containsKey(resource)) {
+                    for (int index = 0; index < resourceCost.get(resource); index++) resourcesToPay.add(resource);
+                }
+            }
+            benefitsToProduce.put(resourceOut, 1);
+        } else throw new NotEnoughResourcesException();
     }
 
     /**
-     * Activate the extra production of the selected card
-     * @param extraPosition: between 1 and 2
-     * @throws InvalidExtraPositionException if extraPosition isn't an integer between 1 and 2 or the position is empty
-     * @return faith points quantity
+     * this method selects the development card Production way of producing benefits: this method do not produce anything, it verifies
+     * that this production can be actually be performed, and than memorize this choice.
+     * @param deckIndex specified index of the card that has to perform the production.
+     * @throws InvalidDeckPositionException if the deck does not exist.
+     * @throws NotEnoughResourcesException if the dashboard can not find resources needed for the production.
+     * @throws NoCardException if the specified deck has no cards at the moment.
+     * @throws ProductionStartedException if a resource has already been spent for another production selected before, and it has not finished yet.
      */
-    public int activateExtraProduction(int extraPosition, Resource resourceOut) throws InvalidExtraPositionException {
-        return 0;
+    public void selectCardProduction(int deckIndex) throws InvalidDeckPositionException, NotEnoughResourcesException, NoCardException, ProductionStartedException {
+        if(isProducing) throw new ProductionStartedException();
+        if(deckIndex > 3 || deckIndex < 1) throw new InvalidDeckPositionException();
+        if(developmentDecks.get(deckIndex - 1).isEmpty()) throw new NoCardException();
+        if(checkResources(developmentDecks.get(deckIndex - 1).lastElement().getResourceIn())){
+            resourcesToPay = new ArrayList<>();
+            benefitsToProduce.clear();
+            for(Resource resource : Resource.values()){
+                if(developmentDecks.get(deckIndex - 1).lastElement().getResourceIn().containsKey(resource)){
+                    for(int index = 0; index < developmentDecks.get(deckIndex - 1).lastElement().getResourceIn().get(resource); index ++)
+                        resourcesToPay.add(resource);
+                }
+            }
+            benefitsToProduce = developmentDecks.get(deckIndex - 1).lastElement().getBenefitsOut();
+        }
+        else throw new NotEnoughResourcesException();
+    }
+
+    /**
+     * this method is used to take a specified resource from warehouse depot in order to pay the actual production cost
+     * of an already selected production.
+     * @param resource specified resource that has to be taken from the warehouse depot.
+     * @throws NotEnoughResourcesException if the selected resource can not be found in warehouse depot.
+     * @throws RequirementsSatisfiedException if the requirements are already satisfied or there is not any production selected.
+     */
+    public void takeFromDepot(Resource resource) throws NotEnoughResourcesException, RequirementsSatisfiedException, InvalidResourceException {
+        if(resource == null) throw new NullPointerException();
+        int resourcesLeft;
+        if (resourcesToPay.isEmpty()) throw new RequirementsSatisfiedException();
+        if(!resourcesToPay.contains(resource)) throw new InvalidResourceException();
+        try {
+            resourcesLeft = warehouseDepot.removeResource(resource, 1);
+            if (resourcesLeft > 0) throw new NotEnoughResourcesException();
+            else {
+                int index = 0;
+                boolean found = false;
+                for(; !found ; index ++){
+                    if(resourcesToPay.get(index) == resource) {
+                        found = true;
+                        resourcesToPay.remove(index);
+                    }
+                }
+                isProducing = true;
+            }
+        } catch (InvalidShelfPosition invalidShelfPosition) {
+            invalidShelfPosition.printStackTrace();
+        }
+    }
+
+    /**
+     * this method is used to take a specified resource from strongbox in order to pay the actual production cost
+     * of an already selected production.
+     * @param resource specified resource that has to be taken from the strongbox.
+     * @throws NotEnoughResourcesException if the selected resource can not be found in strongbox.
+     * @throws RequirementsSatisfiedException if the requirements are already satisfied or there is not any production selected.
+     */
+    public void takeFromStrongbox(Resource resource) throws NotEnoughResourcesException, RequirementsSatisfiedException, InvalidResourceException {
+        if(resource == null) throw new NullPointerException();
+        if (resourcesToPay.isEmpty()) throw new RequirementsSatisfiedException();
+        if(!resourcesToPay.contains(resource)) throw new InvalidResourceException();
+        int resourcesLeft;
+        try {
+            resourcesLeft = strongbox.removeResource(resource, 1);
+            if (resourcesLeft > 0) throw new NotEnoughResourcesException();
+            else {
+                int index = 0;
+                boolean found = false;
+                for(; !found ; index ++){
+                    if(resourcesToPay.get(index) == resource){
+                        found = true;
+                        resourcesToPay.remove(index);
+                    }
+                }
+                isProducing = true;
+            }
+        } catch (NegativeQuantityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * this method is used to take a specified resource from an extraSlot in order to pay the actual production cost
+     * of an already selected production.
+     * @param resource specified resource that has to be taken from an extraSlot.
+     * @throws NotEnoughResourcesException if the selected resource can not be found in any extraSlot.
+     * @throws RequirementsSatisfiedException if the requirements are already satisfied or there is not any production selected.
+     */
+    public void takeFromExtraSlot(Resource resource) throws NotEnoughResourcesException, RequirementsSatisfiedException, InvalidResourceException {
+        if(resource == null) throw new NullPointerException();
+        if (resourcesToPay.isEmpty()) throw new RequirementsSatisfiedException();
+        if(!resourcesToPay.contains(resource)) throw new InvalidResourceException();
+        int index = 0;
+        boolean found = false;
+        ArrayList<ExtraSlot> slotList = warehouseDepot.getExtraSlotList();
+        int resourcesLeft = slotList.get(index).removeResource(1);
+        if (resourcesLeft > 0) throw new NotEnoughResourcesException();
+        for(; !found ; index ++){
+            if(resourcesToPay.get(index) == resource){
+                found = true;
+                resourcesToPay.remove(index);
+            }
+        }
+        isProducing = true;
+    }
+
+    /**
+     * activate the production selected in this round.
+     * @return number of faithPoints earned during the production.
+     * @throws NoProductionAvailableException if a production has not selected yet or if not all the resources to pay have been already selected.
+     */
+    public int activateProduction() throws NoProductionAvailableException {
+        if(benefitsToProduce.isEmpty() || !resourcesToPay.isEmpty() ) throw new NoProductionAvailableException();
+        for(Resource resource : Resource.values())
+            if (benefitsToProduce.containsKey(resource)) {
+                try {
+                    strongbox.addResource(resource, benefitsToProduce.get(resource));
+                } catch (NegativeQuantityException e) {
+                    e.printStackTrace();
+                }
+            }
+        isProducing = false;
+        return benefitsToProduce.getOrDefault(Faith.giveFaith(), 0);
     }
 
     /**
      * Check the leaderCards Development requirements
      * @param cardsNumber quantity of cards required
-     * @param cardsLevel: from 1 to 3
-     * @param color
+     * @param cardsLevel: from 0 to 3: if level is 0 it means that cardsLevel actually is not a requirement.
+     * @param color development card color that has to be searched
      * @return true if requirement is satisfied
-     * @throws WrongLevelException if cardsLevel isn't between 1 and 3
+     * @throws WrongLevelException if cardsLevel isn't between 0 and 3
      */
     public boolean checkDevRequirement(int cardsNumber, int cardsLevel, Color color) throws WrongLevelException{
-        return true;
+        if(cardsLevel > 3 || cardsLevel < 0) throw new WrongLevelException();
+        for(Stack<DevelopmentCard> deck : developmentDecks){
+            for(DevelopmentCard devCard : deck) {
+                if((cardsLevel == 0 || cardsLevel == devCard.getLevel()) && devCard.getColor() == color) {
+                    cardsNumber -= 1;
+                    if (cardsNumber == 0) return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
      * Check the leaderCards Resource requirements
      * @param resourceNumber quantity of resources required
-     * @param resource
+     * @param resource specific resource that has to be searched
      * @return true if requirement is satisfied
      */
     public boolean checkResRequirement(int resourceNumber, Resource resource) {
+        if(resourceNumber <= 0) return true;
+        Map<Resource, Integer> requirement = new HashMap<>();
+        requirement.put(resource, resourceNumber);
+        return checkResources(requirement);
+    }
+
+    /**
+     * this method checks if the owner of this dashboard can afford to spend the specified resources.
+     * @param resources specified resources in a Map where Resource is a key and Integer quantity is the value.
+     * @return true if all the resources can be spent, else false.
+     */
+    public boolean checkResources(Map<Resource,Integer> resources) {
+        if(resources == null) throw new NullPointerException();
+        ArrayList<ExtraSlot> tempExtraSlots = warehouseDepot.getExtraSlotList();
+        for(Resource resource : Resource.values()){
+            if(resources.containsKey(resource)) {
+                int tempQuantity = resources.get(resource);
+                if (tempQuantity > 0) {
+                    tempQuantity -= strongbox.getResourceQuantity(resource);
+                    if (tempQuantity > 0) {
+                        try {
+                            tempQuantity -= warehouseDepot.getResourceQuantity(resource);
+                        } catch (InvalidShelfPosition invalidShelfPosition) {
+                            invalidShelfPosition.printStackTrace();
+                        }
+                        if (tempQuantity > 0) {
+                            for (ExtraSlot slot : tempExtraSlots) {
+                                if (slot.getResource() == resource) tempQuantity -= slot.getQuantity();
+                            }
+                        }
+                    }
+                }
+                if (tempQuantity > 0) return false;
+            }
+        }
         return true;
     }
 
     /**
-     * Produce a resource of your choice sacrificing two other resources
-     * @param firstResourceIn
-     * @param secondResourceIn
-     * @param resourceOut
-     * @throws NotEnoughResourcesException if the player doesn't own one or both the resources requested in input
-     */
-    public void baseProduction(Resource firstResourceIn, Resource secondResourceIn, Resource resourceOut) throws NotEnoughResourcesException{
-
-    }
-
-    public boolean checkResources(Map<Resource,Integer> resources){
-        return true;
-    }
-
-    private void removeResources(Map<Resource,Integer> resources) throws NotEnoughResourcesException{
-
-    }
-
-    /**
      *
-     * @return
-     */
-    public ArrayList<Discount> getDiscounts() {
-        return discounts;
-    }
-
-    /**
-     *
-     * @return
+     * @return the selected dashboard's warehouse depot.
      */
     public WarehouseDepot getWarehouseDepot() {
         return warehouseDepot;
+    }
+
+    public ArrayList<Resource> getResourcesToPay() {
+        return new ArrayList<>(resourcesToPay);
+    }
+
+    public Map<Benefit, Integer> getBenefitsToProduce() {
+        return new HashMap<>(benefitsToProduce);
     }
 }
