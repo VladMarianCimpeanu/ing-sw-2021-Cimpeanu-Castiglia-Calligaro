@@ -49,7 +49,7 @@ public class Strongbox {
     public int removeResource(Resource resource, int quantity) throws NegativeQuantityException{
         if(resource == null) throw new NullPointerException();
         if(quantity < 0) throw new NegativeQuantityException();
-        if(content.get(resource) >= quantity) {
+        if(content.get(resource) <= quantity) {
             int resourceAmount = quantity - content.get(resource);
             content.remove(resource);
             return resourceAmount;
