@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.benefit.Resource;
 import it.polimi.ingsw.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.model.exceptions.NoCardException;
 import it.polimi.ingsw.model.exceptions.WrongLevelException;
@@ -24,6 +25,7 @@ class DevelopmentCardSetTest {
         DevelopmentCard cardOnTop = set.peekCard(YELLOW, 1);
         assertTrue(cardOnTop.getColor() == YELLOW);
         assertTrue(cardOnTop.getLevel() == 1);
+
         assertTrue(cardOnTop == set.peekCard(YELLOW, 1));
         assertThrows(WrongLevelException.class, () -> {
             set.peekCard(YELLOW, 4);

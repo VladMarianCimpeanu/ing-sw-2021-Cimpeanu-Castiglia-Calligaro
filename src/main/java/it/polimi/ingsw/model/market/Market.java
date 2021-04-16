@@ -2,18 +2,50 @@ package it.polimi.ingsw.model.market;
 
 import it.polimi.ingsw.model.MarketStrategy;
 import it.polimi.ingsw.model.benefit.Benefit;
+import it.polimi.ingsw.model.exceptions.InvalidStrategyException;
 import it.polimi.ingsw.model.exceptions.OutOfBoundColumnsException;
 import it.polimi.ingsw.model.exceptions.OutOfBoundRowException;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Stack;
 
 public class Market {
-
+    private final int rows = 3;
+    private final int columns = 4;
     private Marble[][] market;
     private Marble outerMarble;
     private ArrayList<Marble> selectedMarbles; //this array is update every time a row/column selection occurs
+
     public Market(){
+        selectedMarbles = new ArrayList<>();
+        ArrayList<Pair<Marble,Integer>> availableMarbles = new ArrayList<Pair<Marble,Integer>>();
+        availableMarbles.add(new Pair<>(new Blue(), 2));
+        availableMarbles.add(new Pair<>(new Purple(), 2));
+        availableMarbles.add(new Pair<>(new Yellow(), 2));
+        availableMarbles.add(new Pair<>(new Grey(), 2));
+        availableMarbles.add(new Pair<>(new White(), 4));
+        availableMarbles.add(new Pair<>(new Red(), 1));
+
+        market = new Marble[rows][columns];
+
+        //random initialize market
+        Random generator = new Random();
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < columns; j++){
+                int random = generator.nextInt(availableMarbles.size());
+                Pair<Marble, Integer> selected = availableMarbles.get(random);
+                market[i][j] = selected.getKey();
+                if(selected.getValue() > 1){
+                    availableMarbles.set(random, new Pair<>(selected.getKey(),selected.getValue()-1));
+                }else{
+                    availableMarbles.remove(random);
+                }
+            }
+        }
+        outerMarble = availableMarbles.get(0).getKey();
     }
 
     /**
@@ -23,7 +55,18 @@ public class Market {
      * @throws OutOfBoundRowException when row < 0 or row > 2
      */
     public int selRow(int row) throws OutOfBoundRowException {
-        return 0; // TO DO
+        if(row < 0 || row >= rows) throw new OutOfBoundRowException(Integer.toString(row));
+        for(int i = 0; i < columns; i++){
+            selectedMarbles.add(market[row][i]);
+        }
+        //marbles shift
+        Marble oldOuter = outerMarble;
+        outerMarble = market[row][0];
+        for(int i = 0; i < columns - 1; i++){
+            market[row][i] = market[row][i+1];
+        }
+        market[row][columns - 1] = oldOuter;
+        return (int) selectedMarbles.stream().filter(Marble::isWhite).count();
     }
 
     /**
@@ -33,7 +76,18 @@ public class Market {
      * @throws OutOfBoundColumnsException when column < 0 or column > 3
      */
     public int selColumn(int column) throws OutOfBoundColumnsException {
-        return 0; // TO DO
+        if(column < 0 || column >= columns) throw new OutOfBoundColumnsException(Integer.toString(column));
+        for(int i = 0; i < rows; i++){
+            selectedMarbles.add(market[i][column]);
+        }
+        //marbles shift
+        Marble oldOuter = outerMarble;
+        outerMarble = market[0][column];
+        for(int i = 0; i < rows - 1; i++){
+            market[i][column] = market[i+1][column];
+        }
+        market[rows-1][column] = oldOuter;
+        return (int) selectedMarbles.stream().filter(Marble::isWhite).count();
     }
 
     /**
@@ -41,7 +95,11 @@ public class Market {
      * @return the actual configuration of the market.
      */
     public Marble[][] getMarket(){
-        return null; // TO DO
+        Marble[][] clonedArray = new Marble[rows][columns];
+        for(int i = 0; i < rows; i++){
+            clonedArray[i] = market[i].clone();
+        }
+        return clonedArray;
     }
 
     /**
@@ -49,16 +107,24 @@ public class Market {
      * @return the actual Marble that is not in the market
      */
     public Marble getOuterMarble(){
-        return null;
+        return outerMarble;
     }
 
     /**
      *
      * @param marketStrategies each element of the stack is used to convert white marbles gotten from a previous market's selection in specific benefits
-     * @return benefits obtained by the white marbles
+     * @return benefits obtained by all the marbles
      * @throws NullPointerException
+     * @throws InvalidStrategyException if the number of strategies is different from the number of white marbles
      */
-    public Benefit[] convertMarbles(Stack<MarketStrategy> marketStrategies) throws NullPointerException{
-        return null;
+    public ArrayList<Benefit> convertMarbles(Stack<MarketStrategy> marketStrategies) throws NullPointerException, InvalidStrategyException {
+        if(marketStrategies == null || marketStrategies.contains(null)) throw new NullPointerException();
+        if(marketStrategies.size() != selectedMarbles.stream().filter(Marble::isWhite).count()) throw new InvalidStrategyException();
+        Stack<MarketStrategy> strategies = (Stack<MarketStrategy>) marketStrategies.clone();
+        ArrayList<Benefit> converted = new ArrayList<>();
+        for(Marble m: selectedMarbles){
+            converted.add(m.getBenefit(strategies));
+        }
+        return converted;
     }
 }

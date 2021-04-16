@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.leaderCards;
 
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.exceptions.CardActivationException;
 import it.polimi.ingsw.model.stubs.DashboardStub1;
 import it.polimi.ingsw.model.stubs.RequirementStub1;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +23,7 @@ class LeaderCardTest {
             else requirements.add(new RequirementStub1(true));
         LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
             @Override
-            public void activeCard(Player player) {
+            public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
             }
         };
@@ -38,7 +39,7 @@ class LeaderCardTest {
             requirements.add(new RequirementStub1(false));
         LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
             @Override
-            public void activeCard(Player player) {
+            public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
             }
         };
@@ -54,7 +55,7 @@ class LeaderCardTest {
             requirements.add(new RequirementStub1(true));
         LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
             @Override
-            public void activeCard(Player player) {
+            public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
             }
         };
@@ -68,11 +69,11 @@ class LeaderCardTest {
         DashboardStub1 db = new DashboardStub1();
         LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
             @Override
-            public void activeCard(Player player) {
+            public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
             }
         };
-        assertFalse(leaderCard.isSatisfied(db));
+        assertTrue(leaderCard.isSatisfied(db));
     }
     @Test
     @DisplayName("Dashboard parameter = null")
@@ -82,7 +83,7 @@ class LeaderCardTest {
             requirements.add(new RequirementStub1(true));
         LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
             @Override
-            public void activeCard(Player player) {
+            public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
             }
         };

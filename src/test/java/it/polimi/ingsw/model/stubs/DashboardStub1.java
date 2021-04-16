@@ -13,7 +13,6 @@ public class DashboardStub1 extends Dashboard {
     private Color testcolor;
     private int testresourceNumber;
     private Resource testresource;
-    private Discount discount;
     private ExtraProduction extraProduction;
     private boolean resSatisfy;
     private int cardAdded;
@@ -25,7 +24,6 @@ public class DashboardStub1 extends Dashboard {
         testcolor = null;
         testresourceNumber = 0;
         testresource = null;
-        discount = null;
         extraProduction = null;
         depot = new WarehouseDepotStub1();
         resSatisfy = true;
@@ -39,7 +37,6 @@ public class DashboardStub1 extends Dashboard {
         testcolor = null;
         testresourceNumber = 0;
         testresource = null;
-        discount = null;
         extraProduction = null;
         depot = new WarehouseDepotStub1();
         this.resSatisfy = resSatisfy;
@@ -60,9 +57,6 @@ public class DashboardStub1 extends Dashboard {
         return true;
     }
 
-    public Discount getDiscount() {
-        return discount;
-    }
     @Override
     public void addExtraProduction(ExtraProduction extraProd) {
         extraProduction = extraProd;

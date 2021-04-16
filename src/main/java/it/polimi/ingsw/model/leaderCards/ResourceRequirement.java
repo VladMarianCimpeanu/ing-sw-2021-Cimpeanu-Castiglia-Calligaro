@@ -8,17 +8,17 @@ import it.polimi.ingsw.model.benefit.Resource;
  */
 
 public class ResourceRequirement implements Requirement{
-    private int numberResources;
+    private int resourceNumber;
     private Resource resource;
 
-    public ResourceRequirement(int numberResources, Resource resource){
-        this.numberResources = numberResources;
+    public ResourceRequirement(int resourceNumber, Resource resource){
+        this.resourceNumber = resourceNumber;
         this.resource = resource;
     }
 
     @Override
     public boolean isSatisfied(Dashboard dashboard) {
         if(dashboard == null) return false;
-        return dashboard.checkResRequirement(numberResources, resource);
+        return dashboard.checkResRequirement(resourceNumber, resource);
     }
 }

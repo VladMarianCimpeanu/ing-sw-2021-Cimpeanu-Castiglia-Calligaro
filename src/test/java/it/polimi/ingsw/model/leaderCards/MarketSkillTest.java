@@ -16,7 +16,11 @@ class MarketSkillTest {
         ArrayList<Requirement> requirement = new ArrayList<>();
         PlayerStub1 player = new PlayerStub1();
         MarketSkill skill = new MarketSkill(requirement, null, 0);
-        skill.activeCard(player);
+        try {
+            skill.activeCard(player);
+        } catch (it.polimi.ingsw.model.exceptions.CardActivationException e) {
+            e.printStackTrace();
+        }
         assertTrue(player.getMarketStrategycheck() instanceof MarketStrategy);
     }
     //really needed?
@@ -26,7 +30,11 @@ class MarketSkillTest {
         ArrayList<Requirement> requirement = new ArrayList<>();
         PlayerStub1 player = new PlayerStub1();
         MarketSkill skill = new MarketSkill(requirement, null, 0);
-        skill.activeCard(null);
+        try {
+            skill.activeCard(null);
+        } catch (it.polimi.ingsw.model.exceptions.CardActivationException e) {
+            e.printStackTrace();
+        }
         assertEquals(null, player.getMarketStrategycheck());
     }
 }

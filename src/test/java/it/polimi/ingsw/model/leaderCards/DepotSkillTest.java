@@ -14,7 +14,11 @@ class DepotSkillTest {
     void activeCard() {
         PlayerStub1 player = new PlayerStub1();
         LeaderCard skill = new DepotSkill(null, null, 0);
-        skill.activeCard(player);
+        try {
+            skill.activeCard(player);
+        } catch (it.polimi.ingsw.model.exceptions.CardActivationException e) {
+            e.printStackTrace();
+        }
         DashboardStub1 db = (DashboardStub1) player.getDashboard();
         WarehouseDepotStub1 depot = (WarehouseDepotStub1) db.getWarehouseDepot();
         assertEquals(depot.getCountExtraSlot(), 1);

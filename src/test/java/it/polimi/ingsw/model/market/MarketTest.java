@@ -15,7 +15,7 @@ class MarketTest {
     void selColumnOutofBound() {
         Market market = new Market();
         assertThrows(OutOfBoundColumnsException.class, () ->{
-            market.selColumn(0);
+            market.selColumn(4);
         });
         assertThrows(OutOfBoundColumnsException.class, () ->{
             market.selColumn(-1);
@@ -32,7 +32,7 @@ class MarketTest {
     void selRowOutofBound() {
         Market market = new Market();
         assertThrows(OutOfBoundRowException.class, () ->{
-            market.selRow(0);
+            market.selRow(3);
         });
         assertThrows(OutOfBoundRowException.class, () ->{
             market.selRow(-1);
@@ -54,7 +54,7 @@ class MarketTest {
         int check_white = 0;
         for(int i = 0; i<3; i++)
             if(pre_grid[i][0].isWhite()) check_white++;
-        int whiteMarbles = market.selColumn(1);
+        int whiteMarbles = market.selColumn(0);
         assertEquals(check_white, whiteMarbles);
         Marble [][] post_grid = market.getMarket();
         Marble post_outerMarble = market.getOuterMarble();
@@ -73,7 +73,7 @@ class MarketTest {
         int check_white = 0;
         for(int i = 0; i<4; i++)
             if(pre_grid[0][i].isWhite()) check_white++;
-        int whiteMarbles = market.selRow(1);
+        int whiteMarbles = market.selRow(0);
         assertEquals(check_white, whiteMarbles);
         Marble [][] post_grid = market.getMarket();
         Marble post_outerMarble = market.getOuterMarble();

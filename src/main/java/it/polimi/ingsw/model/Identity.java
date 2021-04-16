@@ -4,7 +4,7 @@ public class Identity {
     private String nickname;
     private boolean online;
 
-    public Identity(String nickname){
+    public Identity(String nickname) {
         this.nickname = nickname;
         online = true;
     }

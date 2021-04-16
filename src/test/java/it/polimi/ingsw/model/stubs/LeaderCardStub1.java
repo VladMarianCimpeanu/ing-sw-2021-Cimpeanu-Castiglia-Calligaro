@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.stubs;
 
 import it.polimi.ingsw.model.Dashboard;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.exceptions.CardActivationException;
 import it.polimi.ingsw.model.leaderCards.LeaderCard;
 
 public class LeaderCardStub1 extends LeaderCard {
@@ -12,7 +13,7 @@ public class LeaderCardStub1 extends LeaderCard {
         this.satisfied = satisfied;
     }
     @Override
-    public void activeCard(Player player) {
+    public void activeCard(Player player) throws CardActivationException {
 
     }
 

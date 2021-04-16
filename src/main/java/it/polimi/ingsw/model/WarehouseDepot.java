@@ -121,7 +121,7 @@ public class WarehouseDepot {
      * @throws ExistingResourceException if the selected resource already exists in another shelf
      * @throws InvalidResourceException if the selected resource is different from the resources already stored at the same shelf
      */
-    public int addResource(int shelf, int quantity, Resource resource) throws InvalidShelfPosition, ExistingResourceException,  InvalidResourceException{
+    public int addResource(int shelf, int quantity, Resource resource) throws InvalidShelfPosition, ExistingResourceException,  InvalidResourceException, NotEnoughSpaceException{
         if(shelf < 1 || shelf > 3) throw new InvalidShelfPosition();
         if(quantity <0) return 0;
         if(!getShelfResource(shelf).equals(resource) && getShelfQuantity(shelf) != 0) throw new InvalidResourceException();
@@ -182,7 +182,7 @@ public class WarehouseDepot {
      * @param quantity
      * @return the number of resources that you need to remove from the Strongbox
      */
-    public int removeResource(Resource resource, int quantity) throws InvalidShelfPosition {
+    public int removeResource(Resource resource, int quantity) {
         if(quantity < 0) return 0;
         int shelf;
         if(getShelfResource(1).equals(resource) && getShelfQuantity(1) != 0)
@@ -238,7 +238,7 @@ public class WarehouseDepot {
      * @param quantity
      * @throws MissingExtraSlot if there isn't an extra slot for the requested resource
      */
-    private int removeExtraResource(Resource resource, int quantity) throws MissingExtraSlot {
+    public int removeExtraResource(Resource resource, int quantity) throws MissingExtraSlot {
         for (ExtraSlot slot: extraSlotList)
             if(slot.getResource().equals(resource)) return slot.removeResource(quantity);
         throw new MissingExtraSlot();
@@ -261,7 +261,7 @@ public class WarehouseDepot {
      * @param resource
      * @return 0 if there isn't an extra slot for the requested resource
      */
-    private int getExtraQuantity(Resource resource){
+    public int getExtraQuantity(Resource resource){
         for(ExtraSlot slot: extraSlotList)
             if(slot.getResource().equals(resource)) return slot.getQuantity();
         return 0;
@@ -280,7 +280,7 @@ public class WarehouseDepot {
      * @param resource
      * @return quantity of the selected resource in stock, 0 if there are no resource in stock
      */
-    public int getResourceQuantity(Resource resource) throws InvalidShelfPosition {
+    public int getResourceQuantity(Resource resource) {
         if(getShelfResource(1).equals(resource)) return getShelfQuantity(1);
         else if(getShelfResource(2).equals(resource)) return getShelfQuantity(2);
         else if(getShelfResource(3).equals(resource)) return getShelfQuantity(3);

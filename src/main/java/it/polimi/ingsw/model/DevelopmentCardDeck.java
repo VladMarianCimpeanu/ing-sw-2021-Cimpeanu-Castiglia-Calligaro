@@ -16,6 +16,7 @@ public abstract class DevelopmentCardDeck {
             String path = "src/jsonSources/developmentCard.json";
             cards = (ArrayList<DevelopmentCard>) myJsonReader.readJsonDevelopmentCard(new FileInputStream(path));
         }
+
         return new ArrayList<>(cards);
     }
 }

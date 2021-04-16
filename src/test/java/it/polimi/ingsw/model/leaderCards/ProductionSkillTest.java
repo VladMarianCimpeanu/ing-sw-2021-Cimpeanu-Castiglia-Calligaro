@@ -15,7 +15,11 @@ class ProductionSkillTest {
     void activeCard() {
         PlayerStub1 player = new PlayerStub1();
         LeaderCard skill = new ProductionSkill(null, null, 0);
-        skill.activeCard(player);
+        try {
+            skill.activeCard(player);
+        } catch (it.polimi.ingsw.model.exceptions.CardActivationException e) {
+            e.printStackTrace();
+        }
         DashboardStub1 db = (DashboardStub1) player.getDashboard();
         assertTrue(db.getExtraProduction() instanceof ExtraProduction);
     }

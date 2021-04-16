@@ -14,6 +14,12 @@ public class DevelopmentCardStub1 extends DevelopmentCard{
 
     @Override
     public Map<Resource, Integer> getResourceIn() { return null; }
+
+    @Override
+    public Map<Resource, Integer> getResourceCost() {
+        return null;
+    }
+
     @Override
     public Map<Benefit, Integer> getBenefitsOut() {
         return null;

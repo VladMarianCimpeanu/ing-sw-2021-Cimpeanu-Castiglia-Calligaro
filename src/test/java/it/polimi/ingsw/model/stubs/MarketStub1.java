@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.MarketStrategy;
 import it.polimi.ingsw.model.benefit.Benefit;
 import it.polimi.ingsw.model.market.Market;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class MarketStub1 extends Market {
@@ -21,9 +22,9 @@ public class MarketStub1 extends Market {
         return 2;
     }
     @Override
-    public Benefit[] convertMarbles(Stack<MarketStrategy> marketStrategies) throws NullPointerException{
+    public ArrayList<Benefit> convertMarbles(Stack<MarketStrategy> marketStrategies) throws NullPointerException{
        passedStrategies = true;
-       return null;
+       return new ArrayList<>();
     }
 
     public boolean isPassedStrategies() {

@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.benefit.Resource;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.leaderCards.LeaderCard;
 import it.polimi.ingsw.model.stubs.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +15,13 @@ import static it.polimi.ingsw.model.Color.YELLOW;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+    private static ArrayList<Identity> idS;
+
+    @BeforeAll
+    static void init(){
+        idS = new ArrayList<>();
+        idS.add(new Identity("Steve"));
+    }
 
     @Test
     @DisplayName("(Try to)Activate a LeaderCard not satisfying requirements")
@@ -43,15 +52,12 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("(Try to)Discard a LeaderCard not satisfying requirements")
+    @DisplayName("Discard a LeaderCard not satisfying requirements")
     void discardLeaderCardException() throws IOException, InvalidReadException, NoSuchPlayerException {
         ArrayList<LeaderCard> cards = new ArrayList<>();
         cards.add(new LeaderCardStub1(false));
-        Player player = new Player(null, new GameStub1(), cards, null);
+        Player player = new Player(null, new GameStub1(idS), cards, null);
         int pre_dim = player.getLeaderCards().size();
-        assertThrows(RequirementException.class, () ->{
-            player.discardLeaderCard(player.getLeaderCards().get(0));
-        });
         int post_dim = player.getLeaderCards().size();
         assertEquals(pre_dim, post_dim);
     }
@@ -59,15 +65,16 @@ class PlayerTest {
     @Test
     @DisplayName("Discard a LeaderCard satisfying requirements")
     void discardLeaderCard() throws RequirementException, IOException, InvalidReadException, NoSuchPlayerException {
+        GameStub1 stub = new GameStub1(idS);
         ArrayList<LeaderCard> cards = new ArrayList<>();
         cards.add(new LeaderCardStub1(true));
         cards.add(new LeaderCardStub1(true));
-        Player player = new Player(null, new GameStub1(), cards, null);
+        Player player = new Player(null, stub, cards, null);
         LeaderCard card = player.getLeaderCards().get(0);
         int pre_dim = player.getLeaderCards().size();
         player.discardLeaderCard(card);
         int post_dim = player.getLeaderCards().size();
-        FaithPathStub1 faithpath = (FaithPathStub1) player.getGame().getFaithPath();
+        FaithPathStub1 faithpath = (FaithPathStub1) stub.getFaithPath();
         assertTrue(faithpath.isHaveMovedOpponent());
         assertEquals(pre_dim-1, post_dim);
         assertNotEquals(card, player.getLeaderCards().get(0));
@@ -76,7 +83,7 @@ class PlayerTest {
     @Test
     @DisplayName("Everything about goToMarket")
     void goToMarket() throws InvalidDirectionSelection, OutOfBoundRowException, OutOfBoundColumnsException, IOException, InvalidReadException, NoSuchPlayerException {
-        Player player = new Player(null, new GameStub1(), null, null);
+        Player player = new Player(null, new GameStub1(idS), null, null);
         assertThrows(InvalidDirectionSelection.class, () ->{
             player.goToMarket("Illegal String", 1);
         });
@@ -110,7 +117,7 @@ class PlayerTest {
     @Test
     @DisplayName("Add a non relevant value of faithPoints to the calling player")
     void addFaithPoint() throws IOException, InvalidReadException, NoSuchPlayerException {
-        GameStub1 game = new GameStub1();
+        GameStub1 game = new GameStub1(idS);
         Player player = new Player(null, game, null, null );
         int fp = 2;
         player.addFaithPoint(fp);
@@ -147,14 +154,14 @@ class PlayerTest {
     @Test
     @DisplayName("(Try to) Buy a DevelopmentCard not satisfying requirements")
     void buyDevelopmentCardRequirementException() throws IOException, InvalidReadException, NoSuchPlayerException {
-        GameStub1 game = new GameStub1();
+        GameStub1 game = new GameStub1(idS);
         DashboardStub1 db = new DashboardStub1(false);
         Player player = new Player(null, game, null, db);
-        assertThrows(RequirementException.class, () -> {
-           player.buyDevelopmentCard(YELLOW, 1);
+        assertThrows(NotEnoughResourcesException.class, () -> {
+           player.drawDevelopmentCard(YELLOW, 1, null);
         });
         assertEquals(0, db.getCardAdded());
-        DevelopmentCardSetStub1 cardSet = (DevelopmentCardSetStub1) player.getGame().getDevelopmentCardSet();
+        DevelopmentCardSetStub1 cardSet = (DevelopmentCardSetStub1) game.getDevelopmentCardSet();
         assertEquals(-1, cardSet.getLevel());
         assertEquals(null, cardSet.getColor());
     }
@@ -162,36 +169,48 @@ class PlayerTest {
     @Test
     @DisplayName("(Try to) Buy a DevelopmentCard from an empty Deck")
     void buyDevelopmentCardNoCardException() throws IOException, InvalidReadException, NoSuchPlayerException {
-        GameStub1 game = new GameStub1(new DevelopmentCardSetStub1(0));
+        GameStub1 game = new GameStub1(idS, new DevelopmentCardSetStub1(0));
         DashboardStub1 db = new DashboardStub1();
         Player player = new Player(null, game, null, db);
         assertThrows(NoCardException.class, () -> {
-            player.buyDevelopmentCard(YELLOW, 1);
+            player.drawDevelopmentCard(YELLOW, 1, null);
         });
         assertEquals(0, db.getCardAdded());
-        DevelopmentCardSetStub1 cardSet = (DevelopmentCardSetStub1) player.getGame().getDevelopmentCardSet();
+        DevelopmentCardSetStub1 cardSet = (DevelopmentCardSetStub1) game.getDevelopmentCardSet();
         assertEquals(-1, cardSet.getLevel());
         assertEquals(null, cardSet.getColor());
     }
 
     @Test
     @DisplayName("Buy a DevelopmentCard satisfying requirements")
-    void buyDevelopmentCard() throws RequirementException, NoCardException, WrongLevelException, IOException, InvalidReadException, NoSuchPlayerException {
-        GameStub1 game = new GameStub1();
+    void buyDevelopmentCard() throws NoCardException, WrongLevelException, IOException, InvalidReadException, NoSuchPlayerException, NotEnoughResourcesException, InvalidDiscountException {
+        GameStub1 game = new GameStub1(idS);
         DashboardStub1 db = new DashboardStub1(true);
         Player player = new Player(null, game, null, db);
-        player.buyDevelopmentCard(YELLOW, 1);
-        assertEquals(1, db.getCardAdded());
-        DevelopmentCardSetStub1 cardSet = (DevelopmentCardSetStub1) player.getGame().getDevelopmentCardSet();
+        player.drawDevelopmentCard(YELLOW, 1, null);
+
+        DevelopmentCardSetStub1 cardSet = (DevelopmentCardSetStub1) game.getDevelopmentCardSet();
         assertEquals(1, cardSet.getLevel());
         assertEquals(YELLOW, cardSet.getColor());
     }
 
     @Test
-    void passStrategiesToMarket() throws IOException, InvalidReadException, NoSuchPlayerException {
-        Player player = new Player(null, new GameStub1(), null, null);
-        player.passStrategiesToMarket();
-        MarketStub1 market = (MarketStub1) player.getGame().getMarket();
+    void passStrategiesToMarket() throws IOException, InvalidReadException, NoSuchPlayerException, InvalidStrategyException {
+        GameStub1 stub = new GameStub1(idS);
+        Player player = new Player(null, stub, null, null);
+        player.passStrategiesToMarket(null);
+        MarketStub1 market = (MarketStub1) stub.getMarket();
         assertTrue(market.isPassedStrategies());
+    }
+
+    //This test was originally in dashboard -> moved to player because discounts are now saved in player
+    @Test
+    void addDiscount() throws NoSuchPlayerException, IOException, InvalidReadException {
+        Player player = new Player(null, new GameStub1(idS), null, null);
+        DiscountStub discountStub = new DiscountStub(Resource.COIN);
+        player.addDiscount(discountStub);
+        Discount result = player.getDiscountList().get(0);
+
+        assertTrue(discountStub.equals(result));
     }
 }
