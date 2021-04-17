@@ -16,15 +16,25 @@ import java.util.*;
 import static it.polimi.ingsw.model.Color.*;
 
 
-
+/**
+ * This class is used to read from a Json file all the information about development cards and generates a new set of DevelopmentCards.
+ */
 public class JsonToDevCard {
     /**
-     *
+     * This method will convert all the data inside the specified file in a List of development Cards. The Json file to be read has to respect the following standards:
+     * 1- all the cards must be in the same Json file.
+     * 2- all the cards must contain the following case sensitive keys: "VictoryPoints", "Level", "ResourceCost", "ResourceIn", "BenefitOut" (keys order has no importance).
+     * 3- VictoryPoints has to be a non negative integer value.
+     * 4- Level has to be an integer between 1 and 3.
+     * 5- ResourceCost and ResourceIn are Maps which can not contain keys different from the following case sensitive keys: "STONE", "COIN", "SHIELD", "SERVANT"(order does not matter).
+     *    Non negative values are the only values accepted for these keys. If a key misses it is assumed that its value is 0.
+     * 6- BenefitOut is a Map which can not contain keys different from the following case sensitive keys: "STONE", "COIN", "SHIELD", "SERVANT", "FAITH"(order does not matter).
+     *    Non negative values are the only values accepted for these keys. If a key misses it is assumed that its value is 0.
      * @param in is a specified FileInputStream used to open Json file with development cards information.
      * @return a list of DevelopmentCard with all the cards read from the file.
      * @throws IOException if a general error occurred opening/reading/closing the specified file.
-     * @throws NoSuchElementException if an element read is anomalous
-     * @throws InvalidReadException if a card misses some data
+     * @throws NoSuchElementException if an element read is anomalous.
+     * @throws InvalidReadException if a card misses some data.
      */
     public List<DevelopmentCard> readJsonDevelopmentCard(InputStream in) throws IOException, NoSuchElementException, InvalidReadException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
@@ -32,6 +42,14 @@ public class JsonToDevCard {
         }
     }
 
+    /**
+     * This method is used to read the entire file pointed by the specified JsonReader.
+     * @param reader specified pointer to a JsonFile from which development cards information will be taken.
+     * @return ArrayList of Development cards read by 'reader'.
+     * @throws IOException if a general error occurred reading the specified file.
+     * @throws NoSuchElementException if an element read is anomalous.
+     * @throws InvalidReadException if a card misses some data.
+     */
     private List<DevelopmentCard> readDevelopmentCardArray(JsonReader reader) throws IOException, NoSuchElementException, InvalidReadException {
         List<DevelopmentCard> developmentCards = new ArrayList<>();
 
@@ -43,6 +61,14 @@ public class JsonToDevCard {
         return developmentCards;
     }
 
+    /**
+     * This method reads the first development card following the reader passed as parameter.
+     * @param reader Json reader which points to a specific development card inside a Json file.
+     * @return a development card with all the features described in the file read by reader.
+     * @throws IOException if a general error occurred reading the specified file.
+     * @throws NoSuchElementException if an element read is anomalous.
+     * @throws InvalidReadException if a card misses some data.
+     */
     private DevelopmentCard readDevelopmentCard(JsonReader reader) throws IOException, NoSuchElementException, InvalidReadException {
         int victoryPoints = -1;
         int level = -1;
@@ -108,7 +134,12 @@ public class JsonToDevCard {
     }
 
 
-
+    /**
+     * This method is used to read a Map which keys are Resources and values are integers.
+     * @param reader Json reader which points to a Map<Resource, Integer>.
+     * @return the Map read by 'reader'.
+     * @throws IOException if a general error occurred reading the specified file.
+     */
     private Map<Resource, Integer> readResources(JsonReader reader) throws IOException{
         int integerBuffer ;
         Map <Resource, Integer> resources = new HashMap<>();
@@ -144,7 +175,12 @@ public class JsonToDevCard {
         return resources;
     }
 
-
+    /**
+     * This method is used to read a Map which keys are Benefits and values are integers.
+     * @param reader Json reader which points to a Map<Benefit, Integer>.
+     * @return the Map read by 'reader'.
+     * @throws IOException if a general error occurred reading the specified file.
+     */
     private Map<Benefit, Integer> readBenefits(JsonReader reader) throws IOException{
         int integerBuffer;
         Map <Benefit, Integer> benefits = new HashMap<>();

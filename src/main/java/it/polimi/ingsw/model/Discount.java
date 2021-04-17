@@ -2,6 +2,10 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.benefit.Resource;
 
+/**
+ * This class represents a discount that a player can use to buy a new Development card.
+ * The discount is represented by a specific resource.
+ */
 public class Discount {
     private Resource resource;
 

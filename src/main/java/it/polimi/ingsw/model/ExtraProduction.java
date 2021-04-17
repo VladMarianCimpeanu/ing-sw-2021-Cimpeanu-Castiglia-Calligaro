@@ -7,11 +7,14 @@ import it.polimi.ingsw.model.benefit.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExtraProduction {
-    private Resource resourceIn;
+/**
+ * An extra production produce a faith point anda resource at will. Extra production requires only a specific resource to
+ * be performed.
+ */
+public class ExtraProduction implements Production{
+    private final Resource resourceIn;
 
     /**
-     *
      * @param resourceIn input resource for extra production
      */
     public ExtraProduction(Resource resourceIn){
@@ -19,7 +22,7 @@ public class ExtraProduction {
     }
 
     /**
-     *
+     *This method return which resource extra production requires to be activate.
      * @return input resource for extra production
      */
     public Resource getResourceIn(){
@@ -27,7 +30,6 @@ public class ExtraProduction {
     }
 
     /**
-     *
      * @param resourceOut specified resource to be produced
      * @return a Map containing one faith point and the selected resource
      */

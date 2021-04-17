@@ -3,6 +3,10 @@ package it.polimi.ingsw.model.actionToken;
 import it.polimi.ingsw.model.SingleFaithPath;
 import it.polimi.ingsw.model.Singleplayer;
 
+
+/**
+ * This class represents a specific type of action token.
+ */
 public class FaithForwardToken implements ActionToken{
 
     /**

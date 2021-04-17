@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+/**
+ * This enum is used to represent the color attribute of development cards
+ */
 public enum Color {
     GREEN(0),
     BLUE(1),
@@ -11,6 +14,9 @@ public enum Color {
         this.index = index;
     }
 
+    /**
+     * @return a numeric value associated to the specified color.
+     */
     public int getIndex() {
         return index;
     }

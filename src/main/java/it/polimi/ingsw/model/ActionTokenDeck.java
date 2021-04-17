@@ -7,8 +7,15 @@ import it.polimi.ingsw.model.actionToken.ShuffleToken;
 
 import java.util.ArrayList;
 
+/**
+ * This class is used to distribute a new set of action tokens.
+ */
 public abstract class ActionTokenDeck {
     private static ArrayList<ActionToken> tokens = null;
+
+    /**
+     * @return a non randomized ArrayList of ActionTokens.
+     */
     public static ArrayList<ActionToken> getTokens() {
         if (tokens == null){
             tokens = new ArrayList<>();

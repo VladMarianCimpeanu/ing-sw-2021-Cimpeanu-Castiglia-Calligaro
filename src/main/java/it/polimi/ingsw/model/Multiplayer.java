@@ -7,6 +7,9 @@ import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This class is used to represent the multiplayer game mode.
+ */
 public class Multiplayer extends Game {
     public Multiplayer(ArrayList<Identity> identities) throws InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
         super(identities);
@@ -16,11 +19,6 @@ public class Multiplayer extends Game {
             faithPath.movePlayer(getPlayers().get(i), i / 2);
         //how to handle the bonus resources?
     }
-    /*
-    public Multiplayer(ArrayList<Identity> identities){
-        super(identities);
-    }
-    */
 
     @Override
     public boolean isGameEnded() {

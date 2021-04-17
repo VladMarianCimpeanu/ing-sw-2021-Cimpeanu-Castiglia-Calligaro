@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.Singleplayer;
 import it.polimi.ingsw.model.exceptions.NoCardException;
 import it.polimi.ingsw.model.exceptions.WrongLevelException;
 
+/**
+ * This class represents a specific type of Action token.
+ */
 public class DiscardToken implements ActionToken {
     private final Color color;
 
@@ -14,7 +17,16 @@ public class DiscardToken implements ActionToken {
     }
 
     /**
-     * Discard two cards of the same color of the ActionToken, starting from level one
+     *
+     * @return the color of development cards which this token can discard.
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * Discard two development cards on the top of the deck which contains development cards of the same color as this token indicates.
+     * The method starts looking for tokens from level 1, and if they do not exist, it searches higher level development cards.
      * @param singleplayer used to get access to the Development Card Set
      */
     @Override

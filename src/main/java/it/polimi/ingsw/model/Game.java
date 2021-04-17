@@ -10,12 +10,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This class gives access to all the global objects of the current game: list of players, market, faithPath and all the development cards that have not been bought yet.
+ */
 public abstract class Game {
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     private Market market;
-    private DevelopmentCardSet developmentCardSet;
+    private final DevelopmentCardSet developmentCardSet;
     protected FaithPath faithPath;
 
+    /**
+     * This method initializes a new game played by players having the specified identities passes as parameter.
+     * @param identities an ArrayList of Identities: each Identity represent a player that will play this game
+     * @throws IOException if the files containing all the information about leader cards and development cards can not
+     * be found or other generic problems related to these file occurred.
+     * @throws InvalidReadException if unknown/unexpected values are encountered during the reading process.
+     * @throws NoSuchPlayerException if no player's identity is specified.
+     */
     public Game(ArrayList<Identity> identities) throws IOException, InvalidReadException, NoSuchPlayerException {
         // Obtaining a set of leaderCards available for this game:
         ArrayList<LeaderCard> leaderCards = JsonToLeaderCard.readLeaderCards();
@@ -39,24 +50,33 @@ public abstract class Game {
     }
 
     /**
-     * @return the list of players playing the current game
+     * @return the list of players playing the current game.
      */
     public ArrayList<Player> getPlayers(){
         return new ArrayList<>(players);
     }
     /**
-     * @return true whether the game is ended or false if it is not
+     * @return true whether the game is ended or false if it is not.
      */
     public abstract boolean isGameEnded();
 
+    /**
+     * @return the market of the current game.
+     */
     public Market getMarket(){
         return market;
     }
 
+    /**
+     * @return a DevelopmentCardSet which contains all the development cards have not been bought yet.
+     */
     public DevelopmentCardSet getDevelopmentCardSet() {
         return developmentCardSet;
     }
 
+    /**
+     * @return faithPath of the current game.
+     */
     public FaithPath getFaithPath() {
         return faithPath;
     }

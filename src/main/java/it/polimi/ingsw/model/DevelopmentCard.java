@@ -6,8 +6,11 @@ import it.polimi.ingsw.model.benefit.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class DevelopmentCard {
+/**
+ * this class give access to all the information about a development card: resource cost, resources needed for development activation,
+ * benefits that can be generated thanks to its activation, victory points it generates, level and color.
+ */
+public class DevelopmentCard implements Production{
 
     private  Map<Resource, Integer> resourceIn;
     private  Map<Benefit, Integer> resourceOut;

@@ -6,13 +6,16 @@ import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Stack;
 
 import static java.util.Collections.shuffle;
 
+/**
+ * The Singleplayer class implements the singleplayer game mode. The difference between multiplayer and singleplayer is the latter
+ * gives access to a deck of action tokens: this objects are used only in single player mode.
+ */
 public class Singleplayer extends Game{
-    private Stack<ActionToken> availableActionTokens;
+    private final Stack<ActionToken> availableActionTokens;
 
     public Singleplayer(ArrayList<Identity> identities) throws IOException, InvalidReadException, NoSuchPlayerException {
         super(identities);
@@ -33,7 +36,7 @@ public class Singleplayer extends Game{
     }
 
     /**
-     *  assign one ActionToken to the player at every turn
+     * it triggers the effect of the token on top of the deck of action tokens.
      */
     public void drawToken() throws NoSuchPlayerException {    //any exception?
         ActionToken tempToken = availableActionTokens.pop();

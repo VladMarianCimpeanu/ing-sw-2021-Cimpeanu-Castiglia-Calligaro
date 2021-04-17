@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.leaderCards;
 
 import it.polimi.ingsw.model.MarketStrategy;
+import it.polimi.ingsw.model.exceptions.CardActivationException;
 import it.polimi.ingsw.model.stubs.PlayerStub1;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,11 +31,8 @@ class MarketSkillTest {
         ArrayList<Requirement> requirement = new ArrayList<>();
         PlayerStub1 player = new PlayerStub1();
         MarketSkill skill = new MarketSkill(requirement, null, 0);
-        try {
-            skill.activeCard(null);
-        } catch (it.polimi.ingsw.model.exceptions.CardActivationException e) {
-            e.printStackTrace();
-        }
-        assertEquals(null, player.getMarketStrategycheck());
+        assertThrows(CardActivationException.class,
+                () -> skill.activeCard(null));
+        assertNull(player.getMarketStrategycheck());
     }
 }

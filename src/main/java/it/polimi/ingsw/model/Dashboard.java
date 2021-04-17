@@ -10,6 +10,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+
+/**
+ * Dashboard is formed by a warehouse depot, strongbox and a set of development cards owned by the player.
+ * Stored development cards must respect the following rules:
+ * -1 they can be stored up to 3 decks, they will be indexed as 1[left], 2[center], 3[right]
+ * -2 at the game's begin decks are empty
+ * -3 the first card that can be pushed to a deck must be of level 1
+ * -4 card can be added only at the top of a deck
+ * -5 a purchased development card can be placed in a deck only if the card at the top has level == purchased card level -1
+ * -6 covered cards can not be used
+ * -7 development cards can not be discarded from the dashboard.
+ * Different types of production can be triggered from dashboard: development card production, base production and extra production.
+ * When a production is selected Dashboard will check if the production is affordable. Once the production is selected and approved by the dashboard,
+ * the player can start to choose how to pay each resource needed or change production: after a resource is chosen, there will not be any possibility
+ * to revert this operation. The produced resources will be effectively available after the production phase is concluded.
+ *
+ */
 public class Dashboard {
     //Array of 3 stacks
     private final ArrayList<Stack<DevelopmentCard>> developmentDecks;
@@ -20,6 +37,7 @@ public class Dashboard {
     private ArrayList<Resource> resourcesToPay;
     private Map<Benefit, Integer> benefitsToProduce;
     private boolean isProducing;
+    private final Stack<Production> productionsActivated;
 
     public Dashboard(Strongbox strongbox, WarehouseDepot warehouseDepot){
         this.strongbox = strongbox;
@@ -28,6 +46,7 @@ public class Dashboard {
         developmentDecks = new ArrayList<>();
         resourcesToPay = new ArrayList<>();
         benefitsToProduce = new HashMap<>();
+        productionsActivated = new Stack<>();
         //Creates 3 stack of DevelopmentCard
         for(int i = 0; i < 3; i++){
             Stack<DevelopmentCard> deck = new Stack<>();
@@ -37,7 +56,7 @@ public class Dashboard {
     }
 
     /**
-     *
+     * This method return development decks owned by the player: left deck[0], central deck[1],  right deck[2].
      * @return an ArrayList of 3 developmentCard Decks
      */
     public ArrayList<Stack<DevelopmentCard>> getDevelopmentDecks() {
@@ -54,7 +73,7 @@ public class Dashboard {
     }
 
     /**
-     * Get the upper developmentCard in each Deck
+     * Get the upper developmentCard of each Deck
      * @return an ArrayList of 3 (or less) developmentCards
      */
     public ArrayList<DevelopmentCard> getActivableDevCards(){
@@ -78,13 +97,17 @@ public class Dashboard {
         return false;
     }
 
+    /**
+     * This method returns the strongbox associated to this dashboard.
+     * @return a StrongBox Object
+     */
     public Strongbox getStrongbox() {
         return strongbox;
     }
 
     /**
-     *
-     * @return extraProductions(max 2)
+     * This method returns all the extra productions available from this dashboard.
+     * @return ArrayList of extraProductions
      */
     public ArrayList<ExtraProduction> getExtraProductions() {
         return new ArrayList<>(extraProductions);
@@ -92,7 +115,7 @@ public class Dashboard {
 
     /**
      * Add the specified card to one of the dashboard's decks specified. The card must be placed over a card that is 1 level lower.
-     * @param cardToAdd specified card that have to be placed
+     * @param cardToAdd specified card that has to be placed
      * @param deckPosition: between 1 and 3
      * @throws WrongLevelException level of the card on top of the selected deck isn't 1 below the level of cardToAdd
      * @throws InvalidDeckPositionException if deckPosition isn't an integer between 1 and 3
@@ -118,21 +141,25 @@ public class Dashboard {
 
     /**
      * this method selects the extra Production way of producing benefits: this method do not produce anything, it verifies
-     * that this production can be actually be performed, and than memorize this choice.
+     * that this production can be actually be performed, and then memorize this choice.
      * @param extraProduction is the index position in which the extra production that has to perform is stored in extraProductionList .
      * @param resourceOut is the resource that is supposed to be produced at the end of the production.
      * @throws NotEnoughResourcesException if the dashboard can not find resources needed for the production.
      * @throws ProductionStartedException if a resource has already been spent for another production selected before, and it has not finished yet.
+     * @throws ProductionUsedException if the extra production has already been used.
      */
-    public void selectExtraProduction(int extraProduction, Resource resourceOut) throws NotEnoughResourcesException, ProductionStartedException {
+    public void selectExtraProduction(int extraProduction, Resource resourceOut) throws NotEnoughResourcesException, ProductionStartedException, ProductionUsedException {
         if(isProducing) throw new ProductionStartedException();
         if(extraProduction < 0 || extraProduction >= extraProductions.size()) throw new IndexOutOfBoundsException();
         if(resourceOut == null) throw new NullPointerException();
-        resourcesToPay = new ArrayList<>();
-        benefitsToProduce.clear();
+        if(productionsActivated.contains(extraProductions.get(extraProduction))) throw new ProductionUsedException();
         Map<Resource, Integer> resourceCost = new HashMap<>();
         resourceCost.put(extraProductions.get(extraProduction).getResourceIn(), 1);
         if(checkResources(resourceCost)){
+            if(!resourcesToPay.isEmpty()) productionsActivated.pop();
+            productionsActivated.push(extraProductions.get(extraProduction));
+            resourcesToPay = new ArrayList<>();
+            benefitsToProduce.clear();
             resourcesToPay.add(extraProductions.get(extraProduction).getResourceIn());
             benefitsToProduce.put(resourceOut, 1);
             benefitsToProduce.put(Faith.giveFaith(), 1);
@@ -142,14 +169,15 @@ public class Dashboard {
 
     /**
      * this method selects the base Production way of producing benefits: this method do not produce anything, it verifies
-     * that this production can be actually be performed, and than memorize this choice.
+     * that this production can be actually be performed, and then memorize this choice.
      * @param resourceCost are the resources chosen to be spent during the production.
      * @param resourceOut is the resource that is supposed to be produced at the end of the production.
      * @throws NotEnoughResourcesException if the dashboard can not find resources needed for the production.
      * @throws ResourceCostException if the Map of resources is not composed by 2 resources.
      * @throws ProductionStartedException if a resource has already been spent for another production selected before, and it has not finished yet.
+     * @throws ProductionUsedException if base production has already been used.
      */
-    public void selectBaseProduction(Map<Resource, Integer> resourceCost, Resource resourceOut) throws NotEnoughResourcesException, ResourceCostException, ProductionStartedException {
+    public void selectBaseProduction(Map<Resource, Integer> resourceCost, Resource resourceOut) throws NotEnoughResourcesException, ResourceCostException, ProductionStartedException, ProductionUsedException {
         if(isProducing) throw new ProductionStartedException();
         if(resourceOut == null || resourceCost == null) throw new NullPointerException();
         if (resourceCost.size() == 2){
@@ -159,7 +187,10 @@ public class Dashboard {
         }
         if (resourceCost.size() > 2 || resourceCost.size() == 0) throw new ResourceCostException();
         if (resourceCost.size() == 1 && !resourceCost.containsValue(2)) throw new ResourceCostException();
+        if (productionsActivated.contains(BaseProduction.getBaseProduction())) throw new ProductionUsedException();
         if (checkResources(resourceCost)) {
+            if(!resourcesToPay.isEmpty()) productionsActivated.pop();
+            productionsActivated.push(BaseProduction.getBaseProduction());
             resourcesToPay = new ArrayList<>();
             benefitsToProduce.clear();
             for (Resource resource : Resource.values()) {
@@ -173,18 +204,22 @@ public class Dashboard {
 
     /**
      * this method selects the development card Production way of producing benefits: this method do not produce anything, it verifies
-     * that this production can be actually be performed, and than memorize this choice.
+     * that this production can be actually be performed, and then memorize this choice.
      * @param deckIndex specified index of the card that has to perform the production.
      * @throws InvalidDeckPositionException if the deck does not exist.
      * @throws NotEnoughResourcesException if the dashboard can not find resources needed for the production.
      * @throws NoCardException if the specified deck has no cards at the moment.
      * @throws ProductionStartedException if a resource has already been spent for another production selected before, and it has not finished yet.
+     * @throws ProductionUsedException if the selected card has already been used.
      */
-    public void selectCardProduction(int deckIndex) throws InvalidDeckPositionException, NotEnoughResourcesException, NoCardException, ProductionStartedException {
+    public void selectCardProduction(int deckIndex) throws InvalidDeckPositionException, NotEnoughResourcesException, NoCardException, ProductionStartedException, ProductionUsedException {
         if(isProducing) throw new ProductionStartedException();
         if(deckIndex > 3 || deckIndex < 1) throw new InvalidDeckPositionException();
         if(developmentDecks.get(deckIndex - 1).isEmpty()) throw new NoCardException();
+        if(productionsActivated.contains(developmentDecks.get(deckIndex - 1).lastElement())) throw new ProductionUsedException();
         if(checkResources(developmentDecks.get(deckIndex - 1).lastElement().getResourceIn())){
+            if(!resourcesToPay.isEmpty()) productionsActivated.pop();
+            productionsActivated.push(developmentDecks.get(deckIndex - 1).lastElement());
             resourcesToPay = new ArrayList<>();
             benefitsToProduce.clear();
             for(Resource resource : Resource.values()){
@@ -286,7 +321,7 @@ public class Dashboard {
     }
 
     /**
-     * activate the production selected in this round.
+     * Activate the production selected in this round.
      * @return number of faithPoints earned during the production.
      * @throws NoProductionAvailableException if a production has not selected yet or if not all the resources to pay have been already selected.
      */
@@ -305,7 +340,7 @@ public class Dashboard {
     }
 
     /**
-     * Check the leaderCards Development requirements
+     * Check leaderCards Development requirements
      * @param cardsNumber quantity of cards required
      * @param cardsLevel: from 0 to 3: if level is 0 it means that cardsLevel actually is not a requirement.
      * @param color development card color that has to be searched
@@ -326,10 +361,11 @@ public class Dashboard {
     }
 
     /**
-     * Check the leaderCards Resource requirements
+     * Check if the indicated resource is available: resources which will be considered during the research come from
+     * strongbox, warehouse depot and eventually extra slots
      * @param resourceNumber quantity of resources required
      * @param resource specific resource that has to be searched
-     * @return true if requirement is satisfied
+     * @return true if requirement is satisfied, else false.
      */
     public boolean checkResRequirement(int resourceNumber, Resource resource) {
         if(resourceNumber <= 0) return true;
@@ -340,7 +376,7 @@ public class Dashboard {
 
     /**
      * this method checks if the owner of this dashboard can afford to spend the specified resources.
-     * @param resources specified resources in a Map where Resource is a key and Integer quantity is the value.
+     * @param resources specified resources in a Map where Resource is a key and the value is an Integer indicating quantity of the Resource.
      * @return true if all the resources can be spent, else false.
      */
     public boolean checkResources(Map<Resource,Integer> resources) {
@@ -371,18 +407,33 @@ public class Dashboard {
     }
 
     /**
-     *
+     * This method returns the selected dashboard's warehouse depot.
      * @return the selected dashboard's warehouse depot.
      */
     public WarehouseDepot getWarehouseDepot() {
         return warehouseDepot;
     }
 
+    /**
+     * This method lists all the resources that have not been paid yet in order to activate a production.
+     * @return ArrayList of resources that has to be paid: the same resource can appears multiple times in this ArrayList.
+     */
     public ArrayList<Resource> getResourcesToPay() {
         return new ArrayList<>(resourcesToPay);
     }
 
+    /**
+     * This method lists all the benefits that have to be produced due to a production activation.
+     * @return a Map containing Benefits to be produced as Key and Integers as values indicating quantity to be produced.
+     */
     public Map<Benefit, Integer> getBenefitsToProduce() {
         return new HashMap<>(benefitsToProduce);
+    }
+
+    /**
+     * This method make the dashboard forget about productions used.
+     */
+    public void refreshProductions(){
+        productionsActivated.clear();
     }
 }
