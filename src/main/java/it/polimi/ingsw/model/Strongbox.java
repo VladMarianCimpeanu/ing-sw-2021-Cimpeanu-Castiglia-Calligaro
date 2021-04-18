@@ -5,6 +5,12 @@ import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.HashMap;
 import java.util.Map;
+/**
+ * Identify Player's Strongbox, composed of unlimited space for storing resources
+ * Each player has the reference to a unique and personal Strongbox
+ * Here can be store resources coming from productions
+ * The resources store here can be used to buy development cards, activate productions and activate leader cards
+ */
 
 public class Strongbox {
     private final Map<Resource, Integer> content;
@@ -16,8 +22,7 @@ public class Strongbox {
     }
 
     /**
-     *
-     * @param resource
+     * @param resource type of resource required
      * @return quantity of selected resources in stock
      */
     public int getResourceQuantity(Resource resource){
@@ -29,9 +34,9 @@ public class Strongbox {
      * Save resources produced by a developmentCard.
      * It doesn't really add the resources in the strongbox,
      * to do that you need to call addProduced() method
-     * @param resource
-     * @param quantity
-     * @throws NegativeQuantityException
+     * @param resource type of resources required
+     * @param quantity number of resources, of the specified type, that have to be added to the Strongbox
+     * @throws NegativeQuantityException if quantity < 0
      */
     public void addResource(Resource resource, int quantity) throws NegativeQuantityException{
         if(resource == null) return;
@@ -42,9 +47,9 @@ public class Strongbox {
 
     /**
      *
-     * @param resource
-     * @param quantity
-     * @throws NegativeQuantityException
+     * @param resource type of resources required
+     * @param quantity number of resources, of the specified type, that have to be removed from the Strongbox
+     * @throws NegativeQuantityException if quantity < 0
      */
     public int removeResource(Resource resource, int quantity) throws NegativeQuantityException{
         if(resource == null) throw new NullPointerException();

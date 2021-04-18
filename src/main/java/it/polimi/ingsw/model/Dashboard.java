@@ -245,7 +245,6 @@ public class Dashboard {
         int resourcesLeft;
         if (resourcesToPay.isEmpty()) throw new RequirementsSatisfiedException();
         if(!resourcesToPay.contains(resource)) throw new InvalidResourceException();
-        try {
             resourcesLeft = warehouseDepot.removeResource(resource, 1);
             if (resourcesLeft > 0) throw new NotEnoughResourcesException();
             else {
@@ -259,9 +258,7 @@ public class Dashboard {
                 }
                 isProducing = true;
             }
-        } catch (InvalidShelfPosition invalidShelfPosition) {
-            invalidShelfPosition.printStackTrace();
-        }
+
     }
 
     /**
@@ -383,16 +380,14 @@ public class Dashboard {
         if(resources == null) throw new NullPointerException();
         ArrayList<ExtraSlot> tempExtraSlots = warehouseDepot.getExtraSlotList();
         for(Resource resource : Resource.values()){
+            int tempQuantity = 0;
             if(resources.containsKey(resource)) {
-                int tempQuantity = resources.get(resource);
+                tempQuantity = resources.get(resource);
                 if (tempQuantity > 0) {
                     tempQuantity -= strongbox.getResourceQuantity(resource);
-                    if (tempQuantity > 0) {
-                        try {
+
                             tempQuantity -= warehouseDepot.getResourceQuantity(resource);
-                        } catch (InvalidShelfPosition invalidShelfPosition) {
-                            invalidShelfPosition.printStackTrace();
-                        }
+
                         if (tempQuantity > 0) {
                             for (ExtraSlot slot : tempExtraSlots) {
                                 if (slot.getResource() == resource) tempQuantity -= slot.getQuantity();
@@ -402,7 +397,7 @@ public class Dashboard {
                 }
                 if (tempQuantity > 0) return false;
             }
-        }
+
         return true;
     }
 

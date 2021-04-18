@@ -9,12 +9,12 @@
     {
       "numberCards" : 1,
       "levelCard" : 0,
-      "Color" : "YELLOW"
+      "color" : "YELLOW"
     },
     {
       "numberCards" : 1,
       "levelCard" : 0,
-      "Color" : "GREEN"
+      "color" : "GREEN"
     }
   ]
   }
@@ -28,12 +28,12 @@
     {
       "numberCards" : 1,
       "levelCard" : 0,
-      "Color" : "BLUE"
+      "color" : "BLUE"
     },
     {
       "numberCards" : 1,
       "levelCard" : 0,
-      "Color" : "PURPLE"
+      "color" : "PURPLE"
     }
   ]
 },
@@ -47,12 +47,12 @@
       {
         "numberCards" : 1,
         "levelCard" : 0,
-        "Color" : "GREEN"
+        "color" : "GREEN"
       },
       {
         "numberCards" : 1,
         "levelCard" : 0,
-        "Color" : "BLUE"
+        "color" : "BLUE"
       }
     ]
 },
@@ -66,12 +66,12 @@
       {
         "numberCards" : 1,
         "levelCard" : 0,
-        "Color" : "YELLOW"
+        "color" : "YELLOW"
       },
       {
         "numberCards" : 1,
         "levelCard" : 0,
-        "Color" : "PURPLE"
+        "color" : "PURPLE"
       }
     ]
 },
@@ -137,12 +137,12 @@
       {
         "numberCards" : 2,
         "levelCard" : 0,
-        "Color" : "YELLOW"
+        "color" : "YELLOW"
       },
       {
         "numberCards" : 1,
         "levelCard" : 0,
-        "Color" : "BLUE"
+        "color" : "BLUE"
       }
     ]
   },
@@ -156,12 +156,12 @@
       {
         "numberCards" : 2,
         "levelCard" : 0,
-        "Color" : "GREEN"
+        "color" : "GREEN"
       },
       {
         "numberCards" : 1,
         "levelCard" : 0,
-        "Color" : "PURPLE"
+        "color" : "PURPLE"
       }
     ]
   },
@@ -175,12 +175,12 @@
       {
         "numberCards" : 2,
         "levelCard" : 0,
-        "Color" : "BLUE"
+        "color" : "BLUE"
       },
       {
         "numberCards" : 1,
         "levelCard" : 0,
-        "Color" : "YELLOW"
+        "color" : "YELLOW"
       }
     ]
   },
@@ -194,12 +194,12 @@
       {
         "numberCards" : 2,
         "levelCard" : 0,
-        "Color" : "PURPLE"
+        "color" : "PURPLE"
       },
       {
         "numberCards" : 1,
         "levelCard" : 0,
-        "Color" : "GREEN"
+        "color" : "GREEN"
       }
     ]
   },
@@ -213,7 +213,7 @@
     {
       "numberCards" : 1,
       "levelCard" : 2,
-      "Color" : "YELLOW"
+      "color" : "YELLOW"
     }
   ]
 },
@@ -227,7 +227,7 @@
       {
         "numberCards" : 1,
         "levelCard" : 2,
-        "Color" : "BLUE"
+        "color" : "BLUE"
       }
     ]
   },
@@ -241,7 +241,7 @@
       {
         "numberCards" : 1,
         "levelCard" : 2,
-        "Color" : "PURPLE"
+        "color" : "PURPLE"
       }
     ]
   },
@@ -255,7 +255,7 @@
       {
         "numberCards" : 1,
         "levelCard" : 2,
-        "Color" : "GREEN"
+        "color" : "GREEN"
       }
     ]
   }

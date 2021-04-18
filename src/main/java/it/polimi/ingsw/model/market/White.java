@@ -5,6 +5,11 @@ import it.polimi.ingsw.model.benefit.Benefit;
 
 import java.util.Stack;
 
+/**
+ * Identify White Marbles
+ * They are the only ones that can give back to the player a resource of his choice
+ */
+
 public class White extends Marble {
     /**
      * it removes the strategy from the top of the stack and it uses to convert the marble
@@ -16,5 +21,10 @@ public class White extends Marble {
         if(marketStrategies == null) return null;
         if(marketStrategies.empty()) return null;
         return marketStrategies.pop().getResource();
+    }
+
+    @Override
+    public boolean isWhite(){
+        return true;
     }
 }

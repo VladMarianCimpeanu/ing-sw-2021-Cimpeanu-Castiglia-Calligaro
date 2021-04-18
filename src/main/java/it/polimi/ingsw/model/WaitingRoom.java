@@ -7,10 +7,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class manages the phase before the game creation where the players queue up and wait for the beginning of the concrete game
+ * The object instantiated from this class is unique during all the execution of the program
+ * The first user joining the waiting room can set the game mode where he can set the number of players of the next game, where he would join too
+ * While users join the waiting room, their identity will be added to the list of users that are waiting for the beginning of the game
+ * When the size of the waiting users list will be equal to the game mode set by the first, the game can be created and let it start, clearing the list of waiting users
+ */
+
 public class WaitingRoom {
     private int gameMode;
-    private Map<Identity, Game> identities;
-    private ArrayList<Identity> waitingUsers;
+    private final Map<Identity, Game> identities;
+    private final ArrayList<Identity> waitingUsers;
 
     public WaitingRoom(){
         identities = new HashMap<Identity, Game>();

@@ -7,6 +7,10 @@ import java.util.Stack;
 
 import static it.polimi.ingsw.model.benefit.Resource.STONE;
 
+/**
+ * Identify Grey Marbles
+ */
+
 public class Grey extends Marble{
     /**
      *

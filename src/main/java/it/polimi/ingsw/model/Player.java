@@ -303,7 +303,7 @@ public class Player {
         receivedFromMarket = received;
     }
 
-    public void putInWarehouseDepot(Resource resource, int shelf) throws NotEnoughSpaceException, InvalidResourceException, ExistingResourceException {
+    public void putInWarehouseDepot(Resource resource, int shelf) throws InvalidResourceException, ExistingResourceException, InvalidShelfPosition {
         if(resource == null) throw new InvalidResourceException();
         if(receivedFromMarket.contains(resource)){
             dashboard.getWarehouseDepot().addResource(shelf,1,resource);

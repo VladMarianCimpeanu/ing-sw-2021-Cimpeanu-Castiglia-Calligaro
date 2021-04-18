@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.benefit.Benefit;
 
 import java.util.Stack;
 
+/**
+ * This class represents the marbles located inside the market
+ * Each one, if picked, can give back a benefit to the player
+ */
 public abstract class Marble {
     /**
      * convert a Marble in benefit
@@ -14,6 +18,6 @@ public abstract class Marble {
     public abstract Benefit getBenefit(Stack<MarketStrategy> marketStrategies);
 
     public boolean isWhite(){
-        return this instanceof White;
+        return false;
     }
 }

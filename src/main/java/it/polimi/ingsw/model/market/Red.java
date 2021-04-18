@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.benefit.Faith;
 
 import java.util.Stack;
 
+/**
+ * Identify Red Marbles
+ */
+
 public class Red extends Marble{
     /**
      *

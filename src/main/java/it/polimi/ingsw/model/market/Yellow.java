@@ -7,6 +7,10 @@ import java.util.Stack;
 
 import static it.polimi.ingsw.model.benefit.Resource.COIN;
 
+/**
+ * Identify Yellow Marbles
+ */
+
 public class Yellow extends Marble{
     /**
      *

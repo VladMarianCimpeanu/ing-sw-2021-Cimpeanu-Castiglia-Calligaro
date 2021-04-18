@@ -5,6 +5,13 @@ import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
 
+/**
+ * Identify Player's WareHouseDepot, composed of 3 shelves and other possible extra slots, gained from the activation of some leader cards
+ * Each player has the reference to a unique and personal WareHouseDepot
+ * Here can be store resources coming from the market
+ * The resources store here can be used to buy development cards, activate productions and activate leader cards
+ */
+
 public class WarehouseDepot {
     private Resource firstShelf;
     private Resource secondShelf;
@@ -12,11 +19,7 @@ public class WarehouseDepot {
     private int firstQuantity;
     private int secondQuantity;
     private int thirdQuantity;
-    //Useless attributes?
-    private final int firstMax = 1;
-    private final int secondMax = 2;
-    private final int thirdMax = 3 ;
-    private ArrayList<ExtraSlot> extraSlotList;
+    private final ArrayList<ExtraSlot> extraSlotList;
 
     public WarehouseDepot() {
         //arbitrary values
@@ -69,8 +72,8 @@ public class WarehouseDepot {
 
     /**
      * Move resources from a shelf to another shelf
-     * @param fromShelf
-     * @param toShelf
+     * @param fromShelf first shelf's number
+     * @param toShelf second shelf's number
      * @throws InvalidShelfPosition if shelf isn't an integer between 1 and 3
      * @throws NotEnoughSpaceException if you try to put in a shelf more resources than its capacity
      */
@@ -121,7 +124,7 @@ public class WarehouseDepot {
      * @throws ExistingResourceException if the selected resource already exists in another shelf
      * @throws InvalidResourceException if the selected resource is different from the resources already stored at the same shelf
      */
-    public int addResource(int shelf, int quantity, Resource resource) throws InvalidShelfPosition, ExistingResourceException,  InvalidResourceException, NotEnoughSpaceException{
+    public int addResource(int shelf, int quantity, Resource resource) throws InvalidShelfPosition, ExistingResourceException,  InvalidResourceException{
         if(shelf < 1 || shelf > 3) throw new InvalidShelfPosition();
         if(quantity <0) return 0;
         if(!getShelfResource(shelf).equals(resource) && getShelfQuantity(shelf) != 0) throw new InvalidResourceException();
@@ -179,19 +182,23 @@ public class WarehouseDepot {
     /**
      * Remove resources from a shelf
      * @param resource: resource type
-     * @param quantity
+     * @param quantity number of resources to be removed, of the specified type
      * @return the number of resources that you need to remove from the Strongbox
      */
     public int removeResource(Resource resource, int quantity) {
         if(quantity < 0) return 0;
-        int shelf;
-        if(getShelfResource(1).equals(resource) && getShelfQuantity(1) != 0)
-            shelf = 1;
-        else if(getShelfResource(2).equals(resource) && getShelfQuantity(2) != 0)
-            shelf = 2;
-        else if(getShelfResource(3).equals(resource) && getShelfQuantity(3) != 0)
-            shelf = 3;
-        else return quantity;   //resource not existing on shelves
+        int shelf = 1;
+        try {
+            if (getShelfResource(1).equals(resource) && getShelfQuantity(1) != 0)
+                shelf = 1;
+            else if (getShelfResource(2).equals(resource) && getShelfQuantity(2) != 0)
+                shelf = 2;
+            else if (getShelfResource(3).equals(resource) && getShelfQuantity(3) != 0)
+                shelf = 3;
+            else return quantity;   //resource not existing on shelves
+        }catch(InvalidShelfPosition e){
+            System.out.println("Something went wrong");
+        }
         switch (shelf){
             case 1:
                 if(firstQuantity >= quantity){
@@ -225,8 +232,7 @@ public class WarehouseDepot {
     }
 
     /**
-     *
-     * @return
+     * @return the list of extra slots activated
      */
     public ArrayList<ExtraSlot> getExtraSlotList(){
         return new ArrayList<>(extraSlotList);
@@ -234,8 +240,8 @@ public class WarehouseDepot {
 
     /**
      * Remove a resource from the extra slot
-     * @param resource
-     * @param quantity
+     * @param resource type of resources that have to be removed from a extra slot
+     * @param quantity number of resources that have to be removed from a extra slot
      * @throws MissingExtraSlot if there isn't an extra slot for the requested resource
      */
     public int removeExtraResource(Resource resource, int quantity) throws MissingExtraSlot {
@@ -246,8 +252,8 @@ public class WarehouseDepot {
 
     /**
      * Add a resource to the extra slot
-     * @param resource
-     * @param quantity
+     * @param resource type of resources that have to be added inside an extra slot
+     * @param quantity number of resources that have to be added from a extra slot
      * @throws MissingExtraSlot if there isn't an extra slot for the requested resource
      */
     public int addExtraResource(Resource resource, int quantity) throws MissingExtraSlot{
@@ -258,7 +264,7 @@ public class WarehouseDepot {
 
     /**
      * Get the quantity of resource stored in the extra slot
-     * @param resource
+     * @param resource extra slot type of resource required
      * @return 0 if there isn't an extra slot for the requested resource
      */
     public int getExtraQuantity(Resource resource){
@@ -277,13 +283,17 @@ public class WarehouseDepot {
 
     /**
      *
-     * @param resource
+     * @param resource type of resources required
      * @return quantity of the selected resource in stock, 0 if there are no resource in stock
      */
-    public int getResourceQuantity(Resource resource) {
-        if(getShelfResource(1).equals(resource)) return getShelfQuantity(1);
-        else if(getShelfResource(2).equals(resource)) return getShelfQuantity(2);
-        else if(getShelfResource(3).equals(resource)) return getShelfQuantity(3);
+    public int getResourceQuantity(Resource resource){
+        try {
+            if (getShelfResource(1).equals(resource)) return getShelfQuantity(1);
+            else if (getShelfResource(2).equals(resource)) return getShelfQuantity(2);
+            else if (getShelfResource(3).equals(resource)) return getShelfQuantity(3);
+        }catch(InvalidShelfPosition e){
+            System.out.println("Something went wrong");
+        }
         return 0;
     }
 
@@ -291,9 +301,9 @@ public class WarehouseDepot {
      * It moves a specified quantity of resources from a specified a shelf to an extra slot.
      * @param shelf the specified shelf from which resources are supposed to be moved: the first shelf starts with 1
      * @param quantity quantity of resources to be moved : if quantity is higher than the actual quantity on the shelf, it will be considered to move all the resources that are on the shelf.
-     * @throws InvalidShelfPosition
-     * @throws NotEnoughSpaceException
-     * @throws MissingExtraSlot
+     * @throws InvalidShelfPosition if shelf < 1 or shelf > 3
+     * @throws NotEnoughSpaceException if there is not enough space to store all the required resources into the extra slot
+     * @throws MissingExtraSlot if does not exist an extra slot that can store the specified resource
      */
     public void moveFromShelfToSlot(int shelf, int quantity) throws InvalidShelfPosition,  NotEnoughSpaceException, MissingExtraSlot{
         if(shelf < 1 || shelf > 3) throw new InvalidShelfPosition();
@@ -334,6 +344,16 @@ public class WarehouseDepot {
         if(a) throw new NotEnoughSpaceException();
     }
 
+    /**
+     * It moves a specified quantity of resources from an extra slot to a specified shelf.
+     * @param resource the specified type of resources that have to be moved from an extra slot
+     * @param quantity quantity of resources to be moved : if quantity is higher than the actual quantity in the extra slot, it will be considered to move all the resources that are in the extra slot.
+     * @param shelf the specified shelf where the resources are supposed to be moved: the first shelf starts with 1
+     * @throws InvalidShelfPosition if shelf < 1 or shelf > 3
+     * @throws ExistingResourceException if there are already a few resources inside of the specified shelf which type is different from the required one
+     * @throws InvalidResourceException if there is no extra slot that stores the type of resources required
+     * @throws NotEnoughSpaceException  if there is not enough space to store all the required resources into the shelf
+     */
     public void moveFromSlotToShelf(Resource resource, int quantity, int shelf) throws InvalidShelfPosition, ExistingResourceException, InvalidResourceException, NotEnoughSpaceException {
         if(shelf < 1 || shelf > 3) throw new InvalidShelfPosition();
         ExtraSlot slot = null;

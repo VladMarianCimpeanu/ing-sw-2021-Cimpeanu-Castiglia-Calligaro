@@ -1,11 +1,14 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.benefit.Resource;
-import it.polimi.ingsw.model.exceptions.*;
 
+/**
+ * Identify the Extra slots that can be added to the WareHouseDepot and can store only one defined type of resources
+ * They can be created through the activation of some leader cards
+ */
 
 public class ExtraSlot {
-    private Resource resourceExtra;
+    private final Resource resourceExtra;
     //quantity is an integer between 0 and 2
     private int quantity;
 
@@ -18,16 +21,16 @@ public class ExtraSlot {
     }
 
     /**
-     * Check what kind of resource can be stored
-     * @return
+     * @return the type of resources that can be stored inside the slot
      */
     public Resource getResource(){
         return resourceExtra;
     }
 
     /**
-     * Put a resource in the slot
-     * @param quantity
+     * Put resources in the slot
+     * @param quantity number of resources needed to be put inside the slot
+     * @return the number of resources that the method tried to put inside the slot but have been left over
      */
     public int addResource(int quantity){
         if(quantity < 0) return 0;
@@ -42,13 +45,13 @@ public class ExtraSlot {
 
     /**
      * Pick a resource from the slot
-     * @param quantity
+     * @param quantity number of resources
+     * @return 0 if the slot has enough resources to be removed, otherwise returns the number of resources that remain after running out of resources inside the slot
      */
     public int removeResource(int quantity) {
         if(quantity < 0) return 0;
-        int remain = 0;
         if(quantity > this.quantity){
-            remain = quantity-this.quantity;
+            int remain = quantity-this.quantity;
             this.quantity = 0;
             return remain;
         }
@@ -57,8 +60,7 @@ public class ExtraSlot {
     }
 
     /**
-     * Quantity of resources stored in this extra slot
-     * @return
+     * @return current quantity of resources stored inside the slot
      */
     public int getQuantity(){
         return quantity;

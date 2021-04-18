@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * Represents the faith path whether there is a multiplayer game
+ */
 public class MultiFaithPath extends FaithPath{
     // each index represent a position of the FaithPath track: a cell contains the amount victory points earned during a popeMeeting
     private int[] popeMeeting;

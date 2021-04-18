@@ -7,6 +7,10 @@ import java.util.Stack;
 
 import static it.polimi.ingsw.model.benefit.Resource.SERVANT;
 
+/**
+ * Identify Purple Marbles
+ */
+
 public class Purple extends Marble{
     /**
      *

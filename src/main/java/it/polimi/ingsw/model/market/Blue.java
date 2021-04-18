@@ -7,6 +7,10 @@ import java.util.Stack;
 
 import static it.polimi.ingsw.model.benefit.Resource.SHIELD;
 
+/**
+ * Identify Blue Marbles
+ */
+
 public class Blue extends Marble {
     /**
      *

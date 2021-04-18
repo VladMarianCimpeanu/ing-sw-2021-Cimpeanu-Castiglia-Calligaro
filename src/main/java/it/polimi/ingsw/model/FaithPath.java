@@ -5,10 +5,12 @@ import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 
 import java.util.Map;
 
+/**
+ * Represents the faith path related to a game
+ * A game has the reference to only one faith path (different from other games), so this is unique for each player playing in the game
+ */
 
 public abstract class FaithPath {
-
-
     // each index correspond to a cell of the FaithPath track: each victoryPoints' element is the amount of victory points that the cell offers at the end of the game
     private static int[] victoryPoints;
 
