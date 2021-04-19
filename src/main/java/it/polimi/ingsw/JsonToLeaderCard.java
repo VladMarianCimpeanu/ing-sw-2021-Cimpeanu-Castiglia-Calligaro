@@ -110,9 +110,6 @@ public class JsonToLeaderCard {
                         default:
                             throw new NoSuchElementException(next + " is an undefined field for LeaderCard");
                     }
-                    reader.nextName();
-
-                    reader.nextName();
                 }
                 if(numberResources == -1) throw new NoSuchElementException("There was no numberResources field in the requirement description");
                 if(resource == null) throw new NoSuchElementException("There was no resource field in the requirement description");
@@ -140,11 +137,11 @@ public class JsonToLeaderCard {
                         default:
                             throw new NoSuchElementException(next + " is an undefined field for LeaderCard");
                     }
-                    if(numberCards == -1) throw new NoSuchElementException("There was no numberCards field in the requirement description");
-                    if(levelCard == -1) throw new NoSuchElementException("There was no levelCard field in the requirement description");
-                    if(color == null) throw new NoSuchElementException("There was no color field in the requirement description");
-                    requirements.add(new DevelopmentRequirement(numberCards, levelCard, color));
                 }
+                if(numberCards == -1) throw new NoSuchElementException("There was no numberCards field in the requirement description");
+                if(levelCard == -1) throw new NoSuchElementException("There was no levelCard field in the requirement description");
+                if(color == null) throw new NoSuchElementException("There was no color field in the requirement description");
+                requirements.add(new DevelopmentRequirement(numberCards, levelCard, color));
             }else{
                 throw new NoSuchElementException(type + " is an undefined field for type of requirement");
             }
