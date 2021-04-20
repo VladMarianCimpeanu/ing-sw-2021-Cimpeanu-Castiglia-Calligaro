@@ -9,6 +9,9 @@ import it.polimi.ingsw.model.exceptions.CardActivationException;
 
 import java.util.ArrayList;
 
+/**
+ * A leader card that gives 2 extra slot inside Warehouse Depot for a fixed resource.
+ */
 public class DepotSkill extends LeaderCard{
     //Always 2 space more in the depot of specified resource
     //Indipendent from the the actual shelves(they can be filled in at any time during the game)

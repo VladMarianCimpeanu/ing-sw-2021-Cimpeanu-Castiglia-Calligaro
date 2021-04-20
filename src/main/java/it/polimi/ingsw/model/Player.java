@@ -11,9 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * This class represent the player.
+ * A player can perform each action that a real player can perform in the physical game.
+ */
 public class Player {
     private Identity identity;
     private Dashboard dashboard;
+    //leaderCards not yet activated
     private ArrayList<LeaderCard> leaderCards;
     private int victoryPoints;
     private ArrayList<MarketStrategy> marketStrategies;
@@ -22,6 +27,8 @@ public class Player {
     private Map<Resource,Integer> developmentCardCost;
     private ArrayList<Benefit> receivedFromMarket;
     private DevelopmentCard devCardToAdd;
+    //when a player go to market this stack contains chosen strategy for each white marble
+    private Stack<MarketStrategy> marketStrategyStack;
 
     public Player(Identity identity, Game game, ArrayList<LeaderCard> leaderCards, Dashboard dashboard){
         this.identity = identity;
@@ -32,6 +39,7 @@ public class Player {
         marketStrategies = new ArrayList<>();
         developmentCardCost = new HashMap<>();
         discountList = new ArrayList<>();
+        marketStrategyStack = new Stack<>();
     }
 
     public ArrayList<LeaderCard> getLeaderCards(){
@@ -290,9 +298,20 @@ public class Player {
     }
 
     /**
-     *
+     * Add a strategy to the stack before converting marbles in the market
+     * @param marketStrategy the strategy to add
+     * @throws InvalidStrategyException if the player doesn't own the strategy
      */
-    public void passStrategiesToMarket(Stack<MarketStrategy> marketStrategyStack) throws InvalidStrategyException {
+    public void addInMarketStrategyStack(MarketStrategy marketStrategy) throws InvalidStrategyException {
+        if(marketStrategy == null || !marketStrategies.contains(marketStrategy)) throw new InvalidStrategyException();
+        marketStrategyStack.push(marketStrategy);
+    }
+
+    /**
+     * Pass marketStrategyStack to the market and receive converted marbles
+     * @throws InvalidStrategyException
+     */
+    public void passStrategiesToMarket() throws InvalidStrategyException {
         ArrayList<Benefit> received = game.getMarket().convertMarbles(marketStrategyStack);
         for(Benefit b: received){
             if(b.equals(Faith.giveFaith())){
@@ -303,6 +322,9 @@ public class Player {
         receivedFromMarket = received;
     }
 
+    /**
+     * Put a resource in warehouse depot
+     */
     public void putInWarehouseDepot(Resource resource, int shelf) throws InvalidResourceException, ExistingResourceException, InvalidShelfPosition {
         if(resource == null) throw new InvalidResourceException();
         if(receivedFromMarket.contains(resource)){
@@ -311,6 +333,9 @@ public class Player {
         }
     }
 
+    /**
+     * Put a resource in extra slot
+     */
     public void putInExtraSlot(Resource resource) throws NotEnoughSpaceException, InvalidResourceException, MissingExtraSlot {
         if(resource == null) throw new InvalidResourceException();
         if(receivedFromMarket.contains(resource)){
@@ -319,6 +344,9 @@ public class Player {
         }
     }
 
+    /**
+     * Discard a resource
+     */
     public void discardResource(Resource resource) throws InvalidResourceException {
         if(resource == null) throw new InvalidResourceException();//
         if(receivedFromMarket.contains(resource)){

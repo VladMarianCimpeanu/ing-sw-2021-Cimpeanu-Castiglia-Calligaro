@@ -198,7 +198,7 @@ class PlayerTest {
     void passStrategiesToMarket() throws IOException, InvalidReadException, NoSuchPlayerException, InvalidStrategyException {
         GameStub1 stub = new GameStub1(idS);
         Player player = new Player(null, stub, null, null);
-        player.passStrategiesToMarket(null);
+        player.passStrategiesToMarket();
         MarketStub1 market = (MarketStub1) stub.getMarket();
         assertTrue(market.isPassedStrategies());
     }

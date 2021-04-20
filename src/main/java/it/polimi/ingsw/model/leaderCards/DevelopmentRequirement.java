@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.exceptions.WrongLevelException;
 
 /**
  * LeaderCard activation requirement regarding development cards owned by a player
+ * Number of cards of a certain color and level
  */
 public class DevelopmentRequirement implements Requirement{
     private int cardsNumber;

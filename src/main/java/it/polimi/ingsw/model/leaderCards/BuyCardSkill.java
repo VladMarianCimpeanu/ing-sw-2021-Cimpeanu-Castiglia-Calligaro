@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.exceptions.CardActivationException;
 
 import java.util.ArrayList;
 
+/**
+ * A leader card that gives a discount of 1 resource to buy development cards.
+ */
 public class BuyCardSkill extends LeaderCard{
 
     public BuyCardSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount) {

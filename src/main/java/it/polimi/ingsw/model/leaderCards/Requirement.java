@@ -2,6 +2,9 @@ package it.polimi.ingsw.model.leaderCards;
 
 import it.polimi.ingsw.model.Dashboard;
 
+/**
+ * A leader card requirement
+ */
 public interface Requirement {
     /**
      * necessary at the moment of activation(or rejection) of a leader card

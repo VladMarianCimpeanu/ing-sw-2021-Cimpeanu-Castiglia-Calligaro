@@ -12,12 +12,19 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Stack;
 
+/**
+ * A market is a 3x4 array of marbles (+ 1 outerMarble), it is randomized in the constructor.
+ * You can go to market using selRow() or selColumn(): with selRow you select a row of the market
+ * and pick all the marbles, converting them with convertMarbles(); after that the selected row
+ * is shifted of 1 position from right to left, putting the outerMarble in the first position from right.
+ */
 public class Market {
     private final int rows = 3;
     private final int columns = 4;
     private Marble[][] market;
     private Marble outerMarble;
     private ArrayList<Marble> selectedMarbles; //this array is update every time a row/column selection occurs
+
 
     public Market(){
         selectedMarbles = new ArrayList<>();

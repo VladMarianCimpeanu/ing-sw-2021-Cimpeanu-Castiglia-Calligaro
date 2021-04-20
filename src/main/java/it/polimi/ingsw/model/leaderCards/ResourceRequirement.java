@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.benefit.Resource;
 
 /**
  * LeaderCard activation requirement regarding resources owned by a player
+ * Number of resource of a certain type
  */
 
 public class ResourceRequirement implements Requirement{

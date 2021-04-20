@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.exceptions.NoSuchStrategyException;
 
 import java.util.ArrayList;
 
+/**
+ * A leader card that gives a strategy to convert white marbles to the resource of the leader card.
+ */
 public class MarketSkill extends LeaderCard{
 
     public MarketSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount) {

@@ -7,6 +7,10 @@ import it.polimi.ingsw.model.exceptions.CardActivationException;
 
 import java.util.ArrayList;
 
+/**
+ * A leader card has an array of requirements, each of them can be a development requirement or resource one.
+ * It also has the amount of victory points (received when a card is activated).
+ */
 public abstract class LeaderCard {
     private Resource resource;
     private ArrayList<Requirement> requirements;
