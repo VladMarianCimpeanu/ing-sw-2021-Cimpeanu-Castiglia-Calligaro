@@ -379,15 +379,13 @@ public class Dashboard {
     public boolean checkResources(Map<Resource,Integer> resources) {
         if(resources == null) throw new NullPointerException();
         ArrayList<ExtraSlot> tempExtraSlots = warehouseDepot.getExtraSlotList();
-        for(Resource resource : Resource.values()){
-            int tempQuantity = 0;
-            if(resources.containsKey(resource)) {
-                tempQuantity = resources.get(resource);
+        for(Resource resource : Resource.values()) {
+            if (resources.containsKey(resource)) {
+                int tempQuantity = resources.get(resource);
                 if (tempQuantity > 0) {
                     tempQuantity -= strongbox.getResourceQuantity(resource);
-
-                            tempQuantity -= warehouseDepot.getResourceQuantity(resource);
-
+                    if (tempQuantity > 0) {
+                        tempQuantity -= warehouseDepot.getResourceQuantity(resource);
                         if (tempQuantity > 0) {
                             for (ExtraSlot slot : tempExtraSlots) {
                                 if (slot.getResource() == resource) tempQuantity -= slot.getQuantity();
@@ -397,7 +395,7 @@ public class Dashboard {
                 }
                 if (tempQuantity > 0) return false;
             }
-
+        }
         return true;
     }
 
