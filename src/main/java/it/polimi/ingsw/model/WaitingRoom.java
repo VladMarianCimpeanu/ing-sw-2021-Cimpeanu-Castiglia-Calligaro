@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.MultiEchoServer;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.io.IOException;
@@ -16,14 +18,12 @@ import java.util.Map;
  */
 
 public class WaitingRoom {
-    private int gameMode;
-    private final Map<Identity, Game> identities;
-    private final ArrayList<Identity> waitingUsers;
+    private int gameMode = 4;
+    private ArrayList<Identity> waitingUsers;
 
-    public WaitingRoom(){
-        identities = new HashMap<Identity, Game>();
-        waitingUsers = new ArrayList<Identity>();
-        gameMode = 1;
+    public WaitingRoom(int gameMode){
+        waitingUsers = new ArrayList<>();
+        this.gameMode = gameMode;
     }
 
     /**
@@ -33,20 +33,23 @@ public class WaitingRoom {
      * @throws ExistingNicknameException
      * @throws NullPointerException
      */
-    public void addUser(String nickname) throws ExistingNicknameException, NullPointerException, InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
+    public void addUser(String nickname) throws ExistingNicknameException, NullPointerException {
         if(nickname == null || nickname.equals("")) throw new NullPointerException();
-        for(Identity id : waitingUsers)
-            if(id.getNickname().equals(nickname)) throw new ExistingNicknameException();
-        for(Identity id : identities.keySet())
-            if(id.getNickname().equals(nickname))
-                if(id.isOnline())
-                    throw new ExistingNicknameException();
-                else {
-                    id.setOnline(true);
-                    return;
-                }
         waitingUsers.add(new Identity(nickname));
-        if(gameMode == waitingUsers.size()) createGame();
+        if(gameMode <= waitingUsers.size()) {
+            try {
+                createGame();
+                MultiEchoServer.removeWaitingRoom(this);
+            } catch (InvalidStepsException e) {
+                e.printStackTrace();
+            } catch (NoSuchPlayerException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InvalidReadException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -55,6 +58,7 @@ public class WaitingRoom {
      * @throws NoSuchUserException
      * @throws NullPointerException
      */
+    //TODO: removeUser in case of crash
     public void removeUser(String nickname) throws NoSuchUserException, NullPointerException, EmptyException {
         if(nickname == null) throw new NullPointerException();
         if(waitingUsers.isEmpty()) throw new EmptyException();
@@ -73,12 +77,12 @@ public class WaitingRoom {
     /**
      * it sets the game mode chosen by the host (the first user to register to the waiting room)
      * game modes : 1 == single player | 2 or 3 or 4 == number of players allowed to play at this game (multiplayer).
-     * @param gameMode specified game mode for the next game.
+     * @param mode specified game mode for the next game.
      * @throws InvalidGameModeException
      */
-    public void setGameMode(int gameMode) throws InvalidGameModeException {
-        if(gameMode < 1 || gameMode > 4 || gameMode < waitingUsers.size()) throw new InvalidGameModeException();
-        this.gameMode = gameMode;
+    public void setGameMode(int mode) throws InvalidGameModeException {
+        if(mode < 1 || mode > 4 || mode < waitingUsers.size()) throw new InvalidGameModeException();
+        gameMode = mode;
     }
 
     /**
@@ -88,21 +92,16 @@ public class WaitingRoom {
         Game game;
         if(gameMode == 1) game = new Singleplayer(waitingUsers);
         else game = new Multiplayer(waitingUsers);
-        for (Identity id: waitingUsers)
-            addIdentity(id, game);
-        waitingUsers.clear();
+        new Controller(game, waitingUsers);
     }
 
     public ArrayList<Identity> getWaitingUsers() {
-        return waitingUsers;
+        return new ArrayList<>(waitingUsers);
     }
 
-    public Map<Identity, Game> getIdentities() {
-        return identities;
-    }
-
-    public void addIdentity(Identity identity, Game game){
-        if(!identities.containsKey(identity))
-            identities.put(identity, game);
+    public boolean contains(String nickname){
+        for(Identity i: waitingUsers)
+            if(i.getNickname().equals(nickname)) return true;
+        return false;
     }
 }

@@ -62,6 +62,10 @@ public class Player {
         return marketStrategies;
     }
 
+    public Identity getIdentity() {
+        return identity;
+    }
+
     /**
      * @return nickname of the Player through Identity
      */
@@ -69,6 +73,9 @@ public class Player {
         return identity.getNickname();
     }
 
+    public boolean isOnline(){
+        return identity.isOnline();
+    }
 
     public Map<Resource,Integer> getDevelopmentCardCost() {
         return new HashMap<Resource,Integer>(developmentCardCost);
