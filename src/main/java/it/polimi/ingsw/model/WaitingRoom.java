@@ -37,18 +37,8 @@ public class WaitingRoom {
         if(nickname == null || nickname.equals("")) throw new NullPointerException();
         waitingUsers.add(new Identity(nickname));
         if(gameMode <= waitingUsers.size()) {
-            try {
-                createGame();
-                MultiEchoServer.removeWaitingRoom(this);
-            } catch (InvalidStepsException e) {
-                e.printStackTrace();
-            } catch (NoSuchPlayerException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InvalidReadException e) {
-                e.printStackTrace();
-            }
+            new Controller(waitingUsers);
+            MultiEchoServer.removeWaitingRoom(this);
         }
     }
 
@@ -83,16 +73,6 @@ public class WaitingRoom {
     public void setGameMode(int mode) throws InvalidGameModeException {
         if(mode < 1 || mode > 4 || mode < waitingUsers.size()) throw new InvalidGameModeException();
         gameMode = mode;
-    }
-
-    /**
-     * it creates a game with the users in the waiting room and the settings chosen by the host.
-     */
-    private void createGame() throws InvalidStepsException, NoSuchPlayerException, IOException, InvalidReadException {
-        Game game;
-        if(gameMode == 1) game = new Singleplayer(waitingUsers);
-        else game = new Multiplayer(waitingUsers);
-        new Controller(game, waitingUsers);
     }
 
     public ArrayList<Identity> getWaitingUsers() {

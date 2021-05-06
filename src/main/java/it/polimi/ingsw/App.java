@@ -6,6 +6,8 @@ import it.polimi.ingsw.model.leaderCards.LeaderCard;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 
 /**
  * Hello world!

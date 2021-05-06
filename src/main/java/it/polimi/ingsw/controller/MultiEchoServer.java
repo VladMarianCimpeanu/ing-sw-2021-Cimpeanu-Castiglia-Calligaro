@@ -97,7 +97,7 @@ public class MultiEchoServer {
     }
 
     /**
-     * called by client when crashes
+     * called by clientHandler when crashes
      * @param client references to EchoServerClientHandler
      */
     public static void handleCrash(EchoServerClientHandler client){

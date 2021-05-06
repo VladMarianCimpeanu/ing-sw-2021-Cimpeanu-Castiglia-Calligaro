@@ -82,7 +82,7 @@ public class EchoServerClientHandler implements Runnable {
         return true;
     }
 
-    private void send(String command, ArrayList<String> params){
+    public void send(String command, ArrayList<String> params){
         Message mess = new Message(command, params);
         String outMess = convert.toJson(mess);
         out.println(outMess);
@@ -95,7 +95,7 @@ public class EchoServerClientHandler implements Runnable {
         send(c, params);
     }
 
-    private void sendError(String e){
+    public void sendError(String e){
         ArrayList<String> params = new ArrayList<String>();
         params.add(e);
         send("error", params);
@@ -162,11 +162,10 @@ public class EchoServerClientHandler implements Runnable {
                 break;
             }
 
-
             String line = in.nextLine();
             Message message = convert.fromJson(line, Message.class);
             if (isMyTurn) {
-                controller.receive(this, message);
+
             } else {
                 out.println("It isn't your turn!");
             }
