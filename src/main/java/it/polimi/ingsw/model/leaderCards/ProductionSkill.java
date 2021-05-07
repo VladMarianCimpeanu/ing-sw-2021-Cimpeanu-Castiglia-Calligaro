@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * the cost is the fixed resource of the leader card.
  */
 public class ProductionSkill extends LeaderCard{
-    public ProductionSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount) {
-        super(requirements, resource, victoryPointsAmount);
+    public ProductionSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount, int ID) {
+        super(requirements, resource, victoryPointsAmount, ID);
     }
 
 

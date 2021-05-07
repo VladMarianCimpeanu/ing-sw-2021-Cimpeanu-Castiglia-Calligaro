@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class MarketSkill extends LeaderCard{
 
-    public MarketSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount) {
-        super(requirements, resource, victoryPointsAmount);
+    public MarketSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount, int ID) {
+        super(requirements, resource, victoryPointsAmount, ID);
     }
 
     /**

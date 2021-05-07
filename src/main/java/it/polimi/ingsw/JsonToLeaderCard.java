@@ -36,6 +36,7 @@ public class JsonToLeaderCard {
         ArrayList<Requirement> requirements;
         int victoryPointsAmount = 0;
         String type_req = null;
+        int ID = 0;
 
         reader.beginArray();
         while(reader.hasNext()) {
@@ -44,6 +45,9 @@ public class JsonToLeaderCard {
             while (reader.hasNext()) {
                 String next = reader.nextName();
                 switch (next) {
+                    case "ID":
+                        ID = reader.nextInt();
+                        break;
                     case "type":
                         current_type = reader.nextString();
                         break;
@@ -62,16 +66,16 @@ public class JsonToLeaderCard {
                         if(current_type == null) throw new NoSuchElementException("Type of the leader card cannot be identified");
                         switch (current_type) {
                             case "market":
-                                cards.add(new MarketSkill(requirements, resource, victoryPointsAmount));
+                                cards.add(new MarketSkill(requirements, resource, victoryPointsAmount, ID));
                                 break;
                             case "depot":
-                                cards.add(new DepotSkill(requirements, resource, victoryPointsAmount));
+                                cards.add(new DepotSkill(requirements, resource, victoryPointsAmount, ID));
                                 break;
                             case "buyCard":
-                                cards.add(new BuyCardSkill(requirements, resource, victoryPointsAmount));
+                                cards.add(new BuyCardSkill(requirements, resource, victoryPointsAmount, ID));
                                 break;
                             case "production":
-                                cards.add(new ProductionSkill(requirements, resource, victoryPointsAmount));
+                                cards.add(new ProductionSkill(requirements, resource, victoryPointsAmount, ID));
                                 break;
                             default:
                                 throw new NoSuchElementException(next + " is an undefined type for LeaderCard");

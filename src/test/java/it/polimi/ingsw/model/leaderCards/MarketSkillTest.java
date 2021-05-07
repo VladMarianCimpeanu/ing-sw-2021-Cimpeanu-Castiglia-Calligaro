@@ -16,7 +16,7 @@ class MarketSkillTest {
     void activeCard() {
         ArrayList<Requirement> requirement = new ArrayList<>();
         PlayerStub1 player = new PlayerStub1();
-        MarketSkill skill = new MarketSkill(requirement, null, 0);
+        MarketSkill skill = new MarketSkill(requirement, null, 0, 0);
         try {
             skill.activeCard(player);
         } catch (it.polimi.ingsw.model.exceptions.CardActivationException e) {
@@ -30,7 +30,7 @@ class MarketSkillTest {
     void activeCardNullPlayer() {
         ArrayList<Requirement> requirement = new ArrayList<>();
         PlayerStub1 player = new PlayerStub1();
-        MarketSkill skill = new MarketSkill(requirement, null, 0);
+        MarketSkill skill = new MarketSkill(requirement, null, 0, 0);
         assertThrows(CardActivationException.class,
                 () -> skill.activeCard(null));
         assertNull(player.getMarketStrategycheck());

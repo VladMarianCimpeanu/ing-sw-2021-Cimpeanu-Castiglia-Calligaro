@@ -21,7 +21,7 @@ class LeaderCardTest {
         for(int i = 0; i<5; i++)
             if(i%2 == 0) requirements.add(new RequirementStub1(false));
             else requirements.add(new RequirementStub1(true));
-        LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
+        LeaderCard leaderCard = new LeaderCard(requirements, null, 0, 0) { //only first parameter interesting for this test
             @Override
             public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
@@ -37,7 +37,7 @@ class LeaderCardTest {
         DashboardStub1 db = new DashboardStub1();
         for(int i = 0; i<5; i++)
             requirements.add(new RequirementStub1(false));
-        LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
+        LeaderCard leaderCard = new LeaderCard(requirements, null, 0, 0) { //only first parameter interesting for this test
             @Override
             public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
@@ -53,7 +53,7 @@ class LeaderCardTest {
         DashboardStub1 db = new DashboardStub1();
         for(int i = 0; i<5; i++)
             requirements.add(new RequirementStub1(true));
-        LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
+        LeaderCard leaderCard = new LeaderCard(requirements, null, 0, 0) { //only first parameter interesting for this test
             @Override
             public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
@@ -67,7 +67,7 @@ class LeaderCardTest {
     void isSatisfiedEmpty() {
         ArrayList<Requirement> requirements = new ArrayList<>();
         DashboardStub1 db = new DashboardStub1();
-        LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
+        LeaderCard leaderCard = new LeaderCard(requirements, null, 0, 0) { //only first parameter interesting for this test
             @Override
             public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test
@@ -81,7 +81,7 @@ class LeaderCardTest {
         ArrayList<Requirement> requirements = new ArrayList<>();
         for(int i = 0; i<5; i++)
             requirements.add(new RequirementStub1(true));
-        LeaderCard leaderCard = new LeaderCard(requirements, null, 0) { //only first parameter interesting for this test
+        LeaderCard leaderCard = new LeaderCard(requirements, null, 0, 0) { //only first parameter interesting for this test
             @Override
             public void activeCard(Player player) throws CardActivationException {
                 //Not interesting for this test

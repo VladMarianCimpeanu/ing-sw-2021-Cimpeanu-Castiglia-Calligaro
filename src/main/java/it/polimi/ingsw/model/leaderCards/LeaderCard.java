@@ -15,11 +15,17 @@ public abstract class LeaderCard {
     private Resource resource;
     private ArrayList<Requirement> requirements;
     private int victoryPointsAmount;
+    private int ID;
 
-    public LeaderCard(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount){
+    public LeaderCard(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount, int ID){
         this.requirements = requirements;
         this.resource = resource;
         this.victoryPointsAmount = victoryPointsAmount;
+        this.ID = ID;
+    }
+
+    public int getID() {
+        return ID;
     }
 
     /**

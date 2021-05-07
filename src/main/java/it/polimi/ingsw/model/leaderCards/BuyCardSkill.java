@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class BuyCardSkill extends LeaderCard{
 
-    public BuyCardSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount) {
-        super(requirements, resource, victoryPointsAmount);
+    public BuyCardSkill(ArrayList<Requirement> requirements, Resource resource, int victoryPointsAmount, int ID) {
+        super(requirements, resource, victoryPointsAmount, ID);
     }
 
     /**

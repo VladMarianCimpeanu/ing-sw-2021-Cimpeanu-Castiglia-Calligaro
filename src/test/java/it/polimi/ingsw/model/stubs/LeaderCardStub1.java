@@ -9,7 +9,7 @@ public class LeaderCardStub1 extends LeaderCard {
     private boolean satisfied;
 
     public LeaderCardStub1(boolean satisfied){
-        super(null, null, 0);
+        super(null, null, 0, 0);
         this.satisfied = satisfied;
     }
     @Override

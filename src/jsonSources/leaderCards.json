@@ -1,5 +1,6 @@
 [
   {
+    "ID" : 0,
     "type" : "buyCard",
     "resource" : "SERVANT",
     "victoryPoints" : "2",
@@ -19,6 +20,7 @@
   ]
   }
 , {
+  "ID" : 1,
   "type" : "buyCard",
   "resource" : "SHIELD",
   "victoryPoints" : "2",
@@ -38,6 +40,7 @@
   ]
 },
   {
+    "ID" : 2,
     "type" : "buyCard",
     "resource" : "STONE",
     "victoryPoints" : "2",
@@ -57,6 +60,7 @@
     ]
 },
   {
+    "ID" : 3,
     "type" : "buyCard",
     "resource" : "COIN",
     "victoryPoints" : "2",
@@ -76,6 +80,7 @@
     ]
 },
   {
+    "ID" : 4,
     "type" : "depot",
     "resource" : "STONE",
     "victoryPoints" : "3",
@@ -89,6 +94,7 @@
     ]
   },
   {
+    "ID" : 5,
     "type" : "depot",
     "resource" : "SERVANT",
     "victoryPoints" : "3",
@@ -102,6 +108,7 @@
     ]
   },
   {
+    "ID" : 6,
     "type" : "depot",
     "resource" : "SHIELD",
     "victoryPoints" : "3",
@@ -115,6 +122,7 @@
     ]
   },
   {
+    "ID" : 7,
     "type" : "depot",
     "resource" : "COIN",
     "victoryPoints" : "3",
@@ -128,6 +136,7 @@
     ]
   },
   {
+    "ID" : 8,
     "type" : "market",
     "resource" : "SERVANT",
     "victoryPoints" : "5",
@@ -147,6 +156,7 @@
     ]
   },
   {
+    "ID" : 9,
     "type" : "market",
     "resource" : "SHIELD",
     "victoryPoints" : "5",
@@ -166,6 +176,7 @@
     ]
   },
   {
+    "ID" : 10,
     "type" : "market",
     "resource" : "STONE",
     "victoryPoints" : "5",
@@ -185,6 +196,7 @@
     ]
   },
   {
+    "ID" : 11,
     "type" : "market",
     "resource" : "COIN",
     "victoryPoints" : "5",
@@ -204,6 +216,7 @@
     ]
   },
   {
+    "ID" : 12,
   "type" : "production",
   "resource" : "SHIELD",
   "victoryPoints" : "4",
@@ -218,6 +231,7 @@
   ]
 },
   {
+    "ID" : 13,
     "type" : "production",
     "resource" : "SERVANT",
     "victoryPoints" : "4",
@@ -232,6 +246,7 @@
     ]
   },
   {
+    "ID" : 14,
     "type" : "production",
     "resource" : "STONE",
     "victoryPoints" : "4",
@@ -246,6 +261,7 @@
     ]
   },
   {
+    "ID" : 15,
     "type" : "production",
     "resource" : "COIN",
     "victoryPoints" : "4",
