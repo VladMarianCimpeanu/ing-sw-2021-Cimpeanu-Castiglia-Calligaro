@@ -7,7 +7,7 @@ public class MarketStrategyStub extends MarketStrategy {
     public Resource resource;
 
     public MarketStrategyStub(){
-        super(null);
+        super(null, 0);
         resource = null;
     }
 

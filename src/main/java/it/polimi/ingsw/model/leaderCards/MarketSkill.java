@@ -25,7 +25,7 @@ public class MarketSkill extends LeaderCard{
     @Override
     public void activeCard(Player player) throws CardActivationException {
         if(player == null || !isSatisfied(player.getDashboard())) throw new CardActivationException();
-        MarketStrategy strategy = new MarketStrategy(getResource());
+        MarketStrategy strategy = new MarketStrategy(getResource(), getID());
         try {
             player.addMarketStrategy(strategy);
         } catch (NoSuchStrategyException e) {

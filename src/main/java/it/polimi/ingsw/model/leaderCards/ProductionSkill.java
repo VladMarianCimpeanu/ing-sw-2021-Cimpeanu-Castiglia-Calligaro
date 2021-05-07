@@ -29,7 +29,7 @@ public class ProductionSkill extends LeaderCard{
         if(player == null || !isSatisfied(player.getDashboard())) throw new CardActivationException();
 
         Dashboard dashboard = player.getDashboard();
-        ExtraProduction extraProduction = new ExtraProduction(getResource());
+        ExtraProduction extraProduction = new ExtraProduction(getResource(), getID());
         dashboard.addExtraProduction(extraProduction);
     }
 }

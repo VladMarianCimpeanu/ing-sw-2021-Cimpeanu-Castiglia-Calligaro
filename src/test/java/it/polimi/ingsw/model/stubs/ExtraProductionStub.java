@@ -13,7 +13,7 @@ public class ExtraProductionStub extends ExtraProduction {
     private Resource resource;
 
     public ExtraProductionStub(int id, Resource resource) {
-        super(null);
+        super(null, 0);
         this.id = id;
         this.resource = resource;
     }

@@ -29,6 +29,6 @@ public class DepotSkill extends LeaderCard{
         if(player == null || !isSatisfied(player.getDashboard())) throw new CardActivationException();
 
         Dashboard dashboard = player.getDashboard();
-        dashboard.getWarehouseDepot().addExtraSlot(getResource());
+        dashboard.getWarehouseDepot().addExtraSlot(getResource(), getID());
     }
 }

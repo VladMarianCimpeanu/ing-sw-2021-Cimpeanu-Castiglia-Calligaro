@@ -11,13 +11,15 @@ public class ExtraSlot {
     private final Resource resourceExtra;
     //quantity is an integer between 0 and 2
     private int quantity;
+    private int ID;
 
     /**
      * Set the resource type that can be stored in this ExtraSlot
      */
-    public ExtraSlot(Resource resourceExtra){
+    public ExtraSlot(Resource resourceExtra, int ID){
         this.resourceExtra = resourceExtra;
         quantity = 0;
+        this.ID = ID;
     }
 
     /**

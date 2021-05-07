@@ -7,7 +7,7 @@ public class DiscountStub extends Discount {
     private Resource resource;
 
     public DiscountStub(Resource resource){
-        super(resource);
+        super(resource, 0);
         this.resource = resource;
     }
 

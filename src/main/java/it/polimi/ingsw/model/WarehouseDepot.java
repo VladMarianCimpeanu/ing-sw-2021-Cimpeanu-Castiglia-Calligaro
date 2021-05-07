@@ -277,8 +277,8 @@ public class WarehouseDepot {
      * create a new ExtraSlot object and initialize it with the resource type
      * @param resourceExtra: resource that can be stored in the extra slot
      */
-    public void addExtraSlot(Resource resourceExtra){
-        extraSlotList.add(new ExtraSlot(resourceExtra));
+    public void addExtraSlot(Resource resourceExtra, int ID){
+        extraSlotList.add(new ExtraSlot(resourceExtra, ID));
     }
 
     /**

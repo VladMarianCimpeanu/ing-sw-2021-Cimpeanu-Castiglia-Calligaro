@@ -13,12 +13,13 @@ import java.util.Map;
  */
 public class ExtraProduction implements Production{
     private final Resource resourceIn;
-
+    private int ID;
     /**
      * @param resourceIn input resource for extra production
      */
-    public ExtraProduction(Resource resourceIn){
+    public ExtraProduction(Resource resourceIn, int ID){
         this.resourceIn = resourceIn;
+        this.ID = ID;
     }
 
     /**

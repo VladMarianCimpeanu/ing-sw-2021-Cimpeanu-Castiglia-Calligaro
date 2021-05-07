@@ -11,7 +11,7 @@ public class WarehouseDepotStub1 extends WarehouseDepot {
     }
 
     @Override
-    public void addExtraSlot(Resource resourceExtra){
+    public void addExtraSlot(Resource resourceExtra, int ID){
         countExtraSlot++;
     }
 

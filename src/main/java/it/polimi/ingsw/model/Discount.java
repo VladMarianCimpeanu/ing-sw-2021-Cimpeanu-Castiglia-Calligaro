@@ -8,13 +8,15 @@ import it.polimi.ingsw.model.benefit.Resource;
  */
 public class Discount {
     private Resource resource;
+    private int ID;
 
     /**
      * Set the resource type of the discount
      * @param resource specified resource can be discounted for a development card purchase
      */
-    public Discount(Resource resource){
+    public Discount(Resource resource, int ID){
         this.resource = resource;
+        this.ID = ID;
     }
 
     /**

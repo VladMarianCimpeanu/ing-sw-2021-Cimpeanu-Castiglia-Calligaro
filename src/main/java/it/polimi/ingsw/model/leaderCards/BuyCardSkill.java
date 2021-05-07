@@ -26,7 +26,7 @@ public class BuyCardSkill extends LeaderCard{
     public void activeCard(Player player) throws CardActivationException {
         if(player == null || !isSatisfied(player.getDashboard())) throw new CardActivationException();
 
-        Discount discount = new Discount(getResource());
+        Discount discount = new Discount(getResource(), getID());
         player.addDiscount(discount);
     }
 

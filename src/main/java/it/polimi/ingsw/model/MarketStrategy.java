@@ -8,9 +8,15 @@ import it.polimi.ingsw.model.benefit.Resource;
  */
 public class MarketStrategy {
     private Resource resource;
+    private int ID;
 
-    public MarketStrategy(Resource resource){
+    public MarketStrategy(Resource resource, int ID){
         this.resource = resource;
+        this.ID = ID;
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public Resource getResource() {

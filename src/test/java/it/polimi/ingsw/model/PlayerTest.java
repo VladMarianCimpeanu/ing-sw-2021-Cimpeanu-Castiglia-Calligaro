@@ -131,7 +131,7 @@ class PlayerTest {
     void addMarketStrategyLegit() throws NoSuchStrategyException {
         Player player = new Player(null, null, null, null);
         int pre_dim = player.getMarketStrategies().size();
-        MarketStrategy strategy = new MarketStrategy(null);
+        MarketStrategy strategy = new MarketStrategy(null, 0);
         player.addMarketStrategy(strategy);
         int post_dim = player.getMarketStrategies().size();
         assertEquals(pre_dim+1, post_dim);

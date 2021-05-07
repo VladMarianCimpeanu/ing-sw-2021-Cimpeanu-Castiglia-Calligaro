@@ -266,7 +266,7 @@ class DashboardTest {
 
     @Test
     void nullExtraProduction(){
-        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN, 0));
         assertThrows(NullPointerException.class,
                 () -> dashboard.selectExtraProduction( 0, null));
     }
@@ -289,8 +289,8 @@ class DashboardTest {
 
     @Test
     void notExistingIndexExtraProduction2(){
-        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN));
-        dashboard.addExtraProduction(new ExtraProduction(Resource.STONE));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN, 0));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.STONE, 0));
 
         assertThrows(IndexOutOfBoundsException.class,
                 () -> dashboard.selectExtraProduction(2, Resource.SHIELD));
@@ -301,7 +301,7 @@ class DashboardTest {
     @Test
     void extraProductionNotAffordable() {
         warehouseDepotStub.content.put(Resource.COIN, 2);
-        dashboard.addExtraProduction(new ExtraProduction(Resource.STONE));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.STONE, 0));
 
         assertThrows(NotEnoughResourcesException.class,
                 () -> dashboard.selectExtraProduction(0, Resource.SHIELD));
@@ -312,7 +312,7 @@ class DashboardTest {
     @Test
     void selectExtraProductionTest1() throws NotEnoughResourcesException, ProductionStartedException, ProductionUsedException {
         warehouseDepotStub.content.put(Resource.COIN, 1);
-        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN, 0));
         dashboard.selectExtraProduction(0, Resource.SERVANT);
 
         assertEquals(1, dashboard.getBenefitsToProduce().get(Faith.giveFaith()));
@@ -326,8 +326,8 @@ class DashboardTest {
     void selectExtraProductionTest2() throws NotEnoughResourcesException, ProductionStartedException, ProductionUsedException {
         warehouseDepotStub.content.put(Resource.COIN, 1);
         warehouseDepotStub.content.put(Resource.SHIELD, 1);
-        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN));
-        dashboard.addExtraProduction(new ExtraProduction(Resource.SHIELD));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN, 0));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.SHIELD, 0));
         dashboard.selectExtraProduction(0, Resource.STONE);
         dashboard.selectExtraProduction(1, Resource.SERVANT);
 
@@ -342,8 +342,8 @@ class DashboardTest {
     void selectExtraProduction3() throws NotEnoughResourcesException, ProductionStartedException, RequirementsSatisfiedException, InvalidResourceException, ProductionUsedException {
         warehouseDepotStub.content.put(Resource.COIN, 1);
         warehouseDepotStub.content.put(Resource.SHIELD, 1);
-        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN));
-        dashboard.addExtraProduction(new ExtraProduction(Resource.SHIELD));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.COIN, 0));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.SHIELD, 0));
         dashboard.selectExtraProduction(0, Resource.STONE);
         dashboard.takeFromDepot(Resource.COIN);
 
@@ -556,7 +556,7 @@ class DashboardTest {
     void queriedTooManyResources() throws MissingExtraSlot, ResourceCostException, NotEnoughResourcesException, ProductionStartedException, ProductionUsedException {
         warehouseDepotStub.content.put(Resource.SHIELD, 1);
         warehouseDepotStub.content.put(Resource.STONE, 1);
-        warehouseDepotStub.addExtraSlot(Resource.COIN);
+        warehouseDepotStub.addExtraSlot(Resource.COIN, 0);
         warehouseDepotStub.addExtraResource(Resource.COIN, 2);
         Map<Resource, Integer> resBaseProd = new HashMap<>();
         resBaseProd.put(Resource.COIN, 2);
@@ -688,7 +688,7 @@ class DashboardTest {
     void queriedTooManyResourcesExtraSlot() throws ResourceCostException, NotEnoughResourcesException, ProductionStartedException, RequirementsSatisfiedException, InvalidResourceException, MissingExtraSlot, ProductionUsedException {
         strongboxStub.content.put(Resource.SHIELD, 1);
         strongboxStub.content.put(Resource.STONE, 1);
-        warehouseDepotStub.addExtraSlot(Resource.SHIELD);
+        warehouseDepotStub.addExtraSlot(Resource.SHIELD, 0);
         warehouseDepotStub.addExtraResource(Resource.SHIELD, 1);
         Map<Resource, Integer> resBaseProd = new HashMap<>();
         resBaseProd.put(Resource.SHIELD, 2);
@@ -710,7 +710,7 @@ class DashboardTest {
 
     @Test
     void takeResourceWithNoProductionExtraSlot() throws MissingExtraSlot {
-        warehouseDepotStub.addExtraSlot(Resource.SHIELD);
+        warehouseDepotStub.addExtraSlot(Resource.SHIELD, 0);
         warehouseDepotStub.addExtraResource(Resource.SHIELD, 2);
 
         assertThrows(RequirementsSatisfiedException.class,
@@ -724,7 +724,7 @@ class DashboardTest {
         strongboxStub.content.put(Resource.SHIELD, 1);
         strongboxStub.content.put(Resource.STONE, 1);
         strongboxStub.content.put(Resource.COIN, 3);
-        warehouseDepotStub.addExtraSlot(Resource.SHIELD);
+        warehouseDepotStub.addExtraSlot(Resource.SHIELD, 0);
         warehouseDepotStub.addExtraResource(Resource.SHIELD, 1);
         Map<Resource, Integer> resBaseProd = new HashMap<>();
         resBaseProd.put(Resource.COIN, 2);
@@ -740,7 +740,7 @@ class DashboardTest {
 
     @Test
     void takeResourcesNotNeeded2ExtraSlot() throws ResourceCostException, NotEnoughResourcesException, ProductionStartedException, MissingExtraSlot, ProductionUsedException {
-        warehouseDepotStub.addExtraSlot(Resource.SHIELD);
+        warehouseDepotStub.addExtraSlot(Resource.SHIELD, 0);
         warehouseDepotStub.addExtraResource(Resource.SHIELD, 2);
         strongboxStub.content.put(Resource.COIN, 3);
         Map<Resource, Integer> resBaseProd = new HashMap<>();
@@ -771,7 +771,7 @@ class DashboardTest {
     void checkResourcesInDifferentPlaces() throws MissingExtraSlot {
         warehouseDepotStub.content.put(Resource.STONE, 1);
         strongboxStub.content.put(Resource.COIN, 1);
-        warehouseDepotStub.addExtraSlot(Resource.SHIELD);
+        warehouseDepotStub.addExtraSlot(Resource.SHIELD, 0);
         warehouseDepotStub.addExtraResource(Resource.SHIELD, 2);
         Map<Resource, Integer> toBeChecked = new HashMap<>();
         toBeChecked.put(Resource.STONE, 1);
@@ -785,7 +785,7 @@ class DashboardTest {
     void checkResourcesInDifferentPlaces2() throws MissingExtraSlot {
         warehouseDepotStub.content.put(Resource.SHIELD, 1);
         strongboxStub.content.put(Resource.SHIELD, 1);
-        warehouseDepotStub.addExtraSlot(Resource.SHIELD);
+        warehouseDepotStub.addExtraSlot(Resource.SHIELD, 0);
         warehouseDepotStub.addExtraResource(Resource.SHIELD, 2);
         Map<Resource, Integer> toBeChecked = new HashMap<>();
         toBeChecked.put(Resource.SHIELD, 4);
@@ -807,7 +807,7 @@ class DashboardTest {
     void checkInsufficientResources2() {
         warehouseDepotStub.content.put(Resource.SHIELD, 1);
         strongboxStub.content.put(Resource.STONE, 1);
-        warehouseDepotStub.addExtraSlot(Resource.COIN);
+        warehouseDepotStub.addExtraSlot(Resource.COIN, 0);
         Map<Resource, Integer> toBeChecked = new HashMap<>();
         toBeChecked.put(Resource.STONE, 1);
         toBeChecked.put(Resource.SHIELD, 1);
@@ -844,7 +844,7 @@ class DashboardTest {
     void doubleProduction() throws NotEnoughResourcesException, ProductionStartedException, RequirementsSatisfiedException, InvalidResourceException, NoProductionAvailableException, ProductionUsedException {
         warehouseDepotStub.content.put(Resource.SHIELD, 1);
         strongboxStub.content.put(Resource.STONE, 1);
-        dashboard.addExtraProduction(new ExtraProduction(Resource.STONE));
+        dashboard.addExtraProduction(new ExtraProduction(Resource.STONE, 0));
         dashboard.selectExtraProduction(0, Resource.COIN);
         dashboard.takeFromStrongbox(Resource.STONE);
 
