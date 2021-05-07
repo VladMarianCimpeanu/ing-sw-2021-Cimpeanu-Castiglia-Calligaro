@@ -22,6 +22,7 @@ import static it.polimi.ingsw.model.Color.*;
 public class JsonToDevCard {
     /**
      * This method will convert all the data inside the specified file in a List of development Cards. The Json file to be read has to respect the following standards:
+     * 0- in order to make this class behave correctly, cards should be ordered by ID.
      * 1- all the cards must be in the same Json file.
      * 2- all the cards must contain the following case sensitive keys: "VictoryPoints", "Level", "ResourceCost", "ResourceIn", "BenefitOut" (keys order has no importance).
      * 3- VictoryPoints has to be a non negative integer value.
@@ -31,7 +32,7 @@ public class JsonToDevCard {
      * 6- BenefitOut is a Map which can not contain keys different from the following case sensitive keys: "STONE", "COIN", "SHIELD", "SERVANT", "FAITH"(order does not matter).
      *    Non negative values are the only values accepted for these keys. If a key misses it is assumed that its value is 0.
      * @param in is a specified FileInputStream used to open Json file with development cards information.
-     * @return a list of DevelopmentCard with all the cards read from the file.
+     * @return a list of DevelopmentCard with all the cards read from the file. The list contains the development cards ordered by ID.
      * @throws IOException if a general error occurred opening/reading/closing the specified file.
      * @throws NoSuchElementException if an element read is anomalous.
      * @throws InvalidReadException if a card misses some data.
@@ -72,6 +73,7 @@ public class JsonToDevCard {
     private DevelopmentCard readDevelopmentCard(JsonReader reader) throws IOException, NoSuchElementException, InvalidReadException {
         int victoryPoints = -1;
         int level = -1;
+        int ID = -1;
         Color color = null;
         Map<Resource, Integer> ResourceCost = null;
         Map<Resource, Integer> ResourceIn = null;
@@ -82,6 +84,9 @@ public class JsonToDevCard {
         while (reader.hasNext()) {
             String name = reader.nextName();
             switch (name) {
+                case "ID":
+                    ID = reader.nextInt();
+                    break;
                 case "VictoryPoints":
                     victoryPoints = reader.nextInt();
                     if(victoryPoints < 0) throw new NoSuchElementException("Negative victory points are not allowed. Founded VICTORY POINTS == " + victoryPoints );
@@ -123,6 +128,7 @@ public class JsonToDevCard {
             }
         }
         reader.endObject();
+        if(ID == -1) throw new IOException("This card misses the ID");
         if(victoryPoints ==  -1) throw new InvalidReadException("This card misses VictoryPoints");
         if(level ==  -1) throw new InvalidReadException("This card misses level");
         if(color ==  null) throw new InvalidReadException("This card misses color");
@@ -130,7 +136,7 @@ public class JsonToDevCard {
         if(ResourceIn ==  null) throw new InvalidReadException("This card misses ResourceIn");
         if(ResourceOut ==  null) throw new InvalidReadException("This card misses ResourceOut");
 
-        return new DevelopmentCard(victoryPoints, level, color, ResourceCost, ResourceIn, ResourceOut);
+        return new DevelopmentCard(ID, victoryPoints, level, color, ResourceCost, ResourceIn, ResourceOut);
     }
 
 

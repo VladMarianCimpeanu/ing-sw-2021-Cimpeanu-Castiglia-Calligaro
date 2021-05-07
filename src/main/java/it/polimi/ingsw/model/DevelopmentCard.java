@@ -18,16 +18,20 @@ public class DevelopmentCard implements Production{
     private  int level;
     private  Color color;
     private  int victoryPointsAmount;
+    private int ID;
 
-    public DevelopmentCard(int victoryPointsAmount, int level, Color color, Map<Resource, Integer> resourceCost, Map<Resource, Integer> resourceIn, Map<Benefit, Integer> resourceOut )  {
+    public DevelopmentCard(int ID, int victoryPointsAmount, int level, Color color, Map<Resource, Integer> resourceCost, Map<Resource, Integer> resourceIn, Map<Benefit, Integer> resourceOut )  {
         this.victoryPointsAmount = victoryPointsAmount;
         this.level = level;
         this.color = color;
         this.resourceCost = resourceCost;
         this.resourceIn = resourceIn;
         this.resourceOut = resourceOut;
+        this.ID = ID;
     }
-
+    public int getID(){
+        return ID;
+    }
     public DevelopmentCard(String path){
 
     }

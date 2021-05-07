@@ -1,5 +1,6 @@
 [
   {
+    "ID": 1,
     "VictoryPoints": 1,
     "Level": 1,
     "Color": "GREEN",
@@ -8,6 +9,7 @@
     "BenefitOut": {"FAITH": 1}
   },
   {
+    "ID": 2,
     "VictoryPoints": 1,
     "Level": 1,
     "Color": "PURPLE",
@@ -16,6 +18,7 @@
     "BenefitOut": {"FAITH": 1}
   },
   {
+    "ID": 3,
     "VictoryPoints": 1,
     "Level": 1,
     "Color": "BLUE",
@@ -24,6 +27,7 @@
     "BenefitOut": {"FAITH": 1}
   },
   {
+    "ID": 4,
     "VictoryPoints": 1,
     "Level": 1,
     "Color": "YELLOW",
@@ -32,6 +36,7 @@
     "BenefitOut": {"FAITH": 1}
   },
   {
+    "ID": 5,
     "VictoryPoints": 2,
     "Level": 1,
     "Color": "GREEN",
@@ -40,6 +45,7 @@
     "BenefitOut": {"SERVANT": 1}
   },
   {
+    "ID": 6,
     "VictoryPoints": 2,
     "Level": 1,
     "Color": "PURPLE",
@@ -48,6 +54,7 @@
     "BenefitOut": {"SHIELD": 1}
   },
   {
+    "ID": 7,
     "VictoryPoints": 2,
     "Level": 1,
     "Color": "BLUE",
@@ -56,6 +63,7 @@
     "BenefitOut": {"STONE": 1}
   },
   {
+    "ID": 8,
     "VictoryPoints": 2,
     "Level": 1,
     "Color": "YELLOW",
@@ -64,6 +72,7 @@
     "BenefitOut": {"COIN": 1}
   },
   {
+    "ID": 9,
     "VictoryPoints": 3,
     "Level": 1,
     "Color": "GREEN",
@@ -72,6 +81,7 @@
     "BenefitOut": {"COIN": 1, "STONE": 1, "SHIELD": 1}
   },
   {
+    "ID": 10,
     "VictoryPoints": 3,
     "Level": 1,
     "Color": "PURPLE",
@@ -80,6 +90,7 @@
     "BenefitOut": {"SERVANT": 1, "STONE": 1, "SHIELD": 1}
   },
   {
+    "ID": 11,
     "VictoryPoints": 3,
     "Level": 1,
     "Color": "BLUE",
@@ -88,6 +99,7 @@
     "BenefitOut": {"SERVANT": 1, "COIN": 1, "SHIELD": 1}
   },
   {
+    "ID": 12,
     "VictoryPoints": 3,
     "Level": 1,
     "Color": "YELLOW",
@@ -96,6 +108,7 @@
     "BenefitOut": {"COIN": 1, "STONE": 1, "SERVANT": 1}
   },
   {
+    "ID": 13,
     "VictoryPoints": 4,
     "Level": 1,
     "Color": "GREEN",
@@ -104,6 +117,7 @@
     "BenefitOut": {"COIN": 2, "FAITH": 1}
   },
   {
+    "ID": 14,
     "VictoryPoints": 4,
     "Level": 1,
     "Color": "PURPLE",
@@ -112,6 +126,7 @@
     "BenefitOut": {"STONE": 2, "FAITH": 1}
   },
   {
+    "ID": 15,
     "VictoryPoints": 4,
     "Level": 1,
     "Color": "BLUE",
@@ -120,6 +135,7 @@
     "BenefitOut": {"SERVANT": 2, "FAITH": 1}
   },
   {
+    "ID": 16,
     "VictoryPoints": 4,
     "Level": 1,
     "Color": "YELLOW",
@@ -128,6 +144,7 @@
     "BenefitOut": {"SHIELD": 2, "FAITH": 1}
   },
   {
+    "ID": 17,
     "VictoryPoints": 5,
     "Level": 2,
     "Color": "GREEN",
@@ -136,6 +153,7 @@
     "BenefitOut": {"FAITH": 2}
   },
   {
+    "ID": 18,
     "VictoryPoints": 5,
     "Level": 2,
     "Color": "PURPLE",
@@ -144,6 +162,7 @@
     "BenefitOut": {"FAITH": 2}
   },
   {
+    "ID": 19,
     "VictoryPoints": 5,
     "Level": 2,
     "Color": "BLUE",
@@ -152,6 +171,7 @@
     "BenefitOut": {"FAITH": 2}
   },
   {
+    "ID": 20,
     "VictoryPoints": 5,
     "Level": 2,
     "Color": "YELLOW",
@@ -160,6 +180,7 @@
     "BenefitOut": {"FAITH": 2}
   },
   {
+    "ID": 21,
     "VictoryPoints": 6,
     "Level": 2,
     "Color": "GREEN",
@@ -168,6 +189,7 @@
     "BenefitOut": {"STONE": 3}
   },
   {
+    "ID": 22,
     "VictoryPoints": 6,
     "Level": 2,
     "Color": "PURPLE",
@@ -176,6 +198,7 @@
     "BenefitOut": {"SHIELD": 3}
   },
   {
+    "ID": 23,
     "VictoryPoints": 6,
     "Level": 2,
     "Color": "BLUE",
@@ -184,6 +207,7 @@
     "BenefitOut": {"SERVANT": 3}
   },
   {
+    "ID": 24,
     "VictoryPoints": 6,
     "Level": 2,
     "Color": "YELLOW",
@@ -192,6 +216,7 @@
     "BenefitOut": {"COIN": 3}
   },
   {
+    "ID": 25,
     "VictoryPoints": 7,
     "Level": 2,
     "Color": "GREEN",
@@ -200,6 +225,7 @@
     "BenefitOut": {"STONE": 2, "FAITH": 2}
   },
   {
+    "ID": 26,
     "VictoryPoints": 7,
     "Level": 2,
     "Color": "PURPLE",
@@ -208,6 +234,7 @@
     "BenefitOut": {"COIN": 2, "FAITH": 2}
   },
   {
+    "ID": 27,
     "VictoryPoints": 7,
     "Level": 2,
     "Color": "BLUE",
@@ -216,6 +243,7 @@
     "BenefitOut": {"SHIELD": 2, "FAITH": 2}
   },
   {
+    "ID": 28,
     "VictoryPoints": 7,
     "Level": 2,
     "Color": "YELLOW",
@@ -224,6 +252,7 @@
     "BenefitOut": {"SERVANT": 2, "FAITH": 2}
   },
   {
+    "ID": 29,
     "VictoryPoints": 8,
     "Level": 2,
     "Color": "GREEN",
@@ -232,6 +261,7 @@
     "BenefitOut": {"SHIELD": 2, "FAITH": 1}
   },
   {
+    "ID": 30,
     "VictoryPoints": 8,
     "Level": 2,
     "Color": "PURPLE",
@@ -240,6 +270,7 @@
     "BenefitOut": {"SERVANT": 2, "FAITH": 1}
   },
   {
+    "ID": 31,
     "VictoryPoints": 8,
     "Level": 2,
     "Color": "BLUE",
@@ -248,6 +279,7 @@
     "BenefitOut": {"STONE": 2, "FAITH": 1}
   },
   {
+    "ID": 32,
     "VictoryPoints": 8,
     "Level": 2,
     "Color": "YELLOW",
@@ -256,6 +288,7 @@
     "BenefitOut": {"COIN": 2, "FAITH": 1}
   },
   {
+    "ID": 33,
     "VictoryPoints": 9,
     "Level": 3,
     "Color": "GREEN",
@@ -264,6 +297,7 @@
     "BenefitOut": {"STONE": 3, "FAITH": 2}
   },
   {
+    "ID": 34,
     "VictoryPoints": 9,
     "Level": 3,
     "Color": "PURPLE",
@@ -272,6 +306,7 @@
     "BenefitOut": {"COIN": 3, "FAITH": 2}
   },
   {
+    "ID": 35,
     "VictoryPoints": 9,
     "Level": 3,
     "Color": "BLUE",
@@ -280,6 +315,7 @@
     "BenefitOut": {"SHIELD": 3, "FAITH": 2}
   },
   {
+    "ID": 36,
     "VictoryPoints": 9,
     "Level": 3,
     "Color": "YELLOW",
@@ -288,6 +324,7 @@
     "BenefitOut": {"SERVANT": 3, "FAITH": 2}
   },
   {
+    "ID": 37,
     "VictoryPoints": 10,
     "Level": 3,
     "Color": "GREEN",
@@ -296,6 +333,7 @@
     "BenefitOut": {"SHIELD": 2, "STONE": 2, "FAITH": 1}
   },
   {
+    "ID": 38,
     "VictoryPoints": 10,
     "Level": 3,
     "Color": "PURPLE",
@@ -304,6 +342,7 @@
     "BenefitOut": {"COIN": 2, "SERVANT": 2, "FAITH": 1}
   },
   {
+    "ID": 39,
     "VictoryPoints": 10,
     "Level": 3,
     "Color": "BLUE",
@@ -312,6 +351,7 @@
     "BenefitOut": {"SERVANT": 2, "STONE": 2, "FAITH": 1}
   },
   {
+    "ID": 40,
     "VictoryPoints": 10,
     "Level": 3,
     "Color": "YELLOW",
@@ -320,6 +360,7 @@
     "BenefitOut": {"COIN": 2, "SHIELD": 2, "FAITH": 1}
   },
   {
+    "ID": 41,
     "VictoryPoints": 11,
     "Level": 3,
     "Color": "GREEN",
@@ -328,6 +369,7 @@
     "BenefitOut": {"COIN": 1, "FAITH": 3}
   },
   {
+    "ID": 42,
     "VictoryPoints": 11,
     "Level": 3,
     "Color": "PURPLE",
@@ -336,6 +378,7 @@
     "BenefitOut": {"STONE": 1, "FAITH": 3}
   },
   {
+    "ID": 43,
     "VictoryPoints": 11,
     "Level": 3,
     "Color": "BLUE",
@@ -344,6 +387,7 @@
     "BenefitOut": {"SHIELD": 1, "FAITH": 3}
   },
   {
+    "ID": 44,
     "VictoryPoints": 11,
     "Level": 3,
     "Color": "YELLOW",
@@ -352,6 +396,7 @@
     "BenefitOut": {"SERVANT": 1, "FAITH": 3}
   },
   {
+    "ID": 45,
     "VictoryPoints": 12,
     "Level": 3,
     "Color": "GREEN",
@@ -360,6 +405,7 @@
     "BenefitOut": {"COIN": 3, "SHIELD": 1}
   },
   {
+    "ID": 46,
     "VictoryPoints": 12,
     "Level": 3,
     "Color": "PURPLE",
@@ -368,6 +414,7 @@
     "BenefitOut": {"STONE": 3, "SERVANT": 1}
   },
   {
+    "ID": 47,
     "VictoryPoints": 12,
     "Level": 3,
     "Color": "BLUE",
@@ -376,6 +423,7 @@
     "BenefitOut": {"SHIELD": 3, "COIN": 1}
   },
   {
+    "ID": 48,
     "VictoryPoints": 12,
     "Level": 3,
     "Color": "YELLOW",

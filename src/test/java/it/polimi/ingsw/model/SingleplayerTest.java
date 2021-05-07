@@ -28,8 +28,8 @@ class SingleplayerTest {
         int pre_size = game.getAvailableActionTokens().size();
         ActionToken top = game.getAvailableActionTokens().get(pre_size - 1);
         game.drawToken();
-        assertTrue(top == game.getAvailableActionTokens().get(0));
-        assertTrue(pre_size == game.getAvailableActionTokens().size());
+        assertSame(top, game.getAvailableActionTokens().get(0));
+        assertEquals(pre_size, game.getAvailableActionTokens().size());
     }
 
     /**
@@ -37,12 +37,12 @@ class SingleplayerTest {
      */
     @Test
     void shuffleToken() {
-        Map<ActionToken, Integer> pre_positions = new HashMap<ActionToken, Integer>();
+        Map<ActionToken, Integer> pre_positions = new HashMap<>();
         for(ActionToken token : game.getAvailableActionTokens())
             pre_positions.put(token, game.getAvailableActionTokens().indexOf(token));
         int pre_size = game.getAvailableActionTokens().size();
         game.shuffleToken();
-        Map<ActionToken, Integer> post_positions = new HashMap<ActionToken, Integer>();
+        Map<ActionToken, Integer> post_positions = new HashMap<>();
         for(ActionToken token : game.getAvailableActionTokens())
             post_positions.put(token, game.getAvailableActionTokens().indexOf(token));
         int post_size = game.getAvailableActionTokens().size();

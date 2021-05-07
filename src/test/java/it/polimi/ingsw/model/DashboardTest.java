@@ -506,7 +506,7 @@ class DashboardTest {
         resIn.put(Resource.COIN, 2);
         benefitOut.put(Faith.giveFaith(), 2);
         benefitOut.put(Resource.STONE, 1);
-        DevelopmentCard card = new DevelopmentCard(1, 1, Color.BLUE, null, resIn, benefitOut);
+        DevelopmentCard card = new DevelopmentCard(1,1, 1, Color.BLUE, null, resIn, benefitOut);
         dashboard.addDevelopmentCard(card, 2);
         warehouseDepotStub.content.put(Resource.COIN, 2);
 
@@ -526,7 +526,7 @@ class DashboardTest {
         resBaseProd.put(Resource.COIN, 2);
         benefitOut.put(Faith.giveFaith(), 2);
         benefitOut.put(Resource.STONE, 1);
-        DevelopmentCard card = new DevelopmentCard(1, 1, Color.BLUE, null, resIn, benefitOut);
+        DevelopmentCard card = new DevelopmentCard(1, 1, 1, Color.BLUE, null, resIn, benefitOut);
         dashboard.addDevelopmentCard(card, 2);
         warehouseDepotStub.content.put(Resource.COIN, 4);
         warehouseDepotStub.content.put(Resource.SHIELD, 3);
