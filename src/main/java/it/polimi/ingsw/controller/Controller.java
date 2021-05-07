@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +62,9 @@ public class Controller {
     public void rejoinClient(EchoServerClientHandler client, String nickname) {
 
     }
+    public Player getCurrentPlayer(){
+        return players.get(currentUser);
+    }
 
     public Identity getIdentity(String nickname){
         return players.get(nickname).getIdentity();
@@ -87,6 +91,26 @@ public class Controller {
     }
 
     public void nextTurn(){
-
+        int pos = turns.indexOf(currentUser);
+        pos = (pos+1)%turns.size();
+        currentUser = turns.get(pos);
+        if(!getCurrentPlayer().isOnline()) {
+            nextTurn();
+            //possible problems if everyone in the game is disconnected
+            return;
+        }
+        try {
+            nicknames.get(currentUser).setSocketTimeOut(30*1000);
+        } catch (SocketException e) {
+            getCurrentPlayer().getIdentity().setOnline(false);
+        }
+        for(String user: turns) {
+            if (user.equals(currentUser)) continue;
+            try {
+                nicknames.get(user).setSocketTimeOut(0);
+            } catch (SocketException e) {
+                players.get(user).getIdentity().setOnline(false);
+            }
+        }
     }
 }

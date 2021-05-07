@@ -67,7 +67,7 @@ public class JsonToLeaderCard {
                             case "depot":
                                 cards.add(new DepotSkill(requirements, resource, victoryPointsAmount));
                                 break;
-                            case "buycard":
+                            case "buyCard":
                                 cards.add(new BuyCardSkill(requirements, resource, victoryPointsAmount));
                                 break;
                             case "production":

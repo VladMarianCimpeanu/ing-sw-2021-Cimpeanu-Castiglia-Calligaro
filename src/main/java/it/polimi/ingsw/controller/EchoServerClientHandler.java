@@ -194,6 +194,11 @@ public class EchoServerClientHandler implements Runnable {
     public String getNickname() {
         return nickname;
     }
+
+    public void setSocketTimeOut(int time) throws SocketException {
+        if(time < 0) socket.setSoTimeout(0);
+        else socket.setSoTimeout(time);
+    }
 }
 
 class CrashException extends Exception {

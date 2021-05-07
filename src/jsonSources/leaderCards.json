@@ -1,6 +1,6 @@
 [
   {
-    "type" : "buycard",
+    "type" : "buyCard",
     "resource" : "SERVANT",
     "victoryPoints" : "2",
     "type_req" : "development",
@@ -19,7 +19,7 @@
   ]
   }
 , {
-  "type" : "buycard",
+  "type" : "buyCard",
   "resource" : "SHIELD",
   "victoryPoints" : "2",
   "type_req" : "development",
@@ -38,7 +38,7 @@
   ]
 },
   {
-    "type" : "buycard",
+    "type" : "buyCard",
     "resource" : "STONE",
     "victoryPoints" : "2",
     "type_req" : "development",
@@ -57,7 +57,7 @@
     ]
 },
   {
-    "type" : "buycard",
+    "type" : "buyCard",
     "resource" : "COIN",
     "victoryPoints" : "2",
     "type_req" : "development",
