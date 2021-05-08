@@ -11,6 +11,8 @@ public class BaseProdInState extends TurnState {
 
     @Override
     public void selectInput(Resource res1, Resource res2) {
-
+        Controller controller = getController();
+        controller.sendSimple("select","resOut");
+        controller.setCurrentState(new BaseProdOutState(controller, res1, res2));
     }
 }

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller.states;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.model.Dashboard;
+import it.polimi.ingsw.model.exceptions.NoProductionAvailableException;
 
 public class ActivateProdState extends TurnState {
 
@@ -10,6 +12,15 @@ public class ActivateProdState extends TurnState {
 
     @Override
     public void activateProduction() {
+        Controller controller = getController();
+        Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
 
+        try {
+            dashboard.activateProduction();
+        } catch (NoProductionAvailableException e) {
+            e.printStackTrace();
+        }finally {
+            controller.setCurrentState(new ProductionState(controller));
+        }
     }
 }

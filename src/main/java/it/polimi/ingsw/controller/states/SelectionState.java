@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.leaderCards.LeaderCard;
 
 import static it.polimi.ingsw.controller.states.ErrorMessage.*;
+import it.polimi.ingsw.model.Dashboard;
+import it.polimi.ingsw.model.DevelopmentCard;
+import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
 
@@ -76,16 +79,38 @@ public class SelectionState extends TurnState {
 
     @Override
     public void activateDevCard(int deckIndex) {
+        Controller controller = getController();
+        Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
+        DevelopmentCard card = dashboard.getActivableDevCards().get(deckIndex);
+        controller.sendSimple("resourceCost", card.getResourceCost().toString());
 
+        try {
+            dashboard.selectCardProduction(deckIndex);
+            controller.setCurrentState(new CardProdState(controller));
+        } catch (InvalidDeckPositionException e) {
+            controller.sendError("invalidDeckIndex");
+        } catch (NotEnoughResourcesException e) {
+            controller.sendError("notEnoughResources");
+        } catch (NoCardException e) {
+            controller.sendError("noCard");
+        } catch (ProductionStartedException e) {
+            controller.sendError("productionStarted");
+        } catch (ProductionUsedException e) {
+            controller.sendError("productionUsed");
+        }
     }
 
     @Override
     public void activateBase() {
-
+        Controller controller = getController();
+        controller.sendSimple("select","resIn");
+        controller.setCurrentState(new BaseProdInState(controller));
     }
 
     @Override
     public void activateExtra(int id) {
-
+        Controller controller = getController();
+        controller.sendSimple("select","resOut");
+        controller.setCurrentState(new ExtraProdOutState(controller, id));
     }
 }
