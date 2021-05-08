@@ -7,15 +7,16 @@ import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
 
+import static it.polimi.ingsw.controller.states.ErrorMessage.*;
+
 /**
  * This class represents the state reached by the player during his turn.
  */
 public abstract class TurnState {
     private Controller controller;
-    private final String error;
+
     public TurnState(Controller controller) {
         this.controller = controller;
-        error = "InvalidCommand";
     }
 
     /**
@@ -35,9 +36,9 @@ public abstract class TurnState {
         try {
             controller.getCurrentPlayer().getDashboard().getWarehouseDepot().move(fromShelf, toShelf);
         } catch (NotEnoughSpaceException e) {
-            controller.sendError("NotEnoughSpace");
+            controller.sendError(notEnoughSpace.toString());
         } catch (InvalidShelfPosition e) {
-            controller.sendError("invalidShelf");
+            controller.sendError(invalidShelf.toString());
         }
     }
 
@@ -51,13 +52,13 @@ public abstract class TurnState {
             Resource extraSlot = controller.getCurrentPlayer().getDashboard().getWarehouseDepot().getExtraSlot(leaderId).getResource();
             controller.getCurrentPlayer().getDashboard().getWarehouseDepot().moveFromSlotToShelf(extraSlot, quantityToMove, shelf);
         } catch (InvalidIDExcpetion | InvalidResourceException e) {
-            controller.sendError("InvalidLeaderID");
+            controller.sendError(invalidLeaderCardID.toString());
         } catch (NotEnoughSpaceException e) {
-            controller.sendError("NotEnoughSpace");
+            controller.sendError(notEnoughSpace.toString());
         } catch (ExistingResourceException e) {
-            controller.sendError("OtherExistingResource");
+            controller.sendError(existingResource.toString());
         } catch (InvalidShelfPosition e) {
-            controller.sendError("invalidShelf");
+            controller.sendError(invalidShelf.toString());
         }
     }
 
@@ -70,11 +71,11 @@ public abstract class TurnState {
         try {
             controller.getCurrentPlayer().getDashboard().getWarehouseDepot().moveFromShelfToSlot(shelf, quantityToMove);
         } catch (NotEnoughSpaceException e) {
-            controller.sendError("NotEnoughSpace");
+            controller.sendError(notEnoughSpace.toString());
         } catch (MissingExtraSlot missingExtraSlot) {
-            controller.sendError("InvalidLeaderID");
+            controller.sendError(invalidLeaderCardID.toString());
         } catch (InvalidShelfPosition e) {
-            controller.sendError("invalidShelf");
+            controller.sendError(invalidShelf.toString());
         }
     }
 
@@ -84,7 +85,7 @@ public abstract class TurnState {
      * @param id leaderCard's ID
      */
     public void activateLeaderCard(int id) {
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -93,7 +94,7 @@ public abstract class TurnState {
      * @param id leaderCard's ID
      */
     public void discardLeaderCard(int id) {
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -102,7 +103,7 @@ public abstract class TurnState {
      * @param position row or column position
      */
     public void goToMarket(String direction, int position) {
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -111,7 +112,7 @@ public abstract class TurnState {
      * @param id leaderCard's ID
      */
     public void addStrategy(int id) {
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -120,7 +121,7 @@ public abstract class TurnState {
      * @param shelf specified depot's shelf to place the resource.
      */
     public void putWarehouse(Resource resource, int shelf){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -128,7 +129,7 @@ public abstract class TurnState {
      * @param resource specified resource to place in an extraSlot.
      */
     public void putExtraSlot(Resource resource){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -136,7 +137,7 @@ public abstract class TurnState {
      * @param resource specified resource to discard.
      */
     public void discardRes(Resource resource){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -144,7 +145,7 @@ public abstract class TurnState {
      * @param discountId id of the leaderCard to buy.
      */
     public void buyDevCard(Color color, int level, ArrayList<Integer> discountId){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -154,7 +155,7 @@ public abstract class TurnState {
      *                 'depot' or 'strongbox'
      */
     public void pay(Resource resource, String position){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -163,7 +164,7 @@ public abstract class TurnState {
      * @param deck between 1 and 3
      */
     public void placeDevCard(int deck){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -172,7 +173,7 @@ public abstract class TurnState {
      * @param deckIndex index of the selected development card (from 1 to 3).
      */
     public void activateDevCard(int deckIndex){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -181,7 +182,7 @@ public abstract class TurnState {
      * @param id ID of the selected leaderCard.
      */
     public void activateExtra(int id){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -190,7 +191,7 @@ public abstract class TurnState {
      * @param resource specified resource to take after the production.
      */
     public void selectOutput(Resource resource){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -199,14 +200,14 @@ public abstract class TurnState {
      * @param position position of the required resource: values allowed are 'depot', 'strongbox' and 'extraSlot'
      */
     public void selectInputPosition(String position){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
      * If this method is performed during the wrong turn, it will send an error message to the controller
      */
     public void activateBase(){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -215,7 +216,7 @@ public abstract class TurnState {
      * @param res2 second resource to take as input for the production
      */
     public void selectInput(Resource res1, Resource res2){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -223,7 +224,7 @@ public abstract class TurnState {
      * If this method is performed during the wrong turn, it will send an error message to the controller
      */
     public void activateProduction(){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
 
     /**
@@ -231,6 +232,7 @@ public abstract class TurnState {
      * If this method is performed during the wrong turn, it will send an error message to the controller
      */
     public void end(){
-        controller.sendError(error);
+        controller.sendError(invalidCommand.toString());
     }
+    
 }

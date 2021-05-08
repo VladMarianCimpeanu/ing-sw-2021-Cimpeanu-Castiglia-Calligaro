@@ -6,6 +6,8 @@ import it.polimi.ingsw.model.exceptions.NoCardException;
 import it.polimi.ingsw.model.exceptions.RequirementException;
 import it.polimi.ingsw.model.leaderCards.LeaderCard;
 
+import static it.polimi.ingsw.controller.states.ErrorMessage.*;
+
 public class EndTurnState extends TurnState {
 
     public EndTurnState(Controller controller) {
@@ -24,9 +26,9 @@ public class EndTurnState extends TurnState {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);
             getController().getCurrentPlayer().activateLeaderCard(leaderCard);
         } catch (NoCardException e) {
-            getController().sendError("invalidLeaderCardID");
+            getController().sendError(invalidLeaderCardID.toString());
         } catch (RequirementException e) {
-            getController().sendError("Requirements not satisfied");
+            getController().sendError(requirementsNotSatisfied.toString());
         }
     }
 
@@ -36,7 +38,7 @@ public class EndTurnState extends TurnState {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);
             getController().getCurrentPlayer().discardLeaderCard(leaderCard);
         } catch (NoCardException e) {
-            getController().sendError("invalidLeaderCardID");
+            getController().sendError(invalidLeaderCardID.toString());
         }
 
     }
