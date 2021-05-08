@@ -56,6 +56,18 @@ public class Dashboard {
     }
 
     /**
+     * @param id Identifier of the leadercard associated with the extraProduction
+     * @return the ExtraProduction selected by id
+     * @throws InvalidIDExcpetion if ID is not found in the extraProductions
+     */
+    public ExtraProduction getExtraProduction(int id) throws InvalidIDExcpetion{
+        for(ExtraProduction e: extraProductions){
+            if (e.getID() == id) return e;
+        }
+        throw new InvalidIDExcpetion();
+    }
+
+    /**
      * This method return development decks owned by the player: left deck[0], central deck[1],  right deck[2].
      * @return an ArrayList of 3 developmentCard Decks
      */

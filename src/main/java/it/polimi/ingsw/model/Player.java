@@ -42,6 +42,30 @@ public class Player {
         marketStrategyStack = new Stack<>();
     }
 
+    /**
+     * @param id Identifier of the leadercard associated with the discount
+     * @return the discount selected by id
+     * @throws InvalidIDExcpetion if ID is not found in the discount list
+     */
+    public Discount getDiscount(int id) throws InvalidIDExcpetion{
+        for(Discount d: discountList){
+            if (d.getID() == id) return d;
+        }
+        throw new InvalidIDExcpetion();
+    }
+
+    /**
+     * @param id Identifier of the leadercard associated with the market strategy
+     * @return the market strategy selected by id
+     * @throws InvalidIDExcpetion if ID is not found in the market strategy list
+     */
+    public MarketStrategy getMarketStrategy(int id) throws InvalidIDExcpetion{
+        for(MarketStrategy m: marketStrategies){
+            if (m.getID() == id) return m;
+        }
+        throw new InvalidIDExcpetion();
+    }
+
     public ArrayList<LeaderCard> getLeaderCards(){
         return leaderCards;
     }

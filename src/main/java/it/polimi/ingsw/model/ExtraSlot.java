@@ -67,4 +67,8 @@ public class ExtraSlot {
     public int getQuantity(){
         return quantity;
     }
+
+    public int getID() {
+        return ID;
+    }
 }

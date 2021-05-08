@@ -26,4 +26,8 @@ public class Discount {
     public Resource getResource() {
         return resource;
     }
+
+    public int getID() {
+        return ID;
+    }
 }

@@ -40,4 +40,8 @@ public class ExtraProduction implements Production{
         resourcesProduced.put(resourceOut, 1);
         return resourcesProduced;
     }
+
+    public int getID() {
+        return ID;
+    }
 }

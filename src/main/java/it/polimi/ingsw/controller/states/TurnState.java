@@ -150,7 +150,7 @@ public abstract class TurnState {
     /**
      * Activate the production of the specified development card.
      * If this method is performed during the wrong turn, it will send an error message to the controller
-     * @param deckIndex index of the selected development card.
+     * @param deckIndex index of the selected development card (from 1 to 3).
      */
     public void activateDevCard(int deckIndex){
         controller.sendError(error);
@@ -185,9 +185,8 @@ public abstract class TurnState {
 
     /**
      * If this method is performed during the wrong turn, it will send an error message to the controller
-     * @param id
      */
-    public void activateBase(int id){
+    public void activateBase(){
         controller.sendError(error);
     }
 

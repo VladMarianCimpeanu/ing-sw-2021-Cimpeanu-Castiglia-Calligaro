@@ -36,7 +36,7 @@ public class SelectionState extends TurnState {
     }
 
     @Override
-    public void activateBase(int id) {
+    public void activateBase() {
 
     }
 

@@ -33,6 +33,18 @@ public class WarehouseDepot {
     }
 
     /**
+     * @param id Identifier of the leadercard associated with the extra slot
+     * @return the extra slot selected by id
+     * @throws InvalidIDExcpetion if ID is not found in the extra slot list
+     */
+    public ExtraSlot getExtraSlot(int id) throws InvalidIDExcpetion{
+        for(ExtraSlot e: extraSlotList){
+            if (e.getID() == id) return e;
+        }
+        throw new InvalidIDExcpetion();
+    }
+
+    /**
      *
      * @param shelf: integer between 1 and 3
      * @return what kind of resource is contained in the shelf
