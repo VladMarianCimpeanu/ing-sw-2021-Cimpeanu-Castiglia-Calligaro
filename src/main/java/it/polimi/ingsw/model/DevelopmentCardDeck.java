@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.JsonToDevCard;
 import it.polimi.ingsw.model.exceptions.InvalidReadException;
+import it.polimi.ingsw.model.exceptions.NoCardException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,7 +38,8 @@ public abstract class DevelopmentCardDeck {
      * @throws IOException if an error occurred during opening/reading/closing the default file
      * @throws InvalidReadException if the read file is damaged: read an non-excepted data or the file misses some data.
      */
-    public static DevelopmentCard getDevelopmentCard(int ID) throws IOException, InvalidReadException {
+    public static DevelopmentCard getDevelopmentCard(int ID) throws IOException, InvalidReadException, NoCardException {
+        if (ID < 1 || ID > 48) throw new NoCardException();
         if (cards == null) {
             JsonToDevCard myJsonReader = new JsonToDevCard();
             String path = "src/jsonSources/developmentCard.json";

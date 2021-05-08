@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.InvalidReadException;
+import it.polimi.ingsw.model.exceptions.NoCardException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ class DevelopmentCardDeckTest {
 
     @Test
     @DisplayName("Checking correct IDs")
-    void getCard() throws InvalidReadException, IOException {
+    void getCard() throws InvalidReadException, IOException, NoCardException {
         assertEquals(1, DevelopmentCardDeck.getDevelopmentCard(1).getID());
         assertEquals(2, DevelopmentCardDeck.getDevelopmentCard(2).getID());
         assertEquals(10, DevelopmentCardDeck.getDevelopmentCard(10).getID());
@@ -29,5 +30,14 @@ class DevelopmentCardDeckTest {
         assertEquals(12, DevelopmentCardDeck.getDevelopmentCard(12).getID());
         assertEquals(18, DevelopmentCardDeck.getDevelopmentCard(18).getID());
         assertEquals(8, DevelopmentCardDeck.getDevelopmentCard(8).getID());
+    }
+
+    @Test
+    @DisplayName("Checking incorrect developmentCardIDs")
+    void incorrectDevId() {
+        assertThrows(NoCardException.class, () ->
+                DevelopmentCardDeck.getDevelopmentCard(0));
+        assertThrows(NoCardException.class, () ->
+                DevelopmentCardDeck.getDevelopmentCard(49));
     }
 }

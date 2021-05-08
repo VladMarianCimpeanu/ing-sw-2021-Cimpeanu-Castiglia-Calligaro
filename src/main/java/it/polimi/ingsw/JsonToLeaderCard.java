@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.benefit.Resource;
+import it.polimi.ingsw.model.exceptions.NoCardException;
 import it.polimi.ingsw.model.leaderCards.*;
 
 import java.io.*;
@@ -23,6 +24,24 @@ public class JsonToLeaderCard {
         if(leaderCardsSet == null)
             leaderCardsSet = parseLeaderCards();
         return new ArrayList<>(leaderCardsSet);
+    }
+
+    /**
+     * @param ID specified leaderCard's ID
+     * @return the leaderCard with the specified ID; if no leaderCard has the specified ID, it returns null.
+     */
+    public static LeaderCard getLeaderCard(int ID) throws NoCardException {
+        if(leaderCardsSet == null) {
+            try {
+                leaderCardsSet = parseLeaderCards();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (ID > 0 && ID < 17) {
+            return leaderCardsSet.get(ID - 1);
+        }
+        throw new NoCardException();
     }
 
     private static ArrayList<LeaderCard> parseLeaderCards() throws IOException {

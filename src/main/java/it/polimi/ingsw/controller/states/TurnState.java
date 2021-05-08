@@ -3,8 +3,7 @@ package it.polimi.ingsw.controller.states;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.benefit.Resource;
-import it.polimi.ingsw.model.exceptions.InvalidShelfPosition;
-import it.polimi.ingsw.model.exceptions.NotEnoughSpaceException;
+import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
 
@@ -48,6 +47,18 @@ public abstract class TurnState {
      * @param quantityToMove quantity of resources moved from the extra slot
      */
     public void moveExtraToWarehouse(int shelf, int leaderId, int quantityToMove) {
+        try {
+            Resource extraSlot = controller.getCurrentPlayer().getDashboard().getWarehouseDepot().getExtraSlot(leaderId).getResource();
+            controller.getCurrentPlayer().getDashboard().getWarehouseDepot().moveFromSlotToShelf(extraSlot, quantityToMove, shelf);
+        } catch (InvalidIDExcpetion | InvalidResourceException e) {
+            controller.sendError("InvalidLeaderID");
+        } catch (NotEnoughSpaceException e) {
+            controller.sendError("NotEnoughSpace");
+        } catch (ExistingResourceException e) {
+            controller.sendError("OtherExistingResource");
+        } catch (InvalidShelfPosition e) {
+            controller.sendError("invalidShelf");
+        }
     }
 
     /**
@@ -56,7 +67,15 @@ public abstract class TurnState {
      * @param quantityToMove quantity of resources moved from the depot
      */
     public void moveWarehouseToExtra(int shelf, int leaderId, int quantityToMove) {
-
+        try {
+            controller.getCurrentPlayer().getDashboard().getWarehouseDepot().moveFromShelfToSlot(shelf, quantityToMove);
+        } catch (NotEnoughSpaceException e) {
+            controller.sendError("NotEnoughSpace");
+        } catch (MissingExtraSlot missingExtraSlot) {
+            controller.sendError("InvalidLeaderID");
+        } catch (InvalidShelfPosition e) {
+            controller.sendError("invalidShelf");
+        }
     }
 
     /**
