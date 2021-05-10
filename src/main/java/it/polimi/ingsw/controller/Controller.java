@@ -58,9 +58,6 @@ public class Controller {
 
     }
 
-    public void sendBroadcast(MessageToClient message){
-        //TODO: look at ClientHandler
-    }
 
     public ArrayList<String> getTurns() {
         return turns;
@@ -82,15 +79,32 @@ public class Controller {
     public ArrayList<Player> getPlayers() {
         return new ArrayList<> (players.values());
     }
-    //TODO
-    public void sendMessage(String command, ArrayList<String> params){
-        nicknames.get(currentUser).send(command, params);
+
+    /**
+     * Sends a message to all the players of the game.
+     * @param message specific message to send.
+     */
+    public void sendBroadcast(MessageToClient message){
+        for(EchoServerClientHandler client : nicknames.values()) {
+            client.send(message);
+        }
     }
-    //TODO
-    public void sendSimple(String c, String p){
-        nicknames.get(currentUser).sendSimple(c, p);
+
+    /**
+     * sends a message to the current player.
+     * @param message  specific message to send.
+     */
+    public void sendMessage(MessageToClient message){
+        nicknames.get(currentUser).send(message);
     }
-    //TODO
+    @Deprecated
+    public void sendSimple(String command, String params){
+
+    }
+    /**
+     * sends an error to the current player.
+     * @param e  specific error to send.
+     */
     public void sendError(String e) {
         nicknames.get(currentUser).sendError(e);
     }

@@ -4,8 +4,8 @@ public class Error {
     private String type;
     private String content;
 
-    public Error(String type, String content){
-        this.type = type;
+    public Error(String content){
+        this.type = "Error";
         this.content = content;
     }
 }

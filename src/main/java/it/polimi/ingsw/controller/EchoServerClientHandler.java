@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.MessageFromClient.*;
+import it.polimi.ingsw.MessageToClient.Error;
+import it.polimi.ingsw.MessageToClient.MessageToClient;
 import it.polimi.ingsw.model.Multiplayer;
 
 import java.io.*;
@@ -112,26 +114,27 @@ public class EchoServerClientHandler implements Runnable {
         }
         return true;
     }
+
     @Deprecated
-    public void send(String command, ArrayList<String> params){
-        Message mess = new Message(command, params);
-        String outMess = convert.toJson(mess);
-        out.println(outMess);
-        out.flush();
-    }
-    @Deprecated
-    public void sendSimple(String c, String p){
-        ArrayList<String> params = new ArrayList<String>();
-        params.add(p);
-        send(c, params);
-    }
-    @Deprecated
-    public void sendError(String e){
-        ArrayList<String> params = new ArrayList<String>();
-        params.add(e);
-        send("error", params);
+    public void sendSimple(String command, String params) {
+
     }
 
+    /**
+     * Sends the object to the client
+     * @param message specific message MessageToClient.
+     */
+    public void send(MessageToClient message){
+        String outMessage = convert.toJson(message);
+        out.println(outMessage);
+        out.flush();
+    }
+
+    public void sendError(String error) {
+        String outMessage = convert.toJson(new Error(error));
+        out.println(outMessage);
+        out.flush();
+    }
     private void closeSocket(){
         try {
             in.close();
