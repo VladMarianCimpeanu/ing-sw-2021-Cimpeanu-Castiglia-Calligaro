@@ -27,6 +27,7 @@ public class FirstTurn extends TurnState{
         //TODO: Distribute LeaderCards
     }
 
+    @Override
     public void keepLeaderCards(String nickname, int id1, int id2){
         try {
             getController().getPlayer(nickname).keepLeaderCards(JsonToLeaderCard.getLeaderCard(id1), JsonToLeaderCard.getLeaderCard(id2));
@@ -39,6 +40,7 @@ public class FirstTurn extends TurnState{
     }
 
     //TODO error management
+    @Override
     public void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
         if (!firstTurnResources.containsKey(nickname)) ;//TODO
         if (res1 == null) ;

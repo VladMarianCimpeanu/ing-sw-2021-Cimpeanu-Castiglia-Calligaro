@@ -12,5 +12,6 @@ public enum ErrorMessage {
     invalidDirection,
     noSuchDevelopmentCard,
     wrongLevel,
-    notEnoughResources
+    notEnoughResources,
+    nullResource
 }

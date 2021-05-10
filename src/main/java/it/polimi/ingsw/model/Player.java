@@ -77,6 +77,12 @@ public class Player {
         }else throw new NoCardException();
     }
 
+    /**
+     * @return false if there are resources from market to redeem, otherwise return true.
+     */
+    public boolean isMarketResourcesUnavailable() {
+        return receivedFromMarket.isEmpty();
+    }
     public ArrayList<LeaderCard> getLeaderCards(){
         return leaderCards;
     }
@@ -356,7 +362,9 @@ public class Player {
      * @throws InvalidStrategyException
      */
     public void passStrategiesToMarket() throws InvalidStrategyException {
-        ArrayList<Benefit> received = game.getMarket().convertMarbles(marketStrategyStack);
+        ArrayList<Benefit> received;
+        if(marketStrategies.isEmpty()) received = game.getMarket().convertMarbles();
+        else received = game.getMarket().convertMarbles(marketStrategyStack);
         for(Benefit b: received){
             if(b.equals(Faith.giveFaith())){
                 received.remove(b);
@@ -369,11 +377,11 @@ public class Player {
     /**
      * Put a resource in warehouse depot
      */
-    public void putInWarehouseDepot(Resource resource, int shelf) throws InvalidResourceException, ExistingResourceException, InvalidShelfPosition {
+    public void putInWarehouseDepot(Resource resource, int shelf) throws InvalidResourceException, ExistingResourceException, InvalidShelfPosition, NotEnoughSpaceException {
         if(resource == null) throw new InvalidResourceException();
         if(receivedFromMarket.contains(resource)){
-            dashboard.getWarehouseDepot().addResource(shelf,1,resource);
-            receivedFromMarket.remove(resource);
+            if (dashboard.getWarehouseDepot().addResource(shelf,1,resource) == 1) throw new NotEnoughSpaceException();
+            else receivedFromMarket.remove(resource);
         }
     }
 
@@ -383,8 +391,8 @@ public class Player {
     public void putInExtraSlot(Resource resource) throws NotEnoughSpaceException, InvalidResourceException, MissingExtraSlot {
         if(resource == null) throw new InvalidResourceException();
         if(receivedFromMarket.contains(resource)){
-            dashboard.getWarehouseDepot().addExtraResource(resource,1);
-            receivedFromMarket.remove(resource);
+            if (dashboard.getWarehouseDepot().addExtraResource(resource,1) == 1) throw new NotEnoughSpaceException();
+            else receivedFromMarket.remove(resource);
         }
     }
 

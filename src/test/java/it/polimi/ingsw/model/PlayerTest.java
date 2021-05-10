@@ -216,7 +216,7 @@ class PlayerTest {
         player.subscribe(new VirtualViewStub());
         player.passStrategiesToMarket();
         MarketStub1 market = (MarketStub1) stub.getMarket();
-        assertTrue(market.isPassedStrategies());
+        assertFalse(market.isPassedStrategies());
     }
 
     //This test was originally in dashboard -> moved to player because discounts are now saved in player

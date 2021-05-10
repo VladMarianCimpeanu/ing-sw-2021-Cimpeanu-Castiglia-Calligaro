@@ -4,6 +4,8 @@ import it.polimi.ingsw.JsonToLeaderCard;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Discount;
+import it.polimi.ingsw.model.MarketStrategy;
+import it.polimi.ingsw.model.benefit.Benefit;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.leaderCards.LeaderCard;
 
@@ -46,13 +48,23 @@ public class SelectionState extends TurnState {
     public void goToMarket(String direction, int position) {
         try {
             int whiteMarbles = getController().getCurrentPlayer().goToMarket(direction, position);
-            if(whiteMarbles == 0 || getController().getCurrentPlayer().getDiscountList().isEmpty()) getController().setCurrentState(new MarketState(getController()));
-            else getController().setCurrentState(new MarketStrategyState(getController()));
+            //if there are no white marbles or the player has no marketStrategies, the marketStrategyState will be skipped.
+            if(whiteMarbles == 0 || getController().getCurrentPlayer().getMarketStrategies().isEmpty()){
+                getController().getCurrentPlayer().passStrategiesToMarket();
+                //if there are no resources to keep, the next state will be the endTurnState.
+                if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
+                else getController().setCurrentState(new MarketState(getController()));
+            }
+            else {
+                getController().setCurrentState(new MarketStrategyState(getController(), whiteMarbles));
+            }
 
         } catch (OutOfBoundColumnsException | OutOfBoundRowException e) {
             getController().sendError(invalidMarketPosition.toString());
         } catch (InvalidDirectionSelection invalidDirectionSelection) {
             getController().sendError(invalidDirection.toString());
+        } catch (InvalidStrategyException e) {
+            e.printStackTrace();
         }
     }
 

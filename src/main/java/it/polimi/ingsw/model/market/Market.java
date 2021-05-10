@@ -137,7 +137,22 @@ public class Market {
         Stack<MarketStrategy> strategies = (Stack<MarketStrategy>) marketStrategies.clone();
         ArrayList<Benefit> converted = new ArrayList<>();
         for(Marble m: selectedMarbles){
-            converted.add(m.getBenefit(strategies));
+            Benefit benefitReceived = m.getBenefit(strategies);
+            converted.add(benefitReceived);
+        }
+        return converted;
+    }
+
+    /**
+     * This method is used to convertMarbles without MarketStrategies
+     * @return benefits obtained by all the marbles
+     */
+    public ArrayList<Benefit> convertMarbles(){
+        Stack<MarketStrategy> strategies = new Stack<>();
+        ArrayList<Benefit> converted = new ArrayList<>();
+        for(Marble m: selectedMarbles){
+            Benefit benefitReceived = m.getBenefit(strategies);
+            converted.add(benefitReceived);
         }
         return converted;
     }

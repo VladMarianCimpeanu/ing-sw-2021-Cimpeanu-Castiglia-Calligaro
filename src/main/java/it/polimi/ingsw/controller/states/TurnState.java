@@ -13,7 +13,7 @@ import static it.polimi.ingsw.controller.states.ErrorMessage.*;
  * This class represents the state reached by the player during his turn.
  */
 public abstract class TurnState {
-    private Controller controller;
+    private final Controller controller;
 
     public TurnState(Controller controller) {
         this.controller = controller;
@@ -234,5 +234,26 @@ public abstract class TurnState {
     public void end(){
         controller.sendError(invalidCommand.toString());
     }
-    
+
+    /**
+     * At the beginning of the game, this method is used to choose which leader cards the player wants to keep.
+     * @param nickname nickname of the player that did the choice.
+     * @param id1 ID of a a specific leader card to keep.
+     * @param id2 ID of a a specific leader card to keep.
+     */
+    public void keepLeaderCards(String nickname, int id1, int id2) {
+        controller.sendError(invalidCommand.toString());
+    };
+
+    /**
+     * At the beginning of the game, this method is used to choose which resources the player wants to put in depot.
+     * @param nickname nickname of the player that did the choice.
+     * @param res1 specific resource to put in depot.
+     * @param res2 additional resource to put in depot: if the player is not allowed to choose a second resource, set it to null.
+     * @param shelf1 specific shelf to put the first resource.
+     * @param shelf2 specific shelf to put the addtional resource: if the player is not allowed to choose a second resource, set it to null.
+     */
+    public void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
+
+    };
 }
