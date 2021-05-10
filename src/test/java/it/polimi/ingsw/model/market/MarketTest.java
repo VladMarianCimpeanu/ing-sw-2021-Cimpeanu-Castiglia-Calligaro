@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.market;
 
 import it.polimi.ingsw.model.exceptions.OutOfBoundColumnsException;
 import it.polimi.ingsw.model.exceptions.OutOfBoundRowException;
+import it.polimi.ingsw.model.stubs.VirtualViewStub;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIf;
@@ -49,6 +50,7 @@ class MarketTest {
     @DisplayName("Column selection without exceptions")
     void selCol() throws OutOfBoundColumnsException {
         Market market = new Market();
+        market.subscribe(new VirtualViewStub());
         Marble [][] pre_grid = market.getMarket();
         Marble pre_outerMarble = market.getOuterMarble();
         int check_white = 0;
@@ -68,6 +70,7 @@ class MarketTest {
     @DisplayName("Row selection without exceptions")
     void selRow() throws OutOfBoundRowException {
         Market market = new Market();
+        market.subscribe(new VirtualViewStub());
         Marble [][] pre_grid = market.getMarket();
         Marble pre_outerMarble = market.getOuterMarble();
         int check_white = 0;

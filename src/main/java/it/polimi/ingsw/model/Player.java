@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.JsonToLeaderCard;
+import it.polimi.ingsw.controller.VirtualView;
 import it.polimi.ingsw.model.benefit.Benefit;
 import it.polimi.ingsw.model.benefit.Faith;
 import it.polimi.ingsw.model.benefit.Resource;
@@ -29,6 +31,7 @@ public class Player {
     private DevelopmentCard devCardToAdd;
     //when a player go to market this stack contains chosen strategy for each white marble
     private Stack<MarketStrategy> marketStrategyStack;
+    private VirtualView virtualView;
 
     public Player(Identity identity, Game game, ArrayList<LeaderCard> leaderCards, Dashboard dashboard){
         this.identity = identity;
@@ -64,6 +67,14 @@ public class Player {
             if (m.getID() == id) return m;
         }
         throw new InvalidIDExcpetion();
+    }
+
+    public void keepLeaderCards(LeaderCard card1, LeaderCard card2) throws NoCardException {
+        if(leaderCards.contains(card1) && leaderCards.contains(card2)){
+            leaderCards = new ArrayList<>();
+            leaderCards.add(card1);
+            leaderCards.add(card2);
+        }else throw new NoCardException();
     }
 
     public ArrayList<LeaderCard> getLeaderCards(){
@@ -155,7 +166,8 @@ public class Player {
      * @param leaderCard
      */
     public void discardLeaderCard(LeaderCard leaderCard) {
-        if(leaderCard != null && leaderCards.remove(leaderCard) == true){
+        if(leaderCard != null && leaderCards.remove(leaderCard)){
+            virtualView.updateDiscardLeaderCard(leaderCard.getID());
             try {
                 game.getFaithPath().moveOpponents(this);
             } catch (NoSuchPlayerException e) {
@@ -179,6 +191,7 @@ public class Player {
 
             try {
                 leaderCard.activeCard(this);
+                virtualView.updateActiveLeaderCard(leaderCard.getID());
                 addVictoryPoints(leaderCard.getVictoryPointsAmount());
                 leaderCards.remove(leaderCard);
             } catch (CardActivationException e) {
@@ -296,11 +309,11 @@ public class Player {
         if(position < 1 || position > 3) throw new WrongLevelException();
         try {
             dashboard.addDevelopmentCard(devCardToAdd, position);
+            virtualView.updateDevDeck(position, devCardToAdd.getID());
         } catch (InvalidDeckPositionException e) {
             e.printStackTrace();
             throw new WrongLevelException();
         }
-
     }
     /************* BUY A DEVELOPMENT CARD PROCESS **************/
 
@@ -386,5 +399,9 @@ public class Player {
         addFaithPoint(1);
     }
     /***************** GO TO MARKET PROCESS ********************/
+
+    public void subscribe(VirtualView virtualView){
+        this.virtualView = virtualView;
+    }
 
 }

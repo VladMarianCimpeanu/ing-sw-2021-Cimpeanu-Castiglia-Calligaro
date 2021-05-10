@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class Message {
     private String command;
     private ArrayList<String> params;

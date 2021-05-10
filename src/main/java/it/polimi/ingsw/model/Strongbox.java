@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.VirtualView;
 import it.polimi.ingsw.model.benefit.Resource;
 import it.polimi.ingsw.model.exceptions.*;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 public class Strongbox {
     private final Map<Resource, Integer> content;
     private final Map<Resource, Integer> lastProduced;
+    private VirtualView virtualView;
 
     public Strongbox(){
         content = new HashMap<>();
@@ -43,6 +45,7 @@ public class Strongbox {
         if(quantity < 0) throw new NegativeQuantityException();
         if(lastProduced.containsKey(resource)) lastProduced.put(resource, lastProduced.get(resource)+quantity);
         else lastProduced.put(resource, quantity);
+        virtualView.updateLastProduced(lastProduced);
     }
 
     /**
@@ -57,12 +60,15 @@ public class Strongbox {
         if(content.get(resource) <= quantity) {
             int resourceAmount = quantity - content.get(resource);
             content.remove(resource);
+            virtualView.updateStrongbox(content);
             return resourceAmount;
         }
         else {
             content.put(resource, content.get(resource)-quantity);
+            virtualView.updateStrongbox(content);
             return 0;
         }
+
     }
 
     /**
@@ -72,6 +78,11 @@ public class Strongbox {
         for(Map.Entry<Resource, Integer> couple :lastProduced.entrySet())
             content.put(couple.getKey(), couple.getValue());
         lastProduced.clear();
+        virtualView.updateLastProduced(lastProduced);
+        virtualView.updateStrongbox(content);
     }
 
+    public void subscribe(VirtualView virtualView){
+        this.virtualView = virtualView;
+    }
 }

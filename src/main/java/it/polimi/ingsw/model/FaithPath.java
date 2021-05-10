@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.VirtualView;
 import it.polimi.ingsw.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 public abstract class FaithPath {
     // each index correspond to a cell of the FaithPath track: each victoryPoints' element is the amount of victory points that the cell offers at the end of the game
     private static int[] victoryPoints;
+    private VirtualView virtualView;
 
     public FaithPath() {
 
@@ -65,4 +67,11 @@ public abstract class FaithPath {
 
     public abstract int getPlayerPosition(Player player) throws NoSuchPlayerException;
     public abstract Map<Player, Integer> getAllPositions();
+    public void subscribe(VirtualView virtualView){
+        this.virtualView = virtualView;
+    }
+
+    public VirtualView getVirtualView() {
+        return virtualView;
+    }
 }

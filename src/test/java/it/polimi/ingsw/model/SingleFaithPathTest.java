@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.stubs.PlayerStub2;
+import it.polimi.ingsw.model.stubs.VirtualViewStub;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +40,7 @@ class SingleFaithPathTest {
     void assignVictoryPointsTest1() throws NoSuchPlayerException, InvalidStepsException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 3);
         path.assignVictoryPoints(player);
         assertEquals(1, player.getVictoryPoints());
@@ -49,6 +51,7 @@ class SingleFaithPathTest {
     void assignVictoryPointsTest2() throws NoSuchPlayerException, InvalidStepsException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 2);
         path.assignVictoryPoints(player);
         assertEquals(0, player.getVictoryPoints());
@@ -59,6 +62,7 @@ class SingleFaithPathTest {
     void assignVictoryPointsTest3() throws NoSuchPlayerException, InvalidStepsException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 9);
         path.assignVictoryPoints(player);
         assertEquals(6, player.getVictoryPoints());
@@ -69,6 +73,7 @@ class SingleFaithPathTest {
     void assignVictoryPointsTest4() throws NoSuchPlayerException, InvalidStepsException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 8);
         path.assignVictoryPoints(player);
         assertEquals(4, player.getVictoryPoints());
@@ -92,6 +97,7 @@ class SingleFaithPathTest {
     void moveBackward2() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 2);
         assertThrows(InvalidStepsException.class,
                 () -> path.movePlayer(player, -1));
@@ -125,6 +131,7 @@ class SingleFaithPathTest {
     void moveFarAway() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 30);
         assertEquals(24, path.getPlayerPosition(player));
 
@@ -153,6 +160,7 @@ class SingleFaithPathTest {
     void movePlayerTest1() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 8);
 
         assertEquals(2, player.getVictoryPoints());
@@ -163,6 +171,7 @@ class SingleFaithPathTest {
     void movePlayerTest2() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 9);
 
         assertEquals(2, player.getVictoryPoints());
@@ -173,6 +182,7 @@ class SingleFaithPathTest {
     void movePlayerTest3() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 7);
 
         assertEquals(0, player.getVictoryPoints());
@@ -183,6 +193,7 @@ class SingleFaithPathTest {
     void movePlayerPopeMeeting1() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.moveBlackCross(8);
 
         assertEquals(0, player.getVictoryPoints());
@@ -196,6 +207,7 @@ class SingleFaithPathTest {
     void movePlayerPopeMeeting2() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player,8);
 
         assertEquals(2, player.getVictoryPoints());
@@ -209,6 +221,7 @@ class SingleFaithPathTest {
     void movePlayerTest() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 3);
 
         assertEquals(3, path.getPlayerPosition(player));
@@ -262,6 +275,7 @@ class SingleFaithPathTest {
     void moveOpponentsPopeMeeting1() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 6);
         path.moveBlackCross(7);
         path.moveOpponents(player);
@@ -274,6 +288,7 @@ class SingleFaithPathTest {
     void moveOpponentsPopeMeeting2() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 3);
         path.moveBlackCross(7);
         path.moveOpponents(player);
@@ -286,6 +301,7 @@ class SingleFaithPathTest {
     void moveOpponentsPopeMeeting3() throws InvalidStepsException, NoSuchPlayerException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(player, 4);
         path.moveBlackCross(7);
         path.moveOpponents(player);

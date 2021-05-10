@@ -71,6 +71,7 @@ public class SingleFaithPath extends FaithPath{
             if (i == triggerPopePosition.peek())
                 assignPapalPoints();
         }
+        getVirtualView().updateFaithPath(playersPosition);
     }
 
     /**
@@ -83,6 +84,7 @@ public class SingleFaithPath extends FaithPath{
         if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
         if(!playersPosition.containsKey(player)) return;
         moveBlackCross(1);
+        getVirtualView().updateFaithPath(playersPosition);
     }
 
     @Override
@@ -112,9 +114,12 @@ public class SingleFaithPath extends FaithPath{
      * this method increases victory points of each player placed in a pope position meeting
      */
     private void assignPapalPoints(){
-        for (Player p : playersPosition.keySet())
+        Map<Player, Integer> deltaVictoryPoints = new HashMap<>();
+        for (Player p : playersPosition.keySet()) {
             p.addVictoryPoints(popeMeeting[playersPosition.get(p)]);
-
+            deltaVictoryPoints.put(p, popeMeeting[playersPosition.get(p)]);
+        }
+        getVirtualView().updateMeetingPope(deltaVictoryPoints);
         switch(triggerPopePosition.peek()){
             case 8:
                 for(int index = 0; index < 9; index ++ ) popeMeeting[index] = 0;

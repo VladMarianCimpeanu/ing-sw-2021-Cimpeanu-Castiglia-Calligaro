@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.VirtualView;
 import it.polimi.ingsw.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 
@@ -55,10 +56,13 @@ public class MultiFaithPath extends FaithPath{
         int pre_steps = playersPosition.get(player);
         for(int i = pre_steps+1; i<=pre_steps+steps && i < 25; i++) {
             playersPosition.put(player, i);
-            if (i == triggerPopePosition.peek())
+            if (i == triggerPopePosition.peek()) {
+                //getVirtualView().updateFaithPath(playersPosition);
                 assignPapalPoints();
+            }
             if(i == 24) someoneEnd = true;
         }
+        getVirtualView().updateFaithPath(playersPosition);
     }
 
     @Override
@@ -71,6 +75,7 @@ public class MultiFaithPath extends FaithPath{
             playersPosition.put(p, pre_steps+1);
             if(playersPosition.get(p) == 24) someoneEnd = true;
         }
+        getVirtualView().updateFaithPath(playersPosition);
         for (Player p: playersPosition.keySet())
             if(playersPosition.get(p) == triggerPopePosition.peek()) assignPapalPoints();
     }
@@ -98,8 +103,12 @@ public class MultiFaithPath extends FaithPath{
      * this method increases victory points of each player placed in a pope position meeting
      */
     private void assignPapalPoints(){
-        for (Player p : playersPosition.keySet())
+        Map<Player, Integer> deltaVictoryPoints = new HashMap<>();
+        for (Player p : playersPosition.keySet()) {
             p.addVictoryPoints(popeMeeting[playersPosition.get(p)]);
+            deltaVictoryPoints.put(p, popeMeeting[playersPosition.get(p)]);
+        }
+        getVirtualView().updateMeetingPope(deltaVictoryPoints);
         switch(triggerPopePosition.peek()){
             case 8:
                 for(int index = 0; index < 9; index ++ ) popeMeeting[index] = 0;

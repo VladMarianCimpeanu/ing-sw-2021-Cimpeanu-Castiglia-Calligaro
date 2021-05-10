@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.benefit.Resource;
 import it.polimi.ingsw.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.model.exceptions.NoCardException;
 import it.polimi.ingsw.model.exceptions.WrongLevelException;
+import it.polimi.ingsw.model.stubs.VirtualViewStub;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +46,7 @@ class DevelopmentCardSetTest {
     @Test
     void drawCard() throws WrongLevelException, NoCardException, IOException, InvalidReadException {
         DevelopmentCardSet set = new DevelopmentCardSet();
+        set.subscribe(new VirtualViewStub());
         DevelopmentCard cardOnTop = set.drawCard(YELLOW, 1);
         assertTrue(cardOnTop.getColor() == YELLOW);
         assertTrue(cardOnTop.getLevel() == 1);

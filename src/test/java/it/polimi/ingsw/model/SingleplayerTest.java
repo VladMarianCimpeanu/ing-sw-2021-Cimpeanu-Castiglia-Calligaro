@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.actionToken.ActionToken;
+import it.polimi.ingsw.model.actionToken.ShuffleToken;
 import it.polimi.ingsw.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
+import it.polimi.ingsw.model.stubs.VirtualViewStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +22,7 @@ class SingleplayerTest {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity(""));
         game = new Singleplayer(identities);  //better creating stub because of not handling null cases
+        game.getDevelopmentCardSet().subscribe(new VirtualViewStub());
     }
 
     @Test
@@ -28,7 +31,8 @@ class SingleplayerTest {
         int pre_size = game.getAvailableActionTokens().size();
         ActionToken top = game.getAvailableActionTokens().get(pre_size - 1);
         game.drawToken();
-        assertSame(top, game.getAvailableActionTokens().get(0));
+        if(!(top instanceof ShuffleToken))
+            assertSame(top, game.getAvailableActionTokens().get(0));
         assertEquals(pre_size, game.getAvailableActionTokens().size());
     }
 

@@ -2,12 +2,12 @@ package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import it.polimi.ingsw.model.Multiplayer;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -18,7 +18,7 @@ public class EchoServerClientHandler implements Runnable {
     private Controller controller;
     private boolean isMyTurn;
     private boolean isInGame;
-    Scanner in;
+    BufferedReader in;
     PrintWriter out;
     Gson convert;
 
@@ -28,7 +28,7 @@ public class EchoServerClientHandler implements Runnable {
         isInGame = false;
         nickname = null;
         try {
-            in = new Scanner(socket.getInputStream());
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,7 +39,7 @@ public class EchoServerClientHandler implements Runnable {
     private boolean login(){
         while(true){
             try{
-                String line = in.nextLine();
+                String line = in.readLine();
                 Message message = convert.fromJson(line, Message.class);
                 System.out.println("Received: " + message);
                 if(message.getCommand().equals("login")) {
@@ -60,6 +60,10 @@ public class EchoServerClientHandler implements Runnable {
                         }
                         break;
                     }else{
+                        if(true){
+
+                            break;
+                        }
                         sendError("usedNickname");
                         System.out.println("Error: requested nickname already used");
                     }
@@ -77,24 +81,26 @@ public class EchoServerClientHandler implements Runnable {
                 return false;
             } catch (CrashException e) {
                 return false;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return true;
     }
-
+    @Deprecated
     public void send(String command, ArrayList<String> params){
         Message mess = new Message(command, params);
         String outMess = convert.toJson(mess);
         out.println(outMess);
         out.flush();
     }
-
+    @Deprecated
     public void sendSimple(String c, String p){
         ArrayList<String> params = new ArrayList<String>();
         params.add(p);
         send(c, params);
     }
-
+    @Deprecated
     public void sendError(String e){
         ArrayList<String> params = new ArrayList<String>();
         params.add(e);
@@ -102,7 +108,11 @@ public class EchoServerClientHandler implements Runnable {
     }
 
     private void closeSocket(){
-        in.close();
+        try {
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         out.close();
         try {
             socket.close();
@@ -116,7 +126,7 @@ public class EchoServerClientHandler implements Runnable {
             sendSimple("request","mode");
             while(true) {
                 try{
-                    String line = in.nextLine();
+                    String line = in.readLine();
                     Message message = convert.fromJson(line, Message.class);
                     if(message.getCommand().equals("mode")){
                         String modeString = (message.getParams().get(0));
@@ -131,6 +141,8 @@ public class EchoServerClientHandler implements Runnable {
                 } catch(JsonSyntaxException e){
                     sendError("invalidJson");
                     System.out.println("Error: wrong json format");
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -143,29 +155,46 @@ public class EchoServerClientHandler implements Runnable {
         }
     }
 
-    private void play(){
-
+    private void play(Message message){
     }
 
     public void run() {
         //if the client is crashed during login phase
         if (!login()) return;
-        while (true) {
             try {
-                String line = in.nextLine();
+                String line = in.readLine();
                 if (isInGame) {
 
                 }
                 //TODO: continua con il primo turno
-            } catch (NoSuchElementException e) {
+            } catch (NoSuchElementException | IOException e) {
                 MultiEchoServer.handleCrash(this);
-                break;
+                closeSocket();
+                return;
+            }
+        while (true) {
+            String line = null;
+            try {
+                line = in.readLine();
+                if(line == null){
+                    //client crashed
+                    MultiEchoServer.handleCrash(this);
+                    //store the current state somewhere?
+                    controller.nextTurn();
+                }
+            }catch(SocketTimeoutException e){
+                sendSimple("Ping", "");
+            }catch (IOException e){
+                //client crashed
+                MultiEchoServer.handleCrash(this);
+                //store the current state somewhere?
+                controller.nextTurn();
             }
 
-            String line = in.nextLine();
             Message message = convert.fromJson(line, Message.class);
+            if(message.getCommand().equals("EndGame")) break;
             if (isMyTurn) {
-
+                play(message);
             } else {
                 out.println("It isn't your turn!");
             }

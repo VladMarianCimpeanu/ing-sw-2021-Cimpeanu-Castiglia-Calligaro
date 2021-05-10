@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.VirtualView;
 import it.polimi.ingsw.model.benefit.Resource;
 
 /**
@@ -12,6 +13,7 @@ public class ExtraSlot {
     //quantity is an integer between 0 and 2
     private int quantity;
     private int ID;
+    private VirtualView virtualView;
 
     /**
      * Set the resource type that can be stored in this ExtraSlot
@@ -42,6 +44,7 @@ public class ExtraSlot {
             remain = this.quantity-2;
             this.quantity = 2;
         }
+        virtualView.updateExtraSlot(resourceExtra, ID, quantity);
         return remain;
     }
 
@@ -55,9 +58,11 @@ public class ExtraSlot {
         if(quantity > this.quantity){
             int remain = quantity-this.quantity;
             this.quantity = 0;
+            virtualView.updateExtraSlot(resourceExtra, ID, quantity);
             return remain;
         }
         this.quantity -= quantity;
+        virtualView.updateExtraSlot(resourceExtra, ID, quantity);
         return 0;
     }
 
@@ -71,4 +76,9 @@ public class ExtraSlot {
     public int getID() {
         return ID;
     }
+
+    public void subscribe(VirtualView virtualView){
+        this.virtualView = virtualView;
+    }
+
 }

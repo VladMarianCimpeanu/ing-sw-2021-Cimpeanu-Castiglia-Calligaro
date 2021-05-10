@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
+
+import it.polimi.ingsw.controller.VirtualView;
 import it.polimi.ingsw.model.exceptions.*;
 
 import static java.util.Collections.shuffle;
@@ -14,7 +16,7 @@ import static java.util.Collections.shuffle;
  */
 public class DevelopmentCardSet {
     private final ArrayList<ArrayList<Stack<DevelopmentCard>>> availableDevelopmentCards;
-
+    private VirtualView virtualView;
     public DevelopmentCardSet() throws IOException, InvalidReadException {
 
         // FIRST INDEX == LEVEL ORDER(1, 2, 3)
@@ -66,6 +68,7 @@ public class DevelopmentCardSet {
     public DevelopmentCard drawCard(Color color, int level) throws WrongLevelException, NoCardException {
         if (level < 1 || level > 3) throw new WrongLevelException();
         if (availableDevelopmentCards.get(level - 1).get(color.getIndex()).isEmpty()) throw new NoCardException();
+        virtualView.updateDevCardDrawn(color, level, peekCard(color, level).getID());
         return availableDevelopmentCards.get(level - 1).get(color.getIndex()).pop();
     }
 
@@ -79,4 +82,9 @@ public class DevelopmentCardSet {
         if (level < 1 || level > 3) throw new WrongLevelException();
         return availableDevelopmentCards.get(level - 1).get(color.getIndex()).size();
     }
+
+    public void subscribe(VirtualView virtualView){
+        this.virtualView = virtualView;
+    }
+
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.stubs.PlayerStub2;
+import it.polimi.ingsw.model.stubs.VirtualViewStub;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +46,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 3);
         path.movePlayer(currPlayers.get(1), 6);
         path.movePlayer(currPlayers.get(2), 9);
@@ -60,6 +62,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         for(int i = 0; i < 3; i ++) path.movePlayer(currPlayers.get(i), i * 8 );
         for(int i = 0; i < 3; i ++) path.assignVictoryPoints(currPlayers.get(i));
         assertEquals(0, currPlayers.get(0).getVictoryPoints());
@@ -73,6 +76,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 12);
         path.movePlayer(currPlayers.get(1), 15);
         path.movePlayer(currPlayers.get(2), 18);
@@ -88,6 +92,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 2);
         path.movePlayer(currPlayers.get(1), 5);
         path.movePlayer(currPlayers.get(2), 8);
@@ -106,6 +111,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         for (int i = 0; i < 3; i++) path.movePlayer(currPlayers.get(i), i * 8);
         assertThrows(InvalidStepsException.class,
                 () -> path.movePlayer(currPlayers.get(0), -1));
@@ -118,6 +124,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         for (int i = 0; i < 3; i++) path.movePlayer(currPlayers.get(i), i * 8);
         int currPosition = path.getPlayerPosition(currPlayers.get(2));
         assertThrows(InvalidStepsException.class,
@@ -131,6 +138,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         for (int i = 0; i < 3; i++) path.movePlayer(currPlayers.get(i), i * 8);
         int currPlayersPositionSize = path.getAllPositions().size();
         assertThrows(NoSuchPlayerException.class,
@@ -144,6 +152,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         for (int i = 0; i < 3; i++) path.movePlayer(currPlayers.get(i), i * 8);
         int currPlayersPositionSize = path.getAllPositions().size();
         assertThrows(NoSuchPlayerException.class,
@@ -157,6 +166,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         for (int i = 0; i < 3; i++) path.movePlayer(currPlayers.get(i), i * 8);
         path.movePlayer(currPlayers.get(2), 30);
         assertEquals(24, path.getPlayerPosition(currPlayers.get(2)));
@@ -187,6 +197,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 3);
         path.movePlayer(currPlayers.get(1), 5);
         path.movePlayer(currPlayers.get(2), 7);
@@ -202,6 +213,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 0);
         path.movePlayer(currPlayers.get(1), 5);
         path.movePlayer(currPlayers.get(2), 8);
@@ -217,6 +229,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 0);
         path.movePlayer(currPlayers.get(1), 5);
         path.movePlayer(currPlayers.get(2), 10);
@@ -233,6 +246,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 3);
         path.movePlayer(currPlayers.get(1), 5);
         path.movePlayer(currPlayers.get(2), 10);
@@ -249,6 +263,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 3);
         path.movePlayer(currPlayers.get(1), 8);
         path.movePlayer(currPlayers.get(2), 2);
@@ -264,6 +279,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 3);
         path.movePlayer(currPlayers.get(1), 8);
         path.movePlayer(currPlayers.get(2), 2);
@@ -304,6 +320,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 1);
         path.movePlayer(currPlayers.get(1), 2);
         path.movePlayer(currPlayers.get(2), 0);
@@ -322,6 +339,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 1);
         path.movePlayer(currPlayers.get(1), 2);
         path.movePlayer(currPlayers.get(2), 0);
@@ -340,6 +358,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 4);
         path.movePlayer(currPlayers.get(1), 7);
         path.movePlayer(currPlayers.get(2), 1);
@@ -360,6 +379,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 0);
         path.movePlayer(currPlayers.get(1), 3);
         path.movePlayer(currPlayers.get(2), 1);
@@ -376,6 +396,7 @@ class MultiFaithPathTest {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
+        path.subscribe(new VirtualViewStub());
         path.movePlayer(currPlayers.get(0), 0);
         path.movePlayer(currPlayers.get(1), 3);
         path.movePlayer(currPlayers.get(2), 1);

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.VirtualView;
 import it.polimi.ingsw.model.benefit.Resource;
 import it.polimi.ingsw.model.exceptions.*;
 
@@ -20,6 +21,7 @@ public class WarehouseDepot {
     private int secondQuantity;
     private int thirdQuantity;
     private final ArrayList<ExtraSlot> extraSlotList;
+    private VirtualView virtualView;
 
     public WarehouseDepot() {
         //arbitrary values
@@ -108,20 +110,24 @@ public class WarehouseDepot {
                 case 2:
                     secondQuantity = getShelfQuantity(min);
                     secondShelf = getShelfResource(min);
+                    virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                     break;
                 case 3:
                     thirdQuantity = getShelfQuantity(min);
                     thirdShelf = getShelfResource(min);
+                    virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                     break;
             }
             switch (min){
                 case 1:
                     firstQuantity = temp_quantity;
                     firstShelf = temp_resource;
+                    virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                     break;
                 case 2:
                     secondQuantity = temp_quantity;
                     secondShelf = temp_resource;
+                    virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                     break;
             }
         }
@@ -188,6 +194,7 @@ public class WarehouseDepot {
                     return 0;
                 }
         }
+
         return 0;
     }
 
@@ -258,7 +265,9 @@ public class WarehouseDepot {
      */
     public int removeExtraResource(Resource resource, int quantity) throws MissingExtraSlot {
         for (ExtraSlot slot: extraSlotList)
-            if(slot.getResource().equals(resource)) return slot.removeResource(quantity);
+            if(slot.getResource().equals(resource)) {
+                return slot.removeResource(quantity);
+            }
         throw new MissingExtraSlot();
     }
 
@@ -290,7 +299,9 @@ public class WarehouseDepot {
      * @param resourceExtra: resource that can be stored in the extra slot
      */
     public void addExtraSlot(Resource resourceExtra, int ID){
-        extraSlotList.add(new ExtraSlot(resourceExtra, ID));
+        ExtraSlot slot = new ExtraSlot(resourceExtra, ID);
+        extraSlotList.add(slot);
+        slot.subscribe(virtualView);
     }
 
     /**
@@ -405,5 +416,9 @@ public class WarehouseDepot {
                 break;
         }
         if(a) throw new NotEnoughSpaceException();
+    }
+
+    public void subscribe(VirtualView virtualView){
+        this.virtualView = virtualView;
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.MessageToClient.MessageToClient;
 import it.polimi.ingsw.controller.states.TurnState;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidReadException;
@@ -17,8 +18,7 @@ public class Controller {
     private Game game;
     private String currentUser;
     private boolean isFirstTurn;
-    private ArrayList<String> waitingForLeaderCards;
-    private Map<String, Integer> firstTurnResources;
+
     private Map<String, EchoServerClientHandler> nicknames;
     private Map<String, Player> players;
     //nicknames in order of turns
@@ -29,8 +29,7 @@ public class Controller {
         nicknames = new HashMap<>();
         players = new HashMap<>();
         turns = new ArrayList<>();
-        waitingForLeaderCards = new ArrayList<>();
-        firstTurnResources = new HashMap<>();
+
         System.out.print("A new Game has started. Players: ");
         ArrayList<Identity> identities = new ArrayList<>(users);
         shuffle(identities);
@@ -45,23 +44,33 @@ public class Controller {
             EchoServerClientHandler client = MultiEchoServer.getClient(nick);
             client.setController(this);
             nicknames.put(nick, client);
-
             turns.add(nick);
         }
         System.out.println("Shuffling players");
         System.out.println("Player order: " + turns);
         for(Player p: game.getPlayers())
             players.put(p.getNickName(),p);
-
-        waitingForLeaderCards = new ArrayList<>(turns);
-        for(int i = 2; i <= turns.size(); i++)
-            firstTurnResources.put(turns.get(i-1), i/2);
+        new VirtualView(this);
     }
 
     //TODO: CRASH management
     public void rejoinClient(EchoServerClientHandler client, String nickname) {
 
     }
+
+    public void sendBroadcast(MessageToClient message){
+        //TODO: look at ClientHandler
+    }
+
+    public ArrayList<String> getTurns() {
+        return turns;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public Player getPlayer(String nickname){return players.get(nickname);}
     public Player getCurrentPlayer(){
         return players.get(currentUser);
     }
@@ -73,15 +82,15 @@ public class Controller {
     public ArrayList<Player> getPlayers() {
         return new ArrayList<> (players.values());
     }
-
+    //TODO
     public void sendMessage(String command, ArrayList<String> params){
         nicknames.get(currentUser).send(command, params);
     }
-
+    //TODO
     public void sendSimple(String c, String p){
         nicknames.get(currentUser).sendSimple(c, p);
     }
-
+    //TODO
     public void sendError(String e) {
         nicknames.get(currentUser).sendError(e);
     }
@@ -91,6 +100,9 @@ public class Controller {
     }
 
     public void nextTurn(){
+        if(isAnyoneOnline()) {
+            //endGame: nobody is online
+        }
         int pos = turns.indexOf(currentUser);
         pos = (pos+1)%turns.size();
         currentUser = turns.get(pos);
@@ -112,5 +124,15 @@ public class Controller {
                 players.get(user).getIdentity().setOnline(false);
             }
         }
+    }
+
+    public void startGame(){
+        //TODO
+    }
+
+    private boolean isAnyoneOnline(){
+        for(String p: turns)
+            if(players.get(p).isOnline()) return true;
+        return false;
     }
 }

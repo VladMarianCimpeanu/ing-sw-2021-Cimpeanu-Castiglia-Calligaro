@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.market;
 
+import it.polimi.ingsw.controller.VirtualView;
 import it.polimi.ingsw.model.MarketStrategy;
 import it.polimi.ingsw.model.benefit.Benefit;
 import it.polimi.ingsw.model.exceptions.InvalidStrategyException;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Stack;
+import java.util.stream.IntStream;
 
 /**
  * A market is a 3x4 array of marbles (+ 1 outerMarble), it is randomized in the constructor.
@@ -24,7 +26,7 @@ public class Market {
     private Marble[][] market;
     private Marble outerMarble;
     private ArrayList<Marble> selectedMarbles; //this array is update every time a row/column selection occurs
-
+    private VirtualView virtualView;
 
     public Market(){
         selectedMarbles = new ArrayList<>();
@@ -73,6 +75,7 @@ public class Market {
             market[row][i] = market[row][i+1];
         }
         market[row][columns - 1] = oldOuter;
+        virtualView.updateMarketRow(market[row], outerMarble, row);
         return (int) selectedMarbles.stream().filter(Marble::isWhite).count();
     }
 
@@ -89,11 +92,15 @@ public class Market {
         }
         //marbles shift
         Marble oldOuter = outerMarble;
+        Marble[] newcolumn = new Marble[rows];
         outerMarble = market[0][column];
         for(int i = 0; i < rows - 1; i++){
             market[i][column] = market[i+1][column];
+            newcolumn[i] = market[i][column];
         }
         market[rows-1][column] = oldOuter;
+        newcolumn[rows-1] = oldOuter;
+        virtualView.updateMarketColumn(newcolumn, outerMarble, column);
         return (int) selectedMarbles.stream().filter(Marble::isWhite).count();
     }
 
@@ -133,5 +140,9 @@ public class Market {
             converted.add(m.getBenefit(strategies));
         }
         return converted;
+    }
+
+    public void subscribe(VirtualView virtualView){
+        this.virtualView = virtualView;
     }
 }

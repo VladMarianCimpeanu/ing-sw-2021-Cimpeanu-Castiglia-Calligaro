@@ -15,6 +15,7 @@ public class StrongboxStub extends Strongbox {
         content.put(Resource.SERVANT,0);
         content.put(Resource.SHIELD,0);
         content.put(Resource.STONE,0);
+        subscribe(new VirtualViewStub());
     }
 
     @Override
