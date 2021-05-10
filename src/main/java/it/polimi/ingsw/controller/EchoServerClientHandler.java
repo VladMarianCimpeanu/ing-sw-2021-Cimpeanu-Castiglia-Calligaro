@@ -1,7 +1,9 @@
 package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import it.polimi.ingsw.MessageFromClient.*;
 import it.polimi.ingsw.model.Multiplayer;
 
 import java.io.*;
@@ -18,6 +20,7 @@ public class EchoServerClientHandler implements Runnable {
     private Controller controller;
     private boolean isMyTurn;
     private boolean isInGame;
+    private RuntimeTypeAdapterFactory<MessageFromClient> shapeAdapterFactory;
     BufferedReader in;
     PrintWriter out;
     Gson convert;
@@ -33,7 +36,29 @@ public class EchoServerClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        convert = new Gson();
+        shapeAdapterFactory = RuntimeTypeAdapterFactory.of(MessageFromClient.class, "type");
+        shapeAdapterFactory.registerSubtype(ActivateBaseProduction.class, "ActivateBaseProduction");
+        shapeAdapterFactory.registerSubtype(ActivateCardProduction.class, "ActivateCardProduction");
+        shapeAdapterFactory.registerSubtype(ActivateExtraProduction.class, "ActivateExtraProduction");
+        shapeAdapterFactory.registerSubtype(ActivateLeaderCard.class, "ActivateLeaderCard");
+        shapeAdapterFactory.registerSubtype(ActivateProduction.class, "ActivateProduction");
+        shapeAdapterFactory.registerSubtype(BuyDevCard.class, "BuyDevCard");
+        shapeAdapterFactory.registerSubtype(ChooseFirstResources.class, "ChooseFirstResources");
+        shapeAdapterFactory.registerSubtype(DiscardLeaderCard.class, "DiscardLeaderCard");
+        shapeAdapterFactory.registerSubtype(DiscardResource.class, "DiscardResource");
+        shapeAdapterFactory.registerSubtype(EndTurn.class, "EndTurn");
+        shapeAdapterFactory.registerSubtype(KeepLeaderCard.class, "KeepLeaderCard");
+        shapeAdapterFactory.registerSubtype(Login.class, "Login");
+        shapeAdapterFactory.registerSubtype(Market.class, "Market");
+        shapeAdapterFactory.registerSubtype(Mode.class, "Mode");
+        shapeAdapterFactory.registerSubtype(MoveResource.class, "MoveResource");
+        shapeAdapterFactory.registerSubtype(PlaceCard.class, "PlaceCard");
+        shapeAdapterFactory.registerSubtype(PutResPos.class, "PutResPos");
+        shapeAdapterFactory.registerSubtype(SelResIn.class, "SelResIn");
+        shapeAdapterFactory.registerSubtype(SelResOut.class, "SelResOut");
+        shapeAdapterFactory.registerSubtype(Strategy.class, "Strategy");
+
+        convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
 
     private boolean login(){

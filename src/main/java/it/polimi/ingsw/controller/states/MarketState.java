@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.exceptions.*;
 
 import static it.polimi.ingsw.controller.states.ErrorMessage.*;
 
+/**
+ * A player is in this state when he must chose where to place the resources taken from the depot.
+ */
 public class MarketState extends TurnState {
 
     public MarketState(Controller controller) {

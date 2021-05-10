@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.exceptions.InvalidIDExcpetion;
 import it.polimi.ingsw.model.exceptions.InvalidStrategyException;
 import static it.polimi.ingsw.controller.states.ErrorMessage.*;
 
+/**
+ * A player is in this state when he must chose which leader card to use to convert the white marbles obtained by the market.
+ * The player will remains here till all the white marbles are covered by a leader card.
+ */
 public class MarketStrategyState extends TurnState {
     private int whiteMarbles;
     public MarketStrategyState(Controller controller, int whiteMarbles) {

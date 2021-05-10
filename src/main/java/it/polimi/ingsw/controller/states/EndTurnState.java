@@ -8,6 +8,10 @@ import it.polimi.ingsw.model.leaderCards.LeaderCard;
 
 import static it.polimi.ingsw.controller.states.ErrorMessage.*;
 
+/**
+ * A player is in this state when is going to end his turn.
+ * Here he can only activate or discard leader cards or end the turn.
+ */
 public class EndTurnState extends TurnState {
 
     public EndTurnState(Controller controller) {
