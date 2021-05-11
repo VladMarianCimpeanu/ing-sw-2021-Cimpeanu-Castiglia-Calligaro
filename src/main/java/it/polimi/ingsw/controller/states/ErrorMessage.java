@@ -1,10 +1,13 @@
 package it.polimi.ingsw.controller.states;
 
-public enum ErrorMessage {
+public enum ErrorMessage{
     invalidCommand,
     invalidLeaderCardID,
     invalidDevelopmentCardID,
     invalidShelf,
+    invalidResource,
+    invalidDeck,
+    invalidLevel,
     notEnoughSpace,
     existingResource,
     requirementsNotSatisfied,
@@ -13,5 +16,6 @@ public enum ErrorMessage {
     noSuchDevelopmentCard,
     wrongLevel,
     notEnoughResources,
-    nullResource
+    nullResource,
+    nullPosition
 }

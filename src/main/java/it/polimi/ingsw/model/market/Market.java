@@ -116,6 +116,15 @@ public class Market {
         return clonedArray;
     }
 
+    public String[][] getMarketString(){
+        String[][] clonedArray = new String[rows][columns];
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < columns; j++)
+                clonedArray[i][j] = market[i][j].toString();
+        }
+        return clonedArray;
+    }
+
     /**
      * get the actual Marble that is not in the market
      * @return the actual Marble that is not in the market

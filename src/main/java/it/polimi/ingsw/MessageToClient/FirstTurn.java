@@ -1,6 +1,6 @@
 package it.polimi.ingsw.MessageToClient;
 
-public class FirstTurn {
+public class FirstTurn implements MessageToClient{
     private String type;
     private int position;
     private int numberOfResources;

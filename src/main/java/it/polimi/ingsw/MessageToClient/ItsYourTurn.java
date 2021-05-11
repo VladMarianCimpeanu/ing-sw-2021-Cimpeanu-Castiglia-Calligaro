@@ -1,7 +1,7 @@
 package it.polimi.ingsw.MessageToClient;
 
 
-public class ItsYourTurn {
+public class ItsYourTurn implements MessageToClient{
     private String type;
     private String player;
 

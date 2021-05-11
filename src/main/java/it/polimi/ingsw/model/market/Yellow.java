@@ -21,4 +21,8 @@ public class Yellow extends Marble{
     public Benefit getBenefit(Stack<MarketStrategy> marketStrategies) {
         return COIN;
     }
+    @Override
+    public String toString(){
+        return "YELLOW";
+    }
 }

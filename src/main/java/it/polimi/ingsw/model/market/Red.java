@@ -20,4 +20,8 @@ public class Red extends Marble{
     public Benefit getBenefit(Stack<MarketStrategy> marketStrategies) {
         return Faith.giveFaith();
     }
+    @Override
+    public String toString(){
+        return "RED";
+    }
 }

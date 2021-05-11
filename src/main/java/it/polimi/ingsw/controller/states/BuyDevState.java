@@ -1,5 +1,8 @@
 package it.polimi.ingsw.controller.states;
 
+
+import it.polimi.ingsw.MessageToClient.Error;
+import it.polimi.ingsw.MessageToClient.MessageToClient;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Dashboard;
 import it.polimi.ingsw.model.Player;
@@ -7,6 +10,8 @@ import it.polimi.ingsw.model.benefit.Resource;
 import it.polimi.ingsw.model.exceptions.InvalidResourceException;
 import it.polimi.ingsw.model.exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.model.exceptions.RequirementsSatisfiedException;
+
+import static it.polimi.ingsw.controller.states.ErrorMessage.*;
 
 /**
  * This state follows the player's choice of buying a development card from the development card set
@@ -22,36 +27,32 @@ public class BuyDevState extends TurnState {
     public void pay(Resource resource, String position) {
         Controller controller = getController();
         if(resource == null){
-            controller.sendError("Null Resource found");
+            controller.sendMessage(new Error(nullResource.toString()));
             return;
         }
         Player player = controller.getCurrentPlayer();
         Dashboard dashboard = player.getDashboard();
         if(position != null) {
-            if (position.equals("WarehouseDepot")) {
-                try {
-                    dashboard.takeFromDepot(resource);
-                } catch (NotEnoughResourcesException | InvalidResourceException | RequirementsSatisfiedException e) {
-                    e.printStackTrace();
-                }
-            } else if (position.equals("Strongbox")) {
-                try {
+            try {
+                if (position.equals("WarehouseDepot"))
+                        dashboard.takeFromDepot(resource);
+                else if (position.equals("Strongbox"))
                     dashboard.takeFromStrongbox(resource);
-                } catch (NotEnoughResourcesException | InvalidResourceException | RequirementsSatisfiedException e) {
-                    e.printStackTrace();
+                else if (position.equals("ExtraSlot"))
+                        dashboard.takeFromExtraSlot(resource);
+                else {
+                    controller.sendMessage(new Error(invalidCommand.toString()));
+                    return;
                 }
-            } else if (position.equals("ExtraSlot")) {
-                try {
-                    dashboard.takeFromExtraSlot(resource);
-                } catch (NotEnoughResourcesException | InvalidResourceException | RequirementsSatisfiedException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                controller.sendError("Wrong Position found");
-                return;
+                if (dashboard.getResourcesToPay().isEmpty()) controller.setCurrentState(new PlaceDevState(controller));
+            }catch(NotEnoughResourcesException e){
+                controller.sendMessage(new Error(notEnoughResources.toString()));
+            }catch(InvalidResourceException e){
+                controller.sendMessage(new Error(invalidResource.toString()));
+            }catch(RequirementsSatisfiedException e){
+                controller.sendMessage(new Error(requirementsNotSatisfied.toString()));
             }
-            if(dashboard.getResourcesToPay().isEmpty()) controller.setCurrentState(new PlaceDevState(controller));
         }else
-            controller.sendError("Null Position found");
+            controller.sendMessage(new Error(nullPosition.toString()));
     }
 }

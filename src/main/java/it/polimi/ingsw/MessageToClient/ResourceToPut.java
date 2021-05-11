@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.benefit.Resource;
 
 import java.util.ArrayList;
 
-public class ResourceToPut {
+public class ResourceToPut implements MessageToClient{
     private String type;
     private ArrayList<Resource> resources;
 

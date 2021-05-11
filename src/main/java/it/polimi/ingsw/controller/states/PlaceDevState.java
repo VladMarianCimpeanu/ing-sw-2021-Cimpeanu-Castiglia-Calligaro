@@ -1,8 +1,11 @@
 package it.polimi.ingsw.controller.states;
 
+import it.polimi.ingsw.MessageToClient.Error;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.exceptions.WrongLevelException;
+
+import static it.polimi.ingsw.controller.states.ErrorMessage.*;
 
 /**
  * This state follows the resources payment needed for the purchase of a development card.
@@ -16,16 +19,12 @@ public class PlaceDevState extends TurnState {
     @Override
     public void placeDevCard(int deck) {
         Controller controller = getController();
-        if(deck < 1 || deck > 3) {
-            controller.sendError("Illegal Deck position found");
-            return;
-        }
         Player player = controller.getCurrentPlayer();
         try {
             player.placeDevelopmentCard(deck);
             controller.setCurrentState(new EndTurnState(controller));
         } catch (WrongLevelException e) {
-            controller.sendError("The card is not placeable at the specified deck");
+            controller.sendMessage(new Error(invalidDeck.toString()));
         }
     }
 }

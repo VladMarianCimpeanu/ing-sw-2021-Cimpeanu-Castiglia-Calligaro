@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.MessageToClient.CrashedPlayer;
+import it.polimi.ingsw.MessageToClient.Ping;
 import it.polimi.ingsw.model.Identity;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.WaitingRoom;
@@ -79,7 +81,17 @@ public class MultiEchoServer {
      */
     public static synchronized boolean addNickname(String nickname, EchoServerClientHandler echoServerClientHandler) {
         if(nicknames.containsKey(nickname)){
-            //TODO: call Ping method of 'Handler
+            //find out whether the already existing client is still connected
+            EchoServerClientHandler oppositeClient = nicknames.get(nicknames);
+            if(oppositeClient.getController().getPlayer(nickname).isOnline()){
+                oppositeClient.send(new Ping());
+                if(!oppositeClient.waitForPong()) {
+                    handleCrash(oppositeClient);
+                    if(nicknames.containsKey(nickname))
+                        oppositeClient.getController().rejoinClient(echoServerClientHandler, nickname);
+                }
+            }else
+                oppositeClient.getController().rejoinClient(echoServerClientHandler, nickname);
             return false;
         }
         nicknames.put(nickname, echoServerClientHandler);
@@ -119,7 +131,7 @@ public class MultiEchoServer {
                 ArrayList<Identity> idS = containingClient.getWaitingUsers();
                 for(Identity i: idS){
                     EchoServerClientHandler waitingClient = nicknames.get(i.getNickname());
-                    waitingClient.sendSimple("crashedPlayer", client.getNickname());
+                    waitingClient.send(new CrashedPlayer(client.getNickname()));
                 }
                 System.out.println(client.getNickname() + " crashed");
             }else{
@@ -130,7 +142,7 @@ public class MultiEchoServer {
                     Identity i = p.getIdentity();
                     if(i.isOnline()){
                         EchoServerClientHandler waitingClient = nicknames.get(i.getNickname());
-                        waitingClient.sendSimple("crashedPlayer", client.getNickname());
+                        waitingClient.send(new CrashedPlayer(client.getNickname()));
                     }
                 }
                 System.out.println(client.getNickname() + " has left the game");

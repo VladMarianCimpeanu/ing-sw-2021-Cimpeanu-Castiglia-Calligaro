@@ -6,6 +6,7 @@ import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.MessageFromClient.*;
 import it.polimi.ingsw.MessageToClient.Error;
 import it.polimi.ingsw.MessageToClient.MessageToClient;
+import it.polimi.ingsw.MessageToClient.Ping;
 import it.polimi.ingsw.model.Multiplayer;
 
 import java.io.*;
@@ -87,8 +88,9 @@ public class EchoServerClientHandler implements Runnable {
                         }
                         break;
                     }else{
-                        if(true){
-
+                        //when disconnected player tries to rejoin the game
+                        if(isInGame){
+                            //recovery necessary data
                             break;
                         }
                         sendError("usedNickname");
@@ -103,7 +105,7 @@ public class EchoServerClientHandler implements Runnable {
                 System.out.println("Error: wrong json format");
             }catch(NoSuchElementException e){
                 System.out.println("Player disconnected in login phase");
-                //handle crash closing the socket
+                MultiEchoServer.handleCrash(this);
                 closeSocket();
                 return false;
             } catch (CrashException e) {
@@ -189,17 +191,18 @@ public class EchoServerClientHandler implements Runnable {
     public void run() {
         //if the client is crashed during login phase
         if (!login()) return;
-            try {
-                String line = in.readLine();
-                if (isInGame) {
-
-                }
-                //TODO: continua con il primo turno
-            } catch (NoSuchElementException | IOException e) {
-                MultiEchoServer.handleCrash(this);
-                closeSocket();
-                return;
-            }
+//            is this part still needed, since we include the first turn in the state pattern
+//            try {
+//                String line = in.readLine();
+//                if (isInGame) {
+//
+//                }
+//
+//            } catch (NoSuchElementException | IOException e) {
+//                MultiEchoServer.handleCrash(this);
+//                closeSocket();
+//                return;
+//            }
         while (true) {
             String line = null;
             try {
@@ -211,7 +214,7 @@ public class EchoServerClientHandler implements Runnable {
                     controller.nextTurn();
                 }
             }catch(SocketTimeoutException e){
-                sendSimple("Ping", "");
+                send(new Ping());
             }catch (IOException e){
                 //client crashed
                 MultiEchoServer.handleCrash(this);
@@ -225,9 +228,20 @@ public class EchoServerClientHandler implements Runnable {
                 play(message);
             } else {
                 out.println("It isn't your turn!");
+                out.flush();
             }
         }
         closeSocket();
+    }
+
+    public boolean waitForPong(){
+        try {
+            String line = in.readLine();
+            if(line == null) return false;
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 
 

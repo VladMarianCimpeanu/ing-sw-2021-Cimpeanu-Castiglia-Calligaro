@@ -1,11 +1,11 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.MessageToClient.DevCardSet;
+import it.polimi.ingsw.MessageToClient.MarketGrid;
 import it.polimi.ingsw.MessageToClient.MessageToClient;
 import it.polimi.ingsw.controller.states.TurnState;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.InvalidReadException;
-import it.polimi.ingsw.model.exceptions.InvalidStepsException;
-import it.polimi.ingsw.model.exceptions.NoSuchPlayerException;
+import it.polimi.ingsw.model.exceptions.*;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -29,7 +29,6 @@ public class Controller {
         nicknames = new HashMap<>();
         players = new HashMap<>();
         turns = new ArrayList<>();
-
         System.out.print("A new Game has started. Players: ");
         ArrayList<Identity> identities = new ArrayList<>(users);
         shuffle(identities);
@@ -51,11 +50,44 @@ public class Controller {
         for(Player p: game.getPlayers())
             players.put(p.getNickName(),p);
         new VirtualView(this);
+        setUp();
     }
 
-    //TODO: CRASH management
-    public void rejoinClient(EchoServerClientHandler client, String nickname) {
+    private void setUp(){
+        //send entire market and devcardset broadcast
+        //this can used also for rejoinClient
+        //could be done responding to some client messages?
 
+        //Market
+        String[][] market = new String[3][4];
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 4; j++)
+                market[i][j] = game.getMarket().getMarket()[i][j].toString();
+        }
+        sendBroadcast(new MarketGrid(market, game.getMarket().getOuterMarble().toString()));
+        //DevCardSet
+        ArrayList<ArrayList<Integer>> set = new ArrayList<>();
+        for(int level = 1; level<=3; level++){
+            set.add(new ArrayList<>());
+            try {
+                set.get(level).add(game.getDevelopmentCardSet().peekCard(Color.GREEN, level).getID());
+                set.get(level).add(game.getDevelopmentCardSet().peekCard(Color.BLUE, level).getID());
+                set.get(level).add(game.getDevelopmentCardSet().peekCard(Color.YELLOW, level).getID());
+                set.get(level).add(game.getDevelopmentCardSet().peekCard(Color.PURPLE, level).getID());
+            } catch (WrongLevelException | NoCardException e) {
+                e.printStackTrace();
+            }
+        }
+        sendBroadcast(new DevCardSet(set));
+    }
+
+
+    public void rejoinClient(EchoServerClientHandler client, String nickname) {
+        nicknames.remove(nickname);
+        nicknames.put(nickname, client);
+        players.get(nickname).getIdentity().setOnline(true);
+        client.setController(this);
+        //setUp();
     }
 
 
@@ -122,20 +154,19 @@ public class Controller {
         currentUser = turns.get(pos);
         if(!getCurrentPlayer().isOnline()) {
             nextTurn();
-            //possible problems if everyone in the game is disconnected
             return;
         }
         try {
             nicknames.get(currentUser).setSocketTimeOut(30*1000);
         } catch (SocketException e) {
-            getCurrentPlayer().getIdentity().setOnline(false);
+            MultiEchoServer.handleCrash(nicknames.get(currentUser));
         }
         for(String user: turns) {
             if (user.equals(currentUser)) continue;
             try {
                 nicknames.get(user).setSocketTimeOut(0);
             } catch (SocketException e) {
-                players.get(user).getIdentity().setOnline(false);
+                MultiEchoServer.handleCrash(nicknames.get(currentUser));
             }
         }
     }

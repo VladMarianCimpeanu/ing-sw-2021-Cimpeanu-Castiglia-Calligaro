@@ -1,6 +1,6 @@
 package it.polimi.ingsw.MessageToClient;
 
-public class JoinPlayer {
+public class JoinPlayer implements MessageToClient{
     private String type;
     private String player;
 

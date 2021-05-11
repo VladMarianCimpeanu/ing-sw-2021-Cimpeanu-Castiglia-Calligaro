@@ -1,6 +1,6 @@
 package it.polimi.ingsw.MessageToClient;
 
-public class LastTurn {
+public class LastTurn implements MessageToClient{
     private String type;
     private String player;
     private String cause;

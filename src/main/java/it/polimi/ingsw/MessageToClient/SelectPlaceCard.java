@@ -1,6 +1,6 @@
 package it.polimi.ingsw.MessageToClient;
 
-public class SelectPlaceCard {
+public class SelectPlaceCard implements MessageToClient{
     private String type;
 
     public SelectPlaceCard() {

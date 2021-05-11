@@ -27,4 +27,8 @@ public class White extends Marble {
     public boolean isWhite(){
         return true;
     }
+    @Override
+    public String toString(){
+        return "WHITE";
+    }
 }

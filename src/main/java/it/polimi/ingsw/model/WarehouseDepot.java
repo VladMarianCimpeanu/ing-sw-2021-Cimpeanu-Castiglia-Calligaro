@@ -170,27 +170,33 @@ public class WarehouseDepot {
                 if(getShelfQuantity(shelf)+quantity > 1){
                     quantity -= 1-getShelfQuantity(shelf);
                     firstQuantity = 1;
+                    virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                     return quantity;
                 }else{
                     firstQuantity = getShelfQuantity(shelf)+quantity;
+                    virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                     return 0;
                 }
             case 2:
                 if(getShelfQuantity(shelf)+quantity > 2){
                     quantity -= 2-getShelfQuantity(shelf);
                     secondQuantity = 2;
+                    virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                     return quantity;
                 }else{
                     secondQuantity = getShelfQuantity(shelf)+quantity;
+                    virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                     return 0;
                 }
             case 3:
                 if(getShelfQuantity(shelf)+quantity > 3){
                     quantity -= 3-getShelfQuantity(shelf);
                     thirdQuantity = 3;
+                    virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                     return quantity;
                 }else{
                     thirdQuantity = getShelfQuantity(shelf)+quantity;
+                    virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                     return 0;
                 }
         }
@@ -222,28 +228,34 @@ public class WarehouseDepot {
             case 1:
                 if(firstQuantity >= quantity){
                     firstQuantity -= quantity;
+                    virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                     return 0;
                 }else{
                     quantity -= firstQuantity;
                     firstQuantity = 0;
+                    virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                     return quantity;
                 }
             case 2:
                 if(secondQuantity >= quantity){
                     secondQuantity -= quantity;
+                    virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                     return 0;
                 }else{
                     quantity -= secondQuantity;
                     secondQuantity = 0;
+                    virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                     return quantity;
                 }
             case 3:
                 if(thirdQuantity >= quantity){
                     thirdQuantity -= quantity;
+                    virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                     return 0;
                 }else{
                     quantity -= thirdQuantity;
                     thirdQuantity = 0;
+                    virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                     return quantity;
                 }
         }
@@ -356,12 +368,15 @@ public class WarehouseDepot {
         switch(shelf){
             case 1:
                 firstQuantity -= quantity;
+                virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                 break;
             case 2:
                 secondQuantity -= quantity;
+                virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                 break;
             case 3:
                 thirdQuantity -= quantity;
+                virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                 break;
         }
         if(a) throw new NotEnoughSpaceException();
@@ -395,6 +410,7 @@ public class WarehouseDepot {
                 }
                 firstQuantity += quantity;
                 slot.removeResource(quantity);
+                virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                 break;
             case 2:
                 if(secondQuantity != 0 && !resource.equals(secondShelf)) throw new ExistingResourceException();
@@ -404,6 +420,7 @@ public class WarehouseDepot {
                 }
                 secondQuantity += quantity;
                 slot.removeResource(quantity);
+                virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                 break;
             case 3:
                 if(thirdQuantity != 0 && !resource.equals(thirdShelf)) throw new ExistingResourceException();
@@ -413,6 +430,7 @@ public class WarehouseDepot {
                 }
                 thirdQuantity += quantity;
                 slot.removeResource(quantity);
+                virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                 break;
         }
         if(a) throw new NotEnoughSpaceException();
