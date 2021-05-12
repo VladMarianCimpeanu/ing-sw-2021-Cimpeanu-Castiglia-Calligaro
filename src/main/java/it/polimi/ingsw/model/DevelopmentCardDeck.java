@@ -25,7 +25,7 @@ public abstract class DevelopmentCardDeck {
     public static ArrayList<DevelopmentCard> getDevelopmentCardDeck() throws IOException, InvalidReadException {
         if (cards == null) {
             JsonToDevCard myJsonReader = new JsonToDevCard();
-            String path = "src/jsonSources/developmentCard.json";
+            String path = "src/resources/developmentCard.json";
             cards = (ArrayList<DevelopmentCard>) myJsonReader.readJsonDevelopmentCard(new FileInputStream(path));
         }
         return new ArrayList<>(cards);

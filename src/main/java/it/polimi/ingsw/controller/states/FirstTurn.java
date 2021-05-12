@@ -3,10 +3,7 @@ package it.polimi.ingsw.controller.states;
 import it.polimi.ingsw.JsonToLeaderCard;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.benefit.Resource;
-import it.polimi.ingsw.model.exceptions.ExistingResourceException;
-import it.polimi.ingsw.model.exceptions.InvalidResourceException;
-import it.polimi.ingsw.model.exceptions.InvalidShelfPosition;
-import it.polimi.ingsw.model.exceptions.NoCardException;
+import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +66,13 @@ public class FirstTurn extends TurnState{
 
     private void endPhase(){
         if(waitingForLeaderCards.isEmpty() && firstTurnResources.isEmpty()){
+            for (int i = 0; i < getController().getPlayers().size() ; i++) {
+                try {
+                    getController().getGame().getFaithPath().movePlayer(getController().getPlayers().get(i), i / 2);
+                } catch (NoSuchPlayerException | InvalidStepsException e) {
+                    e.printStackTrace();
+                }
+            }
             getController().setCurrentState(new SelectionState(getController()));
             getController().startGame();
         }

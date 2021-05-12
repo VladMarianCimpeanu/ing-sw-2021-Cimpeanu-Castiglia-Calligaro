@@ -1,17 +1,22 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.MessageToClient.DevCardSet;
+import it.polimi.ingsw.MessageToClient.KeepLeadercards;
 import it.polimi.ingsw.MessageToClient.MarketGrid;
 import it.polimi.ingsw.MessageToClient.MessageToClient;
+import it.polimi.ingsw.controller.states.FirstTurn;
 import it.polimi.ingsw.controller.states.TurnState;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.model.leaderCards.LeaderCard;
 
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import static java.util.Collections.shuffle;
 
 /**
@@ -33,6 +38,7 @@ public class Controller {
         nicknames = new HashMap<>();
         players = new HashMap<>();
         turns = new ArrayList<>();
+        currentState = new FirstTurn(this);
         System.out.print("A new Game has started. Players: ");
         ArrayList<Identity> identities = new ArrayList<>(users);
         shuffle(identities);
@@ -40,6 +46,7 @@ public class Controller {
             if(identities.size() == 1) game = new Singleplayer(identities);
             else game = new Multiplayer(identities);
         }catch(InvalidReadException | IOException | NoSuchPlayerException | InvalidStepsException e){
+            System.out.println("exception");
             e.printStackTrace();
         }
         for(Identity i: identities){
@@ -74,15 +81,25 @@ public class Controller {
         for(int level = 1; level<=3; level++){
             set.add(new ArrayList<>());
             try {
-                set.get(level).add(game.getDevelopmentCardSet().peekCard(Color.GREEN, level).getID());
-                set.get(level).add(game.getDevelopmentCardSet().peekCard(Color.BLUE, level).getID());
-                set.get(level).add(game.getDevelopmentCardSet().peekCard(Color.YELLOW, level).getID());
-                set.get(level).add(game.getDevelopmentCardSet().peekCard(Color.PURPLE, level).getID());
+                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.GREEN, level).getID());
+                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.BLUE, level).getID());
+                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.YELLOW, level).getID());
+                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.PURPLE, level).getID());
             } catch (WrongLevelException | NoCardException e) {
                 e.printStackTrace();
             }
         }
         sendBroadcast(new DevCardSet(set));
+
+        for(String nick: turns){
+            Player p = players.get(nick);
+
+            nicknames.get(nick).send(new KeepLeadercards(p.getLeaderCards()
+                    .stream()
+                    .map(LeaderCard::getID)
+                    .collect(Collectors.toCollection(ArrayList::new))
+                    ));
+        }
     }
 
 

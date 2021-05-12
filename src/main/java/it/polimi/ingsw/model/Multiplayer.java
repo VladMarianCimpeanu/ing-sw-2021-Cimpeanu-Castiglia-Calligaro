@@ -15,9 +15,6 @@ public class Multiplayer extends Game {
         super(identities);
         if(getPlayers() == null) return;
         faithPath = new MultiFaithPath(getPlayers());
-        for (int i = 0; i < getPlayers().size() ; i++)
-            faithPath.movePlayer(getPlayers().get(i), i / 2);
-        //how to handle the bonus resources?
     }
 
     @Override

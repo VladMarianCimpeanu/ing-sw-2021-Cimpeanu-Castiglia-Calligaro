@@ -46,7 +46,7 @@ public class JsonToLeaderCard {
 
     private static ArrayList<LeaderCard> parseLeaderCards() throws IOException {
         ArrayList<LeaderCard> cards = new ArrayList<>();
-        File file = new File("src/jsonSources/leaderCards.json");
+        File file = new File("src/resources/leaderCards.json");
         InputStream in = new FileInputStream(file);
         JsonReader reader = new JsonReader(new InputStreamReader(in));
 

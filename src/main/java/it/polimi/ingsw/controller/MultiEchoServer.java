@@ -77,16 +77,15 @@ public class MultiEchoServer {
     public static synchronized boolean addNickname(String nickname, EchoServerClientHandler echoServerClientHandler) {
         if(nicknames.containsKey(nickname)){
             //find out whether the already existing client is still connected
-            EchoServerClientHandler oppositeClient = nicknames.get(nicknames);
-            if(oppositeClient.getController().getPlayer(nickname).isOnline()){
+            EchoServerClientHandler oppositeClient = nicknames.get(nickname);
+            if(oppositeClient.isInGame()) {
+                if (oppositeClient.getController().getPlayer(nickname).isOnline()) {
+                    oppositeClient.send(new Ping());
+                } else
+                    oppositeClient.getController().rejoinClient(echoServerClientHandler, nickname);
+            }else{
                 oppositeClient.send(new Ping());
-                if(!oppositeClient.waitForPong()) {
-                    handleCrash(oppositeClient);
-                    if(nicknames.containsKey(nickname))
-                        oppositeClient.getController().rejoinClient(echoServerClientHandler, nickname);
-                }
-            }else
-                oppositeClient.getController().rejoinClient(echoServerClientHandler, nickname);
+            }
             return false;
         }
         nicknames.put(nickname, echoServerClientHandler);
