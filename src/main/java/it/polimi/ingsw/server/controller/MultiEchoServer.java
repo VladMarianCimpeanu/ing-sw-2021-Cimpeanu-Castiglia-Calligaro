@@ -58,7 +58,6 @@ public class MultiEchoServer {
         WaitingRoom newWaiting = new WaitingRoom(mode);
         waitingRooms.add(newWaiting);
         System.out.println(nickname + " created a new waiting room: size " + mode);
-        //TODO: WaitingRoom NON ha bisogno di riferimento a handler perchè può chiederlo a MultiEchoServer prima di creare il game.
         newWaiting.addUser(nickname);
     }
 

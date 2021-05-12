@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 public class SelectedLeadercards implements MessageToClient {
     private String type;
-    private ArrayList<Integer> leaderIds;
+    private int id1;
+    private int id2;
 
-    public SelectedLeadercards(ArrayList<Integer> leaderIds) {
+    public SelectedLeadercards(int id1, int id2) {
         this.type = "SelectedLeadercards";
-        this.leaderIds = leaderIds;
+        this.id1 = id1;
+        this.id2 = id2;
     }
 }

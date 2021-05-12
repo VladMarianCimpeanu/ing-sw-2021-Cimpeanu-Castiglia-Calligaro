@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.controller.states;
 
+import it.polimi.ingsw.client.MessageFromServer.Ok;
 import it.polimi.ingsw.server.JsonToLeaderCard;
+import it.polimi.ingsw.server.MessageToClient.SelectedLeadercards;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
@@ -10,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static it.polimi.ingsw.server.controller.states.ErrorMessage.invalidCommand;
+import static it.polimi.ingsw.server.controller.states.ErrorMessage.invalidLeaderCardID;
 
 public class FirstTurn extends TurnState{
     private ArrayList<String> waitingForLeaderCards;
@@ -22,17 +25,15 @@ public class FirstTurn extends TurnState{
         waitingForLeaderCards = new ArrayList<>(controller.getTurns());
         for(int i = 2; i <= controller.getTurns().size(); i++)
             firstTurnResources.put(controller.getTurns().get(i-1), i/2);
-
-        //TODO: Distribute LeaderCards
     }
 
     @Override
     public void keepLeaderCards(String nickname, int id1, int id2){
         try {
             getController().getPlayer(nickname).keepLeaderCards(JsonToLeaderCard.getLeaderCard(id1), JsonToLeaderCard.getLeaderCard(id2));
-            //TODO update Unicast (OK)
+            getController().sendMessage(nickname, new SelectedLeadercards(id1, id2));
         } catch (NoCardException e) {
-            //TODO
+            getController().sendError(invalidLeaderCardID.toString());
         }
         waitingForLeaderCards.remove(nickname);
         endPhase();
@@ -73,8 +74,9 @@ public class FirstTurn extends TurnState{
                     e.printStackTrace();
                 }
             }
-            getController().setCurrentState(new SelectionState(getController()));
+            System.out.println("First turn ended. Game starts now!");
             getController().startGame();
+            getController().setCurrentState(new SelectionState(getController()));
         }
     }
 

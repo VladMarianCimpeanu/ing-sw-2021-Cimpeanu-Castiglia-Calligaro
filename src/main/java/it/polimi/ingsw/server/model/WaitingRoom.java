@@ -44,7 +44,7 @@ public class WaitingRoom {
      * @throws NoSuchUserException
      * @throws NullPointerException
      */
-    //TODO: removeUser in case of crash
+
     public void removeUser(String nickname) throws NoSuchUserException, NullPointerException, EmptyException {
         if(nickname == null) throw new NullPointerException();
         if(waitingUsers.isEmpty()) throw new EmptyException();

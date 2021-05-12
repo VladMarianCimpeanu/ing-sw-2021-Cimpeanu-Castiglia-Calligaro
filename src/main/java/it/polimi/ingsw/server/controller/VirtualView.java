@@ -20,7 +20,7 @@ public class VirtualView {
     public VirtualView(Controller controller) {
         if(controller == null) return;
         this.controller = controller;
-        //TODO: subscribe model classes
+
         controller.getGame().getDevelopmentCardSet().subscribe(this);
         controller.getGame().getFaithPath().subscribe(this);
         controller.getGame().getMarket().subscribe(this);
@@ -76,7 +76,6 @@ public class VirtualView {
         controller.sendBroadcast(new UpdateLastProduced(controller.getCurrentPlayer().getNickName(), resources));
     }
 
-    //TODO
     /**
      * This method is used to notify the virtual view about a change in the warehouse depot
      * @param shelf specific shelf involved in the change.

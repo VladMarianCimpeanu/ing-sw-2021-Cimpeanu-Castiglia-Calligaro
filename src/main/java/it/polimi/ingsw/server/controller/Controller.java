@@ -1,9 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.server.MessageToClient.DevCardSet;
-import it.polimi.ingsw.server.MessageToClient.KeepLeadercards;
-import it.polimi.ingsw.server.MessageToClient.MarketGrid;
-import it.polimi.ingsw.server.MessageToClient.MessageToClient;
+import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.controller.states.FirstTurn;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.*;
@@ -146,10 +143,18 @@ public class Controller {
 
     /**
      * sends a message to the current player.
-     * @param message  specific message to send.
+     * @param message specific message to send.
      */
     public void sendMessage(MessageToClient message){
         nicknames.get(currentUser).send(message);
+    }
+
+    /**
+     * sends a message to a specific player.
+     * @param message specific message to send.
+     */
+    public void sendMessage(String nickname, MessageToClient message){
+        nicknames.get(nickname).send(message);
     }
 
     /**
@@ -175,6 +180,7 @@ public class Controller {
             nextTurn();
             return;
         }
+        sendBroadcast(new ItsYourTurn(currentUser));
         try {
             nicknames.get(currentUser).setSocketTimeOut(30*1000);
         } catch (SocketException e) {
@@ -191,7 +197,10 @@ public class Controller {
     }
 
     public void startGame(){
-        //TODO
+        currentUser = turns.get(0);
+        for(int i = 1; i < turns.size(); i++){
+            nicknames.get(turns.get(i)).setMyTurn(false);
+        }
     }
 
     private boolean isAnyoneOnline(){
