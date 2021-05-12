@@ -7,6 +7,10 @@ public class PlaceCard extends MessageFromClient {
     private int pos;
     @Override
     public void activate(Controller controller) {
+        if(pos == 0) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         state.placeDevCard(pos);
     }

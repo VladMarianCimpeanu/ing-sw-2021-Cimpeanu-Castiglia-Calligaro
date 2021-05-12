@@ -19,6 +19,21 @@ public class BuyDevCard implements MessageToServer {
         this.discountsID = discountsID;
     }
 
+    public BuyDevCard(int level, Color color){
+        this.type = "BuyDevCard";
+        this.level = level;
+        this.color = color;
+        discountsID = new ArrayList<>();
+    }
 
+    public BuyDevCard(int level, Color color, int id1){
+        this(level, color);
+        discountsID.add(id1);
+    }
+
+    public BuyDevCard(int level, Color color, int id1, int id2){
+        this(level, color, id1);
+        discountsID.add(id2);
+    }
 
 }

@@ -7,6 +7,10 @@ public class ActivateCardProduction extends MessageFromClient {
     private int index;
     @Override
     public void activate(Controller controller) {
+        if(index == 0) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         state.activateDevCard(index);
     }

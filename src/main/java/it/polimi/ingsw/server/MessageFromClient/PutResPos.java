@@ -10,6 +10,10 @@ public class PutResPos extends MessageFromClient {
     private int shelf;
     @Override
     public void activate(Controller controller) {
+        if(pos == null || res == null) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         switch(pos){
             case "warehouseDepot":

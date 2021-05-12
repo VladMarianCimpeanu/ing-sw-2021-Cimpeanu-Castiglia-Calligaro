@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller.states;
 
+import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Dashboard;
 import it.polimi.ingsw.server.model.ExtraProduction;
@@ -8,6 +9,10 @@ import it.polimi.ingsw.server.model.exceptions.InvalidIDExcpetion;
 import it.polimi.ingsw.server.model.exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.exceptions.ProductionStartedException;
 import it.polimi.ingsw.server.model.exceptions.ProductionUsedException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -31,7 +36,9 @@ public class ExtraProdOutState extends TurnState {
             int extraIndex = dashboard.getExtraProductions().indexOf(extraProduction);
             dashboard.selectExtraProduction(extraIndex, resource);
             Resource in = extraProduction.getResourceIn();
-            controller.sendSimple("resToPay",in.toString());
+            Map<Resource, Integer> input = new HashMap<>();
+            input.put(in, 1);
+            controller.sendMessage(new ResourceToPay(input));
             controller.setCurrentState(new CardProdState(controller));
         } catch (NotEnoughResourcesException e) {
             controller.sendError("notEnoughResources");

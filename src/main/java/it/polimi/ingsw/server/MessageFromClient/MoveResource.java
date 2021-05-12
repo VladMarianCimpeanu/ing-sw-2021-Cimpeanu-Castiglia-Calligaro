@@ -8,6 +8,10 @@ public class MoveResource extends MessageFromClient {
     private int shelfTo;
     @Override
     public void activate(Controller controller) {
+        if(shelfFrom == 0 || shelfTo == 0) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         state.moveWarehouse(shelfFrom, shelfTo);
     }

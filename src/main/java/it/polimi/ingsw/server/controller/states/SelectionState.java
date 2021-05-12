@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.JsonToLeaderCard;
+import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
+import it.polimi.ingsw.server.MessageToClient.SelectResourceIn;
+import it.polimi.ingsw.server.MessageToClient.SelectResourceOut;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.Discount;
@@ -91,7 +94,7 @@ public class SelectionState extends TurnState {
         Controller controller = getController();
         Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
         DevelopmentCard card = dashboard.getActivableDevCards().get(deckIndex);
-        controller.sendSimple("resourceCost", card.getResourceCost().toString());
+        controller.sendMessage(new ResourceToPay(card.getResourceCost()));
 
         try {
             dashboard.selectCardProduction(deckIndex);
@@ -112,14 +115,14 @@ public class SelectionState extends TurnState {
     @Override
     public void activateBase() {
         Controller controller = getController();
-        controller.sendSimple("select","resIn");
+        controller.sendMessage(new SelectResourceIn());
         controller.setCurrentState(new BaseProdInState(controller));
     }
 
     @Override
     public void activateExtra(int id) {
         Controller controller = getController();
-        controller.sendSimple("select","resOut");
+        controller.sendMessage(new SelectResourceOut());
         controller.setCurrentState(new ExtraProdOutState(controller, id));
     }
 }

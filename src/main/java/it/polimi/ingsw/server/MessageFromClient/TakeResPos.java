@@ -10,6 +10,10 @@ public class TakeResPos extends MessageFromClient {
 
     @Override
     public void activate(Controller controller) {
+        if(resource == null || position == null) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         state.pay(resource, position);
     }

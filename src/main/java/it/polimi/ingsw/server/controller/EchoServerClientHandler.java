@@ -25,9 +25,9 @@ public class EchoServerClientHandler implements Runnable {
     private boolean isMyTurn;
     private boolean isInGame;
     private RuntimeTypeAdapterFactory<MessageFromClient> shapeAdapterFactory;
-    BufferedReader in;
-    PrintWriter out;
-    Gson convert;
+    private BufferedReader in;
+    private PrintWriter out;
+    private Gson convert;
 
     public EchoServerClientHandler(Socket socket) {
         this.socket = socket;
@@ -113,6 +113,7 @@ public class EchoServerClientHandler implements Runnable {
                     }
                     if(MultiEchoServer.addNickname(nick, this)){
                         this.nickname = nick;
+                        send(new NicknameAccepted(nick));
                         if(MultiEchoServer.addToWaitingRoom(nick)){
                             send(new Ok("joined"));
                         }else{
@@ -124,6 +125,7 @@ public class EchoServerClientHandler implements Runnable {
                     }else{
                         //when disconnected player tries to rejoin the game
                         if(isInGame){
+                            send(new NicknameAccepted(nick));
                             //recovery necessary data
                             break;
                         }

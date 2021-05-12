@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller.states;
 
+import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Dashboard;
 import it.polimi.ingsw.server.model.benefit.Resource;
@@ -39,7 +40,7 @@ public class BaseProdOutState extends TurnState {
 
         try {
             dashboard.selectBaseProduction(input,resourceOut);
-            controller.sendSimple("resToPay", res1In.toString());
+            controller.sendMessage(new ResourceToPay(input));
             controller.setCurrentState(new CardProdState(controller));
         } catch (NotEnoughResourcesException e) {
             controller.sendError("notEnoughResources");

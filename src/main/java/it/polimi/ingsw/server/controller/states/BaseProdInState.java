@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller.states;
 
+import it.polimi.ingsw.server.MessageToClient.SelectResourceOut;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
@@ -16,7 +17,7 @@ public class BaseProdInState extends TurnState {
     @Override
     public void selectInput(Resource res1, Resource res2) {
         Controller controller = getController();
-        controller.sendSimple("select","resOut");
+        controller.sendMessage(new SelectResourceOut());
         controller.setCurrentState(new BaseProdOutState(controller, res1, res2));
     }
 }

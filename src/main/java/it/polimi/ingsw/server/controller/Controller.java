@@ -121,6 +121,7 @@ public class Controller {
     }
 
     public Player getPlayer(String nickname){return players.get(nickname);}
+
     public Player getCurrentPlayer(){
         return players.get(currentUser);
     }
@@ -150,10 +151,7 @@ public class Controller {
     public void sendMessage(MessageToClient message){
         nicknames.get(currentUser).send(message);
     }
-    @Deprecated
-    public void sendSimple(String command, String params){
 
-    }
     /**
      * sends an error to the current player.
      * @param e  specific error to send.

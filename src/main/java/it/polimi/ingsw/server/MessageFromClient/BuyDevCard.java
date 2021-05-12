@@ -12,6 +12,10 @@ public class BuyDevCard extends MessageFromClient {
     private ArrayList<Integer> discountsID;
     @Override
     public void activate(Controller controller) {
+        if(color == null || discountsID == null || level == 0) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         state.buyDevCard(color, level, discountsID);
     }

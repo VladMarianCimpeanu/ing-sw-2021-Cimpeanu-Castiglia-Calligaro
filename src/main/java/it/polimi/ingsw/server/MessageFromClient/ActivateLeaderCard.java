@@ -7,6 +7,10 @@ public class ActivateLeaderCard extends MessageFromClient {
     private int id;
     @Override
     public void activate(Controller controller) {
+        if(id == 0) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         state.activateLeaderCard(id);
     }

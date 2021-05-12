@@ -8,6 +8,10 @@ public class KeepLeaderCard extends MessageFromClient {
     private String nickname;
     @Override
     public void activate(Controller controller) {
+        if(id1 == 0 || id2 == 0 || nickname == null) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         state.keepLeaderCards(nickname, id1, id2);
     }

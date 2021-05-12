@@ -10,6 +10,10 @@ public class MoveWarehouseToExtra extends MessageFromClient{
 
     @Override
     public void activate(Controller controller) {
+        if(shelf == 0 || leaderId == 0 || quantityToMove == 0) {
+            controller.sendError("invalidJson");
+            return;
+        }
         TurnState state = controller.getCurrentState();
         state.moveWarehouseToExtra(shelf, leaderId, quantityToMove);
     }
