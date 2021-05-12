@@ -368,13 +368,15 @@ public class Player {
         ArrayList<Benefit> received;
         if(marketStrategies.isEmpty()) received = game.getMarket().convertMarbles();
         else received = game.getMarket().convertMarbles(marketStrategyStack);
+        receivedFromMarket = new ArrayList<>();
         for(Benefit b: received){
             if(b.equals(Faith.giveFaith())){
-                received.remove(b);
+                System.out.println(received);
                 addFaithPoint(1);
+            }else{
+                receivedFromMarket.add(b);
             }
         }
-        receivedFromMarket = received;
     }
 
     /**

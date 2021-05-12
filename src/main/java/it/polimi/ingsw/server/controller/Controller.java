@@ -170,6 +170,7 @@ public class Controller {
 
     public void setCurrentState(TurnState currentState) {
         this.currentState = currentState;
+        System.out.println("Game state: " + currentState.getClass().getSimpleName());
     }
 
     public void nextTurn(){
@@ -192,11 +193,13 @@ public class Controller {
         for(String user: turns) {
             if (user.equals(currentUser)) continue;
             try {
+                nicknames.get(user).setMyTurn(false);
                 nicknames.get(user).setSocketTimeOut(0);
             } catch (SocketException e) {
                 MultiEchoServer.handleCrash(nicknames.get(currentUser));
             }
         }
+        nicknames.get(currentUser).setMyTurn(true);
     }
 
     public void startGame(){

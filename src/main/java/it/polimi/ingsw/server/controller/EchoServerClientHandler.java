@@ -130,6 +130,8 @@ public class EchoServerClientHandler implements Runnable {
                     }else{
                         //when disconnected player tries to rejoin the game
                         if(isInGame){
+                            this.nickname = nick;
+                            isMyTurn = false;
                             send(new NicknameAccepted(nick));
                             //recovery necessary data
                             break;

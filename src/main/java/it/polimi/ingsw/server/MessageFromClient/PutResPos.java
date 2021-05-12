@@ -16,12 +16,14 @@ public class PutResPos extends MessageFromClient {
         }
         TurnState state = controller.getCurrentState();
         switch(pos){
-            case "warehouseDepot":
+            case "depot":
                 state.putWarehouse(res, shelf);
                 break;
-            case "extraSlot":
+            case "extra":
                 state.putExtraSlot(res);
                 break;
+            default:
+                controller.sendError("invalidCommand");
         }
     }
 }

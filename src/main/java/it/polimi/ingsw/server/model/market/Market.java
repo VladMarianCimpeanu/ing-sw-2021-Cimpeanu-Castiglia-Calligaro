@@ -159,7 +159,8 @@ public class Market {
         ArrayList<Benefit> converted = new ArrayList<>();
         for(Marble m: selectedMarbles){
             Benefit benefitReceived = m.getBenefit(strategies);
-            converted.add(benefitReceived);
+            if(benefitReceived != null)
+                converted.add(benefitReceived);
         }
         return converted;
     }
