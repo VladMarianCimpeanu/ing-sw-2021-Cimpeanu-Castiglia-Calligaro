@@ -1,13 +1,12 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class FirstTurn implements MessageToClient {
-    private String type;
+public class FirstTurn extends MessageFromServer {
     private int position;
     private int numberOfResources;
 
-    public FirstTurn(int position, int numberOfResources) {
-        type = "FirstTurn";
-        this.position = position;
-        this.numberOfResources = numberOfResources;
+
+    @Override
+    public void activateMessage() {
+        System.out.println("you are in position: " + position + "\n chose " + numberOfResources +  "resources");
     }
 }

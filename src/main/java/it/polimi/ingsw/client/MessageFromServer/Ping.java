@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class Ping implements MessageToClient {
-    private String type;
+public class Ping extends MessageFromServer {
 
-    public Ping() {
-        this.type = "Ping";
+    @Override
+    public void activateMessage() {
+        System.out.println("ping from server.");
     }
 }

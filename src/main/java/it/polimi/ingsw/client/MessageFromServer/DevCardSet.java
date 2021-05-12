@@ -2,12 +2,11 @@ package it.polimi.ingsw.client.MessageFromServer;
 
 import java.util.ArrayList;
 
-public class DevCardSet implements MessageToClient {
-    private String type;
+public class DevCardSet extends MessageFromServer {
     private ArrayList<ArrayList<Integer>> set;
 
-    public DevCardSet(ArrayList<ArrayList<Integer>> set) {
-        this.type = "DevCardSet";
-        this.set = set;
+    @Override
+    public void activateMessage() {
+        System.out.println("Available cards to buy :" + set.toString());
     }
 }

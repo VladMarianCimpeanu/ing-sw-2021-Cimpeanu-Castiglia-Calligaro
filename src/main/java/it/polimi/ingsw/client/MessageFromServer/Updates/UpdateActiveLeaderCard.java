@@ -1,15 +1,13 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
-public class UpdateActiveLeaderCard implements MessageToClient {
-    private String type;
+public class UpdateActiveLeaderCard extends MessageFromServer {
     private String player;
     private int id;
 
-    public UpdateActiveLeaderCard(String player, int id) {
-        this.type = "UpdateActiveLeaderCard";
-        this.player = player;
-        this.id = id;
+    @Override
+    public void activateMessage() {
+        System.out.println(player + "activated the following leader card:" + id);
     }
 }

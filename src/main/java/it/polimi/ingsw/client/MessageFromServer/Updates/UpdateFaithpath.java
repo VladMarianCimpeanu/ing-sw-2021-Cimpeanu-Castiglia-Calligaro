@@ -1,15 +1,16 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
 import java.util.Map;
 
-public class UpdateFaithpath implements MessageToClient {
-    private String type;
+public class UpdateFaithpath extends MessageFromServer {
     private Map<String, Integer> newPositions;
 
-    public UpdateFaithpath(Map<String, Integer> newPositions) {
-        this.type = "UpdateFaithpath";
-        this.newPositions = newPositions;
-    }
+    @Override
+    public void activateMessage() {
+        for(String player : newPositions.keySet()) {
+            System.out.println(player + " moved to faith path position " + newPositions.get(player));
+        }
+     }
 }

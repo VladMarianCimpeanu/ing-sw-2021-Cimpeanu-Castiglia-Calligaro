@@ -1,11 +1,11 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class Error implements MessageToClient {
-    private String type;
+public class Error extends MessageFromServer {
     private String content;
 
-    public Error(String content){
-        this.type = "Error";
-        this.content = content;
+
+    @Override
+    public void activateMessage() {
+        System.out.println("error :" + content);
     }
 }

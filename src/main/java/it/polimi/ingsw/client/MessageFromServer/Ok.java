@@ -1,11 +1,10 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class Ok implements MessageToClient {
-    private String type;
+public class Ok extends MessageFromServer {
     private String message;
 
-    public Ok(String message){
-        this.type = "Ok";
-        this.message = message;
+    @Override
+    public void activateMessage() {
+        System.out.println("ok: " + message);
     }
 }

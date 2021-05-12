@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class ModeRequest implements MessageToClient {
-    private String type;
+public class ModeRequest extends MessageFromServer {
 
-    public ModeRequest() {
-        type = "ModeRequest";
+    @Override
+    public void activateMessage() {
+        System.out.println("choose number of players");
     }
 }

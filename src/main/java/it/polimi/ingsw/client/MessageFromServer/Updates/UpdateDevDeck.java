@@ -1,17 +1,15 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
-public class UpdateDevDeck implements MessageToClient {
-    private String type;
+public class UpdateDevDeck extends MessageFromServer {
     private String player;
     private int position;
     private int id;
 
-    public UpdateDevDeck(String player, int position, int id) {
-        this.type = "UpdateDevDeck";
-        this.player = player;
-        this.position = position;
-        this.id = id;
+
+    @Override
+    public void activateMessage() {
+        System.out.println(player + " has bought the  development card " + id + " and placed it to deck " + position);
     }
 }

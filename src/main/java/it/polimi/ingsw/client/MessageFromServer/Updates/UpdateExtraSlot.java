@@ -1,20 +1,16 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
-public class UpdateExtraSlot implements MessageToClient {
-    private String type;
+public class UpdateExtraSlot extends MessageFromServer {
     private String player;
     private Resource resource;
     private int id;
     private int quantity;
 
-    public UpdateExtraSlot(String player, Resource resource, int id, int quantity) {
-        this.type = "UpdateExtraSlot";
-        this.player = player;
-        this.resource = resource;
-        this.id = id;
-        this.quantity = quantity;
+    @Override
+    public void activateMessage() {
+        System.out.println(player + "now has " + quantity + " " +  resource + "on his leader card " + id );
     }
 }

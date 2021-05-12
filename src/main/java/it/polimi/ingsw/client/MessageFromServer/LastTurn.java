@@ -1,13 +1,11 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class LastTurn implements MessageToClient {
-    private String type;
+public class LastTurn extends MessageFromServer {
     private String player;
     private String cause;
 
-    public LastTurn(String player, String cause) {
-        type = "LastTurn";
-        this.player = player;
-        this.cause = cause;
+    @Override
+    public void activateMessage() {
+        System.out.println("Last turn! " + player + cause);
     }
 }

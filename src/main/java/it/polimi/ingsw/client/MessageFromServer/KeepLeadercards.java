@@ -2,12 +2,11 @@ package it.polimi.ingsw.client.MessageFromServer;
 
 import java.util.ArrayList;
 
-public class KeepLeadercards implements MessageToClient {
-    private String type;
+public class KeepLeadercards extends MessageFromServer {
     private ArrayList<Integer> leaderIds;
 
-    public KeepLeadercards(ArrayList<Integer> leaderIds) {
-        this.type = "KeepLeadercards";
-        this.leaderIds = leaderIds;
+    @Override
+    public void activateMessage() {
+        System.out.println("choose 2 leader cards between :" + leaderIds.toString());
     }
 }

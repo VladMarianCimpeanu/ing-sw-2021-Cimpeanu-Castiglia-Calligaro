@@ -1,11 +1,10 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class JoinPlayer implements MessageToClient {
-    private String type;
+public class JoinPlayer extends MessageFromServer {
     private String player;
 
-    public JoinPlayer(String player) {
-        type = "JoinPlayer";
-        this.player = player;
+    @Override
+    public void activateMessage() {
+        System.out.println(player + "joined the game");
     }
 }

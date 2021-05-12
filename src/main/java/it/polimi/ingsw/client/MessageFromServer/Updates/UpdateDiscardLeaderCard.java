@@ -1,15 +1,13 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
-public class UpdateDiscardLeaderCard implements MessageToClient {
-    private final String type;
+public class UpdateDiscardLeaderCard extends MessageFromServer {
     private String player;
     private int id;
 
-    public UpdateDiscardLeaderCard(String player, int id) {
-        type = "UpdateDiscardLeaderCard";
-        this.player = player;
-        this.id = id;
+    @Override
+    public void activateMessage() {
+        System.out.println(player + " discarded the following leader card:" + id );
     }
 }

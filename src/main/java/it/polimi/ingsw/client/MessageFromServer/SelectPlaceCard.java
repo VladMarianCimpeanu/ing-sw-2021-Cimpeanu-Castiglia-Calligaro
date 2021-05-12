@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class SelectPlaceCard implements MessageToClient {
-    private String type;
+public class SelectPlaceCard extends MessageFromServer {
 
-    public SelectPlaceCard() {
-        type = "SelectPlaceCard";
+    @Override
+    public void activateMessage() {
+        System.out.println("Where do you want to place the development card?");
     }
 }

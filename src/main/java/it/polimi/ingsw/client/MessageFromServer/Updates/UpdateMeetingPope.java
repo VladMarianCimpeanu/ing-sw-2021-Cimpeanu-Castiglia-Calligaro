@@ -1,15 +1,17 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
 import java.util.Map;
 
-public class UpdateMeetingPope implements MessageToClient {
-    private final String type;
+public class UpdateMeetingPope extends MessageFromServer {
     private Map<String, Integer> deltaVictoryPoints;
 
-    public UpdateMeetingPope(Map<String, Integer> deltaVictoryPoints) {
-        type = "UpdateMeetingPope";
-        this.deltaVictoryPoints = deltaVictoryPoints;
+    @Override
+    public void activateMessage() {
+        System.out.println("The following players has just joined a meeting with the pope:");
+        for (String nickname : deltaVictoryPoints.keySet()) {
+            System.out.println("\n" + nickname);
+        }
     }
 }

@@ -1,9 +1,8 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class AskStrategy implements MessageToClient {
-    private String type;
-
-    public AskStrategy() {
-        type = "AskStrategy";
+public class AskStrategy extends MessageFromServer {
+    @Override
+    public void activateMessage() {
+        System.out.println("Insert strategies");
     }
 }

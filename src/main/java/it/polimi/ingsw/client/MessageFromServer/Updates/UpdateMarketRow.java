@@ -1,19 +1,16 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
 import java.util.ArrayList;
 
-public class UpdateMarketRow implements MessageToClient {
-    private String type;
+public class UpdateMarketRow extends MessageFromServer {
     private ArrayList<String> newRow;
     private String newOuterMarble;
     private int row;
 
-    public UpdateMarketRow(ArrayList<String> newRow, String newOuterMarble, int row) {
-        this.type = "UpdateMarketRow";
-        this.newRow = newRow;
-        this.newOuterMarble = newOuterMarble;
-        this.row = row;
+    @Override
+    public void activateMessage() {
+        System.out.println("The market has changed " + row + " row. The new row is \n" + newRow.toString() + "\n The Marble to insert is: " + newOuterMarble);
     }
 }

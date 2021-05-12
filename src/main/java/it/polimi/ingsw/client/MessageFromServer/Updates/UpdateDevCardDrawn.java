@@ -1,18 +1,17 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 import it.polimi.ingsw.server.model.Color;
 
-public class UpdateDevCardDrawn implements MessageToClient {
-    private String type;
+public class UpdateDevCardDrawn extends MessageFromServer {
     private Color color;
     private int level;
     private int idNewCard;
 
-    public UpdateDevCardDrawn(Color color, int level, int idNewCard) {
-        this.type = "UpdateDevCardDrawn";
-        this.color = color;
-        this.level = level;
-        this.idNewCard = idNewCard;
+    @Override
+    public void activateMessage() {
+        System.out.println("A " + color + " development card of level " + level + " has just drown.");
+        if (idNewCard == 0) System.out.println("There are no more cards.");
+        else System.out.println("Now you can draw the card " + idNewCard);
     }
 }

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class GameStarted implements MessageToClient {
-    private String type;
+public class GameStarted extends MessageFromServer {
 
-    public GameStarted() {
-        type = "GameStarted";
+    @Override
+    public void activateMessage() {
+        System.out.println("game is started!");
     }
 }

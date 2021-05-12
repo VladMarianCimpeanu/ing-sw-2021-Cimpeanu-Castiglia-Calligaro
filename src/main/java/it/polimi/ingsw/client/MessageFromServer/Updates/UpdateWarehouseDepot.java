@@ -1,20 +1,16 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
-import it.polimi.ingsw.client.MessageFromServer.MessageToClient;
+import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
-public class UpdateWarehouseDepot implements MessageToClient {
-    private String type;
+public class UpdateWarehouseDepot extends MessageFromServer {
     private String player;
     private int shelf;
     private Resource resource;
     private int quantity;
 
-    public UpdateWarehouseDepot(String player, int shelf, Resource resource, int quantity) {
-        this.type = "UpdateWarehouseDepot";
-        this.player = player;
-        this.shelf = shelf;
-        this.resource = resource;
-        this.quantity = quantity;
+    @Override
+    public void activateMessage() {
+        System.out.println(player + " now has " + quantity + resource + " on " + shelf);
     }
 }
