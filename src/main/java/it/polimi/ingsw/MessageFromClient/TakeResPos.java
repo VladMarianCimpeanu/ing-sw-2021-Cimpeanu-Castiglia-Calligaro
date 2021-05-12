@@ -2,12 +2,15 @@ package it.polimi.ingsw.MessageFromClient;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.states.TurnState;
+import it.polimi.ingsw.model.benefit.Resource;
 
-public class ActivateLeaderCard extends MessageFromClient {
-    private int id;
+public class TakeResPos extends MessageFromClient {
+    private Resource resource;
+    private String position;
+
     @Override
     public void activate(Controller controller) {
         TurnState state = controller.getCurrentState();
-        state.activateLeaderCard(id);
+        state.pay(resource, position);
     }
 }

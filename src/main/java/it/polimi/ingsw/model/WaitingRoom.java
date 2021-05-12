@@ -30,10 +30,9 @@ public class WaitingRoom {
      * It adds a new player to the waiting room if its nickname isn't used by anyone that is inside the waitingRoom or is playing any game.
      * If the number of players matches the number set by the host, then it starts a new game.
      * @param nickname used by the user to register to the waiting room.
-     * @throws ExistingNicknameException
      * @throws NullPointerException
      */
-    public void addUser(String nickname) throws ExistingNicknameException, NullPointerException {
+    public void addUser(String nickname) throws NullPointerException {
         if(nickname == null || nickname.equals("")) throw new NullPointerException();
         waitingUsers.add(new Identity(nickname));
         if(gameMode <= waitingUsers.size()) {

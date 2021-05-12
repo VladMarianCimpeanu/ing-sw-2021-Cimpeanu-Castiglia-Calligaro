@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Dashboard;
 import it.polimi.ingsw.model.exceptions.NoProductionAvailableException;
 
+/**
+ * Finalize the production when all the resources has been payed.
+ */
 public class ActivateProdState extends TurnState {
 
     public ActivateProdState(Controller controller) {

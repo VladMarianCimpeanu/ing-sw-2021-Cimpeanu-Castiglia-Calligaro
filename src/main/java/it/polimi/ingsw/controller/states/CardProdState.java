@@ -7,6 +7,10 @@ import it.polimi.ingsw.model.exceptions.InvalidResourceException;
 import it.polimi.ingsw.model.exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.model.exceptions.RequirementsSatisfiedException;
 
+/**
+ * In this state the player has activated a production and can
+ * pay one by one all the resources required to produce.
+ */
 public class CardProdState extends TurnState {
 
     public CardProdState(Controller controller) {

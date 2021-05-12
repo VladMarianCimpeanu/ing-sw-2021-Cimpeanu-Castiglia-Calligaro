@@ -11,6 +11,10 @@ import it.polimi.ingsw.model.exceptions.ResourceCostException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * After selecting the resources in input, the player can select
+ * the resource wanted in output.
+ */
 public class BaseProdOutState extends TurnState {
     private Resource res1In;
     private Resource res2In;
@@ -36,7 +40,7 @@ public class BaseProdOutState extends TurnState {
         try {
             dashboard.selectBaseProduction(input,resourceOut);
             controller.sendSimple("resToPay", res1In.toString());
-            controller.setCurrentState(new BaseProdPayState(controller, res1In, res2In));
+            controller.setCurrentState(new CardProdState(controller));
         } catch (NotEnoughResourcesException e) {
             controller.sendError("notEnoughResources");
         } catch (ResourceCostException e) {

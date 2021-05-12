@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import static java.util.Collections.shuffle;
 
+/**
+ * Controller perform actions requested by the client, on the model.
+ * To manage the turn phases, it uses a State Pattern (currentState).
+ */
 public class Controller {
     private Game game;
     private String currentUser;
@@ -179,5 +183,9 @@ public class Controller {
         for(String p: turns)
             if(players.get(p).isOnline()) return true;
         return false;
+    }
+
+    public TurnState getCurrentState() {
+        return currentState;
     }
 }

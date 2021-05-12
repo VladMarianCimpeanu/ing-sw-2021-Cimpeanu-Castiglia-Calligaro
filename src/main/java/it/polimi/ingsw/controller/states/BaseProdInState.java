@@ -3,6 +3,10 @@ package it.polimi.ingsw.controller.states;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.benefit.Resource;
 
+/**
+ * In this state the player has activated the base production and can
+ * select 2 resources in input to start the production.
+ */
 public class BaseProdInState extends TurnState {
 
     public BaseProdInState(Controller controller) {

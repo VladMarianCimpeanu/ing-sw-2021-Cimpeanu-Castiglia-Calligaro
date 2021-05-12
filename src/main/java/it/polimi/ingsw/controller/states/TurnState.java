@@ -195,15 +195,6 @@ public abstract class TurnState {
     }
 
     /**
-     * This method is used to select the position from which the resource required by the extraProduction must be taken.
-     * If this method is performed during the wrong turn, it will send an error message to the controller
-     * @param position position of the required resource: values allowed are 'depot', 'strongbox' and 'extraSlot'
-     */
-    public void selectInputPosition(String position){
-        controller.sendError(invalidCommand.toString());
-    }
-
-    /**
      * If this method is performed during the wrong turn, it will send an error message to the controller
      */
     public void activateBase(){

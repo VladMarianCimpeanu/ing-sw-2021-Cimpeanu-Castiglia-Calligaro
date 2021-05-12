@@ -3,11 +3,14 @@ package it.polimi.ingsw.MessageFromClient;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.states.TurnState;
 
-public class ActivateLeaderCard extends MessageFromClient {
-    private int id;
+public class MoveWarehouseToExtra extends MessageFromClient{
+    private int shelf;
+    private int leaderId;
+    private int quantityToMove;
+
     @Override
     public void activate(Controller controller) {
         TurnState state = controller.getCurrentState();
-        state.activateLeaderCard(id);
+        state.moveWarehouseToExtra(shelf, leaderId, quantityToMove);
     }
 }

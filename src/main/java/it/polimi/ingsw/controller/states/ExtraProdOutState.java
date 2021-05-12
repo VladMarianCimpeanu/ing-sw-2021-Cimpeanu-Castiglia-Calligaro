@@ -9,6 +9,11 @@ import it.polimi.ingsw.model.exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.model.exceptions.ProductionStartedException;
 import it.polimi.ingsw.model.exceptions.ProductionUsedException;
 
+
+/**
+ * In this state the player has activated an extra production and can
+ * select the resource wanted in output.
+ */
 public class ExtraProdOutState extends TurnState {
     private int extraProductionID;
 
@@ -27,7 +32,7 @@ public class ExtraProdOutState extends TurnState {
             dashboard.selectExtraProduction(extraIndex, resource);
             Resource in = extraProduction.getResourceIn();
             controller.sendSimple("resToPay",in.toString());
-            controller.setCurrentState(new ExtraProdBuyState(controller, in));
+            controller.setCurrentState(new CardProdState(controller));
         } catch (NotEnoughResourcesException e) {
             controller.sendError("notEnoughResources");
         } catch (ProductionStartedException e) {

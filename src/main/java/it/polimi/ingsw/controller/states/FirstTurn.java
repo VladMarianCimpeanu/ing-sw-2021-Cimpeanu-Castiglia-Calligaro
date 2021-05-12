@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static it.polimi.ingsw.controller.states.ErrorMessage.invalidCommand;
+
 public class FirstTurn extends TurnState{
     private ArrayList<String> waitingForLeaderCards;
     private Map<String, Integer> firstTurnResources;
@@ -72,4 +74,19 @@ public class FirstTurn extends TurnState{
         }
     }
 
+    @Override
+    public void moveWarehouse(int fromShelf, int toShelf) {
+        getController().sendError(invalidCommand.toString());
+    }
+
+    @Override
+    public void moveExtraToWarehouse(int shelf, int leaderId, int quantityToMove) {
+        getController().sendError(invalidCommand.toString());
+    }
+
+    @Override
+    public void moveWarehouseToExtra(int shelf, int leaderId, int quantityToMove) {
+        getController().sendError(invalidCommand.toString());
+    }
 }
+

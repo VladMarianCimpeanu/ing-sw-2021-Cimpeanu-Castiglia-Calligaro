@@ -7,6 +7,12 @@ import it.polimi.ingsw.model.DevelopmentCard;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.leaderCards.LeaderCard;
 
+/**
+ * Enter in this state when a production is ended, player can now:
+ * - Start another production (card, base or extra)
+ * - Activate (or discard) leader cards
+ * - End the turn
+ */
 public class ProductionState extends TurnState {
 
     public ProductionState(Controller controller) {

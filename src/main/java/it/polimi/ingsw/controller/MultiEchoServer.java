@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.MessageToClient.CrashedPlayer;
+import it.polimi.ingsw.MessageToClient.JoinPlayer;
 import it.polimi.ingsw.MessageToClient.Ping;
 import it.polimi.ingsw.model.Identity;
 import it.polimi.ingsw.model.Player;
@@ -18,6 +19,9 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Server. It requires 2 params to be executed: the ip address and the port of the server.
+ */
 public class MultiEchoServer {
     private static String ip;
     private static int port;
@@ -41,19 +45,14 @@ public class MultiEchoServer {
 
     public static synchronized boolean addToWaitingRoom(String nickname) {
         if(waitingRooms.isEmpty()) return false;
-        try {
-            ArrayList<Identity> idS = waitingRooms.get(0).getWaitingUsers();
-            for(Identity i: idS){
-                EchoServerClientHandler client = nicknames.get(i.getNickname());
-                client.sendSimple("newPlayer", nickname);
-            }
-            System.out.println(nickname + " joined a waiting room");
-            waitingRooms.get(0).addUser(nickname);
-            return true;
-        } catch (ExistingNicknameException e) {
-            e.printStackTrace();
-            return false;
+        ArrayList<Identity> idS = waitingRooms.get(0).getWaitingUsers();
+        for(Identity i: idS){
+            EchoServerClientHandler client = nicknames.get(i.getNickname());
+            client.send(new JoinPlayer(nickname));
         }
+        System.out.println(nickname + " joined a waiting room");
+        waitingRooms.get(0).addUser(nickname);
+        return true;
     }
 
     public static void newWaitingRoom(String nickname, int mode){
@@ -61,11 +60,7 @@ public class MultiEchoServer {
         waitingRooms.add(newWaiting);
         System.out.println(nickname + " created a new waiting room: size " + mode);
         //TODO: WaitingRoom NON ha bisogno di riferimento a handler perchè può chiederlo a MultiEchoServer prima di creare il game.
-        try {
-            newWaiting.addUser(nickname);
-        } catch (ExistingNicknameException e) {
-            e.printStackTrace();
-        }
+        newWaiting.addUser(nickname);
     }
 
     public static void removeWaitingRoom(WaitingRoom waitingRoom){
@@ -183,7 +178,7 @@ public class MultiEchoServer {
     }
 
     public static void main(String[] args) {
-        MultiEchoServer echoServer = new MultiEchoServer("192.168.1.100",1234);
+        MultiEchoServer echoServer = new MultiEchoServer(args[0], Integer.parseInt(args[1]));
         echoServer.startServer();
     }
 }

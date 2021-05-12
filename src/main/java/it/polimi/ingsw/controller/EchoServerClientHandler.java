@@ -2,21 +2,22 @@ package it.polimi.ingsw.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.MessageFromClient.*;
+import it.polimi.ingsw.MessageToClient.*;
 import it.polimi.ingsw.MessageToClient.Error;
-import it.polimi.ingsw.MessageToClient.MessageToClient;
-import it.polimi.ingsw.MessageToClient.Ping;
-import it.polimi.ingsw.model.Multiplayer;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
+/**
+ * Handler of the client.
+ * It converts all the messages from client in actions on the controller.
+ */
 public class EchoServerClientHandler implements Runnable {
     private String nickname;
     private Socket socket;
@@ -60,66 +61,11 @@ public class EchoServerClientHandler implements Runnable {
         shapeAdapterFactory.registerSubtype(SelResIn.class, "SelResIn");
         shapeAdapterFactory.registerSubtype(SelResOut.class, "SelResOut");
         shapeAdapterFactory.registerSubtype(Strategy.class, "Strategy");
+        shapeAdapterFactory.registerSubtype(TakeResPos.class, "TakeResPos");
+        shapeAdapterFactory.registerSubtype(MoveWarehouseToExtra.class, "MoveWarehouseToExtra");
+        shapeAdapterFactory.registerSubtype(MoveExtraToWarehouse.class, "MoveExtraToWarehouse");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
-    }
-
-    private boolean login(){
-        while(true){
-            try{
-                String line = in.readLine();
-                Message message = convert.fromJson(line, Message.class);
-                System.out.println("Received: " + message);
-                if(message.getCommand().equals("login")) {
-                    String nick = message.getParams().get(0);
-                    if(nick == null || nick.equals("")){
-                        sendError("emptyNickname");
-                        System.out.println(nick + " is not permitted");
-                        continue;
-                    }
-                    if(MultiEchoServer.addNickname(nick, this)){
-                        this.nickname = nick;
-                        if(MultiEchoServer.addToWaitingRoom(nick)){
-                            sendSimple("ok", "joined");
-                        }else{
-                            int mode = requireMode();
-                            MultiEchoServer.newWaitingRoom(nick, mode);
-                            sendSimple("ok", "created");
-                        }
-                        break;
-                    }else{
-                        //when disconnected player tries to rejoin the game
-                        if(isInGame){
-                            //recovery necessary data
-                            break;
-                        }
-                        sendError("usedNickname");
-                        System.out.println("Error: requested nickname already used");
-                    }
-                }else {
-                    sendError("expectedLogin");
-                    System.out.println("Error: unexpected command");
-                }
-            }catch(JsonSyntaxException e){
-                sendError("invalidJson");
-                System.out.println("Error: wrong json format");
-            }catch(NoSuchElementException e){
-                System.out.println("Player disconnected in login phase");
-                MultiEchoServer.handleCrash(this);
-                closeSocket();
-                return false;
-            } catch (CrashException e) {
-                return false;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
-    }
-
-    @Deprecated
-    public void sendSimple(String command, String params) {
-
     }
 
     /**
@@ -137,6 +83,7 @@ public class EchoServerClientHandler implements Runnable {
         out.println(outMessage);
         out.flush();
     }
+
     private void closeSocket(){
         try {
             in.close();
@@ -151,21 +98,70 @@ public class EchoServerClientHandler implements Runnable {
         }
     }
 
+    private boolean login(){
+        while(true){
+            try{
+                String line = in.readLine();
+                MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
+                System.out.println("Received: " + message);
+                if(message instanceof Login) {
+                    String nick = ((Login) message).getNickname();
+                    if(nick == null || nick.equals("")){
+                        sendError("emptyNickname");
+                        System.out.println(nick + " is not permitted");
+                        continue;
+                    }
+                    if(MultiEchoServer.addNickname(nick, this)){
+                        this.nickname = nick;
+                        if(MultiEchoServer.addToWaitingRoom(nick)){
+                            send(new Ok("joined"));
+                        }else{
+                            int mode = requireMode();
+                            MultiEchoServer.newWaitingRoom(nick, mode);
+                            send(new Ok("created"));
+                        }
+                        break;
+                    }else{
+                        //when disconnected player tries to rejoin the game
+                        if(isInGame){
+                            //recovery necessary data
+                            break;
+                        }
+                        sendError("usedNickname");
+                        System.out.println("Error: requested nickname already used");
+                    }
+                }else {
+                    sendError("expectedLogin");
+                    System.out.println("Error: unexpected command");
+                }
+            }catch(JsonParseException e) {
+                sendError("invalidJson");
+                System.out.println("Error: wrong json format");
+            }catch(NoSuchElementException e){
+                System.out.println("Player disconnected in login phase");
+                MultiEchoServer.handleCrash(this);
+                closeSocket();
+                return false;
+            } catch (CrashException e) {
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
     private int requireMode() throws CrashException {
         try{
-            sendSimple("request","mode");
+            send(new ModeRequest());
             while(true) {
                 try{
                     String line = in.readLine();
-                    Message message = convert.fromJson(line, Message.class);
-                    if(message.getCommand().equals("mode")){
-                        String modeString = (message.getParams().get(0));
-                        try{
-                            int mode = Integer.parseInt(modeString);
-                            if(mode >= 1 && mode <= 4) return mode;
-                        }catch(NumberFormatException e){
-                            e.printStackTrace();
-                        }
+                    MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
+                    System.out.println("Received: " + message);
+                    if(message instanceof Mode){
+                        int mode = (((Mode) message).getMode());
+                        if(mode >= 1 && mode <= 4) return mode;
                     }
                     sendError("invalidMode");
                 } catch(JsonSyntaxException e){
@@ -185,7 +181,7 @@ public class EchoServerClientHandler implements Runnable {
         }
     }
 
-    private void play(Message message){
+    private void play(MessageFromClient message){
     }
 
     public void run() {
@@ -222,15 +218,16 @@ public class EchoServerClientHandler implements Runnable {
                 controller.nextTurn();
             }
 
-            Message message = convert.fromJson(line, Message.class);
-            if(message.getCommand().equals("EndGame")) break;
+            MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
             if (isMyTurn) {
-                play(message);
+                message.activate(controller);
             } else {
-                out.println("It isn't your turn!");
-                out.flush();
+                sendError("notYourTurn");
             }
         }
+    }
+
+    public void close(){
         closeSocket();
     }
 
