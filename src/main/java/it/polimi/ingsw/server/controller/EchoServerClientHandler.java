@@ -102,6 +102,11 @@ public class EchoServerClientHandler implements Runnable {
         while(true){
             try{
                 String line = in.readLine();
+                if(line == null){
+                    System.out.println("Player disconnected in login phase");
+                    closeSocket();
+                    return false;
+                }
                 MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
                 System.out.println("Received: " + message);
                 if(message instanceof Login) {
@@ -139,14 +144,12 @@ public class EchoServerClientHandler implements Runnable {
             }catch(JsonParseException e) {
                 sendError("invalidJson");
                 System.out.println("Error: wrong json format");
-            }catch(NoSuchElementException e){
+            }catch(IOException e){
                 System.out.println("Player disconnected in login phase");
                 MultiEchoServer.handleCrash(this);
                 closeSocket();
                 return false;
             } catch (CrashException e) {
-                return false;
-            } catch (IOException e) {
                 return false;
             }
         }
@@ -159,6 +162,13 @@ public class EchoServerClientHandler implements Runnable {
             while(true) {
                 try{
                     String line = in.readLine();
+                    if(line == null){
+                        MultiEchoServer.removeNickname(nickname);
+                        System.out.println("Player disconnected in login phase: " + nickname);
+                        //handle crash closing the socket
+                        closeSocket();
+                        throw new CrashException();
+                    }
                     MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
                     System.out.println("Received: " + message);
                     if(message instanceof Mode){
@@ -166,15 +176,13 @@ public class EchoServerClientHandler implements Runnable {
                         if(mode >= 1 && mode <= 4) return mode;
                     }
                     sendError("invalidMode");
-                } catch(JsonSyntaxException e){
+                } catch(JsonParseException e){
                     sendError("invalidJson");
                     System.out.println("Error: wrong json format");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
             }
         }
-        catch(NoSuchElementException e){
+        } catch (IOException e) {
             MultiEchoServer.removeNickname(nickname);
             System.out.println("Player disconnected in login phase: " + nickname);
             //handle crash closing the socket

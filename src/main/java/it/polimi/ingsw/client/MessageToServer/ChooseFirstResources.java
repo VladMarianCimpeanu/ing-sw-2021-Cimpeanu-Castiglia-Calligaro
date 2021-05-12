@@ -18,4 +18,8 @@ public class ChooseFirstResources implements MessageToServer {
         this.shelf2 = shelf2;
         this.nickname = nickname;
     }
+
+    public ChooseFirstResources(Resource res1, int shelf1, String nickname){
+        this(res1, null, shelf1, 0, nickname);
+    }
 }

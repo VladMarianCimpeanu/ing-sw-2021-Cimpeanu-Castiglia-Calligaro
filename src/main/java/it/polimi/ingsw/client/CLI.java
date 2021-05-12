@@ -76,6 +76,13 @@ public class CLI implements Runnable {
                                         command[2]
                                 ));
                                 break;
+                            case "choose":
+                                client.send(new ChooseFirstResources(
+                                        Resource.valueOf(command[1].toUpperCase()),
+                                        Integer.parseInt(command[2]),
+                                        nickname
+                                ));
+                                break;
                             default:
                                 out.println("Unexpected command.");
                         }
@@ -127,6 +134,8 @@ public class CLI implements Runnable {
                                 out.println("Unexpected command.");
                         }
                         break;
+                    default:
+                        out.println("Unexpected command.");
                 }
             }catch(Exception e){
                 out.println("Unexpected command.");
