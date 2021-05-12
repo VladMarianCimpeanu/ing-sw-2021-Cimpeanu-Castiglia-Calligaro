@@ -39,7 +39,7 @@ public class Client {
         shapeAdapterFactory.registerSubtype(CrashedPlayer.class, "CrashedPlayer");
         shapeAdapterFactory.registerSubtype(DevCardSet.class, "DevCardSet");
         shapeAdapterFactory.registerSubtype(Error.class, "Error");
-        shapeAdapterFactory.registerSubtype(FirstTurn.class, "FirstTurn");
+        shapeAdapterFactory.registerSubtype(TurnOrder.class, "TurnOrder");
         shapeAdapterFactory.registerSubtype(GameStarted.class, "GameStarted");
         shapeAdapterFactory.registerSubtype(ItsYourTurn.class, "ItsYourTurn");
         shapeAdapterFactory.registerSubtype(JoinPlayer.class, "JoinPlayer");
@@ -90,6 +90,7 @@ public class Client {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                break;
             }
         }
     }

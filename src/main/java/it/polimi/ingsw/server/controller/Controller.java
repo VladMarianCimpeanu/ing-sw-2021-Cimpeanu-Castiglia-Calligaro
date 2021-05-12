@@ -35,15 +35,15 @@ public class Controller {
         nicknames = new HashMap<>();
         players = new HashMap<>();
         turns = new ArrayList<>();
-        currentState = new FirstTurn(this);
-        System.out.print("A new Game has started. Players: ");
         ArrayList<Identity> identities = new ArrayList<>(users);
+        System.out.print("A new Game has started. Players: ");
+        for(Identity i: identities) System.out.print(i.getNickname() + " ");
+        System.out.println("");
         shuffle(identities);
         try{
             if(identities.size() == 1) game = new Singleplayer(identities);
             else game = new Multiplayer(identities);
         }catch(InvalidReadException | IOException | NoSuchPlayerException | InvalidStepsException e){
-            System.out.println("exception");
             e.printStackTrace();
         }
         for(Identity i: identities){
@@ -55,6 +55,7 @@ public class Controller {
         }
         System.out.println("Shuffling players");
         System.out.println("Player order: " + turns);
+        currentState = new FirstTurn(this);
         for(Player p: game.getPlayers())
             players.put(p.getNickName(),p);
         new VirtualView(this);

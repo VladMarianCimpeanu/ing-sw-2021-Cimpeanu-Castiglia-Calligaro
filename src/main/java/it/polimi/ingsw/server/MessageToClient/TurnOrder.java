@@ -1,12 +1,12 @@
 package it.polimi.ingsw.server.MessageToClient;
 
-public class FirstTurn implements MessageToClient{
+public class TurnOrder implements MessageToClient{
     private String type;
     private int position;
     private int numberOfResources;
 
-    public FirstTurn(int position, int numberOfResources) {
-        type = "FirstTurn";
+    public TurnOrder(int position, int numberOfResources) {
+        type = "TurnOrder";
         this.position = position;
         this.numberOfResources = numberOfResources;
     }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
-public class FirstTurn extends MessageFromServer {
+public class TurnOrder extends MessageFromServer {
     private int position;
     private int numberOfResources;
 

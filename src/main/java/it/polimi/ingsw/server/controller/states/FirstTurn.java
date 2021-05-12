@@ -2,7 +2,9 @@ package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.client.MessageFromServer.Ok;
 import it.polimi.ingsw.server.JsonToLeaderCard;
+import it.polimi.ingsw.server.MessageToClient.Error;
 import it.polimi.ingsw.server.MessageToClient.SelectedLeadercards;
+import it.polimi.ingsw.server.MessageToClient.TurnOrder;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
@@ -11,8 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static it.polimi.ingsw.server.controller.states.ErrorMessage.invalidCommand;
-import static it.polimi.ingsw.server.controller.states.ErrorMessage.invalidLeaderCardID;
+import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
 
 public class FirstTurn extends TurnState{
     private ArrayList<String> waitingForLeaderCards;
@@ -20,7 +21,6 @@ public class FirstTurn extends TurnState{
 
     public FirstTurn(Controller controller) {
         super(controller);
-        waitingForLeaderCards = new ArrayList<>();
         firstTurnResources = new HashMap<>();
         waitingForLeaderCards = new ArrayList<>(controller.getTurns());
         for(int i = 2; i <= controller.getTurns().size(); i++)
@@ -36,32 +36,46 @@ public class FirstTurn extends TurnState{
             getController().sendError(invalidLeaderCardID.toString());
         }
         waitingForLeaderCards.remove(nickname);
+        int position = getController().getTurns().indexOf(nickname);
+        int resNum = firstTurnResources.getOrDefault(nickname, 0);
+        getController().sendMessage(nickname, new TurnOrder(position, resNum));
         endPhase();
     }
 
-    //TODO error management
     @Override
     public void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
-        if (!firstTurnResources.containsKey(nickname)) ;//TODO
-        if (res1 == null) ;
+        if (!firstTurnResources.containsKey(nickname)) {
+            getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+            return;
+        }
+        if (res1 == null){
+            getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+            return;
+        }
         try {
             if (firstTurnResources.get(nickname) == 1) {
-                if (res2 != null) ;
+                if (res2 != null) {
+                    getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+                    return;
+                }
                 getController().getPlayer(nickname).getDashboard().getWarehouseDepot().addResource(shelf1, 1, res1);
             } else if (firstTurnResources.get(nickname) == 2) {
-                if(res2 == null);
+                if(res2 == null){
+                    getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+                    return;
+                }
                 getController().getPlayer(nickname).getDashboard().getWarehouseDepot().addResource(shelf1, 1, res1);
                 getController().getPlayer(nickname).getDashboard().getWarehouseDepot().addResource(shelf2, 1, res2);
             }
+            firstTurnResources.remove(nickname);
+            endPhase();
         } catch(InvalidShelfPosition invalidShelfPosition){
-            invalidShelfPosition.printStackTrace();
+            getController().sendMessage(nickname, new Error(invalidShelf.toString()));
         } catch(ExistingResourceException e){
-            e.printStackTrace();
+            getController().sendMessage(nickname, new Error(existingResource.toString()));
         } catch(InvalidResourceException e){
-            e.printStackTrace();
+            getController().sendMessage(nickname, new Error(invalidResource.toString()));
         }
-        firstTurnResources.remove(nickname);
-        endPhase();
     }
 
 

@@ -191,9 +191,6 @@ public class EchoServerClientHandler implements Runnable {
         }
     }
 
-    private void play(MessageFromClient message){
-    }
-
     public void run() {
         //if the client is crashed during login phase
         if (!login()) return;
@@ -218,6 +215,7 @@ public class EchoServerClientHandler implements Runnable {
                     MultiEchoServer.handleCrash(this);
                     //store the current state somewhere?
                     controller.nextTurn();
+                    break;
                 }
             }catch(SocketTimeoutException e){
                 send(new Ping());
@@ -226,6 +224,7 @@ public class EchoServerClientHandler implements Runnable {
                 MultiEchoServer.handleCrash(this);
                 //store the current state somewhere?
                 controller.nextTurn();
+                break;
             }
 
             MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
