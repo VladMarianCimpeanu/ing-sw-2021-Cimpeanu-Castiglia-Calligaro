@@ -1,7 +1,8 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.exceptions.NoCardException;
-import it.polimi.ingsw.model.leaderCards.LeaderCard;
+import it.polimi.ingsw.server.JsonToLeaderCard;
+import it.polimi.ingsw.server.model.exceptions.NoCardException;
+import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
