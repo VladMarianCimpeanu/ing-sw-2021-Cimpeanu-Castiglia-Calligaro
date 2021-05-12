@@ -4,13 +4,14 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
-public class TakeResPos extends MessageFromClient {
+public class TakeResPos implements MessageToServer {
+    private String type;
     private Resource resource;
     private String position;
 
-    @Override
-    public void activate(Controller controller) {
-        TurnState state = controller.getCurrentState();
-        state.pay(resource, position);
+    public TakeResPos(Resource resource, String position) {
+        this.type = "TakeResPos";
+        this.resource = resource;
+        this.position = position;
     }
 }

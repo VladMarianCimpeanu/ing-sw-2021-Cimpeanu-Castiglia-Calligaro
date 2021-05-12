@@ -4,11 +4,12 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
-public class DiscardResource extends MessageFromClient {
+public class DiscardResource implements MessageToServer {
+    private String type;
     private Resource resource;
-    @Override
-    public void activate(Controller controller) {
-        TurnState state = controller.getCurrentState();
-        state.discardRes(resource);
+
+    public DiscardResource(Resource resource) {
+        this.type = "DiscardResource";
+        this.resource = resource;
     }
 }

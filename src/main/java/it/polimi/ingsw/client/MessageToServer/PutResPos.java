@@ -4,20 +4,16 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
-public class PutResPos extends MessageFromClient {
+public class PutResPos implements MessageToServer {
+    private String type;
     private Resource res;
     private String pos;
     private int shelf;
-    @Override
-    public void activate(Controller controller) {
-        TurnState state = controller.getCurrentState();
-        switch(pos){
-            case "warehouseDepot":
-                state.putWarehouse(res, shelf);
-                break;
-            case "extraSlot":
-                state.putExtraSlot(res);
-                break;
-        }
+
+    public PutResPos(Resource res, String pos, int shelf) {
+        this.type = "PutResPos";
+        this.res = res;
+        this.pos = pos;
+        this.shelf = shelf;
     }
 }

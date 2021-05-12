@@ -4,13 +4,18 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
-public class ChooseFirstResources extends MessageFromClient {
+public class ChooseFirstResources implements MessageToServer {
+    private String type;
     private Resource res1, res2;
     private int shelf1, shelf2;
     private String nickname;
-    @Override
-    public void activate(Controller controller) {
-        TurnState state = controller.getCurrentState();
-        state.selectResources(nickname, res1, res2, shelf1, shelf2);
+
+    public ChooseFirstResources(Resource res1, Resource res2, int shelf1, int shelf2, String nickname) {
+        this.type = "ChooseFirstResources";
+        this.res1 = res1;
+        this.res2 = res2;
+        this.shelf1 = shelf1;
+        this.shelf2 = shelf2;
+        this.nickname = nickname;
     }
 }
