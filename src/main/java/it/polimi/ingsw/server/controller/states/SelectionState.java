@@ -1,18 +1,18 @@
 package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.JsonToLeaderCard;
-import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
-import it.polimi.ingsw.server.MessageToClient.SelectResourceIn;
-import it.polimi.ingsw.server.MessageToClient.SelectResourceOut;
+import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.Discount;
+import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
 
 import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
 import it.polimi.ingsw.server.model.Dashboard;
 import it.polimi.ingsw.server.model.DevelopmentCard;
+import it.polimi.ingsw.server.model.market.Marble;
 
 import java.util.ArrayList;
 
@@ -48,12 +48,26 @@ public class SelectionState extends TurnState {
     public void goToMarket(String direction, int position) {
         try {
             int whiteMarbles = getController().getCurrentPlayer().goToMarket(direction, position);
+            ArrayList<Marble> marbles = getController().getGame().getMarket().getSelectedMarbles();
+            ArrayList<String> selected = new ArrayList<>();
+            for(Marble m: marbles){
+                selected.add(m.toString());
+            }
+            getController().sendMessage(new SelectedMarbles(selected));
+            System.out.println("[" + getController().getCurrentPlayer().getNickName() + "]:" + "Marble from market:");
+            System.out.println(selected);
+
             //if there are no white marbles or the player has no marketStrategies, the marketStrategyState will be skipped.
             if(whiteMarbles == 0 || getController().getCurrentPlayer().getMarketStrategies().isEmpty()){
                 getController().getCurrentPlayer().passStrategiesToMarket();
                 //if there are no resources to keep, the next state will be the endTurnState.
                 if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
-                else getController().setCurrentState(new MarketState(getController()));
+                else {
+                    ArrayList<Resource> resources = getController().getCurrentPlayer().getReceivedFromMarket();
+                    getController().sendMessage(new ConvertedMarbles(resources));
+
+                    getController().setCurrentState(new MarketState(getController()));
+                }
             }
             else {
                 getController().setCurrentState(new MarketStrategyState(getController(), whiteMarbles));

@@ -29,11 +29,15 @@ public class FirstTurn extends TurnState{
 
     @Override
     public void keepLeaderCards(String nickname, int id1, int id2){
+        if(!waitingForLeaderCards.contains(nickname)) {
+            getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+            return;
+        }
         try {
             getController().getPlayer(nickname).keepLeaderCards(JsonToLeaderCard.getLeaderCard(id1), JsonToLeaderCard.getLeaderCard(id2));
             getController().sendMessage(nickname, new SelectedLeadercards(id1, id2));
         } catch (NoCardException e) {
-            getController().sendError(invalidLeaderCardID.toString());
+            getController().sendMessage(nickname, new Error(invalidLeaderCardID.toString()));
         }
         waitingForLeaderCards.remove(nickname);
         int position = getController().getTurns().indexOf(nickname);
@@ -43,7 +47,7 @@ public class FirstTurn extends TurnState{
     }
 
     @Override
-    public void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
+    public synchronized void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
         if (!firstTurnResources.containsKey(nickname)) {
             getController().sendMessage(nickname, new Error(invalidCommand.toString()));
             return;
@@ -58,16 +62,19 @@ public class FirstTurn extends TurnState{
                     getController().sendMessage(nickname, new Error(invalidCommand.toString()));
                     return;
                 }
+                getController().setCurrentUser(nickname);
                 getController().getPlayer(nickname).getDashboard().getWarehouseDepot().addResource(shelf1, 1, res1);
             } else if (firstTurnResources.get(nickname) == 2) {
                 if(res2 == null){
                     getController().sendMessage(nickname, new Error(invalidCommand.toString()));
                     return;
                 }
+                getController().setCurrentUser(nickname);
                 getController().getPlayer(nickname).getDashboard().getWarehouseDepot().addResource(shelf1, 1, res1);
                 getController().getPlayer(nickname).getDashboard().getWarehouseDepot().addResource(shelf2, 1, res2);
             }
             firstTurnResources.remove(nickname);
+            getController().setCurrentUser(null);
             endPhase();
         } catch(InvalidShelfPosition invalidShelfPosition){
             getController().sendMessage(nickname, new Error(invalidShelf.toString()));

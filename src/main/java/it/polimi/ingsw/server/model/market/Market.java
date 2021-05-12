@@ -164,6 +164,10 @@ public class Market {
         return converted;
     }
 
+    public ArrayList<Marble> getSelectedMarbles() {
+        return selectedMarbles;
+    }
+
     public void subscribe(VirtualView virtualView){
         this.virtualView = virtualView;
     }

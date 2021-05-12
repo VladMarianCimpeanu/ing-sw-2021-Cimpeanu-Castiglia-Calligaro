@@ -229,9 +229,11 @@ public class EchoServerClientHandler implements Runnable {
 
             MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
             if (isMyTurn) {
+                System.out.println("[" + nickname + "]:" + message);
                 message.activate(controller);
             } else {
                 sendError("notYourTurn");
+                System.out.println("[" + nickname + "]:" + "tried to play in another turn");
             }
         }
     }

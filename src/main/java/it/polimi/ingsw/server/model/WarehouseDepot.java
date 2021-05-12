@@ -165,6 +165,7 @@ public class WarehouseDepot {
                     break;
             }
         }
+
         switch(shelf){
             case 1:
                 if(getShelfQuantity(shelf)+quantity > 1){

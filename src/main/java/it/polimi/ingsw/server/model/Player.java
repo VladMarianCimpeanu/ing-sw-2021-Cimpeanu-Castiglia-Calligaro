@@ -121,8 +121,12 @@ public class Player {
         return new HashMap<Resource,Integer>(developmentCardCost);
     }
 
-    public ArrayList<Benefit> getReceivedFromMarket() {
-        return new ArrayList<Benefit>(receivedFromMarket);
+    public ArrayList<Resource> getReceivedFromMarket() {
+        ArrayList<Resource> resources = new ArrayList<>();
+        for(Benefit b: receivedFromMarket){
+            resources.add( (Resource) b);
+        }
+        return resources;
     }
 
     /**

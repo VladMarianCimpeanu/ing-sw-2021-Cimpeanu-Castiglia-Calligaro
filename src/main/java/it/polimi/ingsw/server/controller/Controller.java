@@ -35,6 +35,7 @@ public class Controller {
         nicknames = new HashMap<>();
         players = new HashMap<>();
         turns = new ArrayList<>();
+        currentUser = null;
         ArrayList<Identity> identities = new ArrayList<>(users);
         System.out.print("A new Game has started. Players: ");
         for(Identity i: identities) System.out.print(i.getNickname() + " ");
@@ -163,6 +164,7 @@ public class Controller {
      * @param e  specific error to send.
      */
     public void sendError(String e) {
+        if(currentUser == null) return;
         nicknames.get(currentUser).sendError(e);
     }
 
@@ -199,6 +201,7 @@ public class Controller {
 
     public void startGame(){
         currentUser = turns.get(0);
+        sendBroadcast(new ItsYourTurn(currentUser));
         for(int i = 1; i < turns.size(); i++){
             nicknames.get(turns.get(i)).setMyTurn(false);
         }
@@ -212,5 +215,9 @@ public class Controller {
 
     public TurnState getCurrentState() {
         return currentState;
+    }
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
     }
 }

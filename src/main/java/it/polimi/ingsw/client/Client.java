@@ -68,6 +68,8 @@ public class Client {
         shapeAdapterFactory.registerSubtype(UpdateStrongbox.class, "UpdateStrongbox");
         shapeAdapterFactory.registerSubtype(UpdateWarehouseDepot.class, "UpdateWarehouseDepot");
         shapeAdapterFactory.registerSubtype(NicknameAccepted.class, "NicknameAccepted");
+        shapeAdapterFactory.registerSubtype(SelectedMarbles.class, "SelectedMarbles");
+        shapeAdapterFactory.registerSubtype(ConvertedMarbles.class, "ConvertedMarbles");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
