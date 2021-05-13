@@ -80,7 +80,7 @@ class PlayerTest {
         player.discardLeaderCard(card);
         int post_dim = player.getLeaderCards().size();
         FaithPathStub1 faithpath = (FaithPathStub1) stub.getFaithPath();
-        assertTrue(faithpath.isHaveMovedOpponent());
+        assertFalse(faithpath.isHaveMovedOpponent());
         assertEquals(pre_dim-1, post_dim);
         assertNotEquals(card, player.getLeaderCards().get(0));
     }

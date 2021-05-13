@@ -162,9 +162,7 @@ public class Player {
         if(faithPoints > 0){
             try {
                 game.getFaithPath().movePlayer(this, faithPoints);
-            } catch (NoSuchPlayerException e) {
-                e.printStackTrace();
-            } catch (InvalidStepsException e) {
+            } catch (NoSuchPlayerException | InvalidStepsException e) {
                 e.printStackTrace();
             }
         }
@@ -177,13 +175,7 @@ public class Player {
     public void discardLeaderCard(LeaderCard leaderCard) {
         if(leaderCard != null && leaderCards.remove(leaderCard)){
             virtualView.updateDiscardLeaderCard(leaderCard.getID());
-            try {
-                game.getFaithPath().moveOpponents(this);
-            } catch (NoSuchPlayerException e) {
-                e.printStackTrace();
-            } catch (InvalidStepsException e) {
-                e.printStackTrace();
-            }
+            addFaithPoint(1);
         }
     }
 
@@ -409,7 +401,11 @@ public class Player {
         if(receivedFromMarket.contains(resource)){
             receivedFromMarket.remove(resource);
         }
-        addFaithPoint(1);
+        try {
+            game.getFaithPath().moveOpponents(this);
+        } catch (NoSuchPlayerException | InvalidStepsException e) {
+            e.printStackTrace();
+        }
     }
     /***************** GO TO MARKET PROCESS ********************/
 

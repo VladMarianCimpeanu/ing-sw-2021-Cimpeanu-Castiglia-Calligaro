@@ -88,9 +88,9 @@ public class FirstTurn extends TurnState{
 
     private void endPhase(){
         if(waitingForLeaderCards.isEmpty() && firstTurnResources.isEmpty()){
-            for (int i = 0; i < getController().getPlayers().size() ; i++) {
+            for (int i = 2; i < getController().getPlayers().size() ; i++) {
                 try {
-                    getController().getGame().getFaithPath().movePlayer(getController().getPlayers().get(i), i / 2);
+                    getController().getGame().getFaithPath().movePlayer(getController().getPlayers().get(i), 1);
                 } catch (NoSuchPlayerException | InvalidStepsException e) {
                     e.printStackTrace();
                 }

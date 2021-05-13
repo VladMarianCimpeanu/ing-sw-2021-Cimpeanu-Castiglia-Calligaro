@@ -62,6 +62,9 @@ public class CLI implements Runnable {
                             case "cheat":
                                 client.send(new CheatFaith(Integer.parseInt(command[1])));
                                 break;
+                            case "discard":
+                                client.send(new DiscardResource(Resource.valueOf(command[1].toUpperCase())));
+                                break;
                             default:
                                 out.println("Unexpected command.");
                         }
@@ -83,7 +86,7 @@ public class CLI implements Runnable {
                                 ));
                                 break;
                             case "buy":
-                                client.send(new BuyDevCard(Integer.parseInt(command[1]), Color.valueOf((command[2]))));
+                                client.send(new BuyDevCard(Integer.parseInt(command[1]), Color.valueOf((command[2].toUpperCase()))));
                                 break;
                             case "take":
                                 client.send(new TakeResPos(
@@ -114,7 +117,7 @@ public class CLI implements Runnable {
                             case "buy":
                                 client.send(new BuyDevCard(
                                         Integer.parseInt(command[1]),
-                                        Color.valueOf((command[2])),
+                                        Color.valueOf((command[2].toUpperCase())),
                                         Integer.parseInt(command[3])
                                         ));
                                 break;
@@ -138,7 +141,7 @@ public class CLI implements Runnable {
                             case "buy":
                                 client.send(new BuyDevCard(
                                         Integer.parseInt(command[1]),
-                                        Color.valueOf((command[2])),
+                                        Color.valueOf((command[2].toUpperCase())),
                                         Integer.parseInt(command[3]),
                                         Integer.parseInt(command[4])
                                 ));

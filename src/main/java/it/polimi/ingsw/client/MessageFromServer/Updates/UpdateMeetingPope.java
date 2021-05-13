@@ -11,7 +11,7 @@ public class UpdateMeetingPope extends MessageFromServer {
     public void activateMessage() {
         System.out.println("The following players has just joined a meeting with the pope:");
         for (String nickname : deltaVictoryPoints.keySet()) {
-            System.out.println("\n" + nickname);
+            if (deltaVictoryPoints.get(nickname) != 0) System.out.println(nickname);
         }
     }
 }
