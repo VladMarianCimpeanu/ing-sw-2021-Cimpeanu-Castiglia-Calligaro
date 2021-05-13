@@ -246,7 +246,7 @@ public abstract class TurnState {
      * @param shelf2 specific shelf to put the additional resource: if the player is not allowed to choose a second resource, set it to null.
      */
     public void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
-        //TODO: ???
+        controller.sendError(invalidCommand.toString());
     };
 
     /**
@@ -262,5 +262,12 @@ public abstract class TurnState {
             }
         }
         strongbox.addProduced();
+    }
+
+    /**
+     * cheat used during beta testing: move the player by the specified steps.
+     */
+    public void activateFaithCheat(int steps) {
+        getController().getCurrentPlayer().addFaithPoint(steps);
     }
 }

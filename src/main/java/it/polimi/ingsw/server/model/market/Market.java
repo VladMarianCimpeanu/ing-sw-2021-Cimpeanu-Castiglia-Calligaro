@@ -63,6 +63,7 @@ public class Market {
      */
     public int selRow(int row) throws OutOfBoundRowException {
         if(row < 0 || row >= rows) throw new OutOfBoundRowException(Integer.toString(row));
+        selectedMarbles.clear();
         for(int i = 0; i < columns; i++){
             selectedMarbles.add(market[row][i]);
         }
@@ -85,6 +86,7 @@ public class Market {
      */
     public int selColumn(int column) throws OutOfBoundColumnsException {
         if(column < 0 || column >= columns) throw new OutOfBoundColumnsException(Integer.toString(column));
+        selectedMarbles.clear();
         for(int i = 0; i < rows; i++){
             selectedMarbles.add(market[i][column]);
         }

@@ -65,6 +65,8 @@ public class EchoServerClientHandler implements Runnable {
         shapeAdapterFactory.registerSubtype(MoveWarehouseToExtra.class, "MoveWarehouseToExtra");
         shapeAdapterFactory.registerSubtype(MoveExtraToWarehouse.class, "MoveExtraToWarehouse");
         shapeAdapterFactory.registerSubtype(CheatResource.class, "CheatResource");
+        shapeAdapterFactory.registerSubtype(CheatFaith.class, "CheatFaith");
+
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
 
@@ -221,6 +223,7 @@ public class EchoServerClientHandler implements Runnable {
                 }
             }catch(SocketTimeoutException e){
                 send(new Ping());
+                continue;
             }catch (IOException e){
                 //client crashed
                 MultiEchoServer.handleCrash(this);

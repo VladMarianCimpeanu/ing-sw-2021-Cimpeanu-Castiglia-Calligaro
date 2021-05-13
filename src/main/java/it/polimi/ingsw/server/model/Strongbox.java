@@ -75,8 +75,9 @@ public class Strongbox {
      * Finalize previous productions, adding the resources in the strongbox
      */
     public void addProduced(){
-        for(Map.Entry<Resource, Integer> couple :lastProduced.entrySet())
-            content.put(couple.getKey(), couple.getValue());
+        for(Resource res: lastProduced.keySet()) {
+            content.put(res, content.getOrDefault(res, 0) + lastProduced.get(res));
+        }
         lastProduced.clear();
         virtualView.updateLastProduced(lastProduced);
         virtualView.updateStrongbox(content);

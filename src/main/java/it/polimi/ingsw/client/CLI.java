@@ -59,6 +59,9 @@ public class CLI implements Runnable {
                             case "discardLeader":
                                 client.send(new DiscardLeaderCard(Integer.parseInt(command[1])));
                                 break;
+                            case "cheat":
+                                client.send(new CheatFaith(Integer.parseInt(command[1])));
+                                break;
                             default:
                                 out.println("Unexpected command.");
                         }

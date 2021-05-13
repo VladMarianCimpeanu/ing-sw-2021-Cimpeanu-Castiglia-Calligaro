@@ -68,8 +68,10 @@ public class DevelopmentCardSet {
     public DevelopmentCard drawCard(Color color, int level) throws WrongLevelException, NoCardException {
         if (level < 1 || level > 3) throw new WrongLevelException();
         if (availableDevelopmentCards.get(level - 1).get(color.getIndex()).isEmpty()) throw new NoCardException();
-        virtualView.updateDevCardDrawn(color, level, peekCard(color, level).getID());
-        return availableDevelopmentCards.get(level - 1).get(color.getIndex()).pop();
+        DevelopmentCard cardDrawn = availableDevelopmentCards.get(level - 1).get(color.getIndex()).pop();
+        if (availableDevelopmentCards.get(level - 1).get(color.getIndex()).isEmpty()) virtualView.updateDevCardDrawn(color, level, 0);
+        else virtualView.updateDevCardDrawn(color, level, peekCard(color, level).getID());
+        return cardDrawn;
     }
 
     /**

@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller.states;
 
 
 import it.polimi.ingsw.server.MessageToClient.Error;
+import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Dashboard;
 import it.polimi.ingsw.server.model.Player;
@@ -20,6 +21,7 @@ public class BuyDevState extends TurnState {
 
     public BuyDevState(Controller controller) {
         super(controller);
+        getController().sendMessage(new ResourceToPay(getController().getCurrentPlayer().getDevelopmentCardCost()));
     }
 
     @Override
@@ -30,26 +32,21 @@ public class BuyDevState extends TurnState {
             return;
         }
         Player player = controller.getCurrentPlayer();
-        Dashboard dashboard = player.getDashboard();
         if(position != null) {
             try {
                 if (position.equals("WarehouseDepot"))
-                        dashboard.takeFromDepot(resource);
+                    player.payFromWarehouseDepot(resource);
                 else if (position.equals("Strongbox"))
-                    dashboard.takeFromStrongbox(resource);
+                    player.payFromStrongbox(resource);
                 else if (position.equals("ExtraSlot"))
-                        dashboard.takeFromExtraSlot(resource);
+                    player.payFromExtraSlot(resource);
                 else {
                     controller.sendMessage(new Error(invalidCommand.toString()));
                     return;
                 }
-                if (dashboard.getResourcesToPay().isEmpty()) controller.setCurrentState(new PlaceDevState(controller));
+                if (player.getDevelopmentCardCost().isEmpty()) controller.setCurrentState(new PlaceDevState(controller));
             }catch(NotEnoughResourcesException e){
                 controller.sendMessage(new Error(notEnoughResources.toString()));
-            }catch(InvalidResourceException e){
-                controller.sendMessage(new Error(invalidResource.toString()));
-            }catch(RequirementsSatisfiedException e){
-                controller.sendMessage(new Error(requirementsNotSatisfied.toString()));
             }
         }else
             controller.sendMessage(new Error(nullPosition.toString()));

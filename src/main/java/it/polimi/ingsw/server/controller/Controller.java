@@ -185,20 +185,7 @@ public class Controller {
             return;
         }
         sendBroadcast(new ItsYourTurn(currentUser));
-        try {
-            nicknames.get(currentUser).setSocketTimeOut(30*1000);
-        } catch (SocketException e) {
-            MultiEchoServer.handleCrash(nicknames.get(currentUser));
-        }
-        for(String user: turns) {
-            if (user.equals(currentUser)) continue;
-            try {
-                nicknames.get(user).setMyTurn(false);
-                nicknames.get(user).setSocketTimeOut(0);
-            } catch (SocketException e) {
-                MultiEchoServer.handleCrash(nicknames.get(currentUser));
-            }
-        }
+        setTimerPing();
         nicknames.get(currentUser).setMyTurn(true);
     }
 
@@ -208,6 +195,8 @@ public class Controller {
         for(int i = 1; i < turns.size(); i++){
             nicknames.get(turns.get(i)).setMyTurn(false);
         }
+        setTimerPing();
+        nicknames.get(currentUser).setMyTurn(true);
     }
 
     private boolean isAnyoneOnline(){
@@ -222,5 +211,22 @@ public class Controller {
 
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
+    }
+
+    private void setTimerPing() {
+        try {
+            nicknames.get(currentUser).setSocketTimeOut(30*1000);
+        } catch (SocketException e) {
+            MultiEchoServer.handleCrash(nicknames.get(currentUser));
+        }
+        for(String user: turns) {
+            if (user.equals(currentUser)) continue;
+            try {
+                nicknames.get(user).setMyTurn(false);
+                nicknames.get(user).setSocketTimeOut(0);
+            } catch (SocketException e) {
+                MultiEchoServer.handleCrash(nicknames.get(currentUser));
+            }
+        }
     }
 }
