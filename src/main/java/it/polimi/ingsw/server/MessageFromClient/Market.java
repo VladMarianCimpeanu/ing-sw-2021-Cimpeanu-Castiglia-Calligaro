@@ -13,6 +13,6 @@ public class Market extends MessageFromClient {
             return;
         }
         TurnState state = controller.getCurrentState();
-        state.goToMarket(direction, position);
+        state.goToMarket(direction, position - 1);
     }
 }

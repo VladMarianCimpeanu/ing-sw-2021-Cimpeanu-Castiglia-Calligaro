@@ -64,7 +64,7 @@ public class EchoServerClientHandler implements Runnable {
         shapeAdapterFactory.registerSubtype(TakeResPos.class, "TakeResPos");
         shapeAdapterFactory.registerSubtype(MoveWarehouseToExtra.class, "MoveWarehouseToExtra");
         shapeAdapterFactory.registerSubtype(MoveExtraToWarehouse.class, "MoveExtraToWarehouse");
-
+        shapeAdapterFactory.registerSubtype(CheatResource.class, "CheatResource");
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
 

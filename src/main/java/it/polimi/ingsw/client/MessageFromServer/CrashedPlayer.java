@@ -5,6 +5,6 @@ public class CrashedPlayer extends MessageFromServer {
 
     @Override
     public void activateMessage() {
-        System.out.println(nickname + "crashed");
+        System.out.println(nickname + " crashed");
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Color;
+import it.polimi.ingsw.server.model.Strongbox;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 
@@ -242,9 +243,24 @@ public abstract class TurnState {
      * @param res1 specific resource to put in depot.
      * @param res2 additional resource to put in depot: if the player is not allowed to choose a second resource, set it to null.
      * @param shelf1 specific shelf to put the first resource.
-     * @param shelf2 specific shelf to put the addtional resource: if the player is not allowed to choose a second resource, set it to null.
+     * @param shelf2 specific shelf to put the additional resource: if the player is not allowed to choose a second resource, set it to null.
      */
     public void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
-
+        //TODO: ???
     };
+
+    /**
+     * cheat used during beta testing.
+     */
+    public void activateResCheat() {
+        Strongbox strongbox = controller.getCurrentPlayer().getDashboard().getStrongbox();
+        for(Resource res : Resource.values()) {
+            try {
+                strongbox.addResource(res,50);
+            } catch (NegativeQuantityException e) {
+                e.printStackTrace();
+            }
+        }
+        strongbox.addProduced();
+    }
 }

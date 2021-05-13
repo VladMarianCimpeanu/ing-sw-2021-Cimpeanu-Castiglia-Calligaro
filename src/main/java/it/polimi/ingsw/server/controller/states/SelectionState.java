@@ -54,7 +54,7 @@ public class SelectionState extends TurnState {
                 selected.add(m.toString());
             }
             getController().sendMessage(new SelectedMarbles(selected));
-            System.out.println("[" + getController().getCurrentPlayer().getNickName() + "]:" + "Marble from market:");
+            System.out.println("[" + getController().getCurrentPlayer().getNickName() + "]:" + "Marbles from market:");
             System.out.println(selected);
 
             //if there are no white marbles or the player has no marketStrategies, the marketStrategyState will be skipped.

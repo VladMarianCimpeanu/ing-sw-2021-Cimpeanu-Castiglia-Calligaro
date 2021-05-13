@@ -11,6 +11,6 @@ public class UpdateMarketRow extends MessageFromServer {
 
     @Override
     public void activateMessage() {
-        System.out.println("The market has changed " + row + " row. The new row is \n" + newRow.toString() + "\n The Marble to insert is: " + newOuterMarble);
+        System.out.println("The market has changed row " + (row + 1) + " . The new row is \n" + newRow.toString() + "\n The Marble to insert is: " + newOuterMarble);
     }
 }

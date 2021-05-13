@@ -10,7 +10,7 @@ public class UpdateFaithpath extends MessageFromServer {
     @Override
     public void activateMessage() {
         for(String player : newPositions.keySet()) {
-            System.out.println(player + " moved to faith path position " + newPositions.get(player));
+            System.out.println(player + " in faith path position " + newPositions.get(player));
         }
      }
 }

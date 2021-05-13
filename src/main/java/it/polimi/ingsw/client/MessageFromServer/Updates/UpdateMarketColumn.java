@@ -11,6 +11,6 @@ public class UpdateMarketColumn extends MessageFromServer {
 
     @Override
     public void activateMessage() {
-        System.out.println("The market has changed " + col + " column. The new column is \n" + newColumn.toString() + "\n The Marble to insert is: " + newOuterMarble);
+        System.out.println("The market has changed  column " + col + ". The new column is \n" + newColumn.toString() + "\n The Marble to insert is: " + newOuterMarble);
     }
 }

@@ -27,6 +27,18 @@ public class CLI implements Runnable {
             String[] command = line.split(" ");
             try {
                 switch (command.length) {
+                    case 1:
+                        switch (command[0]) {
+                            case "pass":
+                                client.send(new EndTurn());
+                                break;
+                            case "cheat":
+                                client.send(new CheatResource());
+                                break;
+                            default:
+                                out.println("Unexpected command.");
+                        }
+                        break;
                     case 2:
                         switch (command[0]) {
                             case "login":
