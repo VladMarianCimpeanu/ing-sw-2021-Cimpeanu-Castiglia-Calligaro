@@ -24,7 +24,7 @@ public class CardProdState extends TurnState {
 
         try{
             switch(position){
-                case "warehouseDepot":
+                case "depot":    //warehouseDepot
                     dashboard.takeFromDepot(resource);
                     break;
                 case "strongbox":
