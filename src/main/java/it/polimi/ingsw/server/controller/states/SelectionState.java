@@ -134,6 +134,11 @@ public class SelectionState extends TurnState {
     }
 
     @Override
+    public void completeTurn() {
+
+    }
+
+    @Override
     public void activateExtra(int id) {
         Controller controller = getController();
         controller.sendMessage(new SelectResourceOut());

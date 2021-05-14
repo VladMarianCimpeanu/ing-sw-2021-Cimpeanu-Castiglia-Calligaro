@@ -54,4 +54,9 @@ public class MarketState extends TurnState {
             getController().sendError(nullResource.toString());
         }
     }
+
+    @Override
+    public void completeTurn() {
+
+    }
 }

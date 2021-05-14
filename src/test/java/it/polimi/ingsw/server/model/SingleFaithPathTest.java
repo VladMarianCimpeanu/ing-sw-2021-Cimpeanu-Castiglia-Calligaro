@@ -323,6 +323,7 @@ class SingleFaithPathTest {
     void moveBlackCrossTest() {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
+        path.subscribe(new VirtualViewStub());
         path.moveBlackCross(2);
         assertEquals(2, path.getBlackCrossPosition());
     }

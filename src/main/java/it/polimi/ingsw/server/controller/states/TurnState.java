@@ -250,6 +250,11 @@ public abstract class TurnState {
     };
 
     /**
+     * complete the turn when a player crashes.
+     */
+    public abstract void completeTurn(); //TODO
+
+    /**
      * cheat used during beta testing.
      */
     public void activateResCheat() {

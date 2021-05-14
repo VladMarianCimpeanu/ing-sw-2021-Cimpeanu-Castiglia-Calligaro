@@ -47,4 +47,9 @@ public class CardProdState extends TurnState {
             controller.setCurrentState(new ActivateProdState(controller));
         }
     }
+
+    @Override
+    public void completeTurn() {
+
+    }
 }

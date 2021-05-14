@@ -20,4 +20,9 @@ public class BaseProdInState extends TurnState {
         controller.sendMessage(new SelectResourceOut());
         controller.setCurrentState(new BaseProdOutState(controller, res1, res2));
     }
+
+    @Override
+    public void completeTurn() {
+
+    }
 }

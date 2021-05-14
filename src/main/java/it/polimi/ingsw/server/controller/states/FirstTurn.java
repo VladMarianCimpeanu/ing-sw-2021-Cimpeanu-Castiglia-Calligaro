@@ -85,6 +85,11 @@ public class FirstTurn extends TurnState{
         }
     }
 
+    @Override
+    public void completeTurn() {
+
+    }
+
 
     private void endPhase(){
         if(waitingForLeaderCards.isEmpty() && firstTurnResources.isEmpty()){

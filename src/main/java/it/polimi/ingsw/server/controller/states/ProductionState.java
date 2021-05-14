@@ -66,6 +66,11 @@ public class ProductionState extends TurnState {
     }
 
     @Override
+    public void completeTurn() {
+
+    }
+
+    @Override
     public void activateLeaderCard(int id) {
         try {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);

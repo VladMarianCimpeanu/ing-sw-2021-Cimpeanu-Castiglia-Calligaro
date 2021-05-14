@@ -47,4 +47,9 @@ public class MarketStrategyState extends TurnState {
 
     }
 
+    @Override
+    public void completeTurn() {
+
+    }
+
 }

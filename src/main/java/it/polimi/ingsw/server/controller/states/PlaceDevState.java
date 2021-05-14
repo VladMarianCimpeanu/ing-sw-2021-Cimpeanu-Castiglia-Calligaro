@@ -27,4 +27,9 @@ public class PlaceDevState extends TurnState {
             controller.sendMessage(new Error(invalidDeck.toString()));
         }
     }
+
+    @Override
+    public void completeTurn() {
+
+    }
 }

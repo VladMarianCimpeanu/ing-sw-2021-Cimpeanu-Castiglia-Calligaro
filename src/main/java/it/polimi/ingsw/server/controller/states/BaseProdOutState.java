@@ -52,4 +52,9 @@ public class BaseProdOutState extends TurnState {
             controller.sendError("productionUsed");
         }
     }
+
+    @Override
+    public void completeTurn() {
+
+    }
 }

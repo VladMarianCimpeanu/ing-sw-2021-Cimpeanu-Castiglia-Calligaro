@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.controller.states.FirstTurn;
+import it.polimi.ingsw.server.controller.states.SelectionState;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.exceptions.*;
@@ -187,6 +188,7 @@ public class Controller {
         sendBroadcast(new ItsYourTurn(currentUser));
         setTimerPing();
         nicknames.get(currentUser).setMyTurn(true);
+        setCurrentState(new SelectionState(this));
     }
 
     public void startGame(){

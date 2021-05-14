@@ -1,11 +1,13 @@
 package it.polimi.ingsw.server.model.stubs;
 
+import it.polimi.ingsw.server.MessageToClient.Updates.UpdateFaithpath;
 import it.polimi.ingsw.server.controller.VirtualView;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.market.Marble;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class VirtualViewStub extends VirtualView {
@@ -62,6 +64,10 @@ public class VirtualViewStub extends VirtualView {
     @Override
     public void updateFaithPath(Map<Player, Integer> newPositions) {
 
+    }
+
+    @Override
+    public void updateSingleFaithPath(Map<String, Integer> newPositions) {
     }
 
     @Override

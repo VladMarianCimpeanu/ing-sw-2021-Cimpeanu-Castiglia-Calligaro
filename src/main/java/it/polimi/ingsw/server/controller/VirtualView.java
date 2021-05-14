@@ -108,6 +108,10 @@ public class VirtualView {
         controller.sendBroadcast(new UpdateFaithpath(newPos));
     }
 
+    public void updateSingleFaithPath(Map<String, Integer> newPositions) {
+        controller.sendMessage(new UpdateFaithpath(new HashMap<>(newPositions)));
+    }
+
     /**
      * This method is used to notify the virtual view when an extra slot content changes.
      * @param resource resource of the extraSlot.

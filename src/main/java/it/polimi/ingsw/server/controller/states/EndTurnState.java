@@ -21,7 +21,11 @@ public class EndTurnState extends TurnState {
     @Override
     public void end() {
         getController().nextTurn();
-        getController().setCurrentState(new SelectionState(getController()));
+    }
+
+    @Override
+    public void completeTurn() {
+
     }
 
     @Override

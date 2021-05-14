@@ -26,4 +26,9 @@ public class ActivateProdState extends TurnState {
             controller.setCurrentState(new ProductionState(controller));
         }
     }
+
+    @Override
+    public void completeTurn() {
+
+    }
 }

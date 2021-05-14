@@ -113,8 +113,8 @@ public class EchoServerClientHandler implements Runnable {
                 System.out.println("Received: " + message);
                 if(message instanceof Login) {
                     String nick = ((Login) message).getNickname();
-                    if(nick == null || nick.equals("")){
-                        sendError("emptyNickname");
+                    if(nick == null || nick.equals("") || nick.equals("blackCross")){
+                        sendError("invalidNickname");
                         System.out.println(nick + " is not permitted");
                         continue;
                     }
@@ -218,6 +218,7 @@ public class EchoServerClientHandler implements Runnable {
                     //client crashed
                     MultiEchoServer.handleCrash(this);
                     //store the current state somewhere?
+                    //controller.completeTurn()
                     controller.nextTurn();
                     break;
                 }
@@ -228,6 +229,7 @@ public class EchoServerClientHandler implements Runnable {
                 //client crashed
                 MultiEchoServer.handleCrash(this);
                 //store the current state somewhere?
+                //controller.completeTurn()
                 controller.nextTurn();
                 break;
             }

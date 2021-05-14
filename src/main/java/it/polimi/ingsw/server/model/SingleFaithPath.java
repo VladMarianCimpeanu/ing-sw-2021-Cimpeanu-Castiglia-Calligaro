@@ -51,6 +51,7 @@ public class SingleFaithPath extends FaithPath{
     public void moveBlackCross(int steps)  {
         if(steps <= 0) return;
         steps += blackCross;
+        virtualViewUpdate();
         for(int i = blackCross+1; i <= steps && i<25; i++) {
             blackCross = i;
             if (blackCross == triggerPopePosition.peek()) assignPapalPoints();
@@ -71,7 +72,7 @@ public class SingleFaithPath extends FaithPath{
             if (i == triggerPopePosition.peek())
                 assignPapalPoints();
         }
-        getVirtualView().updateFaithPath(playersPosition);
+        virtualViewUpdate();
     }
 
     /**
@@ -84,7 +85,7 @@ public class SingleFaithPath extends FaithPath{
         if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
         if(!playersPosition.containsKey(player)) return;
         moveBlackCross(1);
-        getVirtualView().updateFaithPath(playersPosition);
+        virtualViewUpdate();
     }
 
     @Override
@@ -134,5 +135,13 @@ public class SingleFaithPath extends FaithPath{
                 break;
         }
         triggerPopePosition.pop();
+    }
+
+    private void virtualViewUpdate() {
+        Map<String, Integer> updatedPositions= new HashMap<>();
+        Player actualPlayer = (Player)playersPosition.keySet().toArray()[0];
+        updatedPositions.put(actualPlayer.getNickName(), playersPosition.get(actualPlayer));
+        updatedPositions.put("blackCross", blackCross);
+        getVirtualView().updateSingleFaithPath(updatedPositions);
     }
 }

@@ -51,4 +51,9 @@ public class BuyDevState extends TurnState {
         }else
             controller.sendMessage(new Error(nullPosition.toString()));
     }
+
+    @Override
+    public void completeTurn() {
+
+    }
 }
