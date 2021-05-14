@@ -235,7 +235,7 @@ public abstract class TurnState {
      */
     public void keepLeaderCards(String nickname, int id1, int id2) {
         controller.sendError(invalidCommand.toString());
-    };
+    }
 
     /**
      * At the beginning of the game, this method is used to choose which resources the player wants to put in depot.
@@ -247,12 +247,12 @@ public abstract class TurnState {
      */
     public void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
         controller.sendError(invalidCommand.toString());
-    };
+    }
 
     /**
-     * complete the turn when a player crashes.
+     * complete the turn when the current player crashes.
      */
-    public abstract void completeTurn(); //TODO
+    public abstract void completeTurn();
 
     /**
      * cheat used during beta testing.

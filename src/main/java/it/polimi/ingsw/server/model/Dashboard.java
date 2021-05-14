@@ -449,9 +449,44 @@ public class Dashboard {
     }
 
     /**
-     * This method make the dashboard forget about productions used.
+     * This method makes the dashboard forget about productions used.
      */
     public void refreshProductions(){
         productionsActivated.clear();
+    }
+
+    /**
+     * it clears all the resources that must be paid, benefits to be produced and all the productions activated.
+     */
+    public void refreshState() {
+        resourcesToPay.clear();
+        benefitsToProduce.clear();
+        isProducing = false;
+        productionsActivated.clear();
+    }
+
+    /**
+     * it pays all the resources needed for the selected production.
+     */
+    public void automatizePayment() {
+        for(Resource resource : resourcesToPay) {
+            try {
+                takeFromDepot(resource);
+            } catch (NotEnoughResourcesException e) { // if resource is not in depot, checks if resource is stored in an extraSlot
+                try {
+                    takeFromExtraSlot(resource);
+                } catch (NotEnoughResourcesException notEnoughResourcesException) { // if resource is not in an extra slot checks in strongbox.
+                    try {
+                        takeFromStrongbox(resource);
+                    } catch (NotEnoughResourcesException | InvalidResourceException | RequirementsSatisfiedException enoughResourcesException) {
+                        enoughResourcesException.printStackTrace();
+                    }
+                } catch (RequirementsSatisfiedException | InvalidResourceException requirementsSatisfiedException) {
+                    requirementsSatisfiedException.printStackTrace();
+                }
+            } catch (RequirementsSatisfiedException | InvalidResourceException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

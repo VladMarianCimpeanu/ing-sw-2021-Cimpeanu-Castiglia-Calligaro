@@ -10,7 +10,6 @@ import it.polimi.ingsw.server.model.exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.exceptions.ProductionStartedException;
 import it.polimi.ingsw.server.model.exceptions.ProductionUsedException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +19,8 @@ import java.util.Map;
  * select the resource wanted in output.
  */
 public class ExtraProdOutState extends TurnState {
-    private int extraProductionID;
-    private boolean firstProduction;
+    private final int extraProductionID;
+    private final boolean firstProduction;
 
     public ExtraProdOutState(Controller controller, int ID, boolean firstProduction) {
         super(controller);
@@ -54,13 +53,28 @@ public class ExtraProdOutState extends TurnState {
 
     }
 
+    /**
+     * This method should be called when an extra production fails due to "notEnoughResources", "productionUsed" or "InvalidLeaderCard".
+     * If the production is the first one used during the current turn, it will set SELECTION STATE as the next turn, in order
+     * to avoid skipping any action. If the selected production is not the first activated in this turn, PRODUCTION STATE will be set.
+     * @param controller controller of this state
+     * @param error error that caused production failure.
+     */
     private void resetState(Controller controller, ErrorMessage error) {
         controller.sendError(error.toString());
         if(firstProduction) controller.setCurrentState(new SelectionState(controller));
         else controller.setCurrentState(new ProductionState(controller));
     }
+
+    /**
+     * It adds all the resources produced in this turn to the strongbox and makes the current player's dashboard forget
+     * all the productions used in the current turn.
+     * Then notify the controller to trigger the next turn.
+     */
     @Override
     public void completeTurn() {
-
+        if(!firstProduction) getController().getCurrentPlayer().getDashboard().getStrongbox().addProduced();
+        getController().getCurrentPlayer().getDashboard().refreshState();
+        getController().nextTurn();
     }
 }

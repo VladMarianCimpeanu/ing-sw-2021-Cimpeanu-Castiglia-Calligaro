@@ -50,13 +50,11 @@ public class SelectionState extends TurnState {
             int whiteMarbles = getController().getCurrentPlayer().goToMarket(direction, position);
             ArrayList<Marble> marbles = getController().getGame().getMarket().getSelectedMarbles();
             ArrayList<String> selected = new ArrayList<>();
-            for(Marble m: marbles){
+            for(Marble m: marbles)
                 selected.add(m.toString());
-            }
             getController().sendMessage(new SelectedMarbles(selected));
             System.out.println("[" + getController().getCurrentPlayer().getNickName() + "]:" + "Marbles from market:");
             System.out.println(selected);
-
             //if there are no white marbles or the player has no marketStrategies, the marketStrategyState will be skipped.
             if(whiteMarbles == 0 || getController().getCurrentPlayer().getMarketStrategies().isEmpty()){
                 getController().getCurrentPlayer().passStrategiesToMarket();
@@ -65,14 +63,12 @@ public class SelectionState extends TurnState {
                 else {
                     ArrayList<Resource> resources = getController().getCurrentPlayer().getReceivedFromMarket();
                     getController().sendMessage(new ConvertedMarbles(resources));
-
                     getController().setCurrentState(new MarketState(getController()));
                 }
             }
             else {
                 getController().setCurrentState(new MarketStrategyState(getController(), whiteMarbles));
             }
-
         } catch (OutOfBoundColumnsException | OutOfBoundRowException e) {
             getController().sendError(invalidMarketPosition.toString());
         } catch (InvalidDirectionSelection invalidDirectionSelection) {

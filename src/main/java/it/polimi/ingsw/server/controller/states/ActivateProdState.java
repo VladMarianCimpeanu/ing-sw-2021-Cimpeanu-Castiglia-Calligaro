@@ -17,7 +17,6 @@ public class ActivateProdState extends TurnState {
     public void activateProduction() {
         Controller controller = getController();
         Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
-
         try {
             dashboard.activateProduction();
         } catch (NoProductionAvailableException e) {
@@ -27,8 +26,15 @@ public class ActivateProdState extends TurnState {
         }
     }
 
+    /**
+     * It adds all the resources produced in this turn to the strongbox and makes the current player's dashboard forget
+     * all the productions used in the current turn.
+     * Then notify the controller to trigger the next turn.
+     */
     @Override
     public void completeTurn() {
-
+        getController().getCurrentPlayer().getDashboard().getStrongbox().addProduced();
+        getController().getCurrentPlayer().getDashboard().refreshState();
+        getController().nextTurn();
     }
 }

@@ -60,13 +60,20 @@ public class ProductionState extends TurnState {
 
     @Override
     public void end() {
+        endProduction();
         getController().nextTurn();
         getController().setCurrentState(new SelectionState(getController()));
     }
 
+    /**
+     * It adds all the resources produced in this turn to the strongbox and makes the current player's dashboard forget
+     * all the productions used in the current turn.
+     * Then notify the controller to trigger the next turn.
+     */
     @Override
     public void completeTurn() {
-
+        endProduction();
+        getController().nextTurn();
     }
 
     @Override
@@ -74,6 +81,7 @@ public class ProductionState extends TurnState {
         try {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);
             getController().getCurrentPlayer().activateLeaderCard(leaderCard);
+            endProduction();
             getController().setCurrentState(new EndTurnState(getController()));
         } catch (NoCardException e) {
             getController().sendError("invalidLeaderCardID");
@@ -87,10 +95,20 @@ public class ProductionState extends TurnState {
         try {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);
             getController().getCurrentPlayer().discardLeaderCard(leaderCard);
+            endProduction();
             getController().setCurrentState(new EndTurnState(getController()));
         } catch (NoCardException e) {
             getController().sendError("invalidLeaderCardID");
         }
+    }
 
+    /**
+     * It adds all the resources produced to strongbox and makes the current player's dashboard forget the productions used
+     * in the current turn.
+     */
+    private void endProduction() {
+        Dashboard playersDashboard = getController().getCurrentPlayer().getDashboard();
+        playersDashboard.getStrongbox().addProduced();
+        playersDashboard.refreshProductions();
     }
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Dashboard;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidResourceException;
+import it.polimi.ingsw.server.model.exceptions.NoProductionAvailableException;
 import it.polimi.ingsw.server.model.exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.exceptions.RequirementsSatisfiedException;
 
@@ -21,7 +22,6 @@ public class CardProdState extends TurnState {
     public void pay(Resource resource, String position) {
         Controller controller = getController();
         Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
-
         try{
             switch(position){
                 case "depot":    //warehouseDepot
@@ -48,8 +48,20 @@ public class CardProdState extends TurnState {
         }
     }
 
+    /**
+     * it ends the production payment not completed by the current player and notify the controller to set the next player to play.
+     */
     @Override
     public void completeTurn() {
-
+        Dashboard playersDashboard = getController().getCurrentPlayer().getDashboard();
+        try {
+            playersDashboard.automatizePayment();
+            playersDashboard.activateProduction();
+            playersDashboard.getStrongbox().addProduced();
+            playersDashboard.refreshState();
+            getController().nextTurn();
+        } catch (NoProductionAvailableException e) {
+            e.printStackTrace();
+        }
     }
 }
