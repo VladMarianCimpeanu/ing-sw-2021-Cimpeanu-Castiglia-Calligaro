@@ -5,7 +5,6 @@ import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CLI implements Runnable {
@@ -22,6 +21,7 @@ public class CLI implements Runnable {
 
     @Override
     public void run() {
+        Welcome.dump();
         while(true){
             String line = in.nextLine();
             String[] command = line.split(" ");
