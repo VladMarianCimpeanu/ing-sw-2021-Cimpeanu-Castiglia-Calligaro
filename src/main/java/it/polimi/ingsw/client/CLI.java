@@ -143,12 +143,12 @@ public class CLI implements Runnable {
                                         Integer.parseInt(command[3])
                                         ));
                                 break;
-                            case "moveToExtra":
-                                //move from to(leaderId) quantity
-                                client.send(new MoveExtraToWarehouse(Integer.parseInt(command[1]), Integer.parseInt(command[2]), Integer.parseInt(command[3])));
-                                break;
                             case "moveFromExtra":
                                 //move from(leaderId) to quantity
+                                client.send(new MoveExtraToWarehouse(Integer.parseInt(command[2]), Integer.parseInt(command[1]), Integer.parseInt(command[3])));
+                                break;
+                            case "moveToExtra":
+                                //move from to(leaderId) quantity
                                 client.send(new MoveWarehouseToExtra(Integer.parseInt(command[1]), Integer.parseInt(command[2]), Integer.parseInt(command[3])));
                                 break;
                             default:

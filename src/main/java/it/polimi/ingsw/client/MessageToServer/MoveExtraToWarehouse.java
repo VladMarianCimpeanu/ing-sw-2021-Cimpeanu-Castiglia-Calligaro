@@ -5,13 +5,13 @@ import it.polimi.ingsw.server.controller.states.TurnState;
 
 public class MoveExtraToWarehouse implements MessageToServer {
     private String type;
-    private int shelfFrom;
+    private int shelf;
     private int leaderId;
     private int quantity;
 
-    public MoveExtraToWarehouse(int shelfFrom, int leaderId, int quantity) {
+    public MoveExtraToWarehouse(int shelf, int leaderId, int quantity) {
         this.type = "MoveExtraToWarehouse";
-        this.shelfFrom = shelfFrom;
+        this.shelf = shelf;
         this.leaderId = leaderId;
         this.quantity = quantity;
     }

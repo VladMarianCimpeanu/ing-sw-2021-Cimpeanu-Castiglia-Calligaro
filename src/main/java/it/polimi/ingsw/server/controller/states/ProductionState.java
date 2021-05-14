@@ -27,7 +27,7 @@ public class ProductionState extends TurnState {
         Controller controller = getController();
         Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
         DevelopmentCard card = dashboard.getActivableDevCards().get(deckIndex);
-        controller.sendMessage(new ResourceToPay(card.getResourceCost()));
+        controller.sendMessage(new ResourceToPay(card.getResourceIn()));
 
         try {
             dashboard.selectCardProduction(deckIndex);
