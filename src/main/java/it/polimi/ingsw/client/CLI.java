@@ -32,6 +32,12 @@ public class CLI implements Runnable {
                             case "pass":
                                 client.send(new EndTurn());
                                 break;
+                            case "activateProduction":
+                                client.send(new ActivateProduction());
+                                break;
+                            case "produceBase":
+                                client.send(new ActivateBaseProduction());
+                                break;
                             case "cheat":
                                 client.send(new CheatResource());
                                 break;
@@ -64,6 +70,15 @@ public class CLI implements Runnable {
                                 break;
                             case "discard":
                                 client.send(new DiscardResource(Resource.valueOf(command[1].toUpperCase())));
+                                break;
+                            case "produce":
+                                client.send(new ActivateCardProduction(Integer.parseInt(command[1].toUpperCase())));
+                                break;
+                            case "produceExtra":
+                                client.send(new ActivateExtraProduction(Integer.parseInt(command[1].toUpperCase())));
+                                break;
+                            case "resOut":
+                                client.send(new SelResOut(Resource.valueOf(command[1].toUpperCase())));
                                 break;
                             default:
                                 out.println("Unexpected command.");
@@ -101,6 +116,13 @@ public class CLI implements Runnable {
                                         nickname
                                 ));
                                 break;
+                            case "resIn":
+                                client.send(new SelResIn(Resource.valueOf(command[1].toUpperCase()), Resource.valueOf(command[2].toUpperCase())));
+                                break;
+                            case "move":
+                                //move from to
+                                client.send(new MoveResource(Integer.parseInt(command[1]), Integer.parseInt(command[2])));
+                                break;
                             default:
                                 out.println("Unexpected command.");
                         }
@@ -120,6 +142,14 @@ public class CLI implements Runnable {
                                         Color.valueOf((command[2].toUpperCase())),
                                         Integer.parseInt(command[3])
                                         ));
+                                break;
+                            case "moveToExtra":
+                                //move from to(leaderId) quantity
+                                client.send(new MoveExtraToWarehouse(Integer.parseInt(command[1]), Integer.parseInt(command[2]), Integer.parseInt(command[3])));
+                                break;
+                            case "moveFromExtra":
+                                //move from(leaderId) to quantity
+                                client.send(new MoveWarehouseToExtra(Integer.parseInt(command[1]), Integer.parseInt(command[2]), Integer.parseInt(command[3])));
                                 break;
                             default:
                                 out.println("Unexpected command.");
