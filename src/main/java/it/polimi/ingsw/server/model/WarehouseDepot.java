@@ -411,6 +411,7 @@ public class WarehouseDepot {
                 }
                 firstQuantity += quantity;
                 slot.removeResource(quantity);
+                firstShelf = resource;
                 virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                 break;
             case 2:
@@ -421,6 +422,7 @@ public class WarehouseDepot {
                 }
                 secondQuantity += quantity;
                 slot.removeResource(quantity);
+                secondShelf = resource;
                 virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                 break;
             case 3:
@@ -431,6 +433,7 @@ public class WarehouseDepot {
                 }
                 thirdQuantity += quantity;
                 slot.removeResource(quantity);
+                thirdShelf = resource;
                 virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                 break;
         }
