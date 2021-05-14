@@ -26,11 +26,10 @@ public class ProductionState extends TurnState {
     public void activateDevCard(int deckIndex) {
         Controller controller = getController();
         Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
-        DevelopmentCard card = dashboard.getActivableDevCards().get(deckIndex);
-        controller.sendMessage(new ResourceToPay(card.getResourceIn()));
-
         try {
+            DevelopmentCard card = dashboard.getCardOnTop(deckIndex);
             dashboard.selectCardProduction(deckIndex);
+            controller.sendMessage(new ResourceToPay(card.getResourceIn()));
             controller.setCurrentState(new CardProdState(controller));
         } catch (InvalidDeckPositionException e) {
             controller.sendError("invalidDeckIndex");
@@ -49,14 +48,14 @@ public class ProductionState extends TurnState {
     public void activateBase() {
         Controller controller = getController();
         controller.sendMessage(new SelectResourceIn());
-        controller.setCurrentState(new BaseProdInState(controller));
+        controller.setCurrentState(new BaseProdInState(controller, false));
     }
 
     @Override
     public void activateExtra(int id) {
         Controller controller = getController();
         controller.sendMessage(new SelectResourceOut());
-        controller.setCurrentState(new ExtraProdOutState(controller, id));
+        controller.setCurrentState(new ExtraProdOutState(controller, id, false));
     }
 
     @Override

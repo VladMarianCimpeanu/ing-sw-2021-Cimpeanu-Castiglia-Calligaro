@@ -9,16 +9,17 @@ import it.polimi.ingsw.server.model.benefit.Resource;
  * select 2 resources in input to start the production.
  */
 public class BaseProdInState extends TurnState {
-
-    public BaseProdInState(Controller controller) {
+    private boolean firstProduction;
+    public BaseProdInState(Controller controller, boolean firstProduction) {
         super(controller);
+        this.firstProduction = firstProduction;
     }
 
     @Override
     public void selectInput(Resource res1, Resource res2) {
         Controller controller = getController();
         controller.sendMessage(new SelectResourceOut());
-        controller.setCurrentState(new BaseProdOutState(controller, res1, res2));
+        controller.setCurrentState(new BaseProdOutState(controller, res1, res2, firstProduction));
     }
 
     @Override

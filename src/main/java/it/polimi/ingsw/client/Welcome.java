@@ -12,12 +12,12 @@ public class Welcome {
     private static String title7 = "       ▀                                                                                          ▀                           ▀           ";
 
     public static void dump() {
-        System.out.println(RED.escape() + title1);
+        System.out.println(BLUE.escape() + title1);
         System.out.println(title2);
         System.out.println(title3);
         System.out.println(title4);
         System.out.println(title5);
         System.out.println(title6);
-        System.out.println(title7);
+        System.out.println(title7 + RESET);
     }
 }

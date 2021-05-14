@@ -38,6 +38,7 @@ public class FirstTurn extends TurnState{
             getController().sendMessage(nickname, new SelectedLeadercards(id1, id2));
         } catch (NoCardException e) {
             getController().sendMessage(nickname, new Error(invalidLeaderCardID.toString()));
+            return;
         }
         waitingForLeaderCards.remove(nickname);
         int position = getController().getTurns().indexOf(nickname);

@@ -19,11 +19,13 @@ import java.util.Map;
 public class BaseProdOutState extends TurnState {
     private Resource res1In;
     private Resource res2In;
+    private boolean firstProduction;
 
-    public BaseProdOutState(Controller controller, Resource res1In, Resource res2In) {
+    public BaseProdOutState(Controller controller, Resource res1In, Resource res2In, boolean firstProduction) {
         super(controller);
         this.res1In = res1In;
         this.res2In = res2In;
+        this.firstProduction = firstProduction;
     }
 
     @Override
@@ -37,22 +39,26 @@ public class BaseProdOutState extends TurnState {
             input.put(res1In, 1);
             input.put(res2In, 1);
         }
-
         try {
             dashboard.selectBaseProduction(input,resourceOut);
             controller.sendMessage(new ResourceToPay(input));
             controller.setCurrentState(new CardProdState(controller));
         } catch (NotEnoughResourcesException e) {
-            controller.sendError("notEnoughResources");
+            resetState(controller, ErrorMessage.notEnoughResources);
         } catch (ResourceCostException e) {
-            e.printStackTrace();
+            resetState(controller, ErrorMessage.wrongSizeInput);
         } catch (ProductionStartedException e) {
-            controller.sendError("productionStarted");
+            resetState(controller, ErrorMessage.productionAlreadyStarted);
         } catch (ProductionUsedException e) {
-            controller.sendError("productionUsed");
+            resetState(controller, ErrorMessage.productionUsed);
         }
     }
 
+    private void resetState(Controller controller, ErrorMessage error) {
+        controller.sendError(error.toString());
+        if (firstProduction) controller.setCurrentState(new SelectionState(controller));
+        else controller.setCurrentState(new ProductionState(controller));
+    }
     @Override
     public void completeTurn() {
 

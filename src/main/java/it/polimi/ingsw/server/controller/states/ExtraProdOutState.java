@@ -21,10 +21,12 @@ import java.util.Map;
  */
 public class ExtraProdOutState extends TurnState {
     private int extraProductionID;
+    private boolean firstProduction;
 
-    public ExtraProdOutState(Controller controller, int ID) {
+    public ExtraProdOutState(Controller controller, int ID, boolean firstProduction) {
         super(controller);
         extraProductionID = ID;
+        this.firstProduction = firstProduction;
     }
 
     @Override
@@ -41,17 +43,22 @@ public class ExtraProdOutState extends TurnState {
             controller.sendMessage(new ResourceToPay(input));
             controller.setCurrentState(new CardProdState(controller));
         } catch (NotEnoughResourcesException e) {
-            controller.sendError("notEnoughResources");
+            resetState(controller, ErrorMessage.notEnoughResources);
         } catch (ProductionStartedException e) {
-            controller.sendError("productionStarted");
+            resetState(controller, ErrorMessage.productionAlreadyStarted);
         } catch (ProductionUsedException e) {
-            controller.sendError("productionUsed");
+            resetState(controller, ErrorMessage.productionUsed);
         } catch (InvalidIDExcpetion invalidIDExcpetion) {
-            controller.sendError("invalidID");
+            resetState(controller, ErrorMessage.invalidLeaderCardID);
         }
 
     }
 
+    private void resetState(Controller controller, ErrorMessage error) {
+        controller.sendError(error.toString());
+        if(firstProduction) controller.setCurrentState(new SelectionState(controller));
+        else controller.setCurrentState(new ProductionState(controller));
+    }
     @Override
     public void completeTurn() {
 

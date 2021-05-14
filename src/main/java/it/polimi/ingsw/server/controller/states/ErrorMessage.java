@@ -17,5 +17,8 @@ public enum ErrorMessage{
     wrongLevel,
     notEnoughResources,
     nullResource,
-    nullPosition
+    nullPosition,
+    wrongSizeInput,
+    productionUsed,
+    productionAlreadyStarted
 }

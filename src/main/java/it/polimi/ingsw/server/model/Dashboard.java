@@ -97,6 +97,19 @@ public class Dashboard {
     }
 
     /**
+     * return the card on top of the selected deck
+     * @param deckIndex selected deck: values from 1
+     * @return card selected
+     * @throws NoCardException if the deck is empty
+     */
+    public DevelopmentCard getCardOnTop(int deckIndex) throws NoCardException, InvalidDeckPositionException {
+        if (deckIndex < 1 || deckIndex > 3) throw new InvalidDeckPositionException();
+        Stack<DevelopmentCard> selectedDeck = developmentDecks.get(deckIndex - 1);
+        if (selectedDeck.size() > 0) return selectedDeck.lastElement();
+        else throw new NoCardException();
+    }
+
+    /**
      * this method checks if a development card with the specified level can be placed in the dashboard.
      * @param level specified level of the development card
      * @return true if the card is placeable, else false
