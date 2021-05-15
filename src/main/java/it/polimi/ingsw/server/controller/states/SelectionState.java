@@ -130,7 +130,7 @@ public class SelectionState extends TurnState {
 
     @Override
     public void completeTurn() {
-
+        getController().nextTurn();
     }
 
     @Override

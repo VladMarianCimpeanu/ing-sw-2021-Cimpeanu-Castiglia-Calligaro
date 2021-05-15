@@ -88,7 +88,7 @@ public class FirstTurn extends TurnState{
 
     @Override
     public void completeTurn() {
-
+        //The First Turn has to be completed by each player in order to start the game
     }
 
 

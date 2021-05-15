@@ -1,8 +1,14 @@
 package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.controller.Controller;
+import it.polimi.ingsw.server.model.Dashboard;
+import it.polimi.ingsw.server.model.ExtraSlot;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.WarehouseDepot;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
+
+import java.util.ArrayList;
 
 import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
 
@@ -57,6 +63,58 @@ public class MarketState extends TurnState {
 
     @Override
     public void completeTurn() {
+        Player player = getController().getCurrentPlayer();
+        Dashboard dashboard = player.getDashboard();
+        WarehouseDepot depot = dashboard.getWarehouseDepot();
+        if(player.isMarketResourcesUnavailable()) getController().nextTurn();
 
+        //First look at the ExtraSlots available
+        ArrayList<Resource> resources = player.getReceivedFromMarket();
+        for (Resource resource: resources) {
+            if(depot.getExtraSlotList().contains(resource)){
+                try {
+                    player.putInExtraSlot(resource);
+                } catch (NotEnoughSpaceException | InvalidResourceException | MissingExtraSlot e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        //Then look at the shelves
+        resources = player.getReceivedFromMarket();
+        for(Resource resource: resources){
+            if(depot.getResourceQuantity(resource) != 0) {
+                try {
+                    player.putInWarehouseDepot(resource, depot.getResourceShelf(resource));
+                } catch (InvalidResourceException | ExistingResourceException | InvalidShelfPosition e) {
+                    e.printStackTrace();
+                } catch (NotEnoughSpaceException e) {
+                    try {
+                        player.discardResource(resource);
+                    } catch (InvalidResourceException invalidResourceException) {
+                        invalidResourceException.printStackTrace();
+                    }
+                }
+            }else{
+                try {
+                    int shelf = depot.getFreeShelf(3);
+                    try {
+                        player.putInWarehouseDepot(resource, shelf);
+                    } catch (InvalidResourceException | ExistingResourceException | NotEnoughSpaceException e) {
+                        e.printStackTrace();
+                    }
+                } catch (InvalidShelfPosition invalidShelfPosition) {
+                    try {
+                        player.discardResource(resource);
+                    } catch (InvalidResourceException invalidResourceException) {
+                        invalidResourceException.printStackTrace();
+                    }
+                }
+
+
+            }
+        }
+
+        getController().nextTurn();
     }
 }

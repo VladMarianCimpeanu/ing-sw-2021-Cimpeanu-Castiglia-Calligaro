@@ -25,7 +25,7 @@ public class EndTurnState extends TurnState {
 
     @Override
     public void completeTurn() {
-
+        end();
     }
 
     @Override

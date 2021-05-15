@@ -84,6 +84,25 @@ public class WarehouseDepot {
         }
     }
 
+    public int getResourceShelf(Resource resource) throws InvalidResourceException{
+        try {
+            for(int i = 1; i<4; i++)
+                if(getShelfResource(i) == resource && getShelfQuantity(i) >= 0)
+                    return i;
+        } catch (InvalidShelfPosition invalidShelfPosition) {
+            invalidShelfPosition.printStackTrace();
+        }
+        throw new InvalidResourceException();
+    }
+
+    public int getFreeShelf(int shelfMax) throws InvalidShelfPosition{
+        if(shelfMax <1 || shelfMax >3) throw new InvalidShelfPosition();
+        for(int i = shelfMax; i>0; i--)
+            if(getShelfQuantity(i) == 0)
+                return i;
+        throw new InvalidShelfPosition();
+    }
+
     /**
      * Move resources from a shelf to another shelf
      * @param fromShelf first shelf's number
