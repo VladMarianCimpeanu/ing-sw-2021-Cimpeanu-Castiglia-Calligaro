@@ -44,7 +44,7 @@ public class ExtraSlot {
             remain = this.quantity-2;
             this.quantity = 2;
         }
-        virtualView.updateExtraSlot(resourceExtra, ID, quantity);
+        virtualView.updateExtraSlot(resourceExtra, ID, this.quantity);
         return remain;
     }
 
@@ -58,11 +58,11 @@ public class ExtraSlot {
         if(quantity > this.quantity){
             int remain = quantity-this.quantity;
             this.quantity = 0;
-            virtualView.updateExtraSlot(resourceExtra, ID, quantity);
+            virtualView.updateExtraSlot(resourceExtra, ID, this.quantity);
             return remain;
         }
         this.quantity -= quantity;
-        virtualView.updateExtraSlot(resourceExtra, ID, quantity);
+        virtualView.updateExtraSlot(resourceExtra, ID, this.quantity);
         return 0;
     }
 
