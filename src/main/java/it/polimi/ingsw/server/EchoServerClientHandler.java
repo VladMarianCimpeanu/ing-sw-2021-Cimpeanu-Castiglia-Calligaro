@@ -1,18 +1,17 @@
-package it.polimi.ingsw.server.controller;
+package it.polimi.ingsw.server;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonSyntaxException;
 import it.polimi.ingsw.server.MessageFromClient.*;
 import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.MessageToClient.Error;
+import it.polimi.ingsw.server.controller.Controller;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.NoSuchElementException;
 
 /**
  * Handler of the client.

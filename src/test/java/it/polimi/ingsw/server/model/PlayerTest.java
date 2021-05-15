@@ -9,8 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import static it.polimi.ingsw.server.model.Color.PURPLE;
 import static it.polimi.ingsw.server.model.Color.YELLOW;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -228,5 +232,30 @@ class PlayerTest {
         Discount result = player.getDiscountList().get(0);
 
         assertTrue(discountStub.equals(result));
+    }
+
+    @Test
+    void autoCompletePayment() throws NoSuchPlayerException, IOException, InvalidReadException, InvalidDiscountException, NoCardException, NotEnoughResourcesException, WrongLevelException, InvalidStepsException, NegativeQuantityException {
+        ArrayList<Identity> identities = new ArrayList<>();
+        identities.add(new Identity("danilo"));
+        identities.add(new Identity("nick"));
+        Game game = new Multiplayer(identities);
+        Player player = game.getPlayers().get(0);
+        player.subscribe(new VirtualViewStub());
+        Strongbox strongbox = player.getDashboard().getStrongbox();
+        strongbox.subscribe(new VirtualViewStub());
+        game.getDevelopmentCardSet().subscribe(new VirtualViewStub());
+
+        strongbox.addResource(Resource.COIN, 100);
+        strongbox.addResource(Resource.SERVANT, 100);
+        strongbox.addResource(Resource.SHIELD, 100);
+        strongbox.addResource(Resource.STONE, 100);
+        strongbox.addProduced();
+        DevelopmentCard card = game.getDevelopmentCardSet().getAvailableDevelopmentCards().get(0).get(3).peek();
+        player.drawDevelopmentCard(PURPLE, 1, null);
+        player.completePayment();
+        assertEquals(player.getDevelopmentCardCost(), new HashMap<>());
+        player.autoPlace();
+        assertEquals(player.getDashboard().getActivableDevCards().get(0), card);
     }
 }

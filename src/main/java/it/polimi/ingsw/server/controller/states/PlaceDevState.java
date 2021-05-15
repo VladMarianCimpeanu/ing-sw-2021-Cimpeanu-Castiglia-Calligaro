@@ -30,6 +30,11 @@ public class PlaceDevState extends TurnState {
 
     @Override
     public void completeTurn() {
-
+        try {
+            getController().getCurrentPlayer().autoPlace();
+        } catch (WrongLevelException e) {
+            e.printStackTrace();
+        }
+        getController().nextTurn();
     }
 }

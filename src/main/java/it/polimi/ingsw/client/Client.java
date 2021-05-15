@@ -6,7 +6,7 @@ import it.polimi.ingsw.client.MessageFromServer.*;
 import it.polimi.ingsw.client.MessageFromServer.Error;
 import it.polimi.ingsw.client.MessageFromServer.Updates.*;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
-import it.polimi.ingsw.server.controller.RuntimeTypeAdapterFactory;
+import it.polimi.ingsw.server.RuntimeTypeAdapterFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;

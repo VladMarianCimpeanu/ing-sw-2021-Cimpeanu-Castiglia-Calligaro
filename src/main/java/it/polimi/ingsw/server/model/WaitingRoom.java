@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.controller.Controller;
-import it.polimi.ingsw.server.controller.MultiEchoServer;
+import it.polimi.ingsw.server.MultiEchoServer;
 import it.polimi.ingsw.server.model.exceptions.*;
 
 import java.util.ArrayList;

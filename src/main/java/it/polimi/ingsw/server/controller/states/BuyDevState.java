@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidResourceException;
 import it.polimi.ingsw.server.model.exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.exceptions.RequirementsSatisfiedException;
+import it.polimi.ingsw.server.model.exceptions.WrongLevelException;
 
 import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
 
@@ -54,6 +55,16 @@ public class BuyDevState extends TurnState {
 
     @Override
     public void completeTurn() {
-
+        try {
+            getController().getCurrentPlayer().completePayment();
+        } catch (NotEnoughResourcesException e) {
+            e.printStackTrace();
+        }
+        try {
+            getController().getCurrentPlayer().autoPlace();
+        } catch (WrongLevelException e) {
+            e.printStackTrace();
+        }
+        getController().nextTurn();
     }
 }

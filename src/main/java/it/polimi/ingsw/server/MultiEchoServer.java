@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.controller;
+package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.MessageToClient.CrashedPlayer;
 import it.polimi.ingsw.server.MessageToClient.JoinPlayer;

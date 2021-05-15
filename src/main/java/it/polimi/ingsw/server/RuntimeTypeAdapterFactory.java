@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.controller;
+package it.polimi.ingsw.server;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;

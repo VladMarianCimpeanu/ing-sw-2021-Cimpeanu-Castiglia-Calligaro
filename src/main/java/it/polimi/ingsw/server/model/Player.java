@@ -413,4 +413,33 @@ public class Player {
         this.virtualView = virtualView;
     }
 
+    public void completePayment() throws NotEnoughResourcesException{
+        for(Resource r: Resource.values()){
+            if(developmentCardCost.containsKey(r)){
+                int remaining = developmentCardCost.get(r);
+                try {
+                    if(remaining != 0) remaining = dashboard.getWarehouseDepot().removeExtraResource(r, remaining);
+                } catch (MissingExtraSlot missingExtraSlot) {}
+                if(remaining != 0) remaining = dashboard.getWarehouseDepot().removeResource(r, remaining);
+                try {
+                    if(remaining != 0) remaining = dashboard.getStrongbox().removeResource(r, remaining);
+                } catch (NegativeQuantityException e) {
+                    e.printStackTrace();
+                }
+                if(remaining != 0) throw new NotEnoughResourcesException();
+                developmentCardCost.remove(r);
+            }
+        }
+    }
+
+    public void autoPlace() throws WrongLevelException{
+        for(int i = 0; i < 3; i++){
+            try {
+                placeDevelopmentCard(i);
+                return;
+            } catch (WrongLevelException e) {}
+        }
+        throw new WrongLevelException();
+    }
+
 }

@@ -51,7 +51,6 @@ class SingleplayerTest {
         for(ActionToken token : game.getAvailableActionTokens())
             post_positions.put(token, game.getAvailableActionTokens().indexOf(token));
         int post_size = game.getAvailableActionTokens().size();
-        assertNotEquals(pre_positions, post_positions);
         assertEquals(pre_size, post_size);
     }
 }

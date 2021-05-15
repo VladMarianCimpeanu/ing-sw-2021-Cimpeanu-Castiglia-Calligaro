@@ -18,7 +18,9 @@ public class ActivateProdState extends TurnState {
         Controller controller = getController();
         Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
         try {
-            dashboard.activateProduction();
+            int faithPoints = dashboard.activateProduction();
+            //add the faithPoints obtained by the production activation to the faithPath
+            controller.getCurrentPlayer().addFaithPoint(faithPoints);
         } catch (NoProductionAvailableException e) {
             e.printStackTrace();
         }finally {
