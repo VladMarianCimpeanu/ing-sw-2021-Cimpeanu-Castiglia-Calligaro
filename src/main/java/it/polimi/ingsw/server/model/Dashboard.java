@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.model.benefit.Faith;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -331,6 +332,9 @@ public class Dashboard {
         int index = 0;
         boolean found = false;
         ArrayList<ExtraSlot> slotList = warehouseDepot.getExtraSlotList();
+        //fixed
+        if(slotList.isEmpty()) throw new NotEnoughResourcesException();
+        //why take always the first slot of the list?
         int resourcesLeft = slotList.get(index).removeResource(1);
         if (resourcesLeft > 0) throw new NotEnoughResourcesException();
         for(; !found ; index ++){
@@ -469,7 +473,9 @@ public class Dashboard {
      * it pays all the resources needed for the selected production.
      */
     public void automatizePayment() {
-        for(Resource resource : resourcesToPay) {
+        //fixed bug with only 2 resources in strongbox
+        ArrayList<Resource> resources = resourcesToPay;
+        for(Resource resource : resources) {
             try {
                 takeFromDepot(resource);
             } catch (NotEnoughResourcesException e) { // if resource is not in depot, checks if resource is stored in an extraSlot
@@ -488,5 +494,6 @@ public class Dashboard {
                 e.printStackTrace();
             }
         }
+        resourcesToPay.clear();
     }
 }
