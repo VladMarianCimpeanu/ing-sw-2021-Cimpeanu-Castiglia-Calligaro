@@ -1,9 +1,12 @@
 package it.polimi.ingsw.client.modelLight;
 
+import it.polimi.ingsw.client.Color;
+import it.polimi.ingsw.client.Resource;
+import it.polimi.ingsw.server.model.DevelopmentCard;
+
+import java.util.Map;
+
 public abstract class DevelopmentCardView {
-    int ID;
-    int victoryPoints;
-    int level;
-    int color;
+
     public abstract void show();
 }

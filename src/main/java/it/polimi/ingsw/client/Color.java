@@ -4,20 +4,25 @@ package it.polimi.ingsw.client;
  * color of development cards
  */
 public enum Color {
-    YELLOW("\u001B[33m"),
-    BLUE("\u001B[34m"),
-    GREEN("\u001B[32m");
+    GREEN("\u001B[32m",0),
+    BLUE("\u001B[34m", 1),
+    YELLOW("\u001B[33m", 2),
+    PURPLE("\u001B[95m", 3);
 
-    static final String RESET = "\u001B[0m";
+    public static final String RESET = "\u001B[0m";
 
-    private String escape;
+    private final String escape;
+    private final int index;
 
-    Color(String escape) {
+    Color(String escape, int index) {
         this.escape = escape;
+        this.index = index;
     }
 
     public String escape(){
         return escape;
     }
+
+    public int getIndex(){return index;}
 
 }

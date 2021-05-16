@@ -7,6 +7,6 @@ public class DevCardSet extends MessageFromServer {
 
     @Override
     public void activateMessage() {
-        System.out.println("Available cards to buy :" + set.toString());
+        System.out.println("Available development cards to buy: " + set);
     }
 }
