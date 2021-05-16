@@ -154,9 +154,11 @@ class GoToMarketIntegrationTest {
     @Test
     void youMustUseYourStrategies() throws InvalidDirectionSelection, OutOfBoundColumnsException, OutOfBoundRowException, NoSuchStrategyException {
         currPlayer.addMarketStrategy(new MarketStrategy(Resource.COIN, 1));
-        currPlayer.goToMarket("column", 1);
-        assertThrows(InvalidStrategyException.class, () ->
-                currPlayer.passStrategiesToMarket());
+        int whiteFound = currPlayer.goToMarket("column", 1);
+        if(whiteFound > 0){
+            assertThrows(InvalidStrategyException.class, () ->
+                    currPlayer.passStrategiesToMarket());
+        }
     }
 
     @Test

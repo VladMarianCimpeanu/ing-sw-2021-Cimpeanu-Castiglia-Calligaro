@@ -5,7 +5,6 @@ import it.polimi.ingsw.server.model.benefit.Faith;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -332,12 +331,15 @@ public class Dashboard {
         int index = 0;
         boolean found = false;
         ArrayList<ExtraSlot> slotList = warehouseDepot.getExtraSlotList();
-        //fixed
         if(slotList.isEmpty()) throw new NotEnoughResourcesException();
-        //why take always the first slot of the list?
-        int resourcesLeft = slotList.get(index).removeResource(1);
+        for(; index < slotList.size() && !found; index ++){
+            if(slotList.get(index).getResource() == resource) found = true;
+        }
+        if(!found) throw new InvalidResourceException();
+        found = false;
+        int resourcesLeft = slotList.get(index - 1).removeResource(1);
         if (resourcesLeft > 0) throw new NotEnoughResourcesException();
-        for(; !found ; index ++){
+        for(index = 0; !found ; index ++){
             if(resourcesToPay.get(index) == resource){
                 found = true;
                 resourcesToPay.remove(index);
