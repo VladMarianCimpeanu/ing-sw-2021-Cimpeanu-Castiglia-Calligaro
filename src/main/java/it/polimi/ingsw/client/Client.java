@@ -89,6 +89,7 @@ public class Client {
 
     public void start(){
         cli = new CLI(this);
+        gameView = new GameCLI();
         new Thread(cli).start();
 
         String line = null;
@@ -126,7 +127,6 @@ public class Client {
 
     public void setNicknames(ArrayList<String> nicknames) {
         this.nicknames = new ArrayList<>(nicknames);
-        //TODO: if(cli)
-        gameView = new GameCLI(nicknames);
+        gameView.setPlayers(nicknames);
     }
 }

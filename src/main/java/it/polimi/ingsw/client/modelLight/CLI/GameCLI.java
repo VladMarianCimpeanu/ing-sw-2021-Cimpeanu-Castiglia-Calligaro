@@ -1,21 +1,15 @@
 package it.polimi.ingsw.client.modelLight.CLI;
 
-
-import it.polimi.ingsw.client.modelLight.FaithPathView;
 import it.polimi.ingsw.client.modelLight.GameView;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class GameCLI extends GameView {
-    public GameCLI(ArrayList<String> nicknames) {
-        players = new TreeMap<>();
-        //with TreeMap we can save the player order
-        for(String nickname : nicknames) players.put(nickname, new PlayerCLI(nickname));
+    public GameCLI() {
         market = new MarketCLI();
         faithPath = new FaithPathCLI();
         cards = new DevelopmentCardsSetCLI();
-        printPlayers(nicknames);
     }
 
     private void printPlayers(ArrayList<String> nicknames){
@@ -28,5 +22,17 @@ public class GameCLI extends GameView {
             firstIteration = false;
         }
         System.out.println(".");
+    }
+
+    public void setPlayers(ArrayList<String> nicknames){
+        players = new TreeMap<>();
+        //with TreeMap we can save the player order
+        for(String nickname : nicknames) players.put(nickname, new PlayerCLI(nickname));
+        printPlayers(nicknames);
+    }
+
+    @Override
+    public void dumpMessage(String content) {
+        System.out.println(content);
     }
 }

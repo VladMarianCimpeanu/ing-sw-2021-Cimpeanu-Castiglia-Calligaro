@@ -7,4 +7,20 @@ public abstract class PlayerView {
     protected DepotView depot;
     protected StrongboxView strongbox;
     protected String nickname;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public DepotView getDepot() {
+        return depot;
+    }
+
+    public DevelopmentCardDecksView getDecks() {
+        return decks;
+    }
+
+    public StrongboxView getStrongbox() {
+        return strongbox;
+    }
 }

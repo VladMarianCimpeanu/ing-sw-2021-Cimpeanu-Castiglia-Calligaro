@@ -9,6 +9,6 @@ public class DevCardSet extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("Available development cards to buy: " + set);
+        client.getGameView().getCards().setDecks(set);
     }
 }

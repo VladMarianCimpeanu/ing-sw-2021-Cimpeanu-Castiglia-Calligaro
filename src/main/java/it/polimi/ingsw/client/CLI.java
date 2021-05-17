@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.MessageToServer.*;
+import it.polimi.ingsw.client.modelLight.PlayerView;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
@@ -80,6 +81,30 @@ public class CLI implements Runnable {
                             case "resOut":
                                 client.send(new SelResOut(Resource.valueOf(command[1].toUpperCase())));
                                 break;
+                            case "show":
+                                switch (command[1]){
+                                    case "faith": //TODO: for some reasons, if this command is called before the first update, it does not work correctly.
+                                        client.getGameView().getFaithPathView().show();
+                                        break;
+                                    case "cards":
+                                        client.getGameView().getCards().show();
+                                        break;
+                                    case "me":
+                                        PlayerView player = client.getGameView().getPlayer(nickname);
+                                        player.getDecks().show();
+                                        //player.getStrongbox().show();
+                                        //player.getDepot().show();
+                                        break;
+                                    default:
+                                        System.out.println("wat");
+                                        if(client.getGameView().getPlayer(command[1]) != null) {
+                                            PlayerView opponent = client.getGameView().getPlayer(command[1]);
+                                            opponent.getDecks().show();
+                                            //opponent.getStrongbox().show();
+                                            //opponent.getDepot();
+                                        } else out.println("Unexpected command.");
+                                        break;
+                                } break;
                             default:
                                 out.println("Unexpected command.");
                         }
