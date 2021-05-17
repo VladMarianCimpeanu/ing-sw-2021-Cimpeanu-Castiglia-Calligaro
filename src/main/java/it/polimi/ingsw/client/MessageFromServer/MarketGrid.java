@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Marble;
 
 
@@ -9,7 +10,7 @@ public class MarketGrid extends MessageFromServer {
     private String outerMarble;
 
     @Override
-    public void activateMessage() {
+    public void activateMessage(Client client) {
         String marketRow = "+═══+════+═══+═══+";
         System.out.println("Market:" );
         for(int i = 0; i < 3; i++){

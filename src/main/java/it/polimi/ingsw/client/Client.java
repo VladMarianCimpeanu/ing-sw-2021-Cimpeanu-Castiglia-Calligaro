@@ -85,7 +85,7 @@ public class Client {
             try {
                 line = in.readLine();
                 MessageFromServer message = convert.fromJson(line, MessageFromServer.class);
-                message.activateMessage();
+                message.activateMessage(this);
 
                 //TODO: implement inside activateMessage() of NicknameAccepted
                 if(message instanceof NicknameAccepted){

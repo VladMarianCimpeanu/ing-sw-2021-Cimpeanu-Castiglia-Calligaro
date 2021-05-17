@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.MessageFromServer.Updates;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class UpdateMarketColumn extends MessageFromServer {
     private int col;
 
     @Override
-    public void activateMessage() {
+    public void activateMessage(Client client) {
         System.out.println("The market has changed  column " + col + ". The new column is \n" + newColumn.toString() + "\n The Marble to insert is: " + newOuterMarble);
     }
 }

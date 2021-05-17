@@ -1,11 +1,13 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
 
+import it.polimi.ingsw.client.Client;
+
 public class ItsYourTurn extends MessageFromServer {
     private String player;
 
     @Override
-    public void activateMessage() {
+    public void activateMessage(Client client) {
         System.out.println("It's " + player + "'s turn!");
     }
 }
