@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.MessageToClient.CrashedPlayer;
 import it.polimi.ingsw.server.MessageToClient.JoinPlayer;
+import it.polimi.ingsw.server.MessageToClient.Ok;
 import it.polimi.ingsw.server.MessageToClient.Ping;
 import it.polimi.ingsw.server.model.Identity;
 import it.polimi.ingsw.server.model.Player;
@@ -45,6 +46,7 @@ public class MultiEchoServer {
     public static synchronized boolean addToWaitingRoom(String nickname) {
         if(waitingRooms.isEmpty()) return false;
         ArrayList<Identity> idS = waitingRooms.get(0).getWaitingUsers();
+        nicknames.get(nickname).send(new Ok("joined"));
         for(Identity i: idS){
             EchoServerClientHandler client = nicknames.get(i.getNickname());
             client.send(new JoinPlayer(nickname));
@@ -57,6 +59,7 @@ public class MultiEchoServer {
     public static void newWaitingRoom(String nickname, int mode){
         WaitingRoom newWaiting = new WaitingRoom(mode);
         waitingRooms.add(newWaiting);
+        nicknames.get(nickname).send(new Ok("created"));
         System.out.println(nickname + " created a new waiting room: size " + mode);
         newWaiting.addUser(nickname);
     }

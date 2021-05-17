@@ -71,6 +71,8 @@ public class Controller {
         //this can used also for rejoinClient
         //could be done responding to some client messages?
 
+        sendBroadcast(new PlayersOrder(turns));
+
         //Market
         String[][] market = new String[3][4];
         for(int i = 0; i < 3; i++){

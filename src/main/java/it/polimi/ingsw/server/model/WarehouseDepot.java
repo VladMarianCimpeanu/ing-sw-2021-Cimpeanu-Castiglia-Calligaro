@@ -366,10 +366,13 @@ public class WarehouseDepot {
         switch (shelf){
             case 1:
                 if(firstQuantity == 0) throw new InvalidShelfPosition();
+                break;
             case 2:
                 if(secondQuantity == 0) throw new InvalidShelfPosition();
+                break;
             case 3:
                 if(thirdQuantity == 0) throw new InvalidShelfPosition();
+                break;
         }
         ExtraSlot slot = null;
         for(ExtraSlot s:extraSlotList)

@@ -120,12 +120,9 @@ public class EchoServerClientHandler implements Runnable {
                     if(MultiEchoServer.addNickname(nick, this)){
                         this.nickname = nick;
                         send(new NicknameAccepted(nick));
-                        if(MultiEchoServer.addToWaitingRoom(nick)){
-                            send(new Ok("joined"));
-                        }else{
+                        if(!MultiEchoServer.addToWaitingRoom(nick)) {
                             int mode = requireMode();
                             MultiEchoServer.newWaitingRoom(nick, mode);
-                            send(new Ok("created"));
                         }
                         break;
                     }else{

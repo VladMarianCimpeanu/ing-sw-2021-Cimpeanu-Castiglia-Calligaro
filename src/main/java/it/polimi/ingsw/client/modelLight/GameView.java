@@ -8,4 +8,8 @@ public abstract class GameView {
     protected MarketView market;
     protected FaithPathView faithPath;
     protected DevelopmentCardSetView cards;
+
+    public FaithPathView getFaithPathView(){
+        return faithPath;
+    }
 }

@@ -6,7 +6,11 @@ import it.polimi.ingsw.client.MessageFromServer.*;
 import it.polimi.ingsw.client.MessageFromServer.Error;
 import it.polimi.ingsw.client.MessageFromServer.Updates.*;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
+import it.polimi.ingsw.client.modelLight.CLI.GameCLI;
+import it.polimi.ingsw.client.modelLight.GameView;
+import it.polimi.ingsw.client.modelLight.PlayerView;
 import it.polimi.ingsw.server.RuntimeTypeAdapterFactory;
+import it.polimi.ingsw.server.model.Game;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +18,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Client {
@@ -25,6 +31,10 @@ public class Client {
     private Gson convert;
     private CLI cli;
     private String nickname;
+    private PlayerView me;
+    private GameView gameView;
+    //nicknames in order
+    private ArrayList<String> nicknames;
 
     public Client(String ip, int port){
         try{
@@ -72,6 +82,7 @@ public class Client {
         shapeAdapterFactory.registerSubtype(NicknameAccepted.class, "NicknameAccepted");
         shapeAdapterFactory.registerSubtype(SelectedMarbles.class, "SelectedMarbles");
         shapeAdapterFactory.registerSubtype(ConvertedMarbles.class, "ConvertedMarbles");
+        shapeAdapterFactory.registerSubtype(PlayersOrder.class, "PlayersOrder");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
@@ -107,5 +118,15 @@ public class Client {
     public static void main(String[] args) {
         Client client = new Client(args[0], Integer.parseInt(args[1]));
         client.start();
+    }
+
+    public GameView getGameView() {
+        return gameView;
+    }
+
+    public void setNicknames(ArrayList<String> nicknames) {
+        this.nicknames = new ArrayList<>(nicknames);
+        //TODO: if(cli)
+        gameView = new GameCLI(nicknames);
     }
 }
