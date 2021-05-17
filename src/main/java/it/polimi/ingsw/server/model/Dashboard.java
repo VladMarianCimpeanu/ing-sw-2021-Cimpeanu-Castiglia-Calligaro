@@ -476,7 +476,7 @@ public class Dashboard {
      */
     public void automatizePayment() {
         //fixed bug with only 2 resources in strongbox
-        ArrayList<Resource> resources = resourcesToPay;
+        ArrayList<Resource> resources = new ArrayList<>(resourcesToPay);
         for(Resource resource : resources) {
             try {
                 takeFromDepot(resource);
