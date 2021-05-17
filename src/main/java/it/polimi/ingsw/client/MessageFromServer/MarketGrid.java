@@ -11,16 +11,11 @@ public class MarketGrid extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        String marketRow = "+═══+════+═══+═══+";
-        System.out.println("Market:" );
-        for(int i = 0; i < 3; i++){
-            System.out.println(marketRow);
-            for(int j = 0; j < 4; j++){
-                System.out.print("║ " + Marble.valueOf(market[i][j]).escape() + "\u001B[0m" + " ");
-            }
-            System.out.println("║");
-        }
-        System.out.println(marketRow);
-        System.out.println("Marble to insert: " +Marble.valueOf(outerMarble).escape() + "\u001B[0m");
+        Marble[][] marketGrid = new Marble[3][4];
+        for(int i = 0; i<3; i++)
+            for(int j = 0; j<4; j++)
+                marketGrid[i][j] = Marble.valueOf(market[i][j]);
+        client.getGameView().getMarket().setUp(marketGrid, Marble.valueOf(outerMarble));
+        client.getGameView().getMarket().show();
     }
 }

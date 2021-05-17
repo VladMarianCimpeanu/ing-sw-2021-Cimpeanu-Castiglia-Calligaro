@@ -12,6 +12,6 @@ public class UpdateWarehouseDepot extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println(player + " now has " + quantity + resource + " on " + shelf);
+        //TODO
     }
 }

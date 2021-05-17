@@ -6,7 +6,9 @@ import it.polimi.ingsw.client.MessageFromServer.*;
 import it.polimi.ingsw.client.MessageFromServer.Error;
 import it.polimi.ingsw.client.MessageFromServer.Updates.*;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
+import it.polimi.ingsw.client.modelLight.CLI.DepotCLI;
 import it.polimi.ingsw.client.modelLight.CLI.GameCLI;
+import it.polimi.ingsw.client.modelLight.CLI.StrongboxCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 import it.polimi.ingsw.client.modelLight.PlayerView;
 import it.polimi.ingsw.server.RuntimeTypeAdapterFactory;
@@ -21,6 +23,9 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static it.polimi.ingsw.client.Resource.COIN;
+import static it.polimi.ingsw.client.Resource.SHIELD;
 
 
 public class Client {
@@ -117,8 +122,12 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Client client = new Client(args[0], Integer.parseInt(args[1]));
-        client.start();
+        DepotCLI depot = new DepotCLI();
+        depot.update(3, COIN, 3);
+        depot.show();
+
+//        Client client = new Client(args[0], Integer.parseInt(args[1]));
+//        client.start();
     }
 
     public GameView getGameView() {

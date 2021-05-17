@@ -23,6 +23,7 @@ public class CLI implements Runnable {
     @Override
     public void run() {
         Welcome.dump();
+
         while(true){
             String line = in.nextLine();
             String[] command = line.split(" ");

@@ -12,7 +12,6 @@ public class UpdateStrongbox extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-
-        System.out.println(player + "changed the following resources in his strongbox: " + deltaResources.toString());
+        //TODO
     }
 }

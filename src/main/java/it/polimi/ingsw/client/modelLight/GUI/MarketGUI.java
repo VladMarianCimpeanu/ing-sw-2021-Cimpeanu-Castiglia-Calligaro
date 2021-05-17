@@ -7,4 +7,14 @@ public class MarketGUI extends MarketView {
     public void show() {
 
     }
+
+    @Override
+    public void showColUpdate() {
+
+    }
+
+    @Override
+    public void showRowUpdate() {
+
+    }
 }
