@@ -7,16 +7,20 @@ public class MarketCLI extends MarketView {
 
     @Override
     public void show() {
-        String marketRow = "+═══+════+═══+═══+";
+        String marketRow = "╠═══╬═══╬═══╬═══╣";
+
         System.out.println("Market:" );
+        System.out.println("╔═══╦═══╦═══╦═══╗");
         for(int i = 0; i < 3; i++){
-            System.out.println(marketRow);
+            if(i != 0)
+                System.out.println(marketRow);
             for(int j = 0; j < 4; j++){
                 System.out.print("║ " + marketGrid[i][j].escape() + "\u001B[0m" + " ");
             }
             System.out.println("║");
         }
-        System.out.println(marketRow);
+        //System.out.println(marketRow);
+        System.out.println("╚═══╩═══╩═══╩═══╝");
         System.out.println("Marble to insert: " +outerMarble.escape() + "\u001B[0m");
     }
 

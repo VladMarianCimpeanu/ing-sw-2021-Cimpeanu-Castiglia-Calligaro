@@ -13,4 +13,13 @@ public class PlayerCLI extends PlayerView {
        depot = new DepotCLI();
        leaderCards = new ArrayList<LeaderCardCLI>();
     }
+
+    @Override
+    public void dumpPlayer(String player, String objectUpdated) {
+        if(player.equals(nickname))
+            System.out.print("Your");
+        else
+            System.out.print(player);
+        System.out.println("'s "+ objectUpdated +" has changed into:");
+    }
 }

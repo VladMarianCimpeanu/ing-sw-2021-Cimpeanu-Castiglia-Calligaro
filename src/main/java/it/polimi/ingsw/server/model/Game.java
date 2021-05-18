@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.JsonToLeaderCard;
+import it.polimi.ingsw.server.controller.VirtualView;
 import it.polimi.ingsw.server.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
@@ -18,6 +19,7 @@ public abstract class Game {
     private Market market;
     private final DevelopmentCardSet developmentCardSet;
     protected FaithPath faithPath;
+    protected VirtualView virtualView;
 
     /**
      * This method initializes a new game played by players having the specified identities passes as parameter.
@@ -79,5 +81,13 @@ public abstract class Game {
      */
     public FaithPath getFaithPath() {
         return faithPath;
+    }
+
+    public void subscribe(VirtualView virtualView){
+        this.virtualView = virtualView;
+    }
+
+    public void endTurn() throws NoSuchPlayerException {
+
     }
 }

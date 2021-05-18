@@ -101,4 +101,8 @@ public class VirtualViewStub extends VirtualView {
     public void updateExtraSlot(Resource resource, int id, int quantity) {
         System.out.println("update Extra Slot:" + id + ", now contains " + quantity + " " + resource );
     }
+
+    @Override
+    public void updateDrawToken(int id){
+    }
 }

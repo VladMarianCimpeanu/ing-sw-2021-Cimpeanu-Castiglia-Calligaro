@@ -14,9 +14,8 @@ public abstract class StrongboxView {
                 content.put(resource, 0);
     }
     public abstract void show();
-    public void update(Map<Resource, Integer> deltaResources){
-        for(Resource resource: deltaResources.keySet())
-            content.put(resource, content.get(resource)+deltaResources.get(resource));
+    public void update(Map<Resource, Integer> resources){
+        content = resources;
     }
 
 }

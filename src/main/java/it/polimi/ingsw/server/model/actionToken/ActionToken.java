@@ -12,4 +12,5 @@ public interface ActionToken {
      * @param singleplayer use this object to perform the actions of each token
      */
     void triggerEffect(Singleplayer singleplayer) throws NoSuchPlayerException;
+    int getID();
 }

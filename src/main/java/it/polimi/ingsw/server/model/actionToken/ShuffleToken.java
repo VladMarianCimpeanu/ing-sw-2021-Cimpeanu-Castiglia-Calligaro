@@ -28,4 +28,9 @@ public class ShuffleToken implements ActionToken{
         shuffleDeck(singleplayer);
         stepForward(singleplayer);
     }
+
+    @Override
+    public int getID() {
+        return 4;
+    }
 }

@@ -21,6 +21,7 @@ public class VirtualView {
         if(controller == null) return;
         this.controller = controller;
 
+        controller.getGame().subscribe(this);
         controller.getGame().getDevelopmentCardSet().subscribe(this);
         controller.getGame().getFaithPath().subscribe(this);
         controller.getGame().getMarket().subscribe(this);
@@ -155,5 +156,9 @@ public class VirtualView {
      */
     public void updateActiveLeaderCard(int id){
         controller.sendBroadcast(new UpdateActiveLeaderCard(controller.getCurrentPlayer().getNickName(), id));
+    }
+
+    public void updateDrawToken(int id){
+        controller.sendBroadcast(new UpdateDrawToken(id));
     }
 }

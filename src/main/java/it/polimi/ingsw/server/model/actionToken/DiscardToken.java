@@ -46,4 +46,9 @@ public class DiscardToken implements ActionToken {
             }
         }
     }
+
+    @Override
+    public int getID() {
+        return color.getIndex();
+    }
 }

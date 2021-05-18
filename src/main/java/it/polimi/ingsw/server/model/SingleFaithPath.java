@@ -51,7 +51,6 @@ public class SingleFaithPath extends FaithPath{
     public void moveBlackCross(int steps)  {
         if(steps <= 0) return;
         steps += blackCross;
-        virtualViewUpdate();
         for(int i = blackCross+1; i <= steps && i<25; i++) {
             blackCross = i;
             if (blackCross == triggerPopePosition.peek()) assignPapalPoints();
@@ -59,6 +58,7 @@ public class SingleFaithPath extends FaithPath{
                 //end game
             }
         }
+        virtualViewUpdate();
     }
 
     @Override

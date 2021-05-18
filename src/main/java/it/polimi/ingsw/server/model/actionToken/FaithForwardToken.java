@@ -18,4 +18,9 @@ public class FaithForwardToken implements ActionToken{
         SingleFaithPath singleFaithPath = (SingleFaithPath) singleplayer.getFaithPath();
         singleFaithPath.moveBlackCross(2);
     }
+
+    @Override
+    public int getID() {
+        return 5;
+    }
 }

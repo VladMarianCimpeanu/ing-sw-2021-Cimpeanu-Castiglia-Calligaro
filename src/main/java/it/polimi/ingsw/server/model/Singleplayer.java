@@ -41,6 +41,8 @@ public class Singleplayer extends Game{
     public void drawToken() throws NoSuchPlayerException {    //any exception?
         ActionToken tempToken = availableActionTokens.pop();
         availableActionTokens.add(0, tempToken);
+        System.out.println(tempToken);
+        virtualView.updateDrawToken(tempToken.getID());
         tempToken.triggerEffect(this);
     }
 
@@ -49,6 +51,11 @@ public class Singleplayer extends Game{
      */
     public void shuffleToken(){
         shuffle(availableActionTokens);
+    }
+
+    @Override
+    public void endTurn() throws NoSuchPlayerException{
+            drawToken();
     }
 
 }

@@ -12,6 +12,8 @@ public abstract class PlayerView {
         return nickname;
     }
 
+    public abstract void dumpPlayer(String player, String objectUpdated);
+
     public DepotView getDepot() {
         return depot;
     }

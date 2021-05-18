@@ -20,5 +20,6 @@ public enum ErrorMessage{
     nullPosition,
     wrongSizeInput,
     productionUsed,
-    productionAlreadyStarted
+    productionAlreadyStarted,
+    generic
 }

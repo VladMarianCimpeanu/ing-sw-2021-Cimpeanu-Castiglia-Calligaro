@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.MessageFromServer.Updates.*;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
 import it.polimi.ingsw.client.modelLight.CLI.DepotCLI;
 import it.polimi.ingsw.client.modelLight.CLI.GameCLI;
+import it.polimi.ingsw.client.modelLight.CLI.MarketCLI;
 import it.polimi.ingsw.client.modelLight.CLI.StrongboxCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 import it.polimi.ingsw.client.modelLight.PlayerView;
@@ -24,8 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static it.polimi.ingsw.client.Resource.COIN;
-import static it.polimi.ingsw.client.Resource.SHIELD;
+import static it.polimi.ingsw.client.Resource.*;
 
 
 public class Client {
@@ -88,6 +88,7 @@ public class Client {
         shapeAdapterFactory.registerSubtype(SelectedMarbles.class, "SelectedMarbles");
         shapeAdapterFactory.registerSubtype(ConvertedMarbles.class, "ConvertedMarbles");
         shapeAdapterFactory.registerSubtype(PlayersOrder.class, "PlayersOrder");
+        shapeAdapterFactory.registerSubtype(UpdateDrawToken.class, "UpdateDrawToken");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
@@ -122,12 +123,9 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        DepotCLI depot = new DepotCLI();
-        depot.update(3, COIN, 3);
-        depot.show();
 
-//        Client client = new Client(args[0], Integer.parseInt(args[1]));
-//        client.start();
+        Client client = new Client(args[0], Integer.parseInt(args[1]));
+        client.start();
     }
 
     public GameView getGameView() {
@@ -137,5 +135,9 @@ public class Client {
     public void setNicknames(ArrayList<String> nicknames) {
         this.nicknames = new ArrayList<>(nicknames);
         gameView.setPlayers(nicknames);
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

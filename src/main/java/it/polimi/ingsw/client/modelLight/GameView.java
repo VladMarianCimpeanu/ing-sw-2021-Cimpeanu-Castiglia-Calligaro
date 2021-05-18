@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.modelLight;
 
+import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenView;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -8,6 +11,7 @@ public abstract class GameView {
     protected MarketView market;
     protected FaithPathView faithPath;
     protected DevelopmentCardSetView cards;
+    protected ActionTokenView actionTokenView;
 
     public FaithPathView getFaithPathView(){
         return faithPath;
@@ -29,4 +33,7 @@ public abstract class GameView {
         return cards;
     }
 
+    public ActionTokenView getActionTokenView() {
+        return actionTokenView;
+    }
 }

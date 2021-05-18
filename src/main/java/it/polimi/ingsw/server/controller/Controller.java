@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.controller;
 import it.polimi.ingsw.server.EchoServerClientHandler;
 import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.MultiEchoServer;
+import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.FirstTurn;
 import it.polimi.ingsw.server.controller.states.SelectionState;
 import it.polimi.ingsw.server.controller.states.TurnState;
@@ -193,6 +194,11 @@ public class Controller {
         setTimerPing();
         nicknames.get(currentUser).setMyTurn(true);
         setCurrentState(new SelectionState(this));
+        try {
+            game.endTurn();
+        } catch (NoSuchPlayerException e) {
+            sendError(ErrorMessage.generic.toString());
+        }
     }
 
     public void startGame(){

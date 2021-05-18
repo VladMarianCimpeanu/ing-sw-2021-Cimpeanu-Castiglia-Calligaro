@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelLight.CLI;
 
+import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class GameCLI extends GameView {
     }
 
     public void setPlayers(ArrayList<String> nicknames){
+        if(nicknames.size() == 1) actionTokenView = new ActionTokenCLI();
         players = new TreeMap<>();
         //with TreeMap we can save the player order
         for(String nickname : nicknames) players.put(nickname, new PlayerCLI(nickname));

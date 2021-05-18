@@ -24,6 +24,7 @@ class SingleplayerTest {
         game = new Singleplayer(identities);  //better creating stub because of not handling null cases
         game.getDevelopmentCardSet().subscribe(new VirtualViewStub());
         game.getFaithPath().subscribe(new VirtualViewStub());
+        game.subscribe(new VirtualViewStub());
     }
 
     @Test
