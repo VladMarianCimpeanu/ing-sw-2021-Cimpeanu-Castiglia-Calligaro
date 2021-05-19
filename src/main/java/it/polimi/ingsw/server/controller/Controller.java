@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.controller;
 import it.polimi.ingsw.server.EchoServerClientHandler;
 import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.MessageToClient.Rejoin.*;
+import it.polimi.ingsw.server.MessageToClient.Updates.UpdateFaithpath;
 import it.polimi.ingsw.server.MultiEchoServer;
 import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.FirstTurn;
@@ -98,6 +99,22 @@ public class Controller {
         }
         sendBroadcast(new DevCardSet(set));
 
+        //send faithPath
+        Map<String, Integer> faithPositions = new HashMap<>();
+        if(players.size() == 1){
+            SingleFaithPath path = (SingleFaithPath)game.getFaithPath();
+            faithPositions.put("blackCross", path.getBlackCrossPosition());
+        }
+        for(Player player: players.values()){
+            try {
+                faithPositions.put(player.getNickName(), game.getFaithPath().getPlayerPosition(player));
+            } catch (NoSuchPlayerException e) {
+                e.printStackTrace();
+            }
+        }
+        sendBroadcast(new UpdateFaithpath(faithPositions));
+
+
         //Keep LeaderCard
         for(String nick: turns){
             Player p = players.get(nick);
@@ -121,6 +138,21 @@ public class Controller {
         }
 
         sendMessage(nickname, new MarketGrid(market, game.getMarket().getOuterMarble().toString()));
+
+        //send faithPath
+        Map<String, Integer> faithPositions = new HashMap<>();
+        if(players.size() == 1){
+            SingleFaithPath path = (SingleFaithPath)game.getFaithPath();
+            faithPositions.put("blackCross", path.getBlackCrossPosition());
+        }
+        for(Player player: players.values()){
+            try {
+                faithPositions.put(player.getNickName(), game.getFaithPath().getPlayerPosition(player));
+            } catch (NoSuchPlayerException e) {
+                e.printStackTrace();
+            }
+        }
+        sendMessage(nickname, new UpdateFaithpath(faithPositions));
 
         //DevCardSet
         ArrayList<ArrayList<Integer>> set = new ArrayList<>();
@@ -147,51 +179,55 @@ public class Controller {
 
         //Opponents Activated LeaderCards
         for(Player p: players.values()){
-            if(p.getNickName() != nickname){
+            if(!p.getNickName().equals(nickname)){
                 activated = new HashMap<>();
                 for(LeaderCard active: p.getActivatedLeader())
                     activated.put(active.getID(), true);
+                sendMessage(nickname, new RejoinLeaderCards(p.getNickName(), activated));
             }
-            sendMessage(p.getNickName(), new RejoinLeaderCards(p.getNickName(), activated));
         }
 
         for(Player p: players.values()){
             try {
                 for(int i = 1; i <= 3; i++){
-                    sendMessage(p.getNickName(), new RejoinDepot(p.getNickName(),
+                    sendMessage(nickname, new RejoinDepot(p.getNickName(),
                             i,
                             p.getDashboard().getWarehouseDepot().getShelfResource(i),
                             p.getDashboard().getWarehouseDepot().getShelfQuantity(i)
                     ));
                 }
 
-                sendMessage(p.getNickName(), new RejoinStrongbox(p.getNickName(),
+                sendMessage(nickname, new RejoinStrongbox(p.getNickName(),
                         p.getDashboard().getStrongbox().getResources()
                 ));
 
                 for(int i = 1; i <= 3; i++){
-                    sendMessage(p.getNickName(), new RejoinDecks(p.getNickName(),
-                            i,
-                            p.getDashboard().getCardOnTop(i).getID()
-                    ));
+                    try {
+                        sendMessage(nickname, new RejoinDecks(p.getNickName(),
+                                i,
+                                p.getDashboard().getCardOnTop(i).getID()
+                        ));
+                    } catch (NoCardException e) {
+                        sendMessage(nickname, new RejoinDecks(p.getNickName(),
+                                i,
+                                0
+                        ));
+                    }
                 }
 
                 ArrayList<ExtraSlot> extraSlotList = p.getDashboard().getWarehouseDepot().getExtraSlotList();
                 for(ExtraSlot extraSlot: extraSlotList){
-                    sendMessage(p.getNickName(), new RejoinExtraSlot(p.getNickName(),
+                    sendMessage(nickname, new RejoinExtraSlot(p.getNickName(),
                             extraSlot.getResource(),
                             extraSlot.getID(),
                             extraSlot.getQuantity()
                             ));
                 }
-
-                sendBroadcast(new RejoinPlayer(nickname));
-            } catch (InvalidShelfPosition | NoCardException | InvalidDeckPositionException e) {
+            } catch (InvalidShelfPosition | InvalidDeckPositionException e) {
                 e.printStackTrace();
             }
-
         }
-
+        sendBroadcast(new RejoinPlayer(nickname));
     }
 
     public void rejoinClient(EchoServerClientHandler client, String nickname) {
@@ -199,7 +235,7 @@ public class Controller {
         nicknames.put(nickname, client);
         players.get(nickname).getIdentity().setOnline(true);
         client.setController(this);
-        //setUp();
+        reSetUp(nickname);
     }
 
 

@@ -14,7 +14,6 @@ import it.polimi.ingsw.client.modelLight.CLI.StrongboxCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 import it.polimi.ingsw.client.modelLight.PlayerView;
 import it.polimi.ingsw.server.RuntimeTypeAdapterFactory;
-import it.polimi.ingsw.server.model.Game;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,8 +22,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static it.polimi.ingsw.client.Resource.*;
 

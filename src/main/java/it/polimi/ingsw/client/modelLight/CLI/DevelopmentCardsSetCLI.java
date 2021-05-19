@@ -182,6 +182,5 @@ public class DevelopmentCardsSetCLI extends DevelopmentCardSetView {
         }
         availableDevelopmentCards.get(2).set(Color.BLUE.getIndex(), 0);
         myCards.setDecks(availableDevelopmentCards);
-        myCards.show();
     }
 }

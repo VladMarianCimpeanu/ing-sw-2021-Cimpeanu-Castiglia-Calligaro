@@ -97,18 +97,23 @@ public class CLI implements Runnable {
                                     case "leaderCards":
                                         client.getGameView().getPlayer(nickname).getLeaderCards().show();
                                         break;
+                                    case "market":
+                                        client.getGameView().getMarket().show();
+                                        break;
                                     case "me":
                                         PlayerView player = client.getGameView().getPlayer(nickname);
                                         player.getDecks().show();
-                                        //player.getStrongbox().show();
-                                        //player.getDepot().show();
+                                        player.getStrongbox().show();
+                                        player.getDepot().show();
+                                        player.getLeaderCards().show();
                                         break;
                                     default:
                                         if(client.getGameView().getPlayer(command[1]) != null) {
                                             PlayerView opponent = client.getGameView().getPlayer(command[1]);
                                             opponent.getDecks().show();
-                                            //opponent.getStrongbox().show();
-                                            //opponent.getDepot();
+                                            opponent.getStrongbox().show();
+                                            opponent.getDepot().show();
+                                            opponent.getLeaderCards().show();
                                         } else out.println("Unexpected command.");
                                         break;
                                 }

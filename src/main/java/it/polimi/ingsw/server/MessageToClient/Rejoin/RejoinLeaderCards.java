@@ -11,7 +11,7 @@ public class RejoinLeaderCards implements MessageToClient {
     private Map<Integer, Boolean> active;
 
     public RejoinLeaderCards(String nickname, Map<Integer, Boolean> active) {
-        this.type = "RejoinLeadercards";
+        this.type = "RejoinLeaderCards";
         this.nickname = nickname;
         this.active = active;
     }

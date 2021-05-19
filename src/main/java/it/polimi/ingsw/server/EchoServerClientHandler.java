@@ -131,7 +131,7 @@ public class EchoServerClientHandler implements Runnable {
                             this.nickname = nick;
                             isMyTurn = false;
                             send(new NicknameAccepted(nick));
-                            //recovery necessary data
+                            controller.rejoinClient(this, nickname);
                             break;
                         }
                         sendError("usedNickname");
@@ -214,7 +214,7 @@ public class EchoServerClientHandler implements Runnable {
                     //client crashed
                     MultiEchoServer.handleCrash(this);
                     //store the current state somewhere?
-                    //controller.completeTurn()
+                    controller.getCurrentState().completeTurn();
                     if (isMyTurn)
                         controller.nextTurn();
                     break;
@@ -226,7 +226,7 @@ public class EchoServerClientHandler implements Runnable {
                 //client crashed
                 MultiEchoServer.handleCrash(this);
                 //store the current state somewhere?
-                //controller.completeTurn()
+                controller.getCurrentState().completeTurn();
                 if (isMyTurn)
                     controller.nextTurn();
                 break;

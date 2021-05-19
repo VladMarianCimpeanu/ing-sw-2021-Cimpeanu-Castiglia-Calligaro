@@ -22,5 +22,6 @@ public class RejoinLeaderCards extends MessageFromServer {
         for(int i: active.keySet())
             if(active.get(i))
                 client.getGameView().getPlayer(nickname).getLeaderCards().activate(i);
+        if(nickname.equals(client.getNickname())) client.getGameView().getPlayer(nickname).getLeaderCards().show();
     }
 }

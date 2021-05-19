@@ -83,7 +83,7 @@ public class MultiEchoServer {
                 if (oppositeClient.getController().getPlayer(nickname).isOnline()) {
                     oppositeClient.send(new Ping());
                 } else
-                    oppositeClient.getController().rejoinClient(echoServerClientHandler, nickname);
+                    echoServerClientHandler.setController(oppositeClient.getController());
             }else{
                 oppositeClient.send(new Ping());
             }
