@@ -110,7 +110,7 @@ public class Controller {
         }
     }
 
-    private void reSetUp(String nickname){
+    private synchronized void reSetUp(String nickname){
         sendMessage(nickname, new PlayersOrder(turns));
 
         //Market
@@ -185,11 +185,12 @@ public class Controller {
                             ));
                 }
 
+                sendBroadcast(new RejoinPlayer(nickname));
             } catch (InvalidShelfPosition | NoCardException | InvalidDeckPositionException e) {
                 e.printStackTrace();
             }
-        }
 
+        }
 
     }
 

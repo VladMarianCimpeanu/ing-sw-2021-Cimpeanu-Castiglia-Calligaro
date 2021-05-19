@@ -210,37 +210,38 @@ public class EchoServerClientHandler implements Runnable {
             String line = null;
             try {
                 line = in.readLine();
-                if(line == null){
+                if (line == null) {
                     //client crashed
                     MultiEchoServer.handleCrash(this);
                     //store the current state somewhere?
                     //controller.completeTurn()
-                    if(isMyTurn)
+                    if (isMyTurn)
                         controller.nextTurn();
                     break;
                 }
-            }catch(SocketTimeoutException e){
+            } catch (SocketTimeoutException e) {
                 send(new Ping());
                 continue;
-            }catch (IOException e){
+            } catch (IOException e) {
                 //client crashed
                 MultiEchoServer.handleCrash(this);
                 //store the current state somewhere?
                 //controller.completeTurn()
-                if(isMyTurn)
+                if (isMyTurn)
                     controller.nextTurn();
                 break;
             }
-
-            MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
-            if (isMyTurn) {
-                System.out.println("[" + nickname + "]:" + message);
-                message.activate(controller);
-            } else {
-                sendError("notYourTurn");
-                System.out.println("[" + nickname + "]:" + "tried to play in another turn");
+            synchronized (controller) {
+                MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
+                if (isMyTurn) {
+                    System.out.println("[" + nickname + "]:" + message);
+                    message.activate(controller);
+                } else {
+                    sendError("notYourTurn");
+                    System.out.println("[" + nickname + "]:" + "tried to play in another turn");
+                }
             }
-        }
+            }
     }
 
     public void close(){

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.client.MessageFromServer.*;
 import it.polimi.ingsw.client.MessageFromServer.Error;
+import it.polimi.ingsw.client.MessageFromServer.Rejoin.*;
 import it.polimi.ingsw.client.MessageFromServer.Updates.*;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
 import it.polimi.ingsw.client.modelLight.CLI.DepotCLI;
@@ -89,6 +90,12 @@ public class Client {
         shapeAdapterFactory.registerSubtype(ConvertedMarbles.class, "ConvertedMarbles");
         shapeAdapterFactory.registerSubtype(PlayersOrder.class, "PlayersOrder");
         shapeAdapterFactory.registerSubtype(UpdateDrawToken.class, "UpdateDrawToken");
+        shapeAdapterFactory.registerSubtype(RejoinDecks.class, "RejoinDecks");
+        shapeAdapterFactory.registerSubtype(RejoinDepot.class, "RejoinDepot");
+        shapeAdapterFactory.registerSubtype(RejoinExtraSlot.class, "RejoinExtraSlot");
+        shapeAdapterFactory.registerSubtype(RejoinLeaderCards.class, "RejoinLeaderCards");
+        shapeAdapterFactory.registerSubtype(RejoinStrongbox.class, "RejoinStrongbox");
+        shapeAdapterFactory.registerSubtype(RejoinPlayer.class, "RejoinPlayer");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
@@ -123,7 +130,11 @@ public class Client {
     }
 
     public static void main(String[] args) {
-
+//        DepotCLI depot = new DepotCLI();
+//        depot.update(1, COIN, 1);
+//        depot.update(2, SERVANT, 2);
+//        depot.update(3, STONE, 3);
+//        depot.show();
         Client client = new Client(args[0], Integer.parseInt(args[1]));
         client.start();
     }
