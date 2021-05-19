@@ -7,4 +7,9 @@ public class LeaderCardGUI extends LeaderCardView {
     public void show() {
 
     }
+
+    @Override
+    public int getID() {
+        return 0;
+    }
 }

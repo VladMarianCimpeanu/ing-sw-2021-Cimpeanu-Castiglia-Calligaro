@@ -10,6 +10,11 @@ public class SelectedLeadercards extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("You selected the following leader cards: " + id1 + ", " + id2);
+        if(id1 == 0 || id2 == 0) return;
+        ArrayList<Integer> leaderIds = new ArrayList<>();
+        leaderIds.add(id1);
+        leaderIds.add(id2);
+        client.getGameView().getPlayer(client.getNickname()).getLeaderCards().update(leaderIds);
+        client.getGameView().getPlayer(client.getNickname()).getLeaderCards().show();
     }
 }

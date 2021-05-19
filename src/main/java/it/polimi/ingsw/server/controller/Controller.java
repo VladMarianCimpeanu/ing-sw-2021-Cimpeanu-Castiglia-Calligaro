@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.server.EchoServerClientHandler;
 import it.polimi.ingsw.server.MessageToClient.*;
+import it.polimi.ingsw.server.MessageToClient.Rejoin.*;
 import it.polimi.ingsw.server.MultiEchoServer;
 import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.FirstTurn;
@@ -81,6 +82,7 @@ public class Controller {
                 market[i][j] = game.getMarket().getMarket()[i][j].toString();
         }
         sendBroadcast(new MarketGrid(market, game.getMarket().getOuterMarble().toString()));
+
         //DevCardSet
         ArrayList<ArrayList<Integer>> set = new ArrayList<>();
         for(int level = 1; level<=3; level++){
@@ -96,6 +98,7 @@ public class Controller {
         }
         sendBroadcast(new DevCardSet(set));
 
+        //Keep LeaderCard
         for(String nick: turns){
             Player p = players.get(nick);
 
@@ -107,6 +110,88 @@ public class Controller {
         }
     }
 
+    private void reSetUp(String nickname){
+        sendMessage(nickname, new PlayersOrder(turns));
+
+        //Market
+        String[][] market = new String[3][4];
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 4; j++)
+                market[i][j] = game.getMarket().getMarket()[i][j].toString();
+        }
+
+        sendMessage(nickname, new MarketGrid(market, game.getMarket().getOuterMarble().toString()));
+
+        //DevCardSet
+        ArrayList<ArrayList<Integer>> set = new ArrayList<>();
+        for(int level = 1; level<=3; level++){
+            set.add(new ArrayList<>());
+            try {
+                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.GREEN, level).getID());
+                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.BLUE, level).getID());
+                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.YELLOW, level).getID());
+                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.PURPLE, level).getID());
+            } catch (WrongLevelException | NoCardException e) {
+                e.printStackTrace();
+            }
+        }
+        sendMessage(nickname, new DevCardSet(set));
+
+        //LeaderCards
+        Map<Integer, Boolean> activated = new HashMap<>();
+        for(LeaderCard card: players.get(nickname).getLeaderCards())
+            activated.put(card.getID(), false);
+        for(LeaderCard active: players.get(nickname).getActivatedLeader())
+            activated.put(active.getID(), true);
+        sendMessage(nickname, new RejoinLeaderCards(nickname, activated));
+
+        //Opponents Activated LeaderCards
+        for(Player p: players.values()){
+            if(p.getNickName() != nickname){
+                activated = new HashMap<>();
+                for(LeaderCard active: p.getActivatedLeader())
+                    activated.put(active.getID(), true);
+            }
+            sendMessage(p.getNickName(), new RejoinLeaderCards(p.getNickName(), activated));
+        }
+
+        for(Player p: players.values()){
+            try {
+                for(int i = 1; i <= 3; i++){
+                    sendMessage(p.getNickName(), new RejoinDepot(p.getNickName(),
+                            i,
+                            p.getDashboard().getWarehouseDepot().getShelfResource(i),
+                            p.getDashboard().getWarehouseDepot().getShelfQuantity(i)
+                    ));
+                }
+
+                sendMessage(p.getNickName(), new RejoinStrongbox(p.getNickName(),
+                        p.getDashboard().getStrongbox().getResources()
+                ));
+
+                for(int i = 1; i <= 3; i++){
+                    sendMessage(p.getNickName(), new RejoinDecks(p.getNickName(),
+                            i,
+                            p.getDashboard().getCardOnTop(i).getID()
+                    ));
+                }
+
+                ArrayList<ExtraSlot> extraSlotList = p.getDashboard().getWarehouseDepot().getExtraSlotList();
+                for(ExtraSlot extraSlot: extraSlotList){
+                    sendMessage(p.getNickName(), new RejoinExtraSlot(p.getNickName(),
+                            extraSlot.getResource(),
+                            extraSlot.getID(),
+                            extraSlot.getQuantity()
+                            ));
+                }
+
+            } catch (InvalidShelfPosition | NoCardException | InvalidDeckPositionException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
 
     public void rejoinClient(EchoServerClientHandler client, String nickname) {
         nicknames.remove(nickname);

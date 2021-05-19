@@ -14,8 +14,10 @@ public class AsciiFaithPath {
     private String reset = "\u001B[0m";
     private String[][] path;
 
-    public AsciiFaithPath() {
+    public AsciiFaithPath(ArrayList<String> players) {
         playerColors = new HashMap<>();
+        positions = new HashMap<>();
+
         path = new String[heigth][length];
         for (int i = 0; i < heigth; i++) {
             for (int j = 0; j < length; j++) {
@@ -34,6 +36,12 @@ public class AsciiFaithPath {
         color(2 * 3, 12 * 7, blue);
         color(0, 18 * 7, blue);
         putNumbers(yellow);
+
+        for(String s: players){
+            positions.put(s, 0);
+        }
+        assignColor();
+        move(null, 0);
     }
 
     private void drawSquare(int y, int x){
@@ -193,7 +201,7 @@ public class AsciiFaithPath {
     }
 
     private int getCenterY(int pos){
-        if(pos <= 2 || (11 <= pos && pos <= 17)){
+        if(pos <= 2 || (11 <= pos && pos <= 16)){
             return 7;
         }
         if(pos == 3 || pos == 10 || pos == 17){
@@ -226,20 +234,10 @@ public class AsciiFaithPath {
     }
 
     public void update(Map<String, Integer> newPositions){
-        if(positions == null){
-            positions = new HashMap<>();
-            for(String s: newPositions.keySet()){
-                positions.put(s, 0);
-            }
-            assignColor();
-            move(null, 0);
-            update(newPositions);
-        }else{
-            for(String s: positions.keySet()){
-                if(!positions.get(s).equals(newPositions.get(s)))
-                    move(s, newPositions.get(s));
-            }
-            positions = new HashMap<>(newPositions);
+        for(String s: positions.keySet()){
+            if(!positions.get(s).equals(newPositions.get(s)))
+                move(s, newPositions.get(s));
         }
+        positions = new HashMap<>(newPositions);
     }
 }

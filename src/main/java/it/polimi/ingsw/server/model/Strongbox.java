@@ -83,6 +83,10 @@ public class Strongbox {
         virtualView.updateStrongbox(content);
     }
 
+    public Map<Resource, Integer> getResources() {
+        return new HashMap<>(content);
+    }
+
     public void subscribe(VirtualView virtualView){
         this.virtualView = virtualView;
     }

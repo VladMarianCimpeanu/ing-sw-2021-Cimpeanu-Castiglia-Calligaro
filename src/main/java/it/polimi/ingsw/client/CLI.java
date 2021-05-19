@@ -56,16 +56,19 @@ public class CLI implements Runnable {
                                 client.send(new Mode(Integer.parseInt(command[1])));
                                 break;
                             case "strategy":
-                                client.send(new Strategy(Integer.parseInt(command[1])));
+                            int id = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[1]));
+                            client.send(new Strategy(id));
                                 break;
                             case "place":
                                 client.send(new PlaceCard(Integer.parseInt(command[1])));
                                 break;
                             case "activateLeader":
-                                client.send(new ActivateLeaderCard(Integer.parseInt(command[1])));
+                                id = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[1]));
+                                client.send(new ActivateLeaderCard(id));
                                 break;
                             case "discardLeader":
-                                client.send(new DiscardLeaderCard(Integer.parseInt(command[1])));
+                                id = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[1]));
+                                client.send(new DiscardLeaderCard(id));
                                 break;
                             case "cheat":
                                 client.send(new CheatFaith(Integer.parseInt(command[1])));
@@ -77,18 +80,22 @@ public class CLI implements Runnable {
                                 client.send(new ActivateCardProduction(Integer.parseInt(command[1].toUpperCase())));
                                 break;
                             case "produceExtra":
-                                client.send(new ActivateExtraProduction(Integer.parseInt(command[1].toUpperCase())));
+                            id = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[1]));
+                            client.send(new ActivateExtraProduction(id));
                                 break;
                             case "resOut":
                                 client.send(new SelResOut(Resource.valueOf(command[1].toUpperCase())));
                                 break;
                             case "show":
                                 switch (command[1]){
-                                    case "faith": //TODO: for some reasons, if this command is called before the first update, it does not work correctly.
+                                    case "faith":
                                         client.getGameView().getFaithPathView().show();
                                         break;
-                                    case "cards":
+                                    case "devCards":
                                         client.getGameView().getCards().show();
+                                        break;
+                                    case "leaderCards":
+                                        client.getGameView().getPlayer(nickname).getLeaderCards().show();
                                         break;
                                     case "me":
                                         PlayerView player = client.getGameView().getPlayer(nickname);
@@ -97,7 +104,6 @@ public class CLI implements Runnable {
                                         //player.getDepot().show();
                                         break;
                                     default:
-                                        System.out.println("wat");
                                         if(client.getGameView().getPlayer(command[1]) != null) {
                                             PlayerView opponent = client.getGameView().getPlayer(command[1]);
                                             opponent.getDecks().show();
@@ -105,16 +111,18 @@ public class CLI implements Runnable {
                                             //opponent.getDepot();
                                         } else out.println("Unexpected command.");
                                         break;
-                                } break;
+                                }
+                                break;
                             default:
                                 out.println("Unexpected command.");
                         }
                         break;
                     case 3:
                         switch (command[0]) {
-                            //change id with index (1... 4)
                             case "keep":
-                                client.send(new KeepLeaderCard(Integer.parseInt(command[1]), Integer.parseInt(command[2]), nickname));
+                                int id1 = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[1]));
+                                int id2 = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[2]));
+                                client.send(new KeepLeaderCard(id1, id2, nickname));
                                 break;
                             case "market":
                                 client.send(new Market(command[1], Integer.parseInt(command[2])));
@@ -163,19 +171,22 @@ public class CLI implements Runnable {
                                 ));
                                 break;
                             case "buy":
+                                int id = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[3]));
                                 client.send(new BuyDevCard(
                                         Integer.parseInt(command[1]),
                                         Color.valueOf((command[2].toUpperCase())),
-                                        Integer.parseInt(command[3])
+                                        id
                                         ));
                                 break;
                             case "moveFromExtra":
                                 //move from(leaderId) to quantity
-                                client.send(new MoveExtraToWarehouse(Integer.parseInt(command[2]), Integer.parseInt(command[1]), Integer.parseInt(command[3])));
+                                id = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[1]));
+                                client.send(new MoveExtraToWarehouse(Integer.parseInt(command[2]), id, Integer.parseInt(command[3])));
                                 break;
                             case "moveToExtra":
                                 //move from to(leaderId) quantity
-                                client.send(new MoveWarehouseToExtra(Integer.parseInt(command[1]), Integer.parseInt(command[2]), Integer.parseInt(command[3])));
+                                id = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[2]));
+                                client.send(new MoveWarehouseToExtra(Integer.parseInt(command[1]), id, Integer.parseInt(command[3])));
                                 break;
                             default:
                                 out.println("Unexpected command.");
@@ -195,15 +206,15 @@ public class CLI implements Runnable {
                                 break;
                                 //choose servant 2 coin 1
                             case "buy":
+                                int id1 = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[3]));
+                                int id2 = client.getGameView().getPlayer(nickname).getLeaderCards().getIDfromIndex(Integer.parseInt(command[4]));
                                 client.send(new BuyDevCard(
                                         Integer.parseInt(command[1]),
                                         Color.valueOf((command[2].toUpperCase())),
-                                        Integer.parseInt(command[3]),
-                                        Integer.parseInt(command[4])
+                                        id1,
+                                        id2
                                 ));
                                 break;
-
-
                             default:
                                 out.println("Unexpected command.");
                         }

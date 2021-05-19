@@ -4,16 +4,19 @@ import it.polimi.ingsw.client.AsciiFaithPath;
 import it.polimi.ingsw.client.Color;
 import it.polimi.ingsw.client.modelLight.FaithPathView;
 
+import java.util.ArrayList;
+
 public class FaithPathCLI extends FaithPathView {
     private AsciiFaithPath asciiFaithPath;
 
-    public FaithPathCLI(){
-        asciiFaithPath = new AsciiFaithPath();
+    public FaithPathCLI(ArrayList<String> players){
+        asciiFaithPath = new AsciiFaithPath(players);
     }
 
     @Override
     public void show() {
-        asciiFaithPath.update(positions);
+        if(positions != null)
+            asciiFaithPath.update(positions);
         asciiFaithPath.print();
     }
 

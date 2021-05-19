@@ -9,6 +9,12 @@ public class UpdateDiscardLeaderCard extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println(player + " discarded the following leader card:" + id );
+        client.getGameView().getPlayer(client.getNickname()).dumpPlayer(player, "LeaderCards");
+        client.getGameView().getPlayer(player).getLeaderCards().dumpMessage("Discarded a LeaderCard.");
+
+        if(client.getNickname().equals(player)) {
+            client.getGameView().getPlayer(player).getLeaderCards().remove(id);
+            client.getGameView().getPlayer(player).getLeaderCards().show();
+        }
     }
 }

@@ -21,6 +21,7 @@ public class Player {
     private Dashboard dashboard;
     //leaderCards not yet activated
     private ArrayList<LeaderCard> leaderCards;
+    private ArrayList<LeaderCard> activatedLeader;
     private int victoryPoints;
     private ArrayList<MarketStrategy> marketStrategies;
     private ArrayList<Discount> discountList;
@@ -36,6 +37,7 @@ public class Player {
         this.identity = identity;
         this.game = game;
         this.leaderCards = leaderCards;
+        activatedLeader = new ArrayList<>();
         victoryPoints = 0;
         this.dashboard = dashboard;
         marketStrategies = new ArrayList<>();
@@ -195,6 +197,7 @@ public class Player {
                 virtualView.updateActiveLeaderCard(leaderCard.getID());
                 addVictoryPoints(leaderCard.getVictoryPointsAmount());
                 leaderCards.remove(leaderCard);
+                activatedLeader.add(leaderCard);
             } catch (CardActivationException e) {
                 e.printStackTrace();
                 throw new RequirementException();
@@ -442,4 +445,7 @@ public class Player {
         throw new WrongLevelException();
     }
 
+    public ArrayList<LeaderCard> getActivatedLeader() {
+        return new ArrayList<>(activatedLeader);
+    }
 }

@@ -9,6 +9,9 @@ public class KeepLeadercards extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("choose 2 leader cards between :" + leaderIds.toString());
+        if(leaderIds != null) {
+            client.getGameView().getPlayer(client.getNickname()).getLeaderCards().update(leaderIds);
+            client.getGameView().getPlayer(client.getNickname()).getLeaderCards().show();
+        }
     }
 }
