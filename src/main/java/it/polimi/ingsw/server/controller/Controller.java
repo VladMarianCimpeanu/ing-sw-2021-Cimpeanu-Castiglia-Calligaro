@@ -45,7 +45,6 @@ public class Controller {
         ArrayList<Identity> identities = new ArrayList<>(users);
         System.out.print("A new Game has started. Players: ");
         for(Identity i: identities) System.out.print(i.getNickname() + " ");
-        System.out.println("");
         shuffle(identities);
         try{
             if(identities.size() == 1) game = new Singleplayer(identities);
@@ -69,52 +68,16 @@ public class Controller {
         setUp();
     }
 
+
+    /**
+     * sends to all the players the initial conditions of the game: players in game, market information, faithPath information,
+     * cards available and for each player, which leader cards have.
+     */
     private void setUp(){
-        //send entire market and devcardset broadcast
-        //this can used also for rejoinClient
-        //could be done responding to some client messages?
-
         sendBroadcast(new PlayersOrder(turns));
-
-        //Market
-        String[][] market = new String[3][4];
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 4; j++)
-                market[i][j] = game.getMarket().getMarket()[i][j].toString();
-        }
-        sendBroadcast(new MarketGrid(market, game.getMarket().getOuterMarble().toString()));
-
-        //DevCardSet
-        ArrayList<ArrayList<Integer>> set = new ArrayList<>();
-        for(int level = 1; level<=3; level++){
-            set.add(new ArrayList<>());
-            try {
-                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.GREEN, level).getID());
-                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.BLUE, level).getID());
-                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.YELLOW, level).getID());
-                set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.PURPLE, level).getID());
-            } catch (WrongLevelException | NoCardException e) {
-                e.printStackTrace();
-            }
-        }
-        sendBroadcast(new DevCardSet(set));
-
-        //send faithPath
-        Map<String, Integer> faithPositions = new HashMap<>();
-        if(players.size() == 1){
-            SingleFaithPath path = (SingleFaithPath)game.getFaithPath();
-            faithPositions.put("blackCross", path.getBlackCrossPosition());
-        }
-        for(Player player: players.values()){
-            try {
-                faithPositions.put(player.getNickName(), game.getFaithPath().getPlayerPosition(player));
-            } catch (NoSuchPlayerException e) {
-                e.printStackTrace();
-            }
-        }
-        sendBroadcast(new UpdateFaithpath(faithPositions));
-
-
+        sendBroadcast(setUpMarketGrid());
+        sendBroadcast(setUpDevelopmentGrid());
+        sendBroadcast(setUpFaithPath());
         //Keep LeaderCard
         for(String nick: turns){
             Player p = players.get(nick);
@@ -127,34 +90,56 @@ public class Controller {
         }
     }
 
+    /**
+     * sends all the information of the current game to the specified player: players in game, current market information,
+     * current faith path information, current cards available, dashboard of each player, the player's leader cards and all
+     * the leader cards activated by the opponents.
+     * @param nickname specified player to send all the information.
+     */
     private synchronized void reSetUp(String nickname){
         sendMessage(nickname, new PlayersOrder(turns));
-
-        //Market
-        String[][] market = new String[3][4];
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 4; j++)
-                market[i][j] = game.getMarket().getMarket()[i][j].toString();
-        }
-
-        sendMessage(nickname, new MarketGrid(market, game.getMarket().getOuterMarble().toString()));
-
-        //send faithPath
-        Map<String, Integer> faithPositions = new HashMap<>();
-        if(players.size() == 1){
-            SingleFaithPath path = (SingleFaithPath)game.getFaithPath();
-            faithPositions.put("blackCross", path.getBlackCrossPosition());
-        }
-        for(Player player: players.values()){
-            try {
-                faithPositions.put(player.getNickName(), game.getFaithPath().getPlayerPosition(player));
-            } catch (NoSuchPlayerException e) {
-                e.printStackTrace();
+        sendMessage(nickname, setUpMarketGrid());
+        sendMessage(nickname, setUpFaithPath());
+        sendMessage(nickname, setUpDevelopmentGrid());
+        //LeaderCards
+        Map<Integer, Boolean> activated = new HashMap<>();
+        for(LeaderCard card: players.get(nickname).getLeaderCards())
+            activated.put(card.getID(), false);
+        for(LeaderCard active: players.get(nickname).getActivatedLeader())
+            activated.put(active.getID(), true);
+        sendMessage(nickname, new RejoinLeaderCards(nickname, activated));
+        //Opponents Activated LeaderCards
+        for(Player p: players.values()){
+            if(!p.getNickName().equals(nickname)){
+                activated = new HashMap<>();
+                for(LeaderCard active: p.getActivatedLeader())
+                    activated.put(active.getID(), true);
+                sendMessage(nickname, new RejoinLeaderCards(p.getNickName(), activated));
             }
         }
-        sendMessage(nickname, new UpdateFaithpath(faithPositions));
+        recoveryDashboards(nickname);
+        sendBroadcast(new RejoinPlayer(nickname));
+    }
 
-        //DevCardSet
+    /**
+     * rejoin a client that disconnected, sending him all the information of the current game.
+     * @param client EchoServerClientHandler of the specified player that has rejoined.
+     * @param nickname specified nickname of the player that rejoins the game.
+     */
+    public void rejoinClient(EchoServerClientHandler client, String nickname) {
+        nicknames.remove(nickname);
+        nicknames.put(nickname, client);
+        players.get(nickname).getIdentity().setOnline(true);
+        client.setController(this);
+        reSetUp(nickname);
+    }
+
+
+    /**
+     * creates a new message containing all the information about the development cards available to buy.
+     * @return a DevCardMessage containing all the information of the development cards currently available.
+     */
+    private DevCardSet setUpDevelopmentGrid(){
         ArrayList<ArrayList<Integer>> set = new ArrayList<>();
         for(int level = 1; level<=3; level++){
             set.add(new ArrayList<>());
@@ -167,26 +152,49 @@ public class Controller {
                 e.printStackTrace();
             }
         }
-        sendMessage(nickname, new DevCardSet(set));
+        return new DevCardSet(set);
+    }
 
-        //LeaderCards
-        Map<Integer, Boolean> activated = new HashMap<>();
-        for(LeaderCard card: players.get(nickname).getLeaderCards())
-            activated.put(card.getID(), false);
-        for(LeaderCard active: players.get(nickname).getActivatedLeader())
-            activated.put(active.getID(), true);
-        sendMessage(nickname, new RejoinLeaderCards(nickname, activated));
-
-        //Opponents Activated LeaderCards
-        for(Player p: players.values()){
-            if(!p.getNickName().equals(nickname)){
-                activated = new HashMap<>();
-                for(LeaderCard active: p.getActivatedLeader())
-                    activated.put(active.getID(), true);
-                sendMessage(nickname, new RejoinLeaderCards(p.getNickName(), activated));
+    /**
+     * gives all the information about the current faithPath.
+     * @return UpdateFaithPath message containing all the information of the current faith path.
+     */
+    private UpdateFaithpath setUpFaithPath(){
+        Map<String, Integer> faithPositions = new HashMap<>();
+        if(players.size() == 1){
+            SingleFaithPath path = (SingleFaithPath)game.getFaithPath();
+            faithPositions.put("blackCross", path.getBlackCrossPosition());
+        }
+        for(Player player: players.values()){
+            try {
+                faithPositions.put(player.getNickName(), game.getFaithPath().getPlayerPosition(player));
+            } catch (NoSuchPlayerException e) {
+                e.printStackTrace();
             }
         }
+        return new UpdateFaithpath(faithPositions);
+    }
 
+    /**
+     * gives all the information about the current market.
+     * @return MarketGrid message containing all the information about the current market.
+     */
+    private MarketGrid setUpMarketGrid(){
+        String[][] market = new String[3][4];
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 4; j++)
+                market[i][j] = game.getMarket().getMarket()[i][j].toString();
+        }
+        return new MarketGrid(market, game.getMarket().getOuterMarble().toString());
+    }
+
+    /**
+     * Sends all the information about all the player's dashboards to the specified player.
+     * It sends a RejoinDepotMessage for each shelf of each player, a RejoinStrongbox for each player and a RejoinDeck for
+     * each deck of each player.
+     * @param nickname specified player to send all the information.
+     */
+    private void recoveryDashboards(String nickname){
         for(Player p: players.values()){
             try {
                 for(int i = 1; i <= 3; i++){
@@ -196,11 +204,9 @@ public class Controller {
                             p.getDashboard().getWarehouseDepot().getShelfQuantity(i)
                     ));
                 }
-
                 sendMessage(nickname, new RejoinStrongbox(p.getNickName(),
                         p.getDashboard().getStrongbox().getResources()
                 ));
-
                 for(int i = 1; i <= 3; i++){
                     try {
                         sendMessage(nickname, new RejoinDecks(p.getNickName(),
@@ -214,49 +220,61 @@ public class Controller {
                         ));
                     }
                 }
-
                 ArrayList<ExtraSlot> extraSlotList = p.getDashboard().getWarehouseDepot().getExtraSlotList();
                 for(ExtraSlot extraSlot: extraSlotList){
                     sendMessage(nickname, new RejoinExtraSlot(p.getNickName(),
                             extraSlot.getResource(),
                             extraSlot.getID(),
                             extraSlot.getQuantity()
-                            ));
+                    ));
                 }
             } catch (InvalidShelfPosition | InvalidDeckPositionException e) {
                 e.printStackTrace();
             }
         }
-        sendBroadcast(new RejoinPlayer(nickname));
     }
 
-    public void rejoinClient(EchoServerClientHandler client, String nickname) {
-        nicknames.remove(nickname);
-        nicknames.put(nickname, client);
-        players.get(nickname).getIdentity().setOnline(true);
-        client.setController(this);
-        reSetUp(nickname);
-    }
-
-
+    /**
+     * Give the order of the players.
+     * @return an ArrayList containing players' nicknames ordered by their turn order.
+     */
     public ArrayList<String> getTurns() {
         return turns;
     }
 
+    /**
+     * @return the game managed by the controller.
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * Given a nickname, it returns the player with the specified nickname.
+     * @param nickname specified nickname of the player
+     * @return Player object that is in controller's game and has the specified nickname.
+     */
     public Player getPlayer(String nickname){return players.get(nickname);}
 
+    /**
+     * @return the reference to the player that is currently playing.
+     */
     public Player getCurrentPlayer(){
         return players.get(currentUser);
     }
 
+    /**
+     * returns the identity of the player with the specified nickname.
+     * @param nickname specified nickname of the player that has the identity needed.
+     * @return the identity of the specified nickname.
+     */
     public Identity getIdentity(String nickname){
         return players.get(nickname).getIdentity();
     }
 
+    /**
+     * @return the reference to all the players playing to the current game.
+     */
     public ArrayList<Player> getPlayers() {
         return new ArrayList<> (players.values());
     }
@@ -296,11 +314,20 @@ public class Controller {
         nicknames.get(currentUser).sendError(e);
     }
 
+    /**
+     * changes the state of the game.
+     * @param currentState new phase of the game.
+     */
     public void setCurrentState(TurnState currentState) {
         this.currentState = currentState;
         System.out.println("Game state: " + currentState.getClass().getSimpleName());
     }
 
+    /**
+     * sets the current player to the next player that is online and change the state of the game to SelectionState.
+     * It sets the ping timer of the previous player to infinite, whereas sets the ping timer of the next player to 30
+     * seconds.
+     */
     public void nextTurn(){
         if(isAnyoneOnline()) {
             //endGame: nobody is online
@@ -323,6 +350,9 @@ public class Controller {
         }
     }
 
+    /**
+     * start the first turn of the game: now only the first player can change the model and the states of the game.
+     */
     public void startGame(){
         currentUser = turns.get(0);
         sendBroadcast(new ItsYourTurn(currentUser));
@@ -333,20 +363,34 @@ public class Controller {
         nicknames.get(currentUser).setMyTurn(true);
     }
 
+    /**
+     * checks if there are no players of the current game online.
+     * @return true if there is at least one player online, otherwise false.
+     */
     private boolean isAnyoneOnline(){
         for(String p: turns)
             if(players.get(p).isOnline()) return true;
         return false;
     }
 
+    /**
+     * @return the current state of the game.
+     */
     public TurnState getCurrentState() {
         return currentState;
     }
 
+    /**
+     * sets the current player to the specified one.
+     * @param currentUser nickname of the player that will became the current player.
+     */
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
     }
 
+    /**
+     * set the socket timer to 30s to the current player, whereas it sets it to infinite for all the other players.
+     */
     private void setTimerPing() {
         try {
             nicknames.get(currentUser).setSocketTimeOut(30*1000);
