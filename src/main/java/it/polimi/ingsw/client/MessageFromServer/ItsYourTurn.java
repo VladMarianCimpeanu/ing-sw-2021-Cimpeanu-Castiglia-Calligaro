@@ -8,6 +8,6 @@ public class ItsYourTurn extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("It's " + player + "'s turn!");
+        client.getGameView().dumpMessage("It's " + player + "'s turn!");
     }
 }

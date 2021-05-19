@@ -13,7 +13,6 @@ public abstract class DepotView {
             quantity[i] = 0;
             resources[i] = null;
         }
-
     }
 
     public abstract void show();

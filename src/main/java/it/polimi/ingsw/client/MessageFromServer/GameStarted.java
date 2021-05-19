@@ -6,6 +6,6 @@ public class GameStarted extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("game is started!");
+        client.getGameView().dumpMessage("game is started!");
     }
 }

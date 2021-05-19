@@ -12,6 +12,6 @@ public class UpdateLastProduced extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println(player + " has produced these resources " + resources.toString() + "\nin this turn.");
+        client.getGameView().dumpMessage(player + " has produced these resources " + resources.toString() + "\nin this turn.");
     }
 }

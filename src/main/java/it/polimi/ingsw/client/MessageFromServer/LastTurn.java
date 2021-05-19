@@ -8,6 +8,6 @@ public class LastTurn extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("Last turn! " + player + cause);
+        client.getGameView().dumpMessage("Last turn! " + player + cause);
     }
 }

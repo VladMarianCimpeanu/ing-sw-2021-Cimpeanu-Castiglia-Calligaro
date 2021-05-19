@@ -7,7 +7,7 @@ public class NicknameAccepted extends MessageFromServer{
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("nickname accepted");
+        client.getGameView().dumpMessage("Nickname accepted");
     }
 
     public String getNickname() {

@@ -6,6 +6,6 @@ public class SelectPlaceCard extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("Where do you want to place the development card?");
+        client.getGameView().dumpMessage("Where do you want to place the development card?");
     }
 }

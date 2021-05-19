@@ -11,6 +11,6 @@ public class ConvertedMarbles extends MessageFromServer{
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("Converted:\n" + resources);
+        client.getGameView().dumpMessage("Converted:\n" + resources);
     }
 }

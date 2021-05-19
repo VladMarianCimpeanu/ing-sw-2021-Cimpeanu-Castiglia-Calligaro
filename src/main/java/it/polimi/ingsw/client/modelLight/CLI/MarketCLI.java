@@ -1,7 +1,10 @@
 package it.polimi.ingsw.client.modelLight.CLI;
 
 import it.polimi.ingsw.client.Marble;
+import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.MarketView;
+
+import java.util.ArrayList;
 
 public class MarketCLI extends MarketView {
 
@@ -19,18 +22,10 @@ public class MarketCLI extends MarketView {
             }
             System.out.println("║");
         }
-        //System.out.println(marketRow);
         System.out.println("╚═══╩═══╩═══╩═══╝");
         System.out.println("Marble to insert: " +outerMarble.escape() + "\u001B[0m");
     }
 
-    @Override
-    public void showColUpdate() {
-        //TODO
-    }
 
-    @Override
-    public void showRowUpdate() {
-        //TODO
-    }
+
 }

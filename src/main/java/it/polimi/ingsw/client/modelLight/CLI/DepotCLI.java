@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.DepotView;
 
 public class DepotCLI extends DepotView {
+
     @Override
     public void show() {
         //On Intellij Shell length of Resources greater than normal characters

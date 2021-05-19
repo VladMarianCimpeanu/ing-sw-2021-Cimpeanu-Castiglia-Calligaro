@@ -127,11 +127,6 @@ public class Client {
     }
 
     public static void main(String[] args) {
-//        DepotCLI depot = new DepotCLI();
-//        depot.update(1, COIN, 1);
-//        depot.update(2, SERVANT, 2);
-//        depot.update(3, STONE, 3);
-//        depot.show();
         Client client = new Client(args[0], Integer.parseInt(args[1]));
         client.start();
     }

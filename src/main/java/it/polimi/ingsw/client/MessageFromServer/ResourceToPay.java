@@ -10,6 +10,6 @@ public class ResourceToPay extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("Resources to pay:" + resources.toString());
+        client.getGameView().dumpMessage("Resources to pay:" + resources.toString());
     }
 }

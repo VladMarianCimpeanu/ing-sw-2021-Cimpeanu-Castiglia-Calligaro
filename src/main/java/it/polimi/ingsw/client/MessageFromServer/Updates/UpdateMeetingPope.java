@@ -10,9 +10,10 @@ public class UpdateMeetingPope extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("The following players has just joined a meeting with the pope:");
-        for (String nickname : deltaVictoryPoints.keySet()) {
-            if (deltaVictoryPoints.get(nickname) != 0) System.out.println(nickname);
-        }
+        client.getGameView().dumpMessage("The following players has just joined a meeting with the pope:\n"+deltaVictoryPoints.keySet().toString());
+//        System.out.println("The following players has just joined a meeting with the pope:");
+//        for (String nickname : deltaVictoryPoints.keySet()) {
+//            if (deltaVictoryPoints.get(nickname) != 0) System.out.println(nickname);
+//        }
     }
 }

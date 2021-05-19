@@ -16,6 +16,6 @@ public class UpdateMarketRow extends MessageFromServer {
         Marble[] content = new Marble[4];
         for(int i = 0; i<4; i++)
             content[i] = Marble.valueOf(newRow.get(i));
-        client.getGameView().getMarket().updateColumn(row, content, Marble.valueOf(newOuterMarble));
+        client.getGameView().getMarket().updateRow(row, content, Marble.valueOf(newOuterMarble));
     }
 }

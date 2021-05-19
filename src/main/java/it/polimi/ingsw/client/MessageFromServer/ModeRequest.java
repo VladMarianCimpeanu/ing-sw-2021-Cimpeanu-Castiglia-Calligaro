@@ -6,6 +6,6 @@ public class ModeRequest extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("choose number of players");
+        client.getGameView().dumpMessage("choose number of players");
     }
 }
