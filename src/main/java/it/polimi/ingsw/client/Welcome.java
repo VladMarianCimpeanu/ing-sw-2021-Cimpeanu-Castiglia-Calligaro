@@ -1,24 +1,15 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.MultiEchoServer;
-import it.polimi.ingsw.server.model.Color;
-import it.polimi.ingsw.server.model.benefit.Resource;
-import it.polimi.ingsw.server.model.market.Yellow;
-
-import java.sql.PreparedStatement;
-import java.util.HashMap;
-import java.util.Map;
-
 import static it.polimi.ingsw.client.Color.*;
 
 public class Welcome {
-    private static String title1 = "█▀▄▀█ ██      ▄▄▄▄▄      ▄▄▄▄▀ ▄███▄   █▄▄▄▄   ▄▄▄▄▄       ████▄ ▄████      █▄▄▄▄ ▄███▄      ▄   ██   ▄█    ▄▄▄▄▄    ▄▄▄▄▄   ██      ▄   ▄█▄    ▄███▄   ";
-    private static String title2 = "█ █ █ █ █    █     ▀▄ ▀▀▀ █    █▀   ▀  █  ▄▀  █     ▀▄     █   █ █▀   ▀     █  ▄▀ █▀   ▀      █  █ █  ██   █     ▀▄ █     ▀▄ █ █      █  █▀ ▀▄  █▀   ▀  ";
-    private static String title3 = "█ ▄ █ █▄▄█ ▄  ▀▀▀▀▄       █    ██▄▄    █▀▀▌ ▄  ▀▀▀▀▄       █   █ █▀▀        █▀▀▌  ██▄▄    ██   █ █▄▄█ ██ ▄  ▀▀▀▀▄ ▄  ▀▀▀▀▄   █▄▄█ ██   █ █   ▀  ██▄▄    ";
-    private static String title4 = "█   █ █  █  ▀▄▄▄▄▀       █     █▄   ▄▀ █  █  ▀▄▄▄▄▀        ▀████ █          █  █  █▄   ▄▀ █ █  █ █  █ ▐█  ▀▄▄▄▄▀   ▀▄▄▄▄▀    █  █ █ █  █ █▄  ▄▀ █▄   ▄▀ ";
-    private static String title5 = "   █     █              ▀      ▀███▀     █                        █           █   ▀███▀   █  █ █    █  ▐                        █ █  █ █ ▀███▀  ▀███▀   ";
-    private static String title6 = "  ▀     █                               ▀                          ▀         ▀            █   ██   █                           █  █   ██                ";
-    private static String title7 = "       ▀                                                                                          ▀                           ▀           ";
+    private static final String title1 = "█▀▄▀█ ██      ▄▄▄▄▄      ▄▄▄▄▀ ▄███▄   █▄▄▄▄   ▄▄▄▄▄       ████▄ ▄████      █▄▄▄▄ ▄███▄      ▄   ██   ▄█    ▄▄▄▄▄    ▄▄▄▄▄   ██      ▄   ▄█▄    ▄███▄   ";
+    private static final String title2 = "█ █ █ █ █    █     ▀▄ ▀▀▀ █    █▀   ▀  █  ▄▀  █     ▀▄     █   █ █▀   ▀     █  ▄▀ █▀   ▀      █  █ █  ██   █     ▀▄ █     ▀▄ █ █      █  █▀ ▀▄  █▀   ▀  ";
+    private static final String title3 = "█ ▄ █ █▄▄█ ▄  ▀▀▀▀▄       █    ██▄▄    █▀▀▌ ▄  ▀▀▀▀▄       █   █ █▀▀        █▀▀▌  ██▄▄    ██   █ █▄▄█ ██ ▄  ▀▀▀▀▄ ▄  ▀▀▀▀▄   █▄▄█ ██   █ █   ▀  ██▄▄    ";
+    private static final String title4 = "█   █ █  █  ▀▄▄▄▄▀       █     █▄   ▄▀ █  █  ▀▄▄▄▄▀        ▀████ █          █  █  █▄   ▄▀ █ █  █ █  █ ▐█  ▀▄▄▄▄▀   ▀▄▄▄▄▀    █  █ █ █  █ █▄  ▄▀ █▄   ▄▀ ";
+    private static final String title5 = "   █     █              ▀      ▀███▀     █                        █           █   ▀███▀   █  █ █    █  ▐                        █ █  █ █ ▀███▀  ▀███▀   ";
+    private static final String title6 = "  ▀     █                               ▀                          ▀         ▀            █   ██   █                           █  █   ██                ";
+    private static final String title7 = "       ▀                                                                                          ▀                           ▀           ";
 
     public static void dump() {
         System.out.println(BLUE.escape() + title1);

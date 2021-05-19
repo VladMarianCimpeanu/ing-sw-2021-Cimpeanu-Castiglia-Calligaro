@@ -5,7 +5,10 @@ import it.polimi.ingsw.client.modelLight.PlayerView;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CLI implements Runnable {
@@ -42,6 +45,9 @@ public class CLI implements Runnable {
                                 break;
                             case "cheat":
                                 client.send(new CheatResource());
+                                break;
+                            case "help":
+                                readHelp();
                                 break;
                             default:
                                 out.println("Unexpected command.");
@@ -91,10 +97,10 @@ public class CLI implements Runnable {
                                     case "faith":
                                         client.getGameView().getFaithPathView().show();
                                         break;
-                                    case "devCards":
+                                    case "cards":
                                         client.getGameView().getCards().show();
                                         break;
-                                    case "leaderCards":
+                                    case "leadercards":
                                         client.getGameView().getPlayer(nickname).getLeaderCards().show();
                                         break;
                                     case "market":
@@ -235,5 +241,15 @@ public class CLI implements Runnable {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    private void readHelp(){
+        Path path = Paths.get("src/resources/help.txt");
+        try {
+            for(String line: Files.readAllLines(path))
+                System.out.println(line);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
