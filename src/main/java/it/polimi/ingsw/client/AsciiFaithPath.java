@@ -7,7 +7,7 @@ import java.util.Map;
 public class AsciiFaithPath {
     private Map<String, Integer> positions;
     private Map<String, String> playerColors;
-    private static final int length = 133;
+    private static final int length = 134;
     private static final int heigth = 9;
     private String yellow = "\u001B[33m";
     private String blue = "\u001B[34m";
@@ -225,6 +225,16 @@ public class AsciiFaithPath {
         }
     }
 
+    private void addLegend(){
+        String legendRow;
+        int i = 4;
+        for(String player: playerColors.keySet()){
+            legendRow = (playerColors.get(player) + "┼ " + player + Color.RESET);
+            path[i][length - 1] = legendRow;
+            i++;
+        }
+    }
+
     public void print(){
         for(int i = 0; i < heigth; i++){
             for(int j = 0; j < length; j++){
@@ -238,6 +248,7 @@ public class AsciiFaithPath {
         if(positions.size() == 0){
             positions = new HashMap<>(newPositions);
             assignColor();
+            addLegend();
             move(null, 0);
         }
         for(String s: positions.keySet()){

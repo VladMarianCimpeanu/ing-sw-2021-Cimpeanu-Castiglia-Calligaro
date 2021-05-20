@@ -78,8 +78,8 @@ public final class DevelopmentCardsDecksCLI extends DevelopmentCardDecksView {
             System.out.print(color + "╚═════════════════╝  ");
         }
         System.out.print("\n" + Color.RESET);
-        System.out.println("DECKS :" +
-                "(1)" + stringProduct(19 ," ") + "(2)" + stringProduct(17 ," ") + "(3)" );
+        System.out.println("DECKS: " +
+                "(1)" + stringProduct(18 ," ") + "(2)" + stringProduct(19 ," ") + "(3)" );
     }
 
     //TODO: delete this when all the other CLI components are done: this main is used only to test the development

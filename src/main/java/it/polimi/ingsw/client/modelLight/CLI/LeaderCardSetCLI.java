@@ -37,7 +37,7 @@ public class LeaderCardSetCLI extends LeaderCardSetView {
         }
         System.out.println("These are your leader cards:");
         String[][] leadercards = new String[4][7];
-        String[] leaderCardSet = new String[7];
+        String[] leaderCardSet = new String[8];
         int i = 0;
         for(LeaderCardCLI card : cards){
             leadercards[i] = card.generateAscii();
@@ -49,7 +49,11 @@ public class LeaderCardSetCLI extends LeaderCardSetView {
                 leaderCardSet[row] += leadercards[j][row];
             }
         }
-        for(int row = 0; row < 7; row ++){
+        leaderCardSet[7] = "";
+        for (int j = 0; j < i; j++) {
+            leaderCardSet[7] += "        (" + (j+1) + ")          ";
+        }
+        for(int row = 0; row < 8; row ++){
             System.out.println(leaderCardSet[row]);
         }
     }
