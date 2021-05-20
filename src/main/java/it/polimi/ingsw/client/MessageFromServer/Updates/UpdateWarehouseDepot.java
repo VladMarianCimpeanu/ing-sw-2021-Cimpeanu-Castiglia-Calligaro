@@ -14,6 +14,6 @@ public class UpdateWarehouseDepot extends MessageFromServer {
     public void activateMessage(Client client) {
         client.getGameView().getPlayer(player).getDepot().update(shelf, resource, quantity);
         client.getGameView().getPlayer(player).dumpPlayer(client.getNickname(), "WarehouseDepot");
-        client.getGameView().getPlayer(player).getDepot().show();
+        client.getGameView().getPlayer(player).getDepot().showUpdate();
     }
 }

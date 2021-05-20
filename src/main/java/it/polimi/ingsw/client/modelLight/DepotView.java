@@ -16,6 +16,7 @@ public abstract class DepotView {
     }
 
     public abstract void show();
+    public abstract void showUpdate();
 
     public void update(int shelf, Resource resource, int many) {
         //exceptions?

@@ -26,4 +26,13 @@ public class DepotCLI extends DepotView {
             System.out.print("═══   ");
         System.out.println();
     }
+
+    @Override
+    public void showUpdate() {
+        for(int i = 0; i<3; i++)
+            if(quantity[i] != 0){
+                System.out.print(quantity[i]+"x"+resources[i].toString()+" ");
+            }
+        System.out.println();
+    }
 }

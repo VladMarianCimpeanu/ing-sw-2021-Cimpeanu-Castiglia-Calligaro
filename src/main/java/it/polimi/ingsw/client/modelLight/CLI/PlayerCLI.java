@@ -21,6 +21,6 @@ public class PlayerCLI extends PlayerView {
             System.out.print("Your");
         else
             System.out.print(player);
-        System.out.println("'s "+ objectUpdated +" has changed into:");
+        System.out.print("'s "+ objectUpdated +" has changed into:  ");
     }
 }
