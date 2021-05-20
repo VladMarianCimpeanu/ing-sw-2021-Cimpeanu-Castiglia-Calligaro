@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelLight;
 
+import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenView;
 
 import javax.swing.*;
@@ -36,4 +37,6 @@ public abstract class GameView {
     public ActionTokenView getActionTokenView() {
         return actionTokenView;
     }
+
+    public abstract void displayResourcesToPay(Map<Resource, Integer> resources);
 }

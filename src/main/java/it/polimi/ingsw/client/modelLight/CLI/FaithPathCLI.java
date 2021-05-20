@@ -17,6 +17,7 @@ public class FaithPathCLI extends FaithPathView {
     public void show() {
         if(positions != null)
             asciiFaithPath.update(positions);
+        System.out.println("Here is the current faith path:");
         asciiFaithPath.print();
     }
 

@@ -35,6 +35,7 @@ public class LeaderCardSetCLI extends LeaderCardSetView {
             System.out.println("You don't have any LeaderCard");
             return;
         }
+        System.out.println("These are your leader cards:");
         String[][] leadercards = new String[4][7];
         String[] leaderCardSet = new String[7];
         int i = 0;

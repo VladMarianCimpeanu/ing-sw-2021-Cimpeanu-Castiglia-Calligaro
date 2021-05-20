@@ -41,7 +41,6 @@ public class DevelopmentCardsSetCLI extends DevelopmentCardSetView {
      */
     public void setDecks(ArrayList<ArrayList<Integer>> decks) {
         this.decks = decks;
-        System.out.println("The following cards can be purchased:");
         show();
     }
 

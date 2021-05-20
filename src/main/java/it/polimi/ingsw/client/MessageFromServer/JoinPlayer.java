@@ -7,6 +7,6 @@ public class JoinPlayer extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().dumpMessage(player + "joined the game");
+        client.getGameView().dumpMessage(player + " joined the game.");
     }
 }

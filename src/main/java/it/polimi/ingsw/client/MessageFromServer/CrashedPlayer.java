@@ -7,6 +7,6 @@ public class CrashedPlayer extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().dumpMessage(nickname + " crashed");
+        client.getGameView().dumpMessage(nickname + " has left the game.");
     }
 }

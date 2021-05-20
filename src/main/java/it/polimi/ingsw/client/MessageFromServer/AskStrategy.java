@@ -5,6 +5,6 @@ import it.polimi.ingsw.client.Client;
 public class AskStrategy extends MessageFromServer {
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().dumpMessage("Insert strategies");
+        client.getGameView().dumpMessage("Insert a strategy:");
     }
 }

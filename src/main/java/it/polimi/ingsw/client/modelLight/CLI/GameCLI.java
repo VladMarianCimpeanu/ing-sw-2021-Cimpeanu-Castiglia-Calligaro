@@ -1,9 +1,12 @@
 package it.polimi.ingsw.client.modelLight.CLI;
 
+import it.polimi.ingsw.client.Color;
+import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class GameCLI extends GameView {
@@ -36,5 +39,14 @@ public class GameCLI extends GameView {
     @Override
     public void dumpMessage(String content) {
         System.out.println(content);
+    }
+
+    @Override
+    public void displayResourcesToPay(Map<Resource, Integer> resources) {
+        String content = "You have to pay the following resources: ";
+        for(Resource res: resources.keySet()){
+            content += resources.get(res).toString() + " " + res.escape() + Color.RESET + " ";
+        }
+        dumpMessage(content);
     }
 }

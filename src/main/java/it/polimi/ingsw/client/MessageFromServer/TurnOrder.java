@@ -9,6 +9,6 @@ public class TurnOrder extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("you are in position: " + position + "\nchose " + numberOfResources +  " resources");
+        System.out.println("you are in position: " + position + "\nchoose " + numberOfResources +  " resources");
     }
 }

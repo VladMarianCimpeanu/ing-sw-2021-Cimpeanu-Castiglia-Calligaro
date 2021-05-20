@@ -113,6 +113,9 @@ public class CLI implements Runnable {
                                         player.getDepot().show();
                                         player.getLeaderCards().show();
                                         break;
+                                    case "resources":
+                                        it.polimi.ingsw.client.Resource.showLegend();
+                                        break;
                                     default:
                                         if(client.getGameView().getPlayer(command[1]) != null) {
                                             PlayerView opponent = client.getGameView().getPlayer(command[1]);

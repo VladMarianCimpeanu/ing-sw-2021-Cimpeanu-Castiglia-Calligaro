@@ -11,6 +11,7 @@ public class KeepLeadercards extends MessageFromServer {
     public void activateMessage(Client client) {
         if(leaderIds != null) {
             client.getGameView().getPlayer(client.getNickname()).getLeaderCards().update(leaderIds);
+            client.getGameView().dumpMessage("You have received the following leader cards. Choose two of them:");
             client.getGameView().getPlayer(client.getNickname()).getLeaderCards().show();
         }
     }

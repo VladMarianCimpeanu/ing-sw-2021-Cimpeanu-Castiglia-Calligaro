@@ -28,4 +28,31 @@ public enum Resource {
     public String escape(){
         return escape;
     }
+
+    private static int calculateSpace(String content){
+        int size = "┌──────────────┐".length() - 2;
+        return size - content.length() + Resource.COIN.escape.length();
+    }
+
+    private static String multiplySpaces(int times){
+        String space = "";
+        for(int i = 0; i < times; i++)
+            space += " ";
+        return space;
+    }
+
+    public static void showLegend(){
+        String upperLegend = "┌──────────────┐";
+        System.out.println(upperLegend);
+        for(Resource res : Resource.values()){
+            String content = "│ " + res.toString() + " " + res.escape;
+            System.out.println(content + multiplySpaces(calculateSpace(content)) + RESET + "│ ");
+        }
+        System.out.println("└──────────────┘");
+    }
+
 }
+
+
+
+//┐ └ ─ ┘┌ | │
