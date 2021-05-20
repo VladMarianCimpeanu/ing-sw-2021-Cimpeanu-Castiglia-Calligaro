@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class FaithPathCLI extends FaithPathView {
     private AsciiFaithPath asciiFaithPath;
 
-    public FaithPathCLI(ArrayList<String> players){
-        asciiFaithPath = new AsciiFaithPath(players);
+    public FaithPathCLI(){
+        asciiFaithPath = new AsciiFaithPath();
     }
 
     @Override

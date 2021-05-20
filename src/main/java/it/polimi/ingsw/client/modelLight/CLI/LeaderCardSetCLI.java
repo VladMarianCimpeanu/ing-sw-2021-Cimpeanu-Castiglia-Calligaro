@@ -31,6 +31,10 @@ public class LeaderCardSetCLI extends LeaderCardSetView {
 
     @Override
     public void show() {
+        if(cards.size() == 0){
+            System.out.println("You don't have any LeaderCard");
+            return;
+        }
         String[][] leadercards = new String[4][7];
         String[] leaderCardSet = new String[7];
         int i = 0;

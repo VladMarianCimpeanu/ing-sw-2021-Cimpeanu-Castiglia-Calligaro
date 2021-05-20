@@ -14,7 +14,7 @@ public class AsciiFaithPath {
     private String reset = "\u001B[0m";
     private String[][] path;
 
-    public AsciiFaithPath(ArrayList<String> players) {
+    public AsciiFaithPath() {
         playerColors = new HashMap<>();
         positions = new HashMap<>();
 
@@ -37,11 +37,11 @@ public class AsciiFaithPath {
         color(0, 18 * 7, blue);
         putNumbers(yellow);
 
-        for(String s: players){
-            positions.put(s, 0);
-        }
-        assignColor();
-        move(null, 0);
+//        for(String s: players){
+//            positions.put(s, 0);
+//        }
+//        assignColor();
+//        move(null, 0);
     }
 
     private void drawSquare(int y, int x){
@@ -113,6 +113,7 @@ public class AsciiFaithPath {
     }
 
     private void move(String nick, int newPos){
+        if(newPos > 24) return;
         int xC, yC;
         if(nick != null){
             int oldPos = positions.get(nick);
@@ -234,6 +235,11 @@ public class AsciiFaithPath {
     }
 
     public void update(Map<String, Integer> newPositions){
+        if(positions.size() == 0){
+            positions = new HashMap<>(newPositions);
+            assignColor();
+            move(null, 0);
+        }
         for(String s: positions.keySet()){
             if(!positions.get(s).equals(newPositions.get(s)))
                 move(s, newPositions.get(s));

@@ -10,6 +10,7 @@ public class GameCLI extends GameView {
     public GameCLI() {
         market = new MarketCLI();
         cards = new DevelopmentCardsSetCLI();
+        faithPath = new FaithPathCLI();
     }
 
     private void printPlayers(ArrayList<String> nicknames){
@@ -29,7 +30,6 @@ public class GameCLI extends GameView {
         players = new TreeMap<>();
         //with TreeMap we can save the player order
         for(String nickname : nicknames) players.put(nickname, new PlayerCLI(nickname));
-        faithPath = new FaithPathCLI(new ArrayList<String>(players.keySet()));
         printPlayers(nicknames);
     }
 
