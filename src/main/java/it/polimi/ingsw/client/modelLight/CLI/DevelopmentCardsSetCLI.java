@@ -111,27 +111,36 @@ public class DevelopmentCardsSetCLI extends DevelopmentCardSetView {
     }
 
     /**
+     * print an empty line of the standard length of a card with colored edges
+     * @param color specified color of the edges of the card.
+     */
+    public static void printEmptyLine(Color color){
+        System.out.print(color.escape() + "║" +stringProduct(17, " ") + "║  ");
+    }
+
+    /**
      * show the developments decks available to purchase.
       */
     @Override
     public void show() {
+        System.out.println("You can purchase the following cards:");
         for(int levelSet = 3; levelSet > 0; levelSet --){
             for(Color color: Color.values()){
                 System.out.print(color.escape() + "╔═════════════════╗  ");
             }
             System.out.print("\n" + Color.RESET);
             for(Color color: Color.values()){   //PRINT LEVEL
-                if(getCard(color, levelSet) == 0) System.out.print(color.escape() + "║" +stringProduct(17, " ") + "║  ");
+                if(getCard(color, levelSet) == 0) printEmptyLine(color);
                 else printLine("level " + cards.get(getCard(color, levelSet) - 1).getLevel(), color,0);
             }
             System.out.print("\n");
             for(Color color: Color.values()){   //PRINT VICTORY POINTS
-                if(getCard(color, levelSet) == 0) System.out.print(color.escape() + "║" +stringProduct(17, " ") + "║  ");
+                if(getCard(color, levelSet) == 0) printEmptyLine(color);
                 else printLine("VP " + cards.get(getCard(color, levelSet) - 1).getVictoryPoints(), color, 0);
             }
             System.out.print("\n");
             for(Color color: Color.values()){  //PRINT COST
-                if(getCard(color, levelSet) == 0) System.out.print(color.escape() + "║" +stringProduct(17, " ") + "║  ");
+                if(getCard(color, levelSet) == 0) printEmptyLine(color);
                 else {
                     String contentToDump = "cost" + mapContent(cards.get(getCard(color, levelSet) - 1).getCost());
                     int numberEscapes = countSizeEscapes(cards.get(getCard(color, levelSet) - 1).getCost());
@@ -140,7 +149,7 @@ public class DevelopmentCardsSetCLI extends DevelopmentCardSetView {
             }
             System.out.print("\n");
             for(Color color: Color.values()){  //PRINT INPUT
-                if(getCard(color, levelSet) == 0) System.out.print(color.escape() + "║" +stringProduct(17, " ") + "║  ");
+                if(getCard(color, levelSet) == 0) printEmptyLine(color);
                 else {
                     String contentToDump = "in" + mapContent(cards.get(getCard(color, levelSet) - 1).getInput());
                     int numberEscapes = countSizeEscapes(cards.get(getCard(color, levelSet) - 1).getInput());
@@ -149,7 +158,7 @@ public class DevelopmentCardsSetCLI extends DevelopmentCardSetView {
             }
             System.out.print("\n");
             for(Color color: Color.values()){ //PRINT OUTPUT
-                if(getCard(color, levelSet) == 0) System.out.print(color.escape() + "║" +stringProduct(17, " ") + "║  ");
+                if(getCard(color, levelSet) == 0) printEmptyLine(color);
                 else {
                     String contentToDump = "out" + mapContent(cards.get(getCard(color, levelSet) - 1).getOutput());
                     int numberEscapes = countSizeEscapes(cards.get(getCard(color, levelSet) - 1).getOutput());

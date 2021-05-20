@@ -29,7 +29,7 @@ public final class DevelopmentCardsDecksCLI extends DevelopmentCardDecksView {
      */
     @Override
     public void show() {
-        System.out.println("You have the following development cards:");
+        System.out.println("Development cards:");
         String color;
         for(int card: playerCards){
             color = card == 0 ? Color.RESET : chooseColor(card).escape();
