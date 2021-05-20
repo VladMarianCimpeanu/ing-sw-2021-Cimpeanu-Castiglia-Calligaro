@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.MessageFromClient;
 
 import it.polimi.ingsw.server.controller.Controller;
+import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
@@ -11,7 +12,7 @@ public class PutResPos extends MessageFromClient {
     @Override
     public void activate(Controller controller) {
         if(pos == null || res == null) {
-            controller.sendError("invalidJson");
+            controller.sendError(ErrorMessage.invalidJson);
             return;
         }
         TurnState state = controller.getCurrentState();
@@ -23,7 +24,7 @@ public class PutResPos extends MessageFromClient {
                 state.putExtraSlot(res);
                 break;
             default:
-                controller.sendError("invalidCommand");
+                controller.sendError(ErrorMessage.invalidJson);
         }
     }
 }

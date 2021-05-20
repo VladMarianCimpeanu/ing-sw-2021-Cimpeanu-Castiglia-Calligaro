@@ -30,14 +30,14 @@ public class FirstTurn extends TurnState{
     @Override
     public void keepLeaderCards(String nickname, int id1, int id2){
         if(!waitingForLeaderCards.contains(nickname)) {
-            getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+            getController().sendMessage(nickname, new Error(invalidCommand));
             return;
         }
         try {
             getController().getPlayer(nickname).keepLeaderCards(JsonToLeaderCard.getLeaderCard(id1), JsonToLeaderCard.getLeaderCard(id2));
             getController().sendMessage(nickname, new SelectedLeadercards(id1, id2));
         } catch (NoCardException e) {
-            getController().sendMessage(nickname, new Error(invalidLeaderCardID.toString()));
+            getController().sendMessage(nickname, new Error(invalidLeaderCardID));
             return;
         }
         waitingForLeaderCards.remove(nickname);
@@ -50,24 +50,24 @@ public class FirstTurn extends TurnState{
     @Override
     public synchronized void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
         if (!firstTurnResources.containsKey(nickname)) {
-            getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+            getController().sendMessage(nickname, new Error(invalidCommand));
             return;
         }
         if (res1 == null){
-            getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+            getController().sendMessage(nickname, new Error(invalidCommand));
             return;
         }
         try {
             if (firstTurnResources.get(nickname) == 1) {
                 if (res2 != null) {
-                    getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+                    getController().sendMessage(nickname, new Error(invalidCommand));
                     return;
                 }
                 getController().setCurrentUser(nickname);
                 getController().getPlayer(nickname).getDashboard().getWarehouseDepot().addResource(shelf1, 1, res1);
             } else if (firstTurnResources.get(nickname) == 2) {
                 if(res2 == null){
-                    getController().sendMessage(nickname, new Error(invalidCommand.toString()));
+                    getController().sendMessage(nickname, new Error(invalidCommand));
                     return;
                 }
                 getController().setCurrentUser(nickname);
@@ -78,11 +78,11 @@ public class FirstTurn extends TurnState{
             getController().setCurrentUser(null);
             endPhase();
         } catch(InvalidShelfPosition invalidShelfPosition){
-            getController().sendMessage(nickname, new Error(invalidShelf.toString()));
+            getController().sendMessage(nickname, new Error(invalidShelf));
         } catch(ExistingResourceException e){
-            getController().sendMessage(nickname, new Error(existingResource.toString()));
+            getController().sendMessage(nickname, new Error(existingResource));
         } catch(InvalidResourceException e){
-            getController().sendMessage(nickname, new Error(invalidResource.toString()));
+            getController().sendMessage(nickname, new Error(invalidResource));
         }
     }
 
@@ -109,17 +109,17 @@ public class FirstTurn extends TurnState{
 
     @Override
     public void moveWarehouse(int fromShelf, int toShelf) {
-        getController().sendError(invalidCommand.toString());
+        getController().sendError(invalidCommand);
     }
 
     @Override
     public void moveExtraToWarehouse(int shelf, int leaderId, int quantityToMove) {
-        getController().sendError(invalidCommand.toString());
+        getController().sendError(invalidCommand);
     }
 
     @Override
     public void moveWarehouseToExtra(int shelf, int leaderId, int quantityToMove) {
-        getController().sendError(invalidCommand.toString());
+        getController().sendError(invalidCommand);
     }
 }
 

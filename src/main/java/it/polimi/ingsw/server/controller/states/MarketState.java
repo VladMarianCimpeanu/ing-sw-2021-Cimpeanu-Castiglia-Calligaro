@@ -27,13 +27,13 @@ public class MarketState extends TurnState {
             getController().getCurrentPlayer().putInWarehouseDepot(resource, shelf);
             if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
         } catch (InvalidResourceException e) {
-            getController().sendError(nullResource.toString());
+            getController().sendError(nullResource);
         } catch (ExistingResourceException e) {
-            getController().sendError(existingResource.toString());
+            getController().sendError(existingResource);
         } catch (InvalidShelfPosition e){
-            getController().sendError(invalidShelf.toString());
+            getController().sendError(invalidShelf);
         } catch (NotEnoughSpaceException e) {
-            getController().sendError(notEnoughSpace.toString());
+            getController().sendError(notEnoughSpace);
         }
     }
 
@@ -43,11 +43,11 @@ public class MarketState extends TurnState {
             getController().getCurrentPlayer().putInExtraSlot(resource);
             if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
         } catch (NotEnoughSpaceException e) {
-            getController().sendError(notEnoughSpace.toString());
+            getController().sendError(notEnoughSpace);
         } catch (InvalidResourceException e) {
-            getController().sendError(nullResource.toString());
+            getController().sendError(nullResource);
         } catch (MissingExtraSlot missingExtraSlot) {
-            getController().sendError(invalidLeaderCardID.toString());
+            getController().sendError(invalidLeaderCardID);
         }
     }
 
@@ -57,7 +57,7 @@ public class MarketState extends TurnState {
             getController().getCurrentPlayer().discardResource(resource);
             if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
         } catch (InvalidResourceException e) {
-            getController().sendError(nullResource.toString());
+            getController().sendError(nullResource);
         }
     }
 

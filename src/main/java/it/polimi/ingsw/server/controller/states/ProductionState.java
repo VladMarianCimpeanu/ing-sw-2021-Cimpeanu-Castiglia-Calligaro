@@ -32,15 +32,15 @@ public class ProductionState extends TurnState {
             controller.sendMessage(new ResourceToPay(card.getResourceIn()));
             controller.setCurrentState(new CardProdState(controller));
         } catch (InvalidDeckPositionException e) {
-            controller.sendError("invalidDeckIndex");
+            controller.sendError(ErrorMessage.invalidDeck);
         } catch (NotEnoughResourcesException e) {
-            controller.sendError("notEnoughResources");
+            controller.sendError(ErrorMessage.notEnoughResources);
         } catch (NoCardException e) {
-            controller.sendError("noCard");
+            controller.sendError(ErrorMessage.noSuchDevelopmentCard);
         } catch (ProductionStartedException e) {
-            controller.sendError("productionStarted");
+            controller.sendError(ErrorMessage.productionAlreadyStarted);
         } catch (ProductionUsedException e) {
-            controller.sendError("productionUsed");
+            controller.sendError(ErrorMessage.productionUsed);
         }
     }
 
@@ -84,9 +84,9 @@ public class ProductionState extends TurnState {
             endProduction();
             getController().setCurrentState(new EndTurnState(getController()));
         } catch (NoCardException e) {
-            getController().sendError("invalidLeaderCardID");
+            getController().sendError(ErrorMessage.invalidLeaderCardID);
         } catch (RequirementException e) {
-            getController().sendError("Requirements not satisfied");
+            getController().sendError(ErrorMessage.requirementsNotSatisfied);
         }
     }
 
@@ -98,7 +98,7 @@ public class ProductionState extends TurnState {
             endProduction();
             getController().setCurrentState(new EndTurnState(getController()));
         } catch (NoCardException e) {
-            getController().sendError("invalidLeaderCardID");
+            getController().sendError(ErrorMessage.invalidLeaderCardID);
         }
     }
 

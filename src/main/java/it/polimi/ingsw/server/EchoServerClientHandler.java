@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.MessageFromClient.*;
 import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.MessageToClient.Error;
 import it.polimi.ingsw.server.controller.Controller;
+import it.polimi.ingsw.server.controller.states.ErrorMessage;
 
 import java.io.*;
 import java.net.Socket;
@@ -79,7 +80,7 @@ public class EchoServerClientHandler implements Runnable {
         out.flush();
     }
 
-    public void sendError(String error) {
+    public void sendError(ErrorMessage error) {
         String outMessage = convert.toJson(new Error(error));
         out.println(outMessage);
         out.flush();
@@ -113,7 +114,7 @@ public class EchoServerClientHandler implements Runnable {
                 if(message instanceof Login) {
                     String nick = ((Login) message).getNickname();
                     if(nick == null || nick.equals("") || nick.equals("blackCross")){
-                        sendError("invalidNickname");
+                        sendError(ErrorMessage.invalidNickname);
                         System.out.println(nick + " is not permitted");
                         continue;
                     }
@@ -134,15 +135,15 @@ public class EchoServerClientHandler implements Runnable {
                             controller.rejoinClient(this, nickname);
                             break;
                         }
-                        sendError("usedNickname");
+                        sendError(ErrorMessage.usedNickname);
                         System.out.println("Error: requested nickname already used");
                     }
                 }else {
-                    sendError("expectedLogin");
+                    sendError(ErrorMessage.expectedLogin);
                     System.out.println("Error: unexpected command");
                 }
             }catch(JsonParseException e) {
-                sendError("invalidJson");
+                sendError(ErrorMessage.invalidJson);
                 System.out.println("Error: wrong json format");
             }catch(IOException e){
                 System.out.println("Player disconnected in login phase");
@@ -175,9 +176,9 @@ public class EchoServerClientHandler implements Runnable {
                         int mode = (((Mode) message).getMode());
                         if(mode >= 1 && mode <= 4) return mode;
                     }
-                    sendError("invalidMode");
+                    sendError(ErrorMessage.invalidMode);
                 } catch(JsonParseException e){
-                    sendError("invalidJson");
+                    sendError(ErrorMessage.invalidJson);
                     System.out.println("Error: wrong json format");
 
             }
@@ -237,7 +238,7 @@ public class EchoServerClientHandler implements Runnable {
                     System.out.println("[" + nickname + "]:" + message);
                     message.activate(controller);
                 } else {
-                    sendError("notYourTurn");
+                    sendError(ErrorMessage.notYouTurn);
                     System.out.println("[" + nickname + "]:" + "tried to play in another turn");
                 }
             }

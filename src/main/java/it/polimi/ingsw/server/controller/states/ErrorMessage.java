@@ -21,5 +21,12 @@ public enum ErrorMessage{
     wrongSizeInput,
     productionUsed,
     productionAlreadyStarted,
-    generic
+    generic,
+    invalidNickname,
+    usedNickname,
+    expectedLogin,
+    invalidJson,
+    invalidMode,
+    notYouTurn,
+    invalidStorage,
 }

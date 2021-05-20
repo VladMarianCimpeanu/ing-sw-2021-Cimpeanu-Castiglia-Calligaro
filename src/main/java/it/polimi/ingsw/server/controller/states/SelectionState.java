@@ -27,9 +27,9 @@ public class SelectionState extends TurnState {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);
             getController().getCurrentPlayer().activateLeaderCard(leaderCard);
         } catch (NoCardException e) {
-            getController().sendError(invalidLeaderCardID.toString());
+            getController().sendError(invalidLeaderCardID);
         } catch (RequirementException e) {
-            getController().sendError(requirementsNotSatisfied.toString());
+            getController().sendError(requirementsNotSatisfied);
         }
     }
 
@@ -39,7 +39,7 @@ public class SelectionState extends TurnState {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);
             getController().getCurrentPlayer().discardLeaderCard(leaderCard);
         } catch (NoCardException e) {
-            getController().sendError(invalidLeaderCardID.toString());
+            getController().sendError(invalidLeaderCardID);
         }
 
     }
@@ -70,9 +70,9 @@ public class SelectionState extends TurnState {
                 getController().setCurrentState(new MarketStrategyState(getController(), whiteMarbles));
             }
         } catch (OutOfBoundColumnsException | OutOfBoundRowException e) {
-            getController().sendError(invalidMarketPosition.toString());
+            getController().sendError(invalidMarketPosition);
         } catch (InvalidDirectionSelection invalidDirectionSelection) {
-            getController().sendError(invalidDirection.toString());
+            getController().sendError(invalidDirection);
         } catch (InvalidStrategyException e) {
             e.printStackTrace();
         }
@@ -89,13 +89,13 @@ public class SelectionState extends TurnState {
             getController().setCurrentState(new BuyDevState(getController()));
 
         } catch (InvalidIDExcpetion | InvalidDiscountException e) {
-            getController().sendError(invalidLeaderCardID.toString());
+            getController().sendError(invalidLeaderCardID);
         } catch (NoCardException e) {
-            getController().sendError(noSuchDevelopmentCard.toString());
+            getController().sendError(noSuchDevelopmentCard);
         } catch (WrongLevelException e) {
-            getController().sendError(wrongLevel.toString());
+            getController().sendError(wrongLevel);
         } catch (NotEnoughResourcesException e) {
-            getController().sendError(notEnoughResources.toString());
+            getController().sendError(notEnoughResources);
         }
     }
 
@@ -109,15 +109,15 @@ public class SelectionState extends TurnState {
             controller.sendMessage(new ResourceToPay(card.getResourceIn()));
             controller.setCurrentState(new CardProdState(controller));
         } catch (InvalidDeckPositionException e) {
-            controller.sendError("invalidDeckIndex");
+            controller.sendError(invalidDeck);
         } catch (NotEnoughResourcesException e) {
-            controller.sendError("notEnoughResources");
+            controller.sendError(notEnoughResources);
         } catch (NoCardException e) {
-            controller.sendError("noCard");
+            controller.sendError(noSuchDevelopmentCard);
         } catch (ProductionStartedException e) {
-            controller.sendError("productionStarted");
+            controller.sendError(productionAlreadyStarted);
         } catch (ProductionUsedException e) {
-            controller.sendError("productionUsed");
+            controller.sendError(productionUsed);
         }
     }
 

@@ -1,11 +1,13 @@
 package it.polimi.ingsw.server.MessageToClient;
 
+import it.polimi.ingsw.server.controller.states.ErrorMessage;
+
 public class Error implements MessageToClient{
     private String type;
-    private String content;
+    private ErrorMessage error;
 
-    public Error(String content){
+    public Error(ErrorMessage error){
         this.type = "Error";
-        this.content = content;
+        this.error = error;
     }
 }

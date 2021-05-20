@@ -24,7 +24,7 @@ public class PlaceDevState extends TurnState {
             player.placeDevelopmentCard(deck);
             controller.setCurrentState(new EndTurnState(controller));
         } catch (WrongLevelException e) {
-            controller.sendMessage(new Error(invalidDeck.toString()));
+            controller.sendMessage(new Error(invalidDeck));
         }
     }
 

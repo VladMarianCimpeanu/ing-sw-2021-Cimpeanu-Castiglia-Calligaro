@@ -45,7 +45,7 @@ public class MarketStrategyState extends TurnState {
                 }
             }
         } catch (InvalidIDExcpetion e) {
-            getController().sendError(invalidLeaderCardID.toString());
+            getController().sendError(invalidLeaderCardID);
         } catch (InvalidStrategyException e) {
             e.printStackTrace();
         }
