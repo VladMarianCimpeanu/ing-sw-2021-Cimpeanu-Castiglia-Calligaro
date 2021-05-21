@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.MessageFromServer.Updates;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class UpdateMeetingPope extends MessageFromServer {
@@ -10,10 +11,10 @@ public class UpdateMeetingPope extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().dumpMessage("The following players has just joined a meeting with the pope:\n"+deltaVictoryPoints.keySet().toString());
-//        System.out.println("The following players has just joined a meeting with the pope:");
-//        for (String nickname : deltaVictoryPoints.keySet()) {
-//            if (deltaVictoryPoints.get(nickname) != 0) System.out.println(nickname);
-//        }
+        ArrayList<String> players = new ArrayList<>();
+        for(String player: deltaVictoryPoints.keySet())
+            if(deltaVictoryPoints.get(player) != 0)
+                players.add(player);
+        client.getGameView().dumpMessage("The following players has just joined a meeting with the pope:\n"+players.toString());
     }
 }

@@ -26,7 +26,7 @@ public class BuyDevState extends TurnState {
     public void pay(Resource resource, String position) {
         Controller controller = getController();
         if(resource == null){
-            controller.sendMessage(new Error(nullResource.toString()));
+            controller.sendMessage(new Error(nullResource));
             return;
         }
         Player player = controller.getCurrentPlayer();
@@ -39,15 +39,15 @@ public class BuyDevState extends TurnState {
                 else if (position.equals("extraSlot"))
                     player.payFromExtraSlot(resource);
                 else {
-                    controller.sendMessage(new Error(invalidCommand.toString()));
+                    controller.sendMessage(new Error(invalidCommand));
                     return;
                 }
                 if (player.getDevelopmentCardCost().isEmpty()) controller.setCurrentState(new PlaceDevState(controller));
             }catch(NotEnoughResourcesException e){
-                controller.sendMessage(new Error(notEnoughResources.toString()));
+                controller.sendMessage(new Error(notEnoughResources));
             }
         }else
-            controller.sendMessage(new Error(nullPosition.toString()));
+            controller.sendMessage(new Error(nullPosition));
     }
 
     @Override

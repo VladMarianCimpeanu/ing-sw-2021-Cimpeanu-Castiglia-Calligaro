@@ -61,7 +61,7 @@ public class ExtraProdOutState extends TurnState {
      * @param error error that caused production failure.
      */
     private void resetState(Controller controller, ErrorMessage error) {
-        controller.sendError(error.toString());
+        controller.sendError(error);
         if(firstProduction) controller.setCurrentState(new SelectionState(controller));
         else controller.setCurrentState(new ProductionState(controller));
     }

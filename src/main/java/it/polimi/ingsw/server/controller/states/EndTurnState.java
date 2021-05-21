@@ -34,9 +34,9 @@ public class EndTurnState extends TurnState {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);
             getController().getCurrentPlayer().activateLeaderCard(leaderCard);
         } catch (NoCardException e) {
-            getController().sendError(invalidLeaderCardID.toString());
+            getController().sendError(invalidLeaderCardID);
         } catch (RequirementException e) {
-            getController().sendError(requirementsNotSatisfied.toString());
+            getController().sendError(requirementsNotSatisfied);
         }
     }
 
@@ -46,7 +46,7 @@ public class EndTurnState extends TurnState {
             LeaderCard leaderCard = JsonToLeaderCard.getLeaderCard(id);
             getController().getCurrentPlayer().discardLeaderCard(leaderCard);
         } catch (NoCardException e) {
-            getController().sendError(invalidLeaderCardID.toString());
+            getController().sendError(invalidLeaderCardID);
         }
 
     }

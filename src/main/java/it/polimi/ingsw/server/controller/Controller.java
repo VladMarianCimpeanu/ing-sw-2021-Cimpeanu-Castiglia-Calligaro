@@ -307,11 +307,11 @@ public class Controller {
 
     /**
      * sends an error to the current player.
-     * @param e  specific error to send.
+     * @param error  specific error to send.
      */
-    public void sendError(String e) {
+    public void sendError(ErrorMessage error) {
         if(currentUser == null) return;
-        nicknames.get(currentUser).sendError(e);
+        nicknames.get(currentUser).sendError(error);
     }
 
     /**
@@ -346,7 +346,7 @@ public class Controller {
         try {
             game.endTurn();
         } catch (NoSuchPlayerException e) {
-            sendError(ErrorMessage.generic.toString());
+            sendError(ErrorMessage.generic);
         }
     }
 

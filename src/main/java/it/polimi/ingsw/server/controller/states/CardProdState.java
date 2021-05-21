@@ -34,14 +34,14 @@ public class CardProdState extends TurnState {
                     dashboard.takeFromExtraSlot(resource);
                     break;
                 default:
-                    controller.sendError("wrongPosition");
+                    controller.sendError(ErrorMessage.invalidStorage);
             }
         } catch (NotEnoughResourcesException e) {
-            controller.sendError("notEnoughResources");
+            controller.sendError(ErrorMessage.notEnoughResources);
         } catch (RequirementsSatisfiedException e) {
-            controller.sendError("requirementsSatisfied");
+            controller.sendError(ErrorMessage.requirementsNotSatisfied);
         } catch (InvalidResourceException e) {
-            controller.sendError("invalidResource");
+            controller.sendError(ErrorMessage.invalidResource);
         }
         if(dashboard.getResourcesToPay().size() == 0){
             controller.setCurrentState(new ActivateProdState(controller));

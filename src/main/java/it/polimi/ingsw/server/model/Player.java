@@ -71,7 +71,7 @@ public class Player {
     }
 
     public void keepLeaderCards(LeaderCard card1, LeaderCard card2) throws NoCardException {
-        if(leaderCards.contains(card1) && leaderCards.contains(card2)){
+        if(leaderCards.contains(card1) && leaderCards.contains(card2) && !card1.equals(card2)){
             leaderCards = new ArrayList<>();
             leaderCards.add(card1);
             leaderCards.add(card2);

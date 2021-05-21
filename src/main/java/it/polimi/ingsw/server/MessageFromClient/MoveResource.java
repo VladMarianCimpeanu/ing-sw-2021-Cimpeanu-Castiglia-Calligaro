@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.MessageFromClient;
 
 import it.polimi.ingsw.server.controller.Controller;
+import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.TurnState;
 
 public class MoveResource extends MessageFromClient {
@@ -9,7 +10,7 @@ public class MoveResource extends MessageFromClient {
     @Override
     public void activate(Controller controller) {
         if(shelfFrom == 0 || shelfTo == 0) {
-            controller.sendError("invalidJson");
+            controller.sendError(ErrorMessage.invalidJson);
             return;
         }
         TurnState state = controller.getCurrentState();
