@@ -20,7 +20,7 @@ public class PlayerCLI extends PlayerView {
         if(player.equals(nickname))
             System.out.print("Your");
         else
-            System.out.print(player);
+            System.out.print(nickname);
         System.out.print("'s "+ objectUpdated +" has changed into:  ");
     }
 }

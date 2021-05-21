@@ -215,9 +215,8 @@ public class EchoServerClientHandler implements Runnable {
                     //client crashed
                     MultiEchoServer.handleCrash(this);
                     //store the current state somewhere?
-                    controller.getCurrentState().completeTurn();
                     if (isMyTurn)
-                        controller.nextTurn();
+                        controller.getCurrentState().completeTurn();
                     break;
                 }
             } catch (SocketTimeoutException e) {
@@ -227,9 +226,8 @@ public class EchoServerClientHandler implements Runnable {
                 //client crashed
                 MultiEchoServer.handleCrash(this);
                 //store the current state somewhere?
-                controller.getCurrentState().completeTurn();
                 if (isMyTurn)
-                    controller.nextTurn();
+                    controller.getCurrentState().completeTurn();
                 break;
             }
             synchronized (controller) {
