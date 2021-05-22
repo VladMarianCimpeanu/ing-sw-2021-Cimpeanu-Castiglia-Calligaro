@@ -37,10 +37,9 @@ public class JsonToDevCard {
      * @throws NoSuchElementException if an element read is anomalous.
      * @throws InvalidReadException if a card misses some data.
      */
-    public List<DevelopmentCard> readJsonDevelopmentCard(InputStream in) throws IOException, NoSuchElementException, InvalidReadException {
-        try (JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-            return readDevelopmentCardArray(reader);
-        }
+    public List<DevelopmentCard> readJsonDevelopmentCard(InputStreamReader in) throws IOException, NoSuchElementException, InvalidReadException {
+        JsonReader reader = new JsonReader(in);
+        return readDevelopmentCardArray(reader);
     }
 
     /**

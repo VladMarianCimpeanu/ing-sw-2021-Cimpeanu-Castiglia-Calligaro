@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.exceptions.NoCardException;
 import it.polimi.ingsw.server.model.leaderCards.*;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -45,10 +46,10 @@ public class JsonToLeaderCard {
     }
 
     private static ArrayList<LeaderCard> parseLeaderCards() throws IOException {
+        String srcPath = "/leaderCards.json";
+        Reader inputReader = new InputStreamReader(JsonToLeaderCard.class.getResourceAsStream(srcPath), StandardCharsets.UTF_8);
         ArrayList<LeaderCard> cards = new ArrayList<>();
-        File file = new File("src/resources/leaderCards.json");
-        InputStream in = new FileInputStream(file);
-        JsonReader reader = new JsonReader(new InputStreamReader(in));
+        JsonReader reader = new JsonReader(inputReader);
 
         String current_type;
         Resource resource = null;

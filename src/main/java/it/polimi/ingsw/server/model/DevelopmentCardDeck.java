@@ -6,6 +6,9 @@ import it.polimi.ingsw.server.model.exceptions.NoCardException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -23,9 +26,10 @@ public abstract class DevelopmentCardDeck {
      */
     public static ArrayList<DevelopmentCard> getDevelopmentCardDeck() throws IOException, InvalidReadException {
         if (cards == null) {
+            String path = "/developmentCard.json";
+            InputStreamReader reader = new InputStreamReader(DevelopmentCard.class.getResourceAsStream(path), StandardCharsets.UTF_8);
             JsonToDevCard myJsonReader = new JsonToDevCard();
-            String path = "src/resources/developmentCard.json";
-            cards = (ArrayList<DevelopmentCard>) myJsonReader.readJsonDevelopmentCard(new FileInputStream(path));
+            cards = (ArrayList<DevelopmentCard>) myJsonReader.readJsonDevelopmentCard(reader);
         }
         return new ArrayList<>(cards);
     }
@@ -40,9 +44,10 @@ public abstract class DevelopmentCardDeck {
     public static DevelopmentCard getDevelopmentCard(int ID) throws IOException, InvalidReadException, NoCardException {
         if (ID < 1 || ID > 48) throw new NoCardException();
         if (cards == null) {
+            String path = "/developmentCard.json";
+            InputStreamReader reader = new InputStreamReader(DevelopmentCard.class.getResourceAsStream(path), StandardCharsets.UTF_8);
             JsonToDevCard myJsonReader = new JsonToDevCard();
-            String path = "src/jsonSources/developmentCard.json";
-            cards = (ArrayList<DevelopmentCard>) myJsonReader.readJsonDevelopmentCard(new FileInputStream(path));
+            cards = (ArrayList<DevelopmentCard>) myJsonReader.readJsonDevelopmentCard(reader);
         }
         return cards.get(ID - 1);
     }

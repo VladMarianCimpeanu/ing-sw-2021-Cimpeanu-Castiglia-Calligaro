@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -247,12 +248,13 @@ public class CLI implements Runnable {
     }
 
     private void readHelp(){
-        Path path = Paths.get("src/resources/help.txt");
-        try {
-            for(String line: Files.readAllLines(path))
-                System.out.println(line);
-        } catch (IOException e) {
-            e.printStackTrace();
+        String helpPath = "/help.txt";
+        Reader reader = new InputStreamReader(this.getClass().getResourceAsStream(helpPath), StandardCharsets.UTF_8);
+        Scanner scanner = new Scanner(reader);
+
+        while(scanner.hasNext()){
+            String line = scanner.nextLine();
+            System.out.println(line);
         }
     }
 }

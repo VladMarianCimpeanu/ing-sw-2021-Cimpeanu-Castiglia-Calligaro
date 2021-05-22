@@ -5,10 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
 import it.polimi.ingsw.client.modelLight.LeaderCardView;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -17,16 +16,11 @@ public class LeaderCardSetCLI extends LeaderCardSetView {
 
     public LeaderCardSetCLI() {
         cards = new ArrayList<>();
-        String srcPath = "src/resources/leaderCards.json";
-        BufferedReader reader = null;
+        String srcPath = "/leaderCards.json";
+        Reader reader = new InputStreamReader(this.getClass().getResourceAsStream(srcPath), StandardCharsets.UTF_8);
         Gson converter = new Gson();
-        try {
-            reader = new BufferedReader(new FileReader(srcPath));
-            Type cardsType = new TypeToken<ArrayList<LeaderCardCLI>>(){}.getType();
-            cards = converter.fromJson(reader, cardsType);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        Type cardsType = new TypeToken<ArrayList<LeaderCardCLI>>(){}.getType();
+        cards = converter.fromJson(reader, cardsType);
     }
 
     @Override
