@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.modelLight.GUI.LeaderCardGUI;
-import it.polimi.ingsw.client.modelLight.GUI.LeaderCardSetGUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

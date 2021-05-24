@@ -7,7 +7,7 @@ import it.polimi.ingsw.client.modelLight.LeaderCardView;
 public class LeaderCardGUI extends LeaderCardView implements Clickable {
 
     private int id;
-    private String url;
+    private String image;
     private Shape shape;
 
     public LeaderCardGUI() {
@@ -39,6 +39,6 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     }
 
     public String getUrl() {
-        return url;
+        return image;
     }
 }

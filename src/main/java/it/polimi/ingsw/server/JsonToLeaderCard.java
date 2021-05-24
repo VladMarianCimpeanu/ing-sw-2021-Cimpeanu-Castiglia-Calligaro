@@ -65,6 +65,8 @@ public class JsonToLeaderCard {
             while (reader.hasNext()) {
                 String next = reader.nextName();
                 switch (next) {
+                    case "image":
+                        break;
                     case "ID":
                         ID = reader.nextInt();
                         break;

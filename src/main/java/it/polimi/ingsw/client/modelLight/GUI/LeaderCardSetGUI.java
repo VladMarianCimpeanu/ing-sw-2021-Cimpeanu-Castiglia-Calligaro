@@ -19,7 +19,7 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
         String srcPath = "/leaderCards.json";
         Reader reader = new InputStreamReader(this.getClass().getResourceAsStream(srcPath), StandardCharsets.UTF_8);
         Gson converter = new Gson();
-        Type cardsType = new TypeToken<ArrayList<LeaderCardCLI>>(){}.getType();
+        Type cardsType = new TypeToken<ArrayList<LeaderCardGUI>>(){}.getType();
         cards = converter.fromJson(reader, cardsType);
     }
 
