@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 import static it.polimi.ingsw.client.Resource.*;
 
-
 public class Client {
     private Socket clientSocket;
     private PrintWriter out;
@@ -99,6 +98,8 @@ public class Client {
 
     public void start(){
         cli = new CLI(this);
+        GUI.setClient(this);
+        GUI.start();
         gameView = new GameCLI();
         new Thread(cli).start();
 
