@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client;
 
 
+import it.polimi.ingsw.client.modelLight.GUI.LeaderCardGUI;
+import it.polimi.ingsw.client.modelLight.GUI.LeaderCardSetGUI;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -73,13 +76,6 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //g.drawString("This is my custom Panel!",10,20);
-
-//        LeaderCardSetGUI set = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
-//        for(LeaderCardGUI card: set.getCards()){
-//            drawImage(g, card.getUrl(), card.getShape());
-//        }
-
 
         Shape shape = new Shape(0,0,600,426);
         drawImage(g,"images/board/playerBoard.png", shape);
@@ -88,14 +84,10 @@ public class GamePanel extends JPanel {
         Shape shape3 = new Shape(730,450,200,259);
         drawImage(g,"images/punchboard/portabiglie.png", shape3);
 
-        Shape shape4 = new Shape(20,450,133,200);
-        drawImage(g,"images/front/frontCard60.png", shape4);
-        Shape shape5 = new Shape(170,450,133,200);
-        drawImage(g,"images/front/frontCard63.png", shape5);
-        Shape shape6 = new Shape(320,450,133,200);
-        drawImage(g,"images/front/frontCard60.png", shape6);
-        Shape shape7 = new Shape(470,450,133,200);
-        drawImage(g,"images/front/frontCard63.png", shape7);
+        LeaderCardSetGUI set = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
+        for(LeaderCardGUI card: set.getCards()){
+            drawImage(g, card.getImage(), card.getShape());
+        }
 
         g.drawString("Attiva LeaderCard", 1200, 20);
         g.drawString("Scarta LeaderCard", 1200, 50);
@@ -122,6 +114,10 @@ public class GamePanel extends JPanel {
     public void addGameboard(Clickable clickable){
         if(!gameBoard.contains(clickable))
             gameBoard.add(clickable);
+    }
+
+    public void removeGameboard(Clickable clickable){
+        gameBoard.remove(clickable);
     }
 
     public void addAction(Clickable clickable){

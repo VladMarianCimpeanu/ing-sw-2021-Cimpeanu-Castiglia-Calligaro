@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.modelLight;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public abstract class LeaderCardSetView {
 

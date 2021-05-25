@@ -6,6 +6,7 @@ import javax.swing.*;
 
 public class GUI {
     private static Client client;
+    private static final GamePanel gamePanel = new GamePanel();
 
     public static void setClient(Client client) {
         GUI.client = client;
@@ -28,7 +29,7 @@ public class GUI {
                 SwingUtilities.isEventDispatchThread());
         JFrame f = new JFrame("Maestri del rinascimento");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(new GamePanel());
+        f.add(gamePanel);
         f.setSize(1280,720);
 
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -38,5 +39,9 @@ public class GUI {
 
     public static Client getClient() {
         return client;
+    }
+
+    public static GamePanel getGamePanel() {
+        return gamePanel;
     }
 }

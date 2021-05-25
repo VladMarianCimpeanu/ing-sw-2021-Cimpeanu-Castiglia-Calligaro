@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.modelLight.CLI;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
-import it.polimi.ingsw.client.modelLight.LeaderCardView;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class LeaderCardSetCLI extends LeaderCardSetView {
-    protected ArrayList<LeaderCardCLI> cards;
+    private ArrayList<LeaderCardCLI> cards;
 
     public LeaderCardSetCLI() {
         cards = new ArrayList<>();

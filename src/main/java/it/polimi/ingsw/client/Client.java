@@ -11,6 +11,7 @@ import it.polimi.ingsw.client.modelLight.CLI.DepotCLI;
 import it.polimi.ingsw.client.modelLight.CLI.GameCLI;
 import it.polimi.ingsw.client.modelLight.CLI.MarketCLI;
 import it.polimi.ingsw.client.modelLight.CLI.StrongboxCLI;
+import it.polimi.ingsw.client.modelLight.GUI.GameGUI;
 import it.polimi.ingsw.client.modelLight.GameView;
 import it.polimi.ingsw.client.modelLight.PlayerView;
 import it.polimi.ingsw.server.RuntimeTypeAdapterFactory;
@@ -99,8 +100,8 @@ public class Client {
     public void start(){
         cli = new CLI(this);
         GUI.setClient(this);
-        GUI.start();
-        gameView = new GameCLI();
+//        GUI.start();
+        gameView = new GameGUI();
         new Thread(cli).start();
 
         String line = null;

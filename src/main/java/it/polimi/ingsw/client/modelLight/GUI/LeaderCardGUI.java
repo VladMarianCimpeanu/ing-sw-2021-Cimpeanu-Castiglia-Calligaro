@@ -1,27 +1,26 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
+import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardView;
 
+import java.awt.*;
+
 public class LeaderCardGUI extends LeaderCardView implements Clickable {
 
-    private int id;
+    private int ID;
     private String image;
     private Shape shape;
+    private boolean activated = false;
 
-    public LeaderCardGUI() {
-        shape = new Shape(0,0,1000,1000);
+    public void setShape(Shape shape) {
+        this.shape = shape;
     }
 
     @Override
     public void show() {
 
-    }
-
-    @Override
-    public int getID() {
-        return 0;
     }
 
     @Override
@@ -38,7 +37,18 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
         return shape;
     }
 
-    public String getUrl() {
+    public String getImage() {
         return image;
     }
+
+    @Override
+    public int getID() {
+        return ID;
+    }
+
+    @Override
+    public void activate(){
+        activated = true;
+    }
+
 }

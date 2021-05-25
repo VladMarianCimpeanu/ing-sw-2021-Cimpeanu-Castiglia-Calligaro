@@ -2,6 +2,7 @@
   {
     "ID" : 1,
     "type" : "buyCard",
+    "image" : "images/leader/leader1.png",
     "resource" : "SERVANT",
     "victoryPoints" : "2",
     "type_req" : "development",
@@ -22,6 +23,7 @@
 , {
   "ID" : 2,
   "type" : "buyCard",
+  "image" : "images/leader/leader2.png",
   "resource" : "SHIELD",
   "victoryPoints" : "2",
   "type_req" : "development",
@@ -42,6 +44,7 @@
   {
     "ID" : 3,
     "type" : "buyCard",
+    "image" : "images/leader/leader3.png",
     "resource" : "STONE",
     "victoryPoints" : "2",
     "type_req" : "development",
@@ -62,6 +65,7 @@
   {
     "ID" : 4,
     "type" : "buyCard",
+    "image" : "images/leader/leader4.png",
     "resource" : "COIN",
     "victoryPoints" : "2",
     "type_req" : "development",
@@ -82,6 +86,7 @@
   {
     "ID" : 5,
     "type" : "depot",
+    "image" : "images/leader/leader5.png",
     "resource" : "STONE",
     "victoryPoints" : "3",
     "type_req" : "resource",
@@ -96,6 +101,7 @@
   {
     "ID" : 6,
     "type" : "depot",
+    "image" : "images/leader/leader6.png",
     "resource" : "SERVANT",
     "victoryPoints" : "3",
     "type_req" : "resource",
@@ -110,6 +116,7 @@
   {
     "ID" : 7,
     "type" : "depot",
+    "image" : "images/leader/leader7.png",
     "resource" : "SHIELD",
     "victoryPoints" : "3",
     "type_req" : "resource",
@@ -124,6 +131,7 @@
   {
     "ID" : 8,
     "type" : "depot",
+    "image" : "images/leader/leader8.png",
     "resource" : "COIN",
     "victoryPoints" : "3",
     "type_req" : "resource",
@@ -138,6 +146,7 @@
   {
     "ID" : 9,
     "type" : "market",
+    "image" : "images/leader/leader9.png",
     "resource" : "SERVANT",
     "victoryPoints" : "5",
     "type_req" : "development",
@@ -158,6 +167,7 @@
   {
     "ID" : 10,
     "type" : "market",
+    "image" : "images/leader/leader10.png",
     "resource" : "SHIELD",
     "victoryPoints" : "5",
     "type_req" : "development",
@@ -178,6 +188,7 @@
   {
     "ID" : 11,
     "type" : "market",
+    "image" : "images/leader/leader11.png",
     "resource" : "STONE",
     "victoryPoints" : "5",
     "type_req" : "development",
@@ -198,6 +209,7 @@
   {
     "ID" : 12,
     "type" : "market",
+    "image" : "images/leader/leader12.png",
     "resource" : "COIN",
     "victoryPoints" : "5",
     "type_req" : "development",
@@ -217,12 +229,13 @@
   },
   {
     "ID" : 13,
-  "type" : "production",
-  "resource" : "SHIELD",
-  "victoryPoints" : "4",
-  "type_req" : "development",
-  "requirements" :
-  [
+    "type" : "production",
+    "image" : "images/leader/leader13.png",
+    "resource" : "SHIELD",
+    "victoryPoints" : "4",
+    "type_req" : "development",
+    "requirements" :
+    [
     {
       "numberCards" : 1,
       "levelCard" : 2,
@@ -233,6 +246,7 @@
   {
     "ID" : 14,
     "type" : "production",
+    "image" : "images/leader/leader14.png",
     "resource" : "SERVANT",
     "victoryPoints" : "4",
     "type_req" : "development",
@@ -248,6 +262,7 @@
   {
     "ID" : 15,
     "type" : "production",
+    "image" : "images/leader/leader15.png",
     "resource" : "STONE",
     "victoryPoints" : "4",
     "type_req" : "development",
@@ -263,6 +278,7 @@
   {
     "ID" : 16,
     "type" : "production",
+    "image" : "images/leader/leader16.png",
     "resource" : "COIN",
     "victoryPoints" : "4",
     "type_req" : "development",

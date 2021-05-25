@@ -47,6 +47,9 @@ public class CLI implements Runnable {
                             case "cheat":
                                 client.send(new CheatResource());
                                 break;
+                            case "debug":
+                                GUI.start();
+                                break;
                             case "help":
                                 readHelp();
                                 break;

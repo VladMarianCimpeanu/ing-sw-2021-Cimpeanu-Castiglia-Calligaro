@@ -113,6 +113,7 @@ public class LeaderCardCLI extends LeaderCardView {
         return ID;
     }
 
+    @Override
     public void activate(){
         activated = true;
     }
