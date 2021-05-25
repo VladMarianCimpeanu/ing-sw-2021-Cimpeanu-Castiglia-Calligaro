@@ -8,6 +8,6 @@ public class Error extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().dumpMessage(error.getCaption());
+        client.getGameView().displayError(error);
     }
 }

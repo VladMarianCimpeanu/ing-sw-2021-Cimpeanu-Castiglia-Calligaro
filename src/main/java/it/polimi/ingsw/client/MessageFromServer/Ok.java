@@ -7,6 +7,6 @@ public class Ok extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("ok: " + message);
+        client.getGameView().notifyJoin(message);
     }
 }
