@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-
 import it.polimi.ingsw.client.modelLight.GUI.*;
 
 import javax.imageio.ImageIO;
@@ -96,6 +95,9 @@ public class GamePanel extends JPanel {
         for(LeaderCardGUI card: set.getCards()){
             drawImage(g, card.getImage(), card.getShape());
         }
+
+        MarketGUI marketGUI = (MarketGUI) GUI.getClient().getGameView().getMarket();
+        marketGUI.print(g);
 
         g.drawString("Attiva LeaderCard", 1200, 20);
         g.drawString("Scarta LeaderCard", 1200, 50);

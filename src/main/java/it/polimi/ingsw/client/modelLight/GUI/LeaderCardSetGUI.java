@@ -6,7 +6,6 @@ import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
 
-import java.awt.*;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -44,27 +43,26 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
                 .filter(
                         card -> idS.contains(card.getID())
                 ).collect(Collectors.toCollection(ArrayList::new));
+        updateGUI(newCards);
+    }
+
+    @Override
+    public void remove(int id) {
+        ArrayList<LeaderCardGUI> newCards;
+        newCards = cards
+                .stream()
+                .filter(
+                        card -> id != card.getID()
+                ).collect(Collectors.toCollection(ArrayList::new));
+        updateGUI(newCards);
+    }
+
+    private void updateGUI(ArrayList<LeaderCardGUI> newCards) {
         for(LeaderCardGUI c : cards){
             if(!newCards.contains(c))
                 GUI.getGamePanel().removeGameboard(c);
         }
         cards = newCards;
-        int x = 0;
-        for(LeaderCardGUI card: cards){
-            card.setShape(new Shape((startX + x), startY, cardWidth, cardHeight));
-            x += (cardWidth + margin);
-            GUI.getGamePanel().addGameboard(card);
-        }
-        GUI.getGamePanel().repaint();
-    };
-
-    @Override
-    public void remove(int id) {
-        cards = cards
-                .stream()
-                .filter(
-                        card -> id != card.getID()
-                ).collect(Collectors.toCollection(ArrayList::new));
         int x = 0;
         for(LeaderCardGUI card: cards){
             card.setShape(new Shape((startX + x), startY, cardWidth, cardHeight));

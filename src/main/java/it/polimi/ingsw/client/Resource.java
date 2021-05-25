@@ -7,17 +7,19 @@ package it.polimi.ingsw.client;
  * enum representing resources to the client.
  */
 public enum Resource {
-    FAITH("\u001B[31m┼"),
-    COIN("\u001B[33m©"),
-    SHIELD("\u001B[34m█"),
-    STONE("\u001B[90m░"),
-    SERVANT("\u001B[95m§");
+    FAITH("\u001B[31m┼", "images/punchboard/faith.png"),
+    COIN("\u001B[33m©", "images/punchboard/coin.png"),
+    SHIELD("\u001B[34m█", "images/punchboard/shield.png"),
+    STONE("\u001B[90m░", "images/punchboard/stone.png"),
+    SERVANT("\u001B[95m§", "images/punchboard/servant.png");
     public static final String RESET = "\u001B[0m";
 
     private final String escape;
+    private final String url;
 
-    Resource(String escape) {
+    Resource(String escape, String url) {
         this.escape = escape;
+        this.url = url;
     }
 
     /**
@@ -27,6 +29,10 @@ public enum Resource {
      */
     public String escape(){
         return escape;
+    }
+
+    public String url(){
+        return url;
     }
 
     private static int calculateSpace(String content){

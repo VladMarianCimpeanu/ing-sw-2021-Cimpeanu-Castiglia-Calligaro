@@ -4,18 +4,20 @@ package it.polimi.ingsw.client;
  * marble of the market for the client.
  */
 public enum Marble {
-    RED("\u001B[31m@"),
-    GREY("\u001B[90m@"),
-    YELLOW("\u001B[33m@"),
-    BLUE("\u001B[34m@"),
-    PURPLE("\u001B[95m@"),
-    WHITE("@");
+    RED("\u001B[31m@", "images/punchboard/marbles/red.png"),
+    GREY("\u001B[90m@", "images/punchboard/marbles/grey.png"),
+    YELLOW("\u001B[33m@", "images/punchboard/marbles/yellow.png"),
+    BLUE("\u001B[34m@", "images/punchboard/marbles/blue.png"),
+    PURPLE("\u001B[95m@", "images/punchboard/marbles/purple.png"),
+    WHITE("@", "images/punchboard/marbles/white.png");
     static final String RESET = "\u001B[0m";
 
     private final String escape;
+    private final String url;
 
-    Marble(String escape) {
+    Marble(String escape, String url) {
         this.escape = escape;
+        this.url = url;
     }
 
     /**
@@ -25,6 +27,10 @@ public enum Marble {
      */
     public String escape(){
         return escape;
+    }
+
+    public String url(){
+        return url;
     }
 
 }
