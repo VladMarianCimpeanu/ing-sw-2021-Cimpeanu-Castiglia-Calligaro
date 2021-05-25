@@ -23,4 +23,10 @@ public abstract class DepotView {
         resources[shelf-1] = resource;
         quantity[shelf-1] = many;
     }
+
+    public int howMany(Resource resource){
+        for(int i = 0; i<3; i++)
+            if(resources[i] == resource && quantity[i] != 0) return quantity[i];
+        return 0;
+    }
 }

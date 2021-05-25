@@ -8,6 +8,7 @@ public abstract class FaithPathView {
 
     public abstract void show();
     public abstract void showUpdate();
+    public abstract void addPlayer(String player);
     public void update(Map<String, Integer> positions){
         if(this.positions != null){
             this.positions = new HashMap<>(positions);

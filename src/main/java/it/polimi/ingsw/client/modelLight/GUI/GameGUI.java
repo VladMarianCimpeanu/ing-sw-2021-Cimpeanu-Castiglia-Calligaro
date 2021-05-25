@@ -22,7 +22,10 @@ public class GameGUI extends GameView {
         if(nicknames.size() == 1) actionTokenView = new ActionTokenGUI();
         players = new TreeMap<>();
         //with TreeMap we can save the player order
-        for(String nickname : nicknames) players.put(nickname, new PlayerGUI(nickname));
+        for(String nickname : nicknames){
+            players.put(nickname, new PlayerGUI(nickname));
+            faithPath.addPlayer(nickname);
+        }
     }
 
     @Override

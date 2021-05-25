@@ -16,6 +16,11 @@ public abstract class StrongboxView {
     public abstract void show();
     public void update(Map<Resource, Integer> resources){
         content = resources;
+        show();
+    }
+    public int getQuantity(Resource resource){
+        if(!content.containsKey(resource)) return 0;
+        return content.get(resource);
     }
 
 }

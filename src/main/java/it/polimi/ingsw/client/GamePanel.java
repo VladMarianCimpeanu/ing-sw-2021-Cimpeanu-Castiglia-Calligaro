@@ -99,6 +99,34 @@ public class GamePanel extends JPanel {
         MarketGUI marketGUI = (MarketGUI) GUI.getClient().getGameView().getMarket();
         marketGUI.print(g);
 
+
+        //Strongbox
+        StrongboxGUI strongbox = (StrongboxGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox();
+        for(Resource resource: Resource.values()){
+            if(strongbox.getQuantity(resource) == 0) continue;
+            drawImage(g, resource.url(), strongbox.getShape(resource));
+            g.setColor(Color.WHITE);
+            g.drawString(strongbox.getQuantity(resource)+"x", strongbox.getShape(resource).getX()-19, strongbox.getShape(resource).getY()+10);
+        }
+
+        //WarehouseDepot
+        DepotGUI depot = (DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot();
+        int deltaShelf = 23;    //distance between resources on the same shelf
+        for(Resource resource: depot.getShapes().keySet())
+            for(int i = 0; i<depot.howMany(resource); i++) {
+                Shape s = depot.getShapes().get(resource);
+                drawImage(g, resource.url(), new Shape(s.getX()+i*deltaShelf, s.getY(), s.getWidth(), s.getHeight()));
+            }
+
+        //FaithPath
+        FaithPathGUI faithPath = (FaithPathGUI) GUI.getClient().getGameView().getFaithPathView();
+        for(String player: faithPath.getShapes().keySet())
+            if(player.equals("blackCross"))
+                drawImage(g, "images/punchboard/blackCross.png", faithPath.getShapes().get(player));
+            else
+                drawImage(g, faithPath.getURLCross(player), faithPath.getShapes().get(player));
+
+
         g.drawString("Attiva LeaderCard", 1200, 20);
         g.drawString("Scarta LeaderCard", 1200, 50);
     }

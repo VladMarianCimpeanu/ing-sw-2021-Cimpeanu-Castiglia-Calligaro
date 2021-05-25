@@ -32,4 +32,9 @@ public class FaithPathCLI extends FaithPathView {
         }
         System.out.println(".");
     }
+
+    @Override
+    public void addPlayer(String player) {
+
+    }
 }
