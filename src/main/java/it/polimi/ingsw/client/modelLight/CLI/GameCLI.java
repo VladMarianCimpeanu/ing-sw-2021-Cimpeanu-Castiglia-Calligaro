@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.modelLight.CLI;
 
 import it.polimi.ingsw.client.Color;
+import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
@@ -48,5 +49,15 @@ public class GameCLI extends GameView {
             content += resources.get(res).toString() + " " + res.escape() + Color.RESET + " ";
         }
         dumpMessage(content);
+    }
+
+    @Override
+    public void notifyJoin(String content) {
+        System.out.println(content);
+    }
+
+    @Override
+    public void displayError(ErrorMessage error) {
+        System.out.println(error.getCaption());
     }
 }

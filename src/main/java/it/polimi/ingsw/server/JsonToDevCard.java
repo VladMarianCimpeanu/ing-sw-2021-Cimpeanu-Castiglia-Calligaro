@@ -73,6 +73,7 @@ public class JsonToDevCard {
         int victoryPoints = -1;
         int level = -1;
         int ID = -1;
+        String url;
         Color color = null;
         Map<Resource, Integer> ResourceCost = null;
         Map<Resource, Integer> ResourceIn = null;
@@ -121,6 +122,9 @@ public class JsonToDevCard {
                     break;
                 case "BenefitOut":
                     ResourceOut = readBenefits(reader);
+                    break;
+                case "url":
+                    url = reader.nextString();
                     break;
                 default:
                     throw new NoSuchElementException(name + " is an undefined field");

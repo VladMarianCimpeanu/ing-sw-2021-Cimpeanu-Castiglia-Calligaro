@@ -1,11 +1,9 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
+import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenGUI;
-import it.polimi.ingsw.client.modelLight.CLI.DevelopmentCardsSetCLI;
-import it.polimi.ingsw.client.modelLight.CLI.FaithPathCLI;
-import it.polimi.ingsw.client.modelLight.CLI.MarketCLI;
-import it.polimi.ingsw.client.modelLight.CLI.PlayerCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 
 import java.util.ArrayList;
@@ -35,5 +33,18 @@ public class GameGUI extends GameView {
     @Override
     public void displayResourcesToPay(Map<Resource, Integer> resources) {
 
+    }
+
+    @Override
+    public void notifyJoin(String content) {
+        GUI.goToWaitingRoom();
+    }
+
+
+    @Override
+    public void displayError(ErrorMessage error) {
+        if(error == ErrorMessage.invalidNickname || error == ErrorMessage.usedNickname){
+            GUI.getLoginPanel().setError(error.getCaption());
+        }
     }
 }

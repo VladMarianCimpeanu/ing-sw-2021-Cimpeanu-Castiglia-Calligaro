@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelLight;
 
+import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenView;
 
@@ -39,4 +40,8 @@ public abstract class GameView {
     }
 
     public abstract void displayResourcesToPay(Map<Resource, Integer> resources);
+
+    public abstract void notifyJoin(String content);
+
+    public abstract void displayError(ErrorMessage error);
 }

@@ -8,6 +8,18 @@ import static it.polimi.ingsw.client.modelLight.CLI.DevelopmentCardsSetCLI.*;
 public final class DevelopmentCardsDecksCLI extends DevelopmentCardDecksView {
 
     /**
+     * this method replace the card in the specified position with the new one.
+     * @param deckIndex deck to place the new card.
+     * @param ID id of the new card to place.
+     * @param nickname nickname of the owner of the player.
+     */
+    @Override
+    public void addCard(int deckIndex, int ID, String nickname){
+        playerCards.set(deckIndex - 1, ID);
+        System.out.println(nickname + " has placed a new development card in his " + deckIndex + " deck");
+    }
+
+    /**
      * given a development cards it returns its color.
      * @param cardID ID of the specified development card: note that this method do not verify if the ID is 0
      * (if ID is 0 it will be thrown a runtime Exception OutOfBoundException)
@@ -82,14 +94,4 @@ public final class DevelopmentCardsDecksCLI extends DevelopmentCardDecksView {
                 "(1)" + stringProduct(18 ," ") + "(2)" + stringProduct(19 ," ") + "(3)" );
     }
 
-    //TODO: delete this when all the other CLI components are done: this main is used only to test the development
-    // card deck rendering.
-    public static void main(String[] args) {
-        DevelopmentCardsSetCLI set = new DevelopmentCardsSetCLI();
-        DevelopmentCardsDecksCLI decks = new DevelopmentCardsDecksCLI();
-        decks.addCard(1,1);
-        decks.addCard(3, 48);
-        decks.addCard(2, 18);
-        decks.show();
-    }
 }

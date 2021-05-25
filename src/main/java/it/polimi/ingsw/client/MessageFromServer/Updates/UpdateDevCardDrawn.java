@@ -11,9 +11,6 @@ public class UpdateDevCardDrawn extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().dumpMessage("A " + color + " development card of level " + level + " has just drown.");
-        if (idNewCard == 0) client.getGameView().dumpMessage("There are no more cards.");
-        else client.getGameView().dumpMessage("Now you can draw the card " + idNewCard);
         client.getGameView().getCards().updateSet(color, level, idNewCard);
     }
 }

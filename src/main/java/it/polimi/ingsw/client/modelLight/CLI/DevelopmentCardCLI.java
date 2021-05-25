@@ -7,13 +7,13 @@ import it.polimi.ingsw.client.modelLight.DevelopmentCardView;
 import java.util.Map;
 
 public class DevelopmentCardCLI extends DevelopmentCardView {
-    int ID;
-    int VictoryPoints;
-    int Level;
-    Color Color;
-    Map<Resource, Integer> ResourceCost;
-    Map<Resource, Integer> ResourceIn;
-    Map<Resource, Integer> BenefitOut;
+    private int ID;
+    private int VictoryPoints;
+    private int Level;
+    private Color Color;
+    private Map<Resource, Integer> ResourceCost;
+    private Map<Resource, Integer> ResourceIn;
+    private Map<Resource, Integer> BenefitOut;
 
     public int getID() {
         return ID;

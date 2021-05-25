@@ -11,7 +11,6 @@ public class UpdateDevDeck extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().dumpMessage(player + " has bought a new development card  and placed it to deck " + position);
-        client.getGameView().getPlayer(player).getDecks().addCard(position, id);
+        client.getGameView().getPlayer(player).getDecks().addCard(position, id, player);
     }
 }

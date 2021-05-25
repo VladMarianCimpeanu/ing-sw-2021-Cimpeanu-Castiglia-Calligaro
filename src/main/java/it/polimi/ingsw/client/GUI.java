@@ -1,12 +1,17 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
+import it.polimi.ingsw.server.model.WaitingRoom;
 
 import javax.swing.*;
 
 public class GUI {
     private static Client client;
     private static final GamePanel gamePanel = new GamePanel();
+
+    private static LoginPanel loginPanel;
+
+    private static WaitingRoomPanel waitingRoomPanel;
 
     public static void setClient(Client client) {
         GUI.client = client;
@@ -44,4 +49,20 @@ public class GUI {
     public static GamePanel getGamePanel() {
         return gamePanel;
     }
+
+    public static LoginPanel getLoginPanel(){
+        return loginPanel;
+    }
+
+    public static WaitingRoomPanel getWaitingRoomPanel(){
+        return waitingRoomPanel;
+    }
+
+    public static void goToWaitingRoom(){
+        //JFrame.remove(loginPanel);
+        //JFrame.add(waitingRoomPanel);
+        //Jframe.setVisible(false);
+        //Jframe.setVisible(true)
+    }
+
 }

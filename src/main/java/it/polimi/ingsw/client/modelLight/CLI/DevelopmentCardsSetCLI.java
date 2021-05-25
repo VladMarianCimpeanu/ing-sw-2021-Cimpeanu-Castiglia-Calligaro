@@ -39,6 +39,19 @@ public class DevelopmentCardsSetCLI extends DevelopmentCardSetView {
     }
 
     /**
+     * updates the cards available replacing the current card in the specified place with the new one.
+     * @param color color of the new card to place.
+     * @param level level of the new card to place.
+     * @param ID id of the new card to place.
+     */
+    @Override
+    public void updateSet(Color color, int level, int ID){
+        System.out.println("A " + color + " development card of level " + level + " has just drown.");
+        if (ID == 0) System.out.println("There are no more cards.");
+        decks.get(level - 1).set(color.getIndex(), ID);
+    }
+    
+    /**
      * @param Id specified development card ID
      * @return DevelopmentCardCLI that has the given ID
      */

@@ -7,9 +7,7 @@ import java.util.ArrayList;
 public abstract class DevelopmentCardSetView {
     protected ArrayList<ArrayList<Integer>> decks;
 
-    public void updateSet(Color color, int level, int ID){
-        decks.get(level - 1).set(color.getIndex(), ID);
-    }
+    public abstract void updateSet(Color color, int level, int ID);
 
     public int getCard(Color color, int level){
         return decks.get(level - 1).get(color.getIndex());

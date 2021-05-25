@@ -10,6 +10,6 @@ public class RejoinDecks extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().getPlayer(player).getDecks().addCard(position, id);
+        client.getGameView().getPlayer(player).getDecks().reloadCard(position, id, player);
     }
 }

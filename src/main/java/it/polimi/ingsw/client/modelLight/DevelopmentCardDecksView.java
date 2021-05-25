@@ -10,7 +10,9 @@ public abstract class DevelopmentCardDecksView {
         for(int index = 0; index < 3; index ++) playerCards.add(0);
     }
 
-    public void addCard(int deckIndex, int ID){
+    public abstract void addCard(int deckIndex, int ID, String nickname);
+
+    public void reloadCard(int deckIndex, int ID, String nickname){
         playerCards.set(deckIndex - 1, ID);
     }
 

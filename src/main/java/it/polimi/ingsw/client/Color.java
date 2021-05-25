@@ -31,5 +31,4 @@ public enum Color {
      * be purchased.
      */
     public int getIndex(){return index;}
-
 }

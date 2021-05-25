@@ -7,6 +7,9 @@ public class PlayerGUI extends PlayerView {
     public PlayerGUI(String nickname) {
         this.nickname = nickname;
         leaderCards = new LeaderCardSetGUI();
+        decks = new DevelopmentCardDecksGUI();
+        strongbox = new StrongboxGUI();
+        depot = new DepotGUI();
     }
 
     @Override
