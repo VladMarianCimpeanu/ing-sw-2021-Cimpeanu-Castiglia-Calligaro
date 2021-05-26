@@ -38,6 +38,10 @@ public class StrongboxGUI extends StrongboxView implements Clickable {
             }
         }
         GUI.getGamePanel().repaint();
+        StringBuilder row = new StringBuilder();
+        for(Resource resource: content.keySet())
+            row.append(content.get(resource)).append("x").append(resource.escape()).append("  ").append(Resource.RESET);
+        GUI.print(row.toString());
     }
 
     public Shape getShape(Resource resource) {

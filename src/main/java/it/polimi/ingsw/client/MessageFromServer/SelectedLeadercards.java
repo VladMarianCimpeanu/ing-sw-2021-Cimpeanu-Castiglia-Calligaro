@@ -14,7 +14,7 @@ public class SelectedLeadercards extends MessageFromServer {
         ArrayList<Integer> leaderIds = new ArrayList<>();
         leaderIds.add(id1);
         leaderIds.add(id2);
-        client.getGameView().getPlayer(client.getNickname()).getLeaderCards().update(leaderIds);
+        client.getGameView().getPlayer(client.getNickname()).getLeaderCards().keep(leaderIds);
         client.getGameView().getPlayer(client.getNickname()).getLeaderCards().show();
     }
 }

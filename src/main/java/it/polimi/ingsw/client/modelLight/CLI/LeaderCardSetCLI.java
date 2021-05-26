@@ -3,28 +3,36 @@ package it.polimi.ingsw.client.modelLight.CLI;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
+import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LeaderCardSetCLI extends LeaderCardSetView {
-    private ArrayList<LeaderCardCLI> cards;
+    private Map<Integer,LeaderCardCLI> cards;
 
     public LeaderCardSetCLI() {
-        cards = new ArrayList<>();
+        playerCards = new ArrayList<>();
+        cards = new HashMap<>();
+        ArrayList<LeaderCardCLI> read = new ArrayList<>();
         String srcPath = "/leaderCards.json";
         Reader reader = new InputStreamReader(this.getClass().getResourceAsStream(srcPath), StandardCharsets.UTF_8);
         Gson converter = new Gson();
         Type cardsType = new TypeToken<ArrayList<LeaderCardCLI>>(){}.getType();
-        cards = converter.fromJson(reader, cardsType);
+        read = converter.fromJson(reader, cardsType);
+        for(LeaderCardCLI lc: read){
+            cards.put(lc.getID(), lc);
+        }
     }
 
     @Override
     public void show() {
-        if(cards.size() == 0){
+        if(playerCards.size() == 0){
             System.out.println("You don't have any LeaderCard");
             return;
         }
@@ -32,8 +40,8 @@ public class LeaderCardSetCLI extends LeaderCardSetView {
         String[][] leadercards = new String[4][7];
         String[] leaderCardSet = new String[8];
         int i = 0;
-        for(LeaderCardCLI card : cards){
-            leadercards[i] = card.generateAscii();
+        for(int id: playerCards){
+            leadercards[i] = cards.get(id).generateAscii();
             i++;
         }
         for(int row = 0; row < 7; row++) {
@@ -52,35 +60,8 @@ public class LeaderCardSetCLI extends LeaderCardSetView {
     }
 
     @Override
-    public void update(ArrayList<Integer> idS){
-        cards = cards
-                .stream()
-                .filter(
-                        card -> idS.contains(card.getID())
-                ).collect(Collectors.toCollection(ArrayList::new));
-    };
-
-    public int getIDfromIndex(int index){
-        return cards.get(index-1).getID();
-    }
-
-    @Override
-    public void remove(int id) {
-        cards = cards
-                .stream()
-                .filter(
-                        card -> id != card.getID()
-                ).collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    @Override
     public void activate(int id) {
-        for(LeaderCardCLI l: cards){
-            if(l.getID() == id){
-                l.activate();
-                return;
-            }
-        }
+        cards.get(id).activate();
     }
 
     @Override

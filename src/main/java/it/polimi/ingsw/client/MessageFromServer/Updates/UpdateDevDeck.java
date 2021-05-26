@@ -8,7 +8,6 @@ public class UpdateDevDeck extends MessageFromServer {
     private int position;
     private int id;
 
-
     @Override
     public void activateMessage(Client client) {
         client.getGameView().getPlayer(player).getDecks().addCard(position, id, player);

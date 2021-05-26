@@ -30,7 +30,7 @@ public class GameGUI extends GameView {
 
     @Override
     public void dumpMessage(String content) {
-
+        GUI.print(content);
     }
 
     @Override

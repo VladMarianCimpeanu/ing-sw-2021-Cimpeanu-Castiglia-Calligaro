@@ -11,10 +11,11 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LeaderCardSetGUI extends LeaderCardSetView {
-    private ArrayList<LeaderCardGUI> cards;
+    private Map<Integer, LeaderCardGUI> cards;
     private final static int startX = 20;
     private final static int startY = 450;
     private final static int cardWidth = 133;
@@ -22,59 +23,59 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
     private final static int margin = 17;
 
     public LeaderCardSetGUI() {
-        cards = new ArrayList<>();
+        playerCards = new ArrayList<>();
+        cards = new HashMap<>();
+        ArrayList<LeaderCardGUI> read;
         String srcPath = "/leaderCards.json";
         Reader reader = new InputStreamReader(this.getClass().getResourceAsStream(srcPath), StandardCharsets.UTF_8);
         Gson converter = new Gson();
         Type cardsType = new TypeToken<ArrayList<LeaderCardGUI>>(){}.getType();
-        cards = converter.fromJson(reader, cardsType);
+        read = converter.fromJson(reader, cardsType);
+        for(LeaderCardGUI lc: read){
+            cards.put(lc.getID(), lc);
+        }
     }
 
     @Override
     public void show() {
-
     }
 
     @Override
     public void update(ArrayList<Integer> idS){
-        ArrayList<LeaderCardGUI> newCards;
-        newCards = cards
-                .stream()
-                .filter(
-                        card -> idS.contains(card.getID())
-                ).collect(Collectors.toCollection(ArrayList::new));
-        updateGUI(newCards);
+        super.update(idS);
+        for(int id: playerCards){
+            GUI.getGamePanel().addGameboard(cards.get(id));
+        }
+        updateGUI();
     }
 
     @Override
-    public void remove(int id) {
-        ArrayList<LeaderCardGUI> newCards;
-        newCards = cards
-                .stream()
-                .filter(
-                        card -> id != card.getID()
-                ).collect(Collectors.toCollection(ArrayList::new));
-        updateGUI(newCards);
+    public void keep(ArrayList<Integer> idS) {
+        for(int id: playerCards){
+            GUI.getGamePanel().removeGameboard(cards.get(id));
+        }
+        super.keep(idS);
+        for(int id: playerCards){
+            GUI.getGamePanel().addGameboard(cards.get(id));
+        }
+        updateGUI();
     }
 
-    private void updateGUI(ArrayList<LeaderCardGUI> newCards) {
-        for(LeaderCardGUI c : cards){
-            if(!newCards.contains(c))
-                GUI.getGamePanel().removeGameboard(c);
-        }
-        cards = newCards;
+    @Override
+    public void remove(int idRemove) {
+        super.remove(idRemove);
+        GUI.getGamePanel().removeGameboard(cards.get(idRemove));
+        updateGUI();
+    }
+
+    private void updateGUI() {
         int x = 0;
-        for(LeaderCardGUI card: cards){
-            card.setShape(new Shape((startX + x), startY, cardWidth, cardHeight));
+        for(int id: playerCards){
+            cards.get(id).setShape(new Shape((startX + x), startY, cardWidth, cardHeight));
             x += (cardWidth + margin);
-            GUI.getGamePanel().addGameboard(card);
+            GUI.getGamePanel().addGameboard(cards.get(id));
         }
         GUI.getGamePanel().repaint();
-    }
-
-    @Override
-    public int getIDfromIndex(int index){
-        return cards.get(index-1).getID();
     }
 
     @Override
@@ -88,6 +89,10 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
     }
 
     public ArrayList<LeaderCardGUI> getCards() {
-        return new ArrayList<>(cards);
+        ArrayList<LeaderCardGUI> array = new ArrayList<>();
+        for(int id: playerCards){
+            array.add(cards.get(id));
+        }
+        return array;
     }
 }

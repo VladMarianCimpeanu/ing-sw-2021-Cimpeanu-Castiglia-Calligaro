@@ -76,4 +76,8 @@ public class GUI {
         jFrame.setVisible(true);
     }
 
+    public static void print(String string){
+        gamePanel.getScrollPanel().getMessagesPanel().addMessage(string);
+    }
+
 }

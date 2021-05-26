@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
-    private MessagesPanel messagesPanel;
+    private ScrollPanel scrollPanel;
     private ActionPanel actionPanel;
     private ArrayList<Clickable> gameBoard = new ArrayList<Clickable>();
     private ArrayList<Clickable> action = new ArrayList<Clickable>();
@@ -48,8 +48,8 @@ public class GamePanel extends JPanel {
         button.setBounds(200, 200,
                 size.width, size.height);
 
-        messagesPanel = new MessagesPanel();
-        add(messagesPanel);
+        scrollPanel = new ScrollPanel();
+        add(scrollPanel);
 
         actionPanel = new ActionPanel();
         add(actionPanel);
@@ -201,4 +201,7 @@ public class GamePanel extends JPanel {
         return heightBoard;
     }
 
+    public ScrollPanel getScrollPanel() {
+        return scrollPanel;
+    }
 }

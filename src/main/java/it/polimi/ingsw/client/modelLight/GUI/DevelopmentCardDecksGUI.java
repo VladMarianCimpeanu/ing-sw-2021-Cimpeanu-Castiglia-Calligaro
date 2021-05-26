@@ -46,6 +46,7 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         playerCards.set(deckIndex - 1, ID);
         placeCard(deckIndex, ID, nickname);
         GUI.getGamePanel().repaint();
+        GUI.print(nickname + " has placed a new development card in his " + deckIndex + " deck");
     }
 
 

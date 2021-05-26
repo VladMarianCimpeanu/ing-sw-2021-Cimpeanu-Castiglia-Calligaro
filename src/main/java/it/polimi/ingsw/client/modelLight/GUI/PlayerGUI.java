@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
+import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.modelLight.PlayerView;
 
 public class PlayerGUI extends PlayerView {
@@ -14,6 +15,11 @@ public class PlayerGUI extends PlayerView {
 
     @Override
     public void dumpPlayer(String player, String objectUpdated) {
-
+        String row;
+        if(player.equals(nickname))
+            row = ("Your");
+        else
+            row = (nickname);
+        GUI.print(row + "'s "+ objectUpdated +" has changed into:  ");
     }
 }

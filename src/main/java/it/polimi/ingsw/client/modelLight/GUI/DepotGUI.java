@@ -50,6 +50,12 @@ public class DepotGUI extends DepotView implements Clickable {
     @Override
     public void showUpdate() {
         show();
+        StringBuilder row = new StringBuilder();
+        for(int i = 0; i<3; i++)
+            if(quantity[i] != 0){
+                row.append(quantity[i]).append("x").append(resources[i].toString()).append(" ");
+            }
+        GUI.print(row.toString());
     }
 
     @Override
