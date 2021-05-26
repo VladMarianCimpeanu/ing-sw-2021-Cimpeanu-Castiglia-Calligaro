@@ -33,6 +33,7 @@ public class GamePanel extends JPanel {
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.black));
         gameBoardClickable = true;
+
         addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
                 activeClick(e.getX(),e.getY());
@@ -112,10 +113,10 @@ public class GamePanel extends JPanel {
         DevelopmentCardDecksGUI devCards = (DevelopmentCardDecksGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks();
         devCards.drawDecks(g);
 
-        LeaderCardSetGUI set = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
-        for(LeaderCardGUI card: set.getCards()){
-            drawImage(g, card.getImage(), card.getShape());
-        }
+//        LeaderCardSetGUI set = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
+//        for(LeaderCardGUI card: set.getCards()){
+//            drawImage(g, card.getImage(), card.getShape());
+//        }
 
         MarketGUI marketGUI = (MarketGUI) GUI.getClient().getGameView().getMarket();
         marketGUI.print(g);
@@ -132,11 +133,10 @@ public class GamePanel extends JPanel {
 
         //WarehouseDepot
         DepotGUI depot = (DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot();
-        int deltaShelf = 23;    //distance between resources on the same shelf
         for(Resource resource: depot.getShapes().keySet())
             for(int i = 0; i<depot.howMany(resource); i++) {
                 it.polimi.ingsw.client.Shape s = depot.getShapes().get(resource);
-                drawImage(g, resource.url(), new it.polimi.ingsw.client.Shape(s.getX()+i*deltaShelf, s.getY(), s.getWidth(), s.getHeight()));
+                drawImage(g, resource.url(), new it.polimi.ingsw.client.Shape(s.getX()+i* depot.getDeltapixel(), s.getY(), s.getWidth(), s.getHeight()));
             }
 
         //FaithPath
