@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
+    private MessagesPanel messagesPanel;
+    private ActionPanel actionPanel;
     private ArrayList<Clickable> gameBoard = new ArrayList<Clickable>();
     private ArrayList<Clickable> action = new ArrayList<Clickable>();
     private boolean gameBoardClickable;
@@ -21,7 +23,10 @@ public class GamePanel extends JPanel {
     private static final int Y_board = 0;
     private static final int widthBoard = 600;
     private static final int heightBoard = 426;
+
     public GamePanel() {
+        setLayout(null);
+
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.black));
         gameBoardClickable = true;
@@ -31,6 +36,20 @@ public class GamePanel extends JPanel {
                 activeClick(e.getX(),e.getY());
             }
         });
+
+
+        //Example of absolute positioning
+        JButton button = new JButton("Cliccami!");
+        add(button);
+        Dimension size = button.getPreferredSize();
+        button.setBounds(200, 200,
+                size.width, size.height);
+
+        messagesPanel = new MessagesPanel();
+        add(messagesPanel);
+
+        actionPanel = new ActionPanel();
+        add(actionPanel);
 
 //        addMouseMotionListener(new MouseAdapter(){
 //            public void mouseDragged(MouseEvent e){
