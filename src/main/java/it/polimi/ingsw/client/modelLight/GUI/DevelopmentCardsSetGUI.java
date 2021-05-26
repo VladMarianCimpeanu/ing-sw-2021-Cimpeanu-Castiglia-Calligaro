@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.Color;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.panels.GamePanel;
@@ -14,7 +15,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class DevelopmentCardsSetGUI extends DevelopmentCardSetView {
+public class DevelopmentCardsSetGUI extends DevelopmentCardSetView implements Clickable {
     private static ArrayList<DevelopmentCardGUI> cards;
     private final static int padding = 10;
 
@@ -30,15 +31,15 @@ public class DevelopmentCardsSetGUI extends DevelopmentCardSetView {
     @Override
     public void setDecks(ArrayList<ArrayList<Integer>> decks) {
         this.decks = decks;
-        int leftPadding = GamePanel.getXBoard() + GamePanel.getWidthBoard();
+        int leftPadding = GamePanel.getXBoard() + GamePanel.getWidthBoard() + padding;
         for(int level = 0; level < decks.size(); level ++){
             for(int color = 0; color < decks.get(0).size(); color ++){
                 DevelopmentCardGUI card = cards.get(decks.get(level).get(color) - 1);
                 card.setToBuyable();
-                card.setPosition(leftPadding + color * (padding + DevelopmentCardGUI.getWidth()), level * (DevelopmentCardGUI.getHeight() + padding));
-                GUI.getGamePanel().addGameboard(card);
+                card.setPosition(leftPadding + color * (padding + DevelopmentCardGUI.getWidth()), padding + level * (DevelopmentCardGUI.getHeight() + padding));
             }
         }
+        GUI.getGamePanel().addGameboard(this);
     }
 
     @Override
@@ -50,10 +51,9 @@ public class DevelopmentCardsSetGUI extends DevelopmentCardSetView {
         decks.get(level - 1).set(color.getIndex(), ID);
         if(ID > 0){
             DevelopmentCardGUI card = cards.get(ID - 1);
-            int leftPadding = GamePanel.getXBoard() + GamePanel.getWidthBoard();
-            card.setPosition(leftPadding + color.getIndex() * (padding + DevelopmentCardGUI.getWidth()), (level - 1) * DevelopmentCardGUI.getHeight());
+            int leftPadding = GamePanel.getXBoard() + GamePanel.getWidthBoard() + padding;
+            card.setPosition(leftPadding + color.getIndex() * (padding + DevelopmentCardGUI.getWidth()), padding + (level - 1) * (DevelopmentCardGUI.getHeight() + padding));
             card.setToBuyable();
-            GUI.getGamePanel().addGameboard(card);
         }
         GUI.getGamePanel().repaint();
     }
@@ -75,4 +75,26 @@ public class DevelopmentCardsSetGUI extends DevelopmentCardSetView {
         return cards.get(Id - 1);
     }
 
+    @Override
+    public boolean isClicked(int x, int y) {
+        for(ArrayList<Integer> deck : decks){
+            for(Integer id : deck){
+                if(getCard(id).isClicked(x, y)) return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void click(int x, int y) {
+        boolean found = false;
+        for(int i = 0; i < decks.size(); i ++){
+            for(int j = 0; j < decks.get(0).size() && !found; j ++){
+                if(getCard(decks.get(i).get(j)).isClicked(x, y)) {
+                    found = true;
+                    getCard(decks.get(i).get(j)).click(x, y);
+                }
+            }
+        }
+    }
 }

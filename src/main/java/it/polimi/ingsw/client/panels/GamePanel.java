@@ -33,7 +33,6 @@ public class GamePanel extends JPanel {
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.black));
         gameBoardClickable = true;
-
         addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
                 activeClick(e.getX(),e.getY());
