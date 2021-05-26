@@ -13,15 +13,23 @@ import java.util.Map;
 public class DepotGUI extends DepotView implements Clickable {
     private Runnable strategy;
     private Map<Resource, Shape> shapes;
+    private final int deltapixel = 23;
+    private final int heightRes = 14;
+    private final int widthRes = 14;
 
     public DepotGUI(){
         super();
         setStrategyMove();
         shapes = new HashMap<>();
+        GUI.getGamePanel().addAction(this);
     }
 
     public Map<Resource, Shape> getShapes() {
         return shapes;
+    }
+
+    public int getDeltapixel() {
+        return deltapixel;
     }
 
     @Override
@@ -32,11 +40,10 @@ public class DepotGUI extends DepotView implements Clickable {
         //just put the position of the first resource of each shelf
         for(int i = 0; i<3; i++) {
             if(quantity[i] != 0)
-                shapes.put(resources[i], new Shape(x, y, 14, 14));
+                shapes.put(resources[i], new Shape(x, y, widthRes, heightRes));
             x -= 11+(1-i)*6;
             y += 37;
         }
-
         GUI.getGamePanel().repaint();
     }
 
@@ -47,7 +54,23 @@ public class DepotGUI extends DepotView implements Clickable {
 
     @Override
     public boolean isClicked(int x, int y) {
-        return false;
+        return !(whichClicked(x, y) == null);
+    }
+
+    public Resource whichClicked(int x, int y){
+        int yIn = 188;
+        int xIn = 74;
+        for(int i = 0; i<3; i++) {
+            int delta = 0;
+            for (int j = 0; j < quantity[j]; j++) {
+                if(xIn+delta <= x && x <= xIn+widthRes+delta && yIn <= y && y <= yIn+heightRes)
+                    return resources[i];
+                delta += deltapixel;
+            }
+            xIn -= 11+(1-i)*6;
+            yIn += 37;
+        }
+        return null;
     }
 
     @Override
