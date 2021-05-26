@@ -1,5 +1,8 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.panels;
 
+import it.polimi.ingsw.client.Clickable;
+import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.GUI.*;
 
 import javax.imageio.ImageIO;
@@ -97,14 +100,14 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Shape shape = new Shape(X_board, Y_board, widthBoard, heightBoard);
+        it.polimi.ingsw.client.Shape shape = new it.polimi.ingsw.client.Shape(X_board, Y_board, widthBoard, heightBoard);
         drawImage(g,"images/board/playerBoard.png", shape);
-        Shape shape2 = new Shape(630,28,400,370);
+        it.polimi.ingsw.client.Shape shape2 = new it.polimi.ingsw.client.Shape(630,28,400,370);
         //drawImage(g,"images/devCards.png", shape2);
-        Shape shape3 = new Shape(730,450,200,259);
+        it.polimi.ingsw.client.Shape shape3 = new it.polimi.ingsw.client.Shape(730,450,200,259);
         drawImage(g,"images/punchboard/portabiglie.png", shape3);
 
-        DevelopmentCardsSetGUI cardsToBuy = (DevelopmentCardsSetGUI)GUI.getClient().getGameView().getCards();
+        DevelopmentCardsSetGUI cardsToBuy = (DevelopmentCardsSetGUI) GUI.getClient().getGameView().getCards();
         cardsToBuy.paintCards(g);
 
         DevelopmentCardDecksGUI devCards = (DevelopmentCardDecksGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks();
@@ -133,8 +136,8 @@ public class GamePanel extends JPanel {
         int deltaShelf = 23;    //distance between resources on the same shelf
         for(Resource resource: depot.getShapes().keySet())
             for(int i = 0; i<depot.howMany(resource); i++) {
-                Shape s = depot.getShapes().get(resource);
-                drawImage(g, resource.url(), new Shape(s.getX()+i*deltaShelf, s.getY(), s.getWidth(), s.getHeight()));
+                it.polimi.ingsw.client.Shape s = depot.getShapes().get(resource);
+                drawImage(g, resource.url(), new it.polimi.ingsw.client.Shape(s.getX()+i*deltaShelf, s.getY(), s.getWidth(), s.getHeight()));
             }
 
         //FaithPath
@@ -151,7 +154,7 @@ public class GamePanel extends JPanel {
     }
 
     //TODO public? it would be nicer if the logic around development cards was inside their classes
-    public static void drawImage(Graphics g, String path, Shape shape){
+    public static void drawImage(Graphics g, String path, it.polimi.ingsw.client.Shape shape){
         int x = shape.getX();
         int y = shape.getY();
         int width = shape.getWidth();

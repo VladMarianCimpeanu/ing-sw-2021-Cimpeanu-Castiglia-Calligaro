@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.panels;
 
 import javax.swing.*;
 import java.awt.Color;

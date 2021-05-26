@@ -1,5 +1,6 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.panels;
 
+import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.MessageToServer.Login;
 import it.polimi.ingsw.client.MessageToServer.Mode;
 

@@ -1,6 +1,4 @@
-package it.polimi.ingsw.client;
-
-import it.polimi.ingsw.server.model.WaitingRoom;
+package it.polimi.ingsw.client.panels;
 
 import javax.swing.*;
 import java.awt.Color;

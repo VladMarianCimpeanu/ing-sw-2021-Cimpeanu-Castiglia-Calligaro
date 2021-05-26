@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.client.Color;
 import it.polimi.ingsw.client.GUI;
-import it.polimi.ingsw.client.GamePanel;
+import it.polimi.ingsw.client.panels.GamePanel;
 import it.polimi.ingsw.client.modelLight.DevelopmentCardSetView;
 
 import java.awt.*;

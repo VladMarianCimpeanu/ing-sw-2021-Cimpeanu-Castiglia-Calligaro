@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.modelLight.GUI;
 import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.MarketView;
+import it.polimi.ingsw.client.panels.GamePanel;
 
 import java.awt.*;
 

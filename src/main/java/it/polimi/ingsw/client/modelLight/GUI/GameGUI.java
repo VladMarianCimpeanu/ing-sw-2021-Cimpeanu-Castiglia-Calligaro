@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.modelLight.GUI;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
-import it.polimi.ingsw.client.WaitingRoomPanel;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenGUI;
 import it.polimi.ingsw.client.modelLight.GameView;
 

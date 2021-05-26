@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
-import it.polimi.ingsw.server.model.WaitingRoom;
+import it.polimi.ingsw.client.panels.GamePanel;
+import it.polimi.ingsw.client.panels.LoginPanel;
+import it.polimi.ingsw.client.panels.WaitingRoomPanel;
 
 import javax.swing.*;
 
