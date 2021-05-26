@@ -6,11 +6,10 @@ import it.polimi.ingsw.server.model.WaitingRoom;
 import javax.swing.*;
 
 public class GUI {
+    private static JFrame jFrame;
     private static Client client;
     private static final GamePanel gamePanel = new GamePanel();
-
     private static LoginPanel loginPanel;
-
     private static WaitingRoomPanel waitingRoomPanel;
 
     public static void setClient(Client client) {
@@ -32,14 +31,13 @@ public class GUI {
     private static void createAndShowGUI() {
         System.out.println("Created GUI on EDT? "+
                 SwingUtilities.isEventDispatchThread());
-        JFrame f = new JFrame("Maestri del rinascimento");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(gamePanel);
-        f.setSize(1280,720);
+        jFrame = new JFrame("Maestri del rinascimento");
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        loginPanel = new LoginPanel();
+        jFrame.add(loginPanel);
+        jFrame.setSize(400, 190);
 
-        f.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        f.setVisible(true);
+        jFrame.setVisible(true);
     }
 
     public static Client getClient() {
@@ -59,10 +57,21 @@ public class GUI {
     }
 
     public static void goToWaitingRoom(){
-        //JFrame.remove(loginPanel);
-        //JFrame.add(waitingRoomPanel);
-        //Jframe.setVisible(false);
-        //Jframe.setVisible(true)
+        jFrame.remove(loginPanel);
+        waitingRoomPanel = new WaitingRoomPanel();
+        jFrame.add(waitingRoomPanel);
+        jFrame.setVisible(false);
+        jFrame.setVisible(true);
+    }
+
+    public static void goToGame(){
+        jFrame.remove(waitingRoomPanel);
+        jFrame.add(gamePanel);
+        jFrame.setSize(1280,720);
+        jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        jFrame.setVisible(false);
+        jFrame.setVisible(true);
     }
 
 }

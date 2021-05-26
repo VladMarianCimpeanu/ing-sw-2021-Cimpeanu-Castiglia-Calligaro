@@ -88,6 +88,7 @@ public class Controller {
                     .collect(Collectors.toCollection(ArrayList::new))
                     ));
         }
+        sendBroadcast(new GameStarted());
     }
 
     /**

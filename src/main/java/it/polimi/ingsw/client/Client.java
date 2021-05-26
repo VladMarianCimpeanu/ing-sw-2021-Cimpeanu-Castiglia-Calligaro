@@ -100,7 +100,7 @@ public class Client {
     public void start(){
         cli = new CLI(this);
         GUI.setClient(this);
-//        GUI.start();
+        GUI.start();
         gameView = new GameGUI();
         new Thread(cli).start();
 

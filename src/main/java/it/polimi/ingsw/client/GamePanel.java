@@ -42,13 +42,13 @@ public class GamePanel extends JPanel {
     private void activeClick(int x, int y){
         for (Clickable c: new ArrayList<>(action)){
             if (c.isClicked(x,y)){
-                c.click();
+                c.click(x, y);
             }
         }
         if (gameBoardClickable) {
             for (Clickable c : new ArrayList<>(gameBoard)) {
                 if (c.isClicked(x, y)) {
-                    c.click();
+                    c.click(x, y);
                 }
             }
         }

@@ -44,4 +44,12 @@ public abstract class GameView {
     public abstract void notifyJoin(String content);
 
     public abstract void displayError(ErrorMessage error);
+
+    public abstract void newWaitingPlayer(String player);
+
+    public abstract void crashedWaitingPlayer(String player);
+
+    public abstract void startGame();
+
+    public abstract void requireMode();
 }

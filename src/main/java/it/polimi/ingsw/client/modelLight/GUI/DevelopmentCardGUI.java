@@ -60,7 +60,7 @@ public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable
     }
 
     @Override
-    public void click() {
+    public void click(int x, int y) {
         actionOnClick.run();
     }
 

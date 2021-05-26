@@ -60,4 +60,25 @@ public class GameCLI extends GameView {
     public void displayError(ErrorMessage error) {
         System.out.println(error.getCaption());
     }
+
+    @Override
+    public void newWaitingPlayer(String player) {
+        dumpMessage(player + " joined the game.");
+    }
+
+    @Override
+    public void crashedWaitingPlayer(String player) {
+        dumpMessage(player + " has left the game.");
+    }
+
+    @Override
+    public void startGame() {
+        dumpMessage("Game started!");
+    }
+
+    @Override
+    public void requireMode() {
+        dumpMessage("There are no waiting rooms available: you are the host. Choose number of players");
+    }
+
 }

@@ -1,16 +1,19 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
-import it.polimi.ingsw.client.GUI;
-import it.polimi.ingsw.client.GamePanel;
-import it.polimi.ingsw.client.Marble;
+import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.MarketView;
 
 import java.awt.*;
 
-public class MarketGUI extends MarketView {
-    private Shape[][] positions;
-    private Shape outerShape;
+public class MarketGUI extends MarketView implements Clickable {
+    //The entire market
+    private final static Shape dimension = new Shape(730,450,200,259);
+    private final static int arrowSize = 24;//
+    private final static Shape horizontalArrowDimension = new Shape(900,507,30,3 * arrowSize);//
+    private final static Shape verticalArrowDimension = new Shape(786,600,4 * arrowSize,40);//
+    private final Shape[][] positions;
+    private final Shape outerShape;
     private final static int startX = 785;
     private final static int startY = 507;
     private final static int width = 23;
@@ -27,6 +30,7 @@ public class MarketGUI extends MarketView {
             }
         }
         outerShape = new Shape(outerX, outerY, width, height);
+        GUI.getGamePanel().addGameboard(this);
     }
 
     @Override
@@ -59,5 +63,38 @@ public class MarketGUI extends MarketView {
     public void setUp(Marble[][] marketGrid, Marble outerMarble) {
         super.setUp(marketGrid, outerMarble);
         GUI.getGamePanel().repaint();
+    }
+
+    @Override
+    public boolean isClicked(int x, int y) {
+        return((dimension.getX() <= x && x <= (dimension.getX() + dimension.getWidth())) && (dimension.getY() <= y && y <= (dimension.getY() + dimension.getHeight())));
+    }
+
+    @Override
+    public void click(int x, int y) {
+        if (horizontalArrowDimension.getX() <= x && x <= (horizontalArrowDimension.getX() + horizontalArrowDimension.getWidth())
+        && (horizontalArrowDimension.getY() <= y && y <= (horizontalArrowDimension.getY() + horizontalArrowDimension.getHeight()))) {
+            int arrow = y - horizontalArrowDimension.getY();
+            if(0 <= arrow && arrow <= arrowSize){
+                System.out.println("Select row 1");
+            }else if(arrowSize <= arrow && arrow <= 2 * arrowSize){
+                System.out.println("Select row 2");
+            }else if(2 * arrowSize <= arrow && arrow <= 3 * arrowSize){
+                System.out.println("Select row 3");
+            }
+        }
+        if (verticalArrowDimension.getX() <= x && x <= (verticalArrowDimension.getX() + verticalArrowDimension.getWidth())
+        && (verticalArrowDimension.getY() <= y && y <= (verticalArrowDimension.getY() + verticalArrowDimension.getHeight()))) {
+            int arrow = x - verticalArrowDimension.getX();
+            if(0 <= arrow && arrow <= arrowSize){
+                System.out.println("Select column 1");
+            }else if(arrowSize <= arrow && arrow <= 2 * arrowSize){
+                System.out.println("Select column 2");
+            }else if(2 * arrowSize <= arrow && arrow <= 3 * arrowSize){
+                System.out.println("Select column 3");
+            }else if(3 * arrowSize <= arrow && arrow <= 4 * arrowSize){
+                System.out.println("Select column 4");
+            }
+        }
     }
 }

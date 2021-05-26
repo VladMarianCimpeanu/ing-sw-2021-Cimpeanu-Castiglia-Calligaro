@@ -51,7 +51,7 @@ public class DepotGUI extends DepotView implements Clickable {
     }
 
     @Override
-    public void click() {
+    public void click(int x, int y) {
         strategy.run();
         setStrategyMove();
     }
