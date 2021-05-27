@@ -112,7 +112,6 @@ public class GameGUI extends GameView {
 
     @Override
     public void firstTurnEnded() {
-        System.out.println("end");;
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
         GUI.getGamePanel().revalidate();
@@ -124,6 +123,14 @@ public class GameGUI extends GameView {
         //GUI.getGamePanel().getActionPanel().getClickable().clear(); //not so efficient(remain listening)
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         GUI.getGamePanel().repaint();
+    }
+
+    @Override
+    public void changeTurn(String player) {
+        if(player.equals(GUI.getClient().getNickname())){
+            GUI.getGamePanel().unlockGameBoard(true);
+            dumpMessage("It's your turn!");
+        }else dumpMessage("It's " + player + "'s turn!");
     }
 
     @Override

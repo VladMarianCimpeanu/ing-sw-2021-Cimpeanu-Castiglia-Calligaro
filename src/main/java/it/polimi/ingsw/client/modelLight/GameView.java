@@ -82,4 +82,6 @@ public abstract class GameView {
     public abstract void firstTurnEnded();
 
     public abstract void lastProduced(Map<Resource, Integer> resources, String player);
+
+    public abstract void changeTurn(String player);
 }

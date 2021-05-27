@@ -25,6 +25,9 @@ public class SwitchToPlayerPanel extends JPanel implements ActionListener {
             playerButtons.add(button);
             this.add(button);
         }
+        passButton = new JButton("Pass");
+        passButton.addActionListener(this);
+        add(passButton);
     }
 
     @Override
@@ -34,6 +37,11 @@ public class SwitchToPlayerPanel extends JPanel implements ActionListener {
                 GUI.getGamePanel().setPlayerWatched(button.getPlayer());
                 GUI.getGamePanel().repaint();
             }
+        if(e.getSource() == passButton){
+            GUI.sendMessage(new EndTurn());
+            GUI.getGamePanel().setActionPanel(new DefaultPanel());
+            GUI.getGamePanel().unlockGameBoard(false);
+        }
     }
 }
 

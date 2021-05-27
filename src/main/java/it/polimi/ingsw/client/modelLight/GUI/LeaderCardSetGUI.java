@@ -49,9 +49,9 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
     @Override
     public void update(ArrayList<Integer> idS){
         super.update(idS);
-        for(int id: playerCards){
-            GUI.getGamePanel().addGameboard(cards.get(id));
-        }
+//        for(int id: playerCards){
+//            GUI.getGamePanel().addGameboard(cards.get(id));
+//        }
         updateGUI();
     }
 

@@ -105,6 +105,11 @@ public class GameCLI extends GameView {
     }
 
     @Override
+    public void changeTurn(String player) {
+        dumpMessage("It's " + player + "'s turn!");
+    }
+
+    @Override
     public void updateResourcesFromMarket(ArrayList<Resource> resources) {
         String resourcesToDump = "";
         for(Resource res: resources){

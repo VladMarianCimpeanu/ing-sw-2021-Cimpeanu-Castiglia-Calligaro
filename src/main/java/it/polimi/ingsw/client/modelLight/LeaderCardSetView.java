@@ -26,4 +26,5 @@ public abstract class LeaderCardSetView {
     public void remove(int id) {
         playerCards.remove((Object) id);
     }
+
 }

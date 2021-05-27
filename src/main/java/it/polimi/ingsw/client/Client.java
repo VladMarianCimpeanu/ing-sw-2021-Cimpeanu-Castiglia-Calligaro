@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import static it.polimi.ingsw.client.Resource.*;
 
 public class Client {
+    private boolean gui;
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
@@ -39,7 +40,13 @@ public class Client {
     //nicknames in order
     private ArrayList<String> nicknames;
 
-    public Client(String ip, int port){
+    public Client(String ip, int port, String mode){
+        if(mode.equals("cli"))
+            gui = false;
+        else if(mode.equals("gui"))
+            gui = true;
+        else
+            System.out.println("Error: you need to select a mode between cli and gui.");
         try{
             clientSocket = new Socket(ip, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -100,11 +107,15 @@ public class Client {
     }
 
     public void start(){
-        cli = new CLI(this);
-        GUI.setClient(this);
-        GUI.start();
-        gameView = new GameGUI();
-        new Thread(cli).start();
+        if(gui){
+            GUI.setClient(this);
+            GUI.start();
+            gameView = new GameGUI();
+        }else {
+            cli = new CLI(this);
+            gameView = new GameCLI();
+            new Thread(cli).start();
+        }
 
         String line = null;
         while(true){
@@ -116,7 +127,8 @@ public class Client {
                 //TODO: implement inside activateMessage() of NicknameAccepted
                 if(message instanceof NicknameAccepted){
                     nickname = ((NicknameAccepted) message).getNickname();
-                    cli.setNickname(nickname);
+                    if(!gui)
+                        cli.setNickname(nickname);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -131,7 +143,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Client client = new Client(args[0], Integer.parseInt(args[1]));
+        Client client = new Client(args[0], Integer.parseInt(args[1]), args[2]);
         client.start();
     }
 

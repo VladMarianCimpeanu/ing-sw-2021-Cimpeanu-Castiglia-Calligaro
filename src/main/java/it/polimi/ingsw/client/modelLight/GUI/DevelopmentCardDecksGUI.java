@@ -17,7 +17,6 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         paddingBoardX = 245;
         paddingY = 210;
         paddingCards = DevelopmentCardGUI.getWidth() + 35;
-        GUI.getGamePanel().addGameboard(this);
     }
 
 
