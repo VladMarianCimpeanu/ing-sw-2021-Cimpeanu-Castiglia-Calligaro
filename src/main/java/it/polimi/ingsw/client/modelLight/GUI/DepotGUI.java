@@ -14,11 +14,11 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class DepotGUI extends DepotView implements Clickable {
-    private Consumer<Resource> strategy;
+    private Consumer<Integer> strategy;
     private Map<Resource, Shape> shapes;
     private final int deltapixel = 23;
-    private final int heightRes = 14;
-    private final int widthRes = 14;
+    private final int heightRes = 20;
+    private final int widthRes = 20;
 
     public DepotGUI(){
         super();
@@ -63,29 +63,25 @@ public class DepotGUI extends DepotView implements Clickable {
 
     @Override
     public boolean isClicked(int x, int y) {
-        return !(whichClicked(x, y) == null);
+        return !(whichClicked(x, y) == -1);
     }
 
-    public Resource whichClicked(int x, int y){
+    public int whichClicked(int x, int y){
         int yIn = 188;
         int xIn = 74;
         for(int i = 0; i<3; i++) {
-            int delta = 0;
-            for (int j = 0; j < quantity[j]; j++) {
-                if(xIn+delta <= x && x <= xIn+widthRes+delta && yIn <= y && y <= yIn+heightRes)
-                    return resources[i];
-                delta += deltapixel;
-            }
+                if(xIn <= x && x <= xIn+widthRes+deltapixel*i && yIn <= y && y <= yIn+heightRes)
+                    return i+1;
             xIn -= 11+(1-i)*6;
             yIn += 37;
         }
-        return null;
+        return -1;
     }
 
-    private int whichShelf(Resource resource){
-        for(int i = 0; i<3; i++)
-            if(quantity[i] > 0 && resources[i] == resource) return i+1;
-        return -1;
+    public Resource whichResource(int shelf){
+        shelf--;
+        if(quantity[shelf] == 0) return null;
+        return resources[shelf];
     }
 
     @Override
@@ -101,14 +97,16 @@ public class DepotGUI extends DepotView implements Clickable {
     }
 
     public void setStrategyPut(){
-        strategy = (resource) -> {
-            GUI.getClient().send(new PutResPos(resource, "depot", whichShelf(resource)));
+        strategy = (shelf) -> {
+            if(whichResource(shelf) != null) return;
+            GUI.getClient().send(new PutResPos(resources[shelf], "depot", shelf));
         };
     }
 
     public void setStrategyTake(){
-        strategy = (resource) ->{
-            GUI.getClient().send(new TakeResPos(resource, "depot"));
+        strategy = (shelf) ->{
+            if(whichResource(shelf) == null) return;
+            GUI.getClient().send(new TakeResPos(resources[shelf], "depot"));
         };
     }
 }
