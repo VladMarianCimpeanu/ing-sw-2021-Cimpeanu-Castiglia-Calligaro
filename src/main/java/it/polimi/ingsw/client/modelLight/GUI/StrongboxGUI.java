@@ -20,7 +20,6 @@ public class StrongboxGUI extends StrongboxView implements Clickable {
     public StrongboxGUI(){
         super();
         shapes = new HashMap<>();
-        GUI.getGamePanel().addAction(this);
     }
 
     @Override

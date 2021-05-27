@@ -100,6 +100,11 @@ public class GameCLI extends GameView {
     }
 
     @Override
+    public void changeTurn(String player) {
+        dumpMessage("It's " + player + "'s turn!");
+    }
+
+    @Override
     public void updateResourcesFromMarket(ArrayList<Resource> resources) {
         String resourcesToDump = "";
         for(Resource res: resources){
@@ -113,5 +118,4 @@ public class GameCLI extends GameView {
         if(whiteMarbles == 0) dumpMessage("There are no more white marbles to convert");
         else dumpMessage("There are " + whiteMarbles + " to convert.");
     }
-
 }
