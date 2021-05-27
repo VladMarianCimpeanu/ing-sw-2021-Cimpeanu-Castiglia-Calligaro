@@ -171,9 +171,9 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         //TODO: better discuss
         if(isADeckClicked(x,y)) {
             //if it is clicked an empty deck, I assume a place card action is happening
-            if (isFirstDeckClicked(x)) GUI.getClient().send(new PlaceCard(1));
-            else if(isSecondDeckClicked(x)) GUI.getClient().send(new PlaceCard(2));
-            else if(isThirdDeckClicked(x)) GUI.getClient().send(new PlaceCard(3));
+            if (isFirstDeckClicked(x) && playerCards.get(0) == 0) GUI.getClient().send(new PlaceCard(1));
+            else if(isSecondDeckClicked(x) && playerCards.get(1) == 0) GUI.getClient().send(new PlaceCard(2));
+            else if(isThirdDeckClicked(x) && playerCards.get(2) == 0) GUI.getClient().send(new PlaceCard(3));
         }
     }
 
