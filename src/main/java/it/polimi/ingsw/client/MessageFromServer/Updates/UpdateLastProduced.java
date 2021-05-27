@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.MessageFromServer.Updates;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
-import it.polimi.ingsw.server.model.benefit.Resource;
+import it.polimi.ingsw.client.Resource;
 
 import java.util.Map;
 
@@ -12,6 +12,6 @@ public class UpdateLastProduced extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().dumpMessage(player + " has produced these resources " + resources.toString() + "\nin this turn.");
+        client.getGameView().lastProduced(resources, player);
     }
 }

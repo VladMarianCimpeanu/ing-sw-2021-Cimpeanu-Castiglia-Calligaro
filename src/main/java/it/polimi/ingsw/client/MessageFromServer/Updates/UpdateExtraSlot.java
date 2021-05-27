@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.MessageFromServer.Updates;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
-import it.polimi.ingsw.server.model.benefit.Resource;
+import it.polimi.ingsw.client.Resource;
 
 public class UpdateExtraSlot extends MessageFromServer {
     private String player;

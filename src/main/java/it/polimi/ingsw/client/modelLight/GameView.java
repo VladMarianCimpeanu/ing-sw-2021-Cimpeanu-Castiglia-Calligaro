@@ -80,4 +80,6 @@ public abstract class GameView {
     public abstract void chooseResources(int position, int number);
 
     public abstract void firstTurnEnded();
+
+    public abstract void lastProduced(Map<Resource, Integer> resources, String player);
 }

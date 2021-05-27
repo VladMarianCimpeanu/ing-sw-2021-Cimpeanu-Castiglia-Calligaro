@@ -40,11 +40,6 @@ public class BuyPanel extends ActionPanel{
 
     @Override
     public void displayError(ErrorMessage error) {
-        if(error == ErrorMessage.requirementsNotSatisfied){
-            ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
-            GUI.getGamePanel().setActionPanel(new DefaultPanel());
-            clickables.clear();
-        }
     }
 
     private void activeClick(int x, int y) {

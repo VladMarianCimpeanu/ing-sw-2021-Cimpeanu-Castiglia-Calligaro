@@ -36,9 +36,7 @@ public class DevProductionPanel extends ActionPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 GUI.getClient().send(new ActivateProduction());
-                ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
-                GUI.getGamePanel().setActionPanel(new DefaultPanel());
-                clickables.clear(); //not so efficient(remain listening)
+
             }
         });
         activate.setBounds(100, 100, activate.getPreferredSize().width, activate.getPreferredSize().height);
@@ -55,11 +53,6 @@ public class DevProductionPanel extends ActionPanel{
 
     @Override
     public void displayError(ErrorMessage error) {
-        if(error == ErrorMessage.requirementsNotSatisfied){
-            ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
-            GUI.getGamePanel().setActionPanel(new DefaultPanel());
-            clickables.clear();
-        }
     }
 
     private void activeClick(int x, int y) {

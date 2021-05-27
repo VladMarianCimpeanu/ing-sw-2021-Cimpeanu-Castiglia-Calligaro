@@ -34,17 +34,18 @@ public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable
     }
 
     public void setToBuyable(){
+
         actionOnClick = () -> {
+            ((GameGUI)GUI.getClient().getGameView()).setPayPanel("buy");
             GUI.sendMessage(new BuyDevCard(Level, Color));
-            GUI.getGamePanel().setActionPanel(new BuyPanel());
         };
     }
 
     public void setToProduction(){
         actionOnClick = () -> {
             int pos = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks().getPos(ID);
+            ((GameGUI)GUI.getClient().getGameView()).setPayPanel("production");
             GUI.getClient().send(new ActivateCardProduction(pos));
-            GUI.getGamePanel().setActionPanel(new DevProductionPanel());
         };
     }
 

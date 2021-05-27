@@ -24,10 +24,16 @@ import java.util.TreeMap;
 import static it.polimi.ingsw.client.GUI.getGamePanel;
 
 public class GameGUI extends GameView {
+    private String payPanel;
     public GameGUI() {
         market = new MarketGUI();
         cards = new DevelopmentCardsSetGUI();
         faithPath = new FaithPathGUI();
+        payPanel = null;
+    }
+
+    public void setPayPanel(String payPanel) {
+        this.payPanel = payPanel;
     }
 
     @Override
@@ -48,11 +54,17 @@ public class GameGUI extends GameView {
 
     @Override
     public void displayResourcesToPay(Map<Resource, Integer> resources) {
-        ActionPanel panel = GUI.getGamePanel().getActionPanel();
         //add a concept of state?
         //how can i know if i am in a production state or buy state
-        ((DepotGUI)getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyTake();
+        if(payPanel.equals("buy"))
+            GUI.getGamePanel().setActionPanel(new BuyPanel());
+        else if(payPanel.equals("production")) {
+            GUI.getGamePanel().setActionPanel(new DevProductionPanel());
+        }
+        payPanel = "";
         setResBuffer(resources);
+        ((DepotGUI)getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyTake();
+        ActionPanel panel = GUI.getGamePanel().getActionPanel();
         panel.repaint();
     }
 
@@ -104,6 +116,14 @@ public class GameGUI extends GameView {
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
         GUI.getGamePanel().revalidate();
+    }
+
+    @Override
+    public void lastProduced(Map<Resource, Integer> resources, String player) {
+        ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
+        //GUI.getGamePanel().getActionPanel().getClickable().clear(); //not so efficient(remain listening)
+        GUI.getGamePanel().setActionPanel(new DefaultPanel());
+        GUI.getGamePanel().repaint();
     }
 
     @Override
