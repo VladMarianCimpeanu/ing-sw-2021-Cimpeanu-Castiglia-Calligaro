@@ -49,6 +49,9 @@ public class GameGUI extends GameView {
         if(error == ErrorMessage.invalidNickname || error == ErrorMessage.usedNickname){
             GUI.getLoginPanel().setError(error.getCaption());
         }
+        else {
+            GUI.getGamePanel().getActionPanel().displayError(error);
+        }
     }
 
     @Override

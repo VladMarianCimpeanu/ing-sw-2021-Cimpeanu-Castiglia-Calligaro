@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelLight;
 
+
 public abstract class PlayerView {
     protected DevelopmentCardDecksView decks;
     protected DepotView depot;
@@ -28,4 +29,5 @@ public abstract class PlayerView {
     public LeaderCardSetView getLeaderCards() {
         return leaderCards;
     }
+
 }

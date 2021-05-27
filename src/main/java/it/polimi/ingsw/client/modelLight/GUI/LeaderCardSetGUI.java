@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
+import it.polimi.ingsw.client.panels.ActionPanel;
+import it.polimi.ingsw.client.panels.DefaultPanel;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -38,6 +40,7 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
 
     @Override
     public void show() {
+
     }
 
     @Override
@@ -66,6 +69,7 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
         super.remove(idRemove);
         GUI.getGamePanel().removeGameboard(cards.get(idRemove));
         updateGUI();
+        GUI.getGamePanel().setActionPanel(new DefaultPanel());
     }
 
     private void updateGUI() {
@@ -80,7 +84,7 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
 
     @Override
     public void activate(int id) {
-
+        GUI.getGamePanel().setActionPanel(new DefaultPanel());
     }
 
     @Override

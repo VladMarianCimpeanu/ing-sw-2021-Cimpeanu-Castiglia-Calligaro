@@ -29,6 +29,7 @@ public class Player {
     private Map<Resource,Integer> developmentCardCost;
     private ArrayList<Benefit> receivedFromMarket;
     private DevelopmentCard devCardToAdd;
+    private int whiteMarbles;
     //when a player go to market this stack contains chosen strategy for each white marble
     private Stack<MarketStrategy> marketStrategyStack;
     private VirtualView virtualView;
@@ -337,22 +338,26 @@ public class Player {
         if(directionSelection == null){
             throw new InvalidDirectionSelection();
         }else if(directionSelection.equals("row") || directionSelection.equals("Row")){
-            return game.getMarket().selRow(position);
+            whiteMarbles = game.getMarket().selRow(position);
         }else if(directionSelection.equals("column") || directionSelection.equals("Column")){
-            return game.getMarket().selColumn(position);
+            whiteMarbles =  game.getMarket().selColumn(position);
         }else{
             throw new InvalidDirectionSelection();
         }
+        return whiteMarbles;
     }
 
     /**
      * Add a strategy to the stack before converting marbles in the market
      * @param marketStrategy the strategy to add
-     * @throws InvalidStrategyException if the player doesn't own the strategy
+     * @throws InvalidStrategyException if the player doesn't own the strategy or there are no more strategies to use.
      */
     public void addInMarketStrategyStack(MarketStrategy marketStrategy) throws InvalidStrategyException {
         if(marketStrategy == null || !marketStrategies.contains(marketStrategy)) throw new InvalidStrategyException();
+        if(whiteMarbles == 0) throw new InvalidStrategyException();
         marketStrategyStack.push(marketStrategy);
+        whiteMarbles -= 1;
+        virtualView.updateStrategies(whiteMarbles);
     }
 
     /**
@@ -372,6 +377,7 @@ public class Player {
                 receivedFromMarket.add(b);
             }
         }
+        whiteMarbles = 0;
     }
 
     /**

@@ -93,6 +93,7 @@ public class Client {
         shapeAdapterFactory.registerSubtype(RejoinLeaderCards.class, "RejoinLeaderCards");
         shapeAdapterFactory.registerSubtype(RejoinStrongbox.class, "RejoinStrongbox");
         shapeAdapterFactory.registerSubtype(RejoinPlayer.class, "RejoinPlayer");
+        shapeAdapterFactory.registerSubtype(UpdateStrategyBuffer.class, "UpdateStrategyBuffer");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
@@ -144,5 +145,14 @@ public class Client {
 
     public String getNickname() {
         return nickname;
+    }
+
+
+    /**
+     * gives all the players of the game
+     * @return arrayList of nicknames ordered by the turns order.
+     */
+    public ArrayList<String> getTurns(){
+        return new ArrayList<>(nicknames);
     }
 }

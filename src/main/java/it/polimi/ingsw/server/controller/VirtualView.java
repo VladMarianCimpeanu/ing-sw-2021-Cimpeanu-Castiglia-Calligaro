@@ -161,4 +161,6 @@ public class VirtualView {
     public void updateDrawToken(int id){
         controller.sendBroadcast(new UpdateDrawToken(id));
     }
+
+    public void updateStrategies(int remaining){ controller.sendMessage(new UpdateStrategyBuffer(remaining));}
 }

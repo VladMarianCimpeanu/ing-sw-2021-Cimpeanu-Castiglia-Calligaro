@@ -105,4 +105,8 @@ public class VirtualViewStub extends VirtualView {
     @Override
     public void updateDrawToken(int id){
     }
+
+    @Override
+    public void updateStrategies(int remaining){
+    }
 }

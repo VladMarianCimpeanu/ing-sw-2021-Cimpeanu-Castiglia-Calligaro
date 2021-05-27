@@ -10,7 +10,7 @@ import javax.swing.*;
 public class GUI {
     private static JFrame jFrame;
     private static Client client;
-    private static final GamePanel gamePanel = new GamePanel();
+    private static GamePanel gamePanel = new GamePanel();
     private static LoginPanel loginPanel;
     private static WaitingRoomPanel waitingRoomPanel;
 
@@ -72,6 +72,9 @@ public class GUI {
         jFrame.setSize(1280,720);
         jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        gamePanel.setPlayerWatched(GUI.getClient().getNickname());
+        gamePanel.addOtherPlayersPanel();
+
         jFrame.setVisible(false);
         jFrame.setVisible(true);
     }
@@ -79,5 +82,4 @@ public class GUI {
     public static void print(String string){
         gamePanel.getScrollPanel().getMessagesPanel().addMessage(string);
     }
-
 }
