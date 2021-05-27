@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
+import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.PlaceCard;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.DevelopmentCardView;
 
@@ -26,7 +28,8 @@ public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable
 
     public void setToBuyable(){
         actionOnClick = () -> {
-            System.out.println("click: buy");
+            int pos = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks().getPos(ID);
+            GUI.getClient().send(new PlaceCard(pos));
         };
     }
 
@@ -36,6 +39,7 @@ public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable
         };
     }
 
+    //TODO
     public void setToReplaceable(){
         actionOnClick = () -> {
             System.out.println("click: replace");

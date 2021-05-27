@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller.states;
 
+import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Dashboard;
 import it.polimi.ingsw.server.model.benefit.Resource;
@@ -36,6 +37,7 @@ public class CardProdState extends TurnState {
                 default:
                     controller.sendError(ErrorMessage.invalidStorage);
             }
+            controller.sendMessage(new ResourceToPay(controller.getCurrentPlayer().getDashboard().getResourcesToPayMap()));
         } catch (NotEnoughResourcesException e) {
             controller.sendError(ErrorMessage.notEnoughResources);
         } catch (RequirementsSatisfiedException e) {

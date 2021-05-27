@@ -2,11 +2,10 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.MessageToServer.KeepLeaderCard;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
-import it.polimi.ingsw.client.panels.GamePanel;
-import it.polimi.ingsw.client.panels.LoginPanel;
-import it.polimi.ingsw.client.panels.WaitingRoomPanel;
+import it.polimi.ingsw.client.panels.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GUI {

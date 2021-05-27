@@ -25,6 +25,10 @@ public abstract class GameView {
         return resBuffer;
     }
 
+    public void setResBuffer(Map<Resource, Integer> resBuffer) {
+        this.resBuffer = resBuffer;
+    }
+
     public FaithPathView getFaithPathView(){
         return faithPath;
     }

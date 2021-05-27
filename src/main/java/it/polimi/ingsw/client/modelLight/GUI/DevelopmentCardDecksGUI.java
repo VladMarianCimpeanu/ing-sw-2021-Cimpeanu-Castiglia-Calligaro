@@ -3,6 +3,8 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.PlaceCard;
+import it.polimi.ingsw.client.panels.DefaultPanel;
 import it.polimi.ingsw.client.panels.GamePanel;
 import it.polimi.ingsw.client.modelLight.DevelopmentCardDecksView;
 
@@ -47,6 +49,8 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         placeCard(deckIndex, ID, nickname);
         GUI.getGamePanel().repaint();
         GUI.print(nickname + " has placed a new development card in his " + deckIndex + " deck");
+        //TODO remove listeners old action panel?
+        GUI.getGamePanel().setActionPanel(new DefaultPanel());
     }
 
 
@@ -164,7 +168,13 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
                 if(card.isClicked(x, y)) card.click(x, y);
             }
         }
-        //TODO: here if a deck has been clicked but is empty
+        //TODO: better discuss
+        if(isADeckClicked(x,y)) {
+            //if it is clicked an empty deck, I assume a place card action is happening
+            if (isFirstDeckClicked(x)) GUI.getClient().send(new PlaceCard(1));
+            else if(isSecondDeckClicked(x)) GUI.getClient().send(new PlaceCard(2));
+            else if(isThirdDeckClicked(x)) GUI.getClient().send(new PlaceCard(3));
+        }
     }
 
     /**

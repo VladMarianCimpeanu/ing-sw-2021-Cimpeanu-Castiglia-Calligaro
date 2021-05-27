@@ -6,11 +6,17 @@ import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenGUI;
 import it.polimi.ingsw.client.modelLight.GameView;
 import it.polimi.ingsw.client.panels.ActionPanel;
+import it.polimi.ingsw.client.panels.BaseProdPanel;
+import it.polimi.ingsw.client.panels.BuyPanel;
+import it.polimi.ingsw.client.panels.DevProductionPanel;
+import it.polimi.ingsw.client.panels.ActionPanel;
 import it.polimi.ingsw.client.panels.DefaultPanel;
 import it.polimi.ingsw.client.panels.FirstTurnPanel;
 import it.polimi.ingsw.client.panels.WaitingRoomPanel;
 
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -41,7 +47,10 @@ public class GameGUI extends GameView {
 
     @Override
     public void displayResourcesToPay(Map<Resource, Integer> resources) {
-
+        ActionPanel panel = GUI.getGamePanel().getActionPanel();
+        ((DepotGUI)getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyTake();
+        setResBuffer(resources);
+        panel.repaint();
     }
 
     @Override
@@ -91,4 +100,6 @@ public class GameGUI extends GameView {
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         GUI.getGamePanel().revalidate();
     }
+
+
 }

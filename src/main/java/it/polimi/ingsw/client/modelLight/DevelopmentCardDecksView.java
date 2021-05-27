@@ -20,6 +20,10 @@ public abstract class DevelopmentCardDecksView {
         return new ArrayList<>(playerCards);
     }
 
+    public int getPos(int ID){
+        return playerCards.indexOf(ID)+1;
+    }
+
     public abstract void show();
     public void update(){}
 }

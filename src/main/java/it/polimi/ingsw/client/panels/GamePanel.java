@@ -238,11 +238,10 @@ public class GamePanel extends JPanel {
         revalidate();
     }
 
+    public ActionPanel getActionPanel(){
+        return actionPanel;
+    }
     public ScrollPanel getScrollPanel() {
         return scrollPanel;
-    }
-
-    public ActionPanel getActionPanel() {
-        return actionPanel;
     }
 }

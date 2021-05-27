@@ -446,6 +446,17 @@ public class Dashboard {
         return new ArrayList<>(resourcesToPay);
     }
 
+    public Map<Resource, Integer> getResourcesToPayMap(){
+        Map<Resource, Integer> resources = new HashMap<>();
+        System.out.println(resourcesToPay);
+        for(Resource resource: resourcesToPay)
+            if(resources.containsKey(resource))
+                resources.put(resource, resources.get(resource)+1);
+            else
+                resources.put(resource, 1);
+        return resources;
+    }
+
     /**
      * This method lists all the benefits that have to be produced due to a production activation.
      * @return a Map containing Benefits to be produced as Key and Integers as values indicating quantity to be produced.

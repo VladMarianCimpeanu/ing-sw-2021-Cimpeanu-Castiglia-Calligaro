@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.TakeResPos;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.StrongboxView;
@@ -13,8 +14,8 @@ public class StrongboxGUI extends StrongboxView implements Clickable {
     private Map<Resource, Shape> shapes;
     private final int deltaX = 40;
     private final int deltaY = 25;
-    private final int heightRes = 14;
-    private final int widthRes = 14;
+    private final int heightRes = 20;
+    private final int widthRes = 20;
 
     public StrongboxGUI(){
         super();
@@ -29,7 +30,7 @@ public class StrongboxGUI extends StrongboxView implements Clickable {
         int y = 335;
         int many = 0;
         for(Resource resource: content.keySet()){
-            shapes.put(resource, new Shape(x, y, 14 ,14));
+            shapes.put(resource, new Shape(x, y, widthRes ,heightRes));
             x += deltaX;
             many++;
             if(many == 2){
@@ -72,6 +73,6 @@ public class StrongboxGUI extends StrongboxView implements Clickable {
 
         @Override
     public void click(int x, int y) {
-            System.out.println("nnerfnwenr");
+            GUI.getClient().send(new TakeResPos(whichClicked(x, y), "strongbox"));
     }
 }

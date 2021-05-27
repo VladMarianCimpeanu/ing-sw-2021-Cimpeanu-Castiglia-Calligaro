@@ -42,12 +42,14 @@ public class BuyDevState extends TurnState {
                     controller.sendMessage(new Error(invalidCommand));
                     return;
                 }
+                controller.sendMessage(new ResourceToPay(controller.getCurrentPlayer().getDevelopmentCardCost()));
                 if (player.getDevelopmentCardCost().isEmpty()) controller.setCurrentState(new PlaceDevState(controller));
             }catch(NotEnoughResourcesException e){
                 controller.sendMessage(new Error(notEnoughResources));
             }
         }else
             controller.sendMessage(new Error(nullPosition));
+
     }
 
     @Override
