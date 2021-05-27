@@ -48,6 +48,8 @@ public class GameGUI extends GameView {
     @Override
     public void displayResourcesToPay(Map<Resource, Integer> resources) {
         ActionPanel panel = GUI.getGamePanel().getActionPanel();
+        //add a concept of state?
+        //how can i know if i am in a production state or buy state
         ((DepotGUI)getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyTake();
         setResBuffer(resources);
         panel.repaint();

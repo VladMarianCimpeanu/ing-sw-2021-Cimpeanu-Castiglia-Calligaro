@@ -1,15 +1,22 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
+import it.polimi.ingsw.client.Color;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.ActivateCardProduction;
+import it.polimi.ingsw.client.MessageToServer.BuyDevCard;
 import it.polimi.ingsw.client.MessageToServer.PlaceCard;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.DevelopmentCardView;
+import it.polimi.ingsw.client.panels.BuyPanel;
+import it.polimi.ingsw.client.panels.DevProductionPanel;
 
 public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable {
     private Shape shape;
     private String url;
     private int ID;
+    private int Level;
+    private Color Color;
     private final static int width = 79;
     private final static int height =120;
     private Runnable actionOnClick;
@@ -28,14 +35,16 @@ public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable
 
     public void setToBuyable(){
         actionOnClick = () -> {
-            int pos = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks().getPos(ID);
-            GUI.getClient().send(new PlaceCard(pos));
+            GUI.sendMessage(new BuyDevCard(Level, Color));
+            GUI.getGamePanel().setActionPanel(new BuyPanel());
         };
     }
 
     public void setToProduction(){
         actionOnClick = () -> {
-            System.out.println("click: produce");
+            int pos = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks().getPos(ID);
+            GUI.getClient().send(new ActivateCardProduction(pos));
+            GUI.getGamePanel().setActionPanel(new DevProductionPanel());
         };
     }
 
