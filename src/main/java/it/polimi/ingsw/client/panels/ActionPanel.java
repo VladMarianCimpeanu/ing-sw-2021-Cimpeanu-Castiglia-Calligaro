@@ -1,14 +1,29 @@
 package it.polimi.ingsw.client.panels;
 
+import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
+
 import javax.swing.*;
 import java.awt.Color;
 
-public class ActionPanel extends JPanel {
+public abstract class ActionPanel extends JPanel {
+    private static final int width = 450;
+    private static final int height = 450;
+    protected JLabel errorLabel = new JLabel("");
     public ActionPanel() {
-        setBackground(Color.BLUE);
+        setBackground(Color.WHITE);
 
-        setBounds( 1100, 0, 450, 450);
+        setBounds( 1100, 0, width, height);
 
-        add(new JButton("NON CLICCARMI (cu edition) !!!"));
+        //add(new JButton("NON CLICCARMI (cu edition) !!!"));
     }
+
+    public static int getActionWidth(){
+        return width;
+    }
+    public static int getActionHeight(){
+        return height;
+    }
+
+    public abstract void displayError(ErrorMessage error);
+
 }

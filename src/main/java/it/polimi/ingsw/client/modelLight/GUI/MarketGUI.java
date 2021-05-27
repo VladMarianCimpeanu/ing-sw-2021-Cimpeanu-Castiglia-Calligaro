@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.*;
+import it.polimi.ingsw.client.MessageToServer.Market;
+import it.polimi.ingsw.client.MessageToServer.MessageToServer;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.MarketView;
 import it.polimi.ingsw.client.panels.GamePanel;
@@ -77,25 +79,30 @@ public class MarketGUI extends MarketView implements Clickable {
         && (horizontalArrowDimension.getY() <= y && y <= (horizontalArrowDimension.getY() + horizontalArrowDimension.getHeight()))) {
             int arrow = y - horizontalArrowDimension.getY();
             if(0 <= arrow && arrow <= arrowSize){
-                System.out.println("Select row 1");
+                selectNewMarbles(new Market("row", 1));
             }else if(arrowSize <= arrow && arrow <= 2 * arrowSize){
-                System.out.println("Select row 2");
+                selectNewMarbles(new Market("row", 2));
             }else if(2 * arrowSize <= arrow && arrow <= 3 * arrowSize){
-                System.out.println("Select row 3");
+                selectNewMarbles(new Market("row", 3));
             }
         }
         if (verticalArrowDimension.getX() <= x && x <= (verticalArrowDimension.getX() + verticalArrowDimension.getWidth())
         && (verticalArrowDimension.getY() <= y && y <= (verticalArrowDimension.getY() + verticalArrowDimension.getHeight()))) {
             int arrow = x - verticalArrowDimension.getX();
             if(0 <= arrow && arrow <= arrowSize){
-                System.out.println("Select column 1");
+                selectNewMarbles(new Market("column", 1));
             }else if(arrowSize <= arrow && arrow <= 2 * arrowSize){
-                System.out.println("Select column 2");
+                selectNewMarbles(new Market("column", 2));
             }else if(2 * arrowSize <= arrow && arrow <= 3 * arrowSize){
-                System.out.println("Select column 3");
+                selectNewMarbles(new Market("column", 3));
             }else if(3 * arrowSize <= arrow && arrow <= 4 * arrowSize){
-                System.out.println("Select column 4");
+                selectNewMarbles(new Market("column", 4));
             }
         }
+    }
+
+    public void selectNewMarbles(MessageToServer message){
+        GUI.getClient().send(message);
+        GUI.getGamePanel().unlockGameBoard(false);
     }
 }

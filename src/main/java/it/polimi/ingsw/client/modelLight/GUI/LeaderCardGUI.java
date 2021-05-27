@@ -1,8 +1,10 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
+import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardView;
+import it.polimi.ingsw.client.panels.LeaderCardsPanel;
 
 public class LeaderCardGUI extends LeaderCardView implements Clickable {
 
@@ -27,7 +29,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
 
     @Override
     public void click(int x, int y) {
-        System.out.println("sono stato cliccato");
+        GUI.getGamePanel().setActionPanel(new LeaderCardsPanel(ID));
     }
 
     public Shape getShape() {
