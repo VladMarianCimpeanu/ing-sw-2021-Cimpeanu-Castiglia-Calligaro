@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenView;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class GameView {
@@ -14,6 +15,15 @@ public abstract class GameView {
     protected FaithPathView faithPath;
     protected DevelopmentCardSetView cards;
     protected ActionTokenView actionTokenView;
+    private Map<Resource, Integer> resBuffer;
+
+    public GameView(){
+        resBuffer = new HashMap<>();
+    }
+
+    public Map<Resource, Integer> getResBuffer() {
+        return resBuffer;
+    }
 
     public FaithPathView getFaithPathView(){
         return faithPath;
