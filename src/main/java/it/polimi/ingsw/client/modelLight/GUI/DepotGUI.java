@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.PutResPos;
+import it.polimi.ingsw.client.MessageToServer.TakeResPos;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.DepotView;
@@ -9,9 +11,10 @@ import it.polimi.ingsw.client.modelLight.DepotView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class DepotGUI extends DepotView implements Clickable {
-    private Runnable strategy;
+    private Consumer<Resource> strategy;
     private Map<Resource, Shape> shapes;
     private final int deltapixel = 23;
     private final int heightRes = 14;
@@ -79,26 +82,33 @@ public class DepotGUI extends DepotView implements Clickable {
         return null;
     }
 
+    private int whichShelf(Resource resource){
+        for(int i = 0; i<3; i++)
+            if(quantity[i] > 0 && resources[i] == resource) return i+1;
+        return -1;
+    }
+
     @Override
     public void click(int x, int y) {
-        strategy.run();
-        setStrategyMove();
+        strategy.accept(whichClicked(x, y));
     }
 
     //default
-    private void setStrategyMove(){
-        strategy = () -> {
+    public void setStrategyMove(){
+        strategy = (resource) -> {
             System.out.println("move strategy");
         };
     }
 
     public void setStrategyPut(){
-        strategy = () -> {
-            System.out.println("put strategy");
+        strategy = (resource) -> {
+            GUI.getClient().send(new PutResPos(resource, "depot", whichShelf(resource)));
         };
     }
 
     public void setStrategyTake(){
-
+        strategy = (resource) ->{
+            GUI.getClient().send(new TakeResPos(resource, "depot"));
+        };
     }
 }
