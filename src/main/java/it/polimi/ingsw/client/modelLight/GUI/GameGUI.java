@@ -100,6 +100,4 @@ public class GameGUI extends GameView {
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         GUI.getGamePanel().revalidate();
     }
-
-
 }

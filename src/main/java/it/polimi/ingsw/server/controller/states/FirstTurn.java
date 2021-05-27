@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.JsonToLeaderCard;
 import it.polimi.ingsw.server.MessageToClient.Error;
+import it.polimi.ingsw.server.MessageToClient.FirstTurnEnded;
 import it.polimi.ingsw.server.MessageToClient.SelectedLeadercards;
 import it.polimi.ingsw.server.MessageToClient.TurnOrder;
 import it.polimi.ingsw.server.controller.Controller;
@@ -100,6 +101,7 @@ public class FirstTurn extends TurnState{
                     e.printStackTrace();
                 }
             }
+            getController().sendBroadcast(new FirstTurnEnded());
             System.out.println("First turn ended. Game starts now!");
             getController().startGame();
             getController().setCurrentState(new SelectionState(getController()));
