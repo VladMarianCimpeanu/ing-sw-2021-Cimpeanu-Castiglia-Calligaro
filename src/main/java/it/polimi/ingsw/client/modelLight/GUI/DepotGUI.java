@@ -106,7 +106,7 @@ public class DepotGUI extends DepotView implements Clickable {
     public void setStrategyTake(){
         strategy = (shelf) ->{
             if(whichResource(shelf) == null) return;
-            GUI.getClient().send(new TakeResPos(resources[shelf], "depot"));
+            GUI.getClient().send(new TakeResPos(resources[shelf - 1], "depot"));
         };
     }
 
