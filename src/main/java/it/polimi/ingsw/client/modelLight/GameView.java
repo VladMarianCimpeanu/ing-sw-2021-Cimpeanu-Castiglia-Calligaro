@@ -41,7 +41,7 @@ public abstract class GameView {
 
     public abstract void displayResourcesToPay(Map<Resource, Integer> resources);
 
-    public abstract void notifyJoin(String content);
+    public abstract void notifyJoin(String content, int size, ArrayList<String> players);
 
     public abstract void displayError(ErrorMessage error);
 
@@ -52,4 +52,8 @@ public abstract class GameView {
     public abstract void startGame();
 
     public abstract void requireMode();
+
+    public abstract void chooseResources(int position, int number);
+
+    public abstract void firstTurnEnded();
 }

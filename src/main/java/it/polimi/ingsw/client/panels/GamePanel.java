@@ -26,6 +26,7 @@ public class GamePanel extends JPanel {
     private static final int Y_board = 0;
     private static final int widthBoard = 600;
     private static final int heightBoard = 426;
+    private static final int leaderActivationMargin = 3;
     private String playerWatched;
 
     public GamePanel() {
@@ -42,16 +43,16 @@ public class GamePanel extends JPanel {
 
 
         //Example of absolute positioning
-        JButton button = new JButton("Cliccami!");
-        add(button);
-        Dimension size = button.getPreferredSize();
-        button.setBounds(200, 200,
-                size.width, size.height);
+//        JButton button = new JButton("Cliccami!");
+//        add(button);
+//        Dimension size = button.getPreferredSize();
+//        button.setBounds(200, 200,
+//                size.width, size.height);
 
         scrollPanel = new ScrollPanel();
         add(scrollPanel);
 
-        actionPanel = new DefaultPanel();
+        actionPanel = new FirstTurnPanel();
         add(actionPanel);
 
 //        addMouseMotionListener(new MouseAdapter(){
@@ -101,7 +102,7 @@ public class GamePanel extends JPanel {
     @Override
     public synchronized void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("paintComponetn?");
+
         it.polimi.ingsw.client.Shape shape = new it.polimi.ingsw.client.Shape(X_board, Y_board, widthBoard, heightBoard);
         drawImage(g,"images/board/playerBoard.png", shape);
         it.polimi.ingsw.client.Shape shape2 = new it.polimi.ingsw.client.Shape(630,28,400,370);
@@ -115,8 +116,17 @@ public class GamePanel extends JPanel {
         DevelopmentCardDecksGUI devCards = (DevelopmentCardDecksGUI)GUI.getClient().getGameView().getPlayer(playerWatched).getDecks();
         devCards.drawDecks(g);
 
-        LeaderCardSetGUI set = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(playerWatched).getLeaderCards();
+        LeaderCardSetGUI set = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
         for(LeaderCardGUI card: set.getCards()){
+            if(card.isActivated()){
+                g.setColor(Color.BLUE);
+                g.fillRect(
+                        card.getShape().getX() - leaderActivationMargin,
+                        card.getShape().getY() - leaderActivationMargin,
+                        card.getShape().getWidth() + 2 * leaderActivationMargin,
+                        card.getShape().getHeight() + 2 * leaderActivationMargin
+                );
+            }
             drawImage(g, card.getImage(), card.getShape());
         }
 
@@ -155,6 +165,7 @@ public class GamePanel extends JPanel {
         g.drawString("Scarta LeaderCard", 1200, 50);
     }
 
+    //TODO public? it would be nicer if the logic around development cards was inside their classes
     public static void drawImage(Graphics g, String path, it.polimi.ingsw.client.Shape shape){
         int x = shape.getX();
         int y = shape.getY();
@@ -227,10 +238,11 @@ public class GamePanel extends JPanel {
         revalidate();
     }
 
-    public ActionPanel getActionPanel(){
-        return actionPanel;
-    }
     public ScrollPanel getScrollPanel() {
         return scrollPanel;
+    }
+
+    public ActionPanel getActionPanel() {
+        return actionPanel;
     }
 }

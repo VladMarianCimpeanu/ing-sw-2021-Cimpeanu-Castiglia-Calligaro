@@ -52,8 +52,14 @@ public class GameCLI extends GameView {
     }
 
     @Override
-    public void notifyJoin(String content) {
-        System.out.println(content);
+    public void notifyJoin(String content, int size, ArrayList<String> players) {
+        if(content.equals("created")){
+            System.out.print("Created a new waiting room. ");
+        }else{
+            System.out.print("Joined a waiting room. ");
+        }
+        System.out.println("Size: " + size);
+        System.out.println("Players in waitingRoom: " + players);
     }
 
     @Override
@@ -79,6 +85,16 @@ public class GameCLI extends GameView {
     @Override
     public void requireMode() {
         dumpMessage("There are no waiting rooms available: you are the host. Choose number of players");
+    }
+
+    @Override
+    public void chooseResources(int position, int number) {
+        System.out.println("You are in position: " + position + " | Choose " + number +  " resources");
+    }
+
+    @Override
+    public void firstTurnEnded() {
+        System.out.println("You have finished your first turn");
     }
 
 }

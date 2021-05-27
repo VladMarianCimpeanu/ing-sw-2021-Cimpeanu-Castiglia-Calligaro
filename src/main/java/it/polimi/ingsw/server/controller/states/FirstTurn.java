@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.controller.states;
 
-import it.polimi.ingsw.client.MessageFromServer.Ok;
 import it.polimi.ingsw.server.JsonToLeaderCard;
 import it.polimi.ingsw.server.MessageToClient.Error;
 import it.polimi.ingsw.server.MessageToClient.SelectedLeadercards;

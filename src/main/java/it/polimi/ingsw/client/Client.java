@@ -62,7 +62,7 @@ public class Client {
         shapeAdapterFactory.registerSubtype(LastTurn.class, "LastTurn");
         shapeAdapterFactory.registerSubtype(MarketGrid.class, "MarketGrid");
         shapeAdapterFactory.registerSubtype(ModeRequest.class, "ModeRequest");
-        shapeAdapterFactory.registerSubtype(Ok.class, "Ok");
+        shapeAdapterFactory.registerSubtype(OkRoom.class, "OkRoom");
         shapeAdapterFactory.registerSubtype(Ping.class, "Ping");
         shapeAdapterFactory.registerSubtype(ResourceToPay.class, "ResourceToPay");
         shapeAdapterFactory.registerSubtype(ResourceToPut.class, "ResourceToPut");
@@ -93,6 +93,7 @@ public class Client {
         shapeAdapterFactory.registerSubtype(RejoinLeaderCards.class, "RejoinLeaderCards");
         shapeAdapterFactory.registerSubtype(RejoinStrongbox.class, "RejoinStrongbox");
         shapeAdapterFactory.registerSubtype(RejoinPlayer.class, "RejoinPlayer");
+        shapeAdapterFactory.registerSubtype(FirstTurnEnded.class, "FirstTurnEnded");
         shapeAdapterFactory.registerSubtype(UpdateStrategyBuffer.class, "UpdateStrategyBuffer");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();

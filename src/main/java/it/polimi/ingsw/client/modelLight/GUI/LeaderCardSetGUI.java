@@ -40,7 +40,6 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -84,6 +83,7 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
 
     @Override
     public void activate(int id) {
+        cards.get(id).activate();
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
     }
 

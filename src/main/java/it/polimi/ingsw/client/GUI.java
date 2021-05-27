@@ -1,11 +1,13 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.MessageToServer.KeepLeaderCard;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
 import it.polimi.ingsw.client.panels.GamePanel;
 import it.polimi.ingsw.client.panels.LoginPanel;
 import it.polimi.ingsw.client.panels.WaitingRoomPanel;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class GUI {
     private static JFrame jFrame;
@@ -13,6 +15,7 @@ public class GUI {
     private static GamePanel gamePanel = new GamePanel();
     private static LoginPanel loginPanel;
     private static WaitingRoomPanel waitingRoomPanel;
+    private static int leaderToKeep = 0;
 
     public static void setClient(Client client) {
         GUI.client = client;
@@ -58,9 +61,9 @@ public class GUI {
         return waitingRoomPanel;
     }
 
-    public static void goToWaitingRoom(){
+    public static void goToWaitingRoom(int size, ArrayList<String> players){
         jFrame.remove(loginPanel);
-        waitingRoomPanel = new WaitingRoomPanel();
+        waitingRoomPanel = new WaitingRoomPanel(size, players);
         jFrame.add(waitingRoomPanel);
         jFrame.setVisible(false);
         jFrame.setVisible(true);
@@ -77,6 +80,15 @@ public class GUI {
 
         jFrame.setVisible(false);
         jFrame.setVisible(true);
+    }
+
+    public static void keepLeader(int id){
+        if(leaderToKeep == 0){
+            leaderToKeep = id;
+        }else{
+            sendMessage(new KeepLeaderCard(leaderToKeep, id, client.getNickname()));
+            leaderToKeep = 0;
+        }
     }
 
     public static void print(String string){

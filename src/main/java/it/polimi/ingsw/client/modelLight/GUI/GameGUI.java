@@ -5,10 +5,16 @@ import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenGUI;
 import it.polimi.ingsw.client.modelLight.GameView;
+import it.polimi.ingsw.client.panels.ActionPanel;
+import it.polimi.ingsw.client.panels.DefaultPanel;
+import it.polimi.ingsw.client.panels.FirstTurnPanel;
+import it.polimi.ingsw.client.panels.WaitingRoomPanel;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+
+import static it.polimi.ingsw.client.GUI.getGamePanel;
 
 public class GameGUI extends GameView {
     public GameGUI() {
@@ -39,8 +45,8 @@ public class GameGUI extends GameView {
     }
 
     @Override
-    public void notifyJoin(String content) {
-        GUI.goToWaitingRoom();
+    public void notifyJoin(String content, int size, ArrayList<String> players) {
+        GUI.goToWaitingRoom(size, players);
     }
 
 
@@ -72,5 +78,17 @@ public class GameGUI extends GameView {
     @Override
     public void requireMode() {
         GUI.getLoginPanel().requireMode();
+    }
+
+    @Override
+    public void chooseResources(int position, int number) {
+        FirstTurnPanel panel = (FirstTurnPanel) GUI.getGamePanel().getActionPanel();
+        panel.selectRes(position, number);
+    }
+
+    @Override
+    public void firstTurnEnded() {
+        GUI.getGamePanel().setActionPanel(new DefaultPanel());
+        GUI.getGamePanel().revalidate();
     }
 }
