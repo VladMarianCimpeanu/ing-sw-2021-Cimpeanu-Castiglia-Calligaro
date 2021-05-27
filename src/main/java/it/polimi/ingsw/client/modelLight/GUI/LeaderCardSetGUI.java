@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
-import it.polimi.ingsw.client.panels.ActionPanel;
 import it.polimi.ingsw.client.panels.DefaultPanel;
 
 import java.io.InputStreamReader;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LeaderCardSetGUI extends LeaderCardSetView {
-    private Map<Integer, LeaderCardGUI> cards;
+    private static Map<Integer, LeaderCardGUI> cards;
     private final static int startX = 20;
     private final static int startY = 450;
     private final static int cardWidth = 133;
@@ -36,6 +35,10 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
         for(LeaderCardGUI lc: read){
             cards.put(lc.getID(), lc);
         }
+    }
+
+    public static LeaderCardGUI getLeaderCard(int id){
+        return cards.getOrDefault(id, null);
     }
 
     @Override
@@ -98,5 +101,13 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
             array.add(cards.get(id));
         }
         return array;
+    }
+
+    public void setLeadersToMarketStrategy(){
+        for(LeaderCardGUI card : cards.values()) card.setMarketStrategy();
+    }
+
+    public void setLeadersToDefaultStrategy(){
+        for(LeaderCardGUI card : cards.values()) card.setStrategyDefault();
     }
 }

@@ -116,19 +116,19 @@ public class GamePanel extends JPanel {
         DevelopmentCardDecksGUI devCards = (DevelopmentCardDecksGUI)GUI.getClient().getGameView().getPlayer(playerWatched).getDecks();
         devCards.drawDecks(g);
 
-//        LeaderCardSetGUI set = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
-//        for(LeaderCardGUI card: set.getCards()){
-//            if(card.isActivated()){
-//                g.setColor(Color.BLUE);
-//                g.fillRect(
-//                        card.getShape().getX() - leaderActivationMargin,
-//                        card.getShape().getY() - leaderActivationMargin,
-//                        card.getShape().getWidth() + 2 * leaderActivationMargin,
-//                        card.getShape().getHeight() + 2 * leaderActivationMargin
-//                );
-//            }
-//            drawImage(g, card.getImage(), card.getShape());
-//        }
+        LeaderCardSetGUI set = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(playerWatched).getLeaderCards();
+        for(LeaderCardGUI card: set.getCards()){
+            if(card.isActivated()){
+                g.setColor(Color.BLUE);
+                g.fillRect(
+                        card.getShape().getX() - leaderActivationMargin,
+                        card.getShape().getY() - leaderActivationMargin,
+                        card.getShape().getWidth() + 2 * leaderActivationMargin,
+                        card.getShape().getHeight() + 2 * leaderActivationMargin
+                );
+            }
+            drawImage(g, card.getImage(), card.getShape());
+        }
 
         MarketGUI marketGUI = (MarketGUI) GUI.getClient().getGameView().getMarket();
         marketGUI.print(g);

@@ -344,6 +344,7 @@ public class Player {
         }else{
             throw new InvalidDirectionSelection();
         }
+        virtualView.updateStrategies(whiteMarbles, 0);
         return whiteMarbles;
     }
 
@@ -357,7 +358,7 @@ public class Player {
         if(whiteMarbles == 0) throw new InvalidStrategyException();
         marketStrategyStack.push(marketStrategy);
         whiteMarbles -= 1;
-        virtualView.updateStrategies(whiteMarbles);
+        virtualView.updateStrategies(whiteMarbles, marketStrategy.getID());
     }
 
     /**
@@ -378,6 +379,7 @@ public class Player {
             }
         }
         whiteMarbles = 0;
+        virtualView.updateConvertedMarbles(receivedFromMarket);
     }
 
     /**
@@ -389,6 +391,7 @@ public class Player {
             if (dashboard.getWarehouseDepot().addResource(shelf,1,resource) == 1) throw new NotEnoughSpaceException();
             else receivedFromMarket.remove(resource);
         }
+        virtualView.updateConvertedMarbles(receivedFromMarket);
     }
 
     /**
@@ -400,6 +403,7 @@ public class Player {
             if (dashboard.getWarehouseDepot().addExtraResource(resource,1) == 1) throw new NotEnoughSpaceException();
             else receivedFromMarket.remove(resource);
         }
+        virtualView.updateConvertedMarbles(receivedFromMarket);
     }
 
     /**
@@ -415,6 +419,7 @@ public class Player {
         } catch (NoSuchPlayerException | InvalidStepsException e) {
             e.printStackTrace();
         }
+        virtualView.updateConvertedMarbles(receivedFromMarket);
     }
     /***************** GO TO MARKET PROCESS ********************/
 

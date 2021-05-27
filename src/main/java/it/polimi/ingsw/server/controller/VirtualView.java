@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.server.MessageToClient.ConvertedMarbles;
 import it.polimi.ingsw.server.MessageToClient.Updates.*;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.benefit.Benefit;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.market.Marble;
 
@@ -162,5 +164,23 @@ public class VirtualView {
         controller.sendBroadcast(new UpdateDrawToken(id));
     }
 
-    public void updateStrategies(int remaining){ controller.sendMessage(new UpdateStrategyBuffer(remaining));}
+
+    /**
+     * This method is used to notify the virtual view about the number of white marbles that need to be converted.
+     * @param remaining remaining white marbles.
+     * @param id id of the leader card selected.
+     */
+    public void updateStrategies(int remaining, int id){ controller.sendMessage(new UpdateStrategyBuffer(remaining, id));}
+
+    /**
+     * notify the virtual view about the remaining resources to take from the market.
+     * @param resources remaining resources.
+     */
+    public void updateConvertedMarbles(ArrayList<Benefit> resources){
+        ArrayList<Resource> converted = new ArrayList<>();
+        for(Benefit res : resources){
+            converted.add((Resource) res);
+        }
+        controller.sendMessage(new ConvertedMarbles(converted));
+    }
 }

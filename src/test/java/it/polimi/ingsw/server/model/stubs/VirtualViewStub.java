@@ -107,6 +107,6 @@ public class VirtualViewStub extends VirtualView {
     }
 
     @Override
-    public void updateStrategies(int remaining){
+    public void updateStrategies(int remaining, int id){
     }
 }

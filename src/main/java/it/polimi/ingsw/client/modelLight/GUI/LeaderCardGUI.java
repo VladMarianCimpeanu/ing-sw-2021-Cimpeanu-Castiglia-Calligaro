@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.Strategy;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardView;
 import it.polimi.ingsw.client.panels.LeaderCardsPanel;
@@ -59,9 +60,11 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     }
 
     public void setStrategyDefault(){
-        strategy = () -> {
-            GUI.getGamePanel().setActionPanel(new LeaderCardsPanel(ID));
-        };
+        strategy = () -> GUI.getGamePanel().setActionPanel(new LeaderCardsPanel(ID));
+    }
+
+    public void setMarketStrategy(){
+        strategy = () -> GUI.getClient().send(new Strategy(ID));
     }
 
     public boolean isActivated(){

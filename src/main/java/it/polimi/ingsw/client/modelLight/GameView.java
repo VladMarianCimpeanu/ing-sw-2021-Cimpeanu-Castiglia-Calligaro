@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenView;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +30,13 @@ public abstract class GameView {
 
     public FaithPathView getFaithPathView(){
         return faithPath;
+    }
+
+    public void setResBuffer(ArrayList<Resource> resources) {
+        resBuffer.clear();
+        for(Resource resource : resources){
+            resBuffer.put(resource, resBuffer.getOrDefault(resource, 0) + 1);
+        }
     }
 
     public abstract void setPlayers(ArrayList<String> nicknames);
@@ -66,6 +72,10 @@ public abstract class GameView {
     public abstract void startGame();
 
     public abstract void requireMode();
+
+    public abstract void updateResourcesFromMarket(ArrayList<Resource> resources);
+
+    public abstract void updatedUsedStrategies(int whiteMarbles, int strategies);
 
     public abstract void chooseResources(int position, int number);
 

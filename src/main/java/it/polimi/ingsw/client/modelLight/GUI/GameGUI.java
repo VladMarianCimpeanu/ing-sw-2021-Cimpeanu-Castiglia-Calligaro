@@ -13,6 +13,7 @@ import it.polimi.ingsw.client.panels.ActionPanel;
 import it.polimi.ingsw.client.panels.DefaultPanel;
 import it.polimi.ingsw.client.panels.FirstTurnPanel;
 import it.polimi.ingsw.client.panels.WaitingRoomPanel;
+import it.polimi.ingsw.client.panels.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -99,7 +100,36 @@ public class GameGUI extends GameView {
 
     @Override
     public void firstTurnEnded() {
+        System.out.println("end");;
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
+        ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
         GUI.getGamePanel().revalidate();
+    }
+
+    @Override
+    public void updateResourcesFromMarket(ArrayList<Resource> resources) {
+        if(!((MarketPanel)GUI.getGamePanel().getActionPanel()).isTakingResources())
+            ((MarketPanel)GUI.getGamePanel().getActionPanel()).setToSelectResources();
+        if(resources.isEmpty()) {
+            GUI.getGamePanel().setActionPanel(new DefaultPanel());
+            GUI.getGamePanel().unlockGameBoard(true);
+        }
+        else {
+            setResBuffer(resources);
+            ((MarketPanel)GUI.getGamePanel().getActionPanel()).updateRemainingResources();
+        }
+    }
+
+    @Override
+    public void updatedUsedStrategies(int whiteMarbles, int strategy) {
+        if(strategy == 0) {
+            GUI.getGamePanel().setActionPanel(new MarketPanel());
+            ((LeaderCardSetGUI)players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToMarketStrategy();
+        }
+        if(whiteMarbles == 0 ) {
+            ((MarketPanel)GUI.getGamePanel().getActionPanel()).setToSelectResources();
+            ((LeaderCardSetGUI)players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
+        }
+        else if(strategy != 0)((MarketPanel)GUI.getGamePanel().getActionPanel()).updateStrategies(whiteMarbles, strategy);
     }
 }

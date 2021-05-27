@@ -1,12 +1,10 @@
 package it.polimi.ingsw.server.controller.states;
 
-import it.polimi.ingsw.server.MessageToClient.ConvertedMarbles;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Dashboard;
 import it.polimi.ingsw.server.model.MarketStrategy;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.WarehouseDepot;
-import it.polimi.ingsw.server.model.benefit.Benefit;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidIDExcpetion;
 import it.polimi.ingsw.server.model.exceptions.InvalidResourceException;
@@ -37,12 +35,7 @@ public class MarketStrategyState extends TurnState {
             if (whiteMarbles == 0) {
                 getController().getCurrentPlayer().passStrategiesToMarket();
                 if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
-                else {
-                    ArrayList<Resource> resources = getController().getCurrentPlayer().getReceivedFromMarket();
-                    getController().sendMessage(new ConvertedMarbles(resources));
-
-                    getController().setCurrentState(new MarketState(getController()));
-                }
+                else getController().setCurrentState(new MarketState(getController()));
             }
         } catch (InvalidIDExcpetion e) {
             getController().sendError(invalidLeaderCardID);

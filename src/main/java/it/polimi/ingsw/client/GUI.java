@@ -5,7 +5,6 @@ import it.polimi.ingsw.client.MessageToServer.MessageToServer;
 import it.polimi.ingsw.client.panels.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class GUI {

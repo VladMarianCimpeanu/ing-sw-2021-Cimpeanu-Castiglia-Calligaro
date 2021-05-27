@@ -7,8 +7,10 @@ import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class GameCLI extends GameView {
     public GameCLI() {
@@ -95,6 +97,21 @@ public class GameCLI extends GameView {
     @Override
     public void firstTurnEnded() {
         System.out.println("You have finished your first turn");
+    }
+
+    @Override
+    public void updateResourcesFromMarket(ArrayList<Resource> resources) {
+        String resourcesToDump = "";
+        for(Resource res: resources){
+            resourcesToDump += " " + (res.toString().toLowerCase(Locale.ROOT));
+        }
+        if(!resources.isEmpty()) dumpMessage("Resources to redeem left are:" +  resourcesToDump);
+    }
+
+    @Override
+    public void updatedUsedStrategies(int whiteMarbles, int strategies) {
+        if(whiteMarbles == 0) dumpMessage("There are no more white marbles to convert");
+        else dumpMessage("There are " + whiteMarbles + " to convert.");
     }
 
 }

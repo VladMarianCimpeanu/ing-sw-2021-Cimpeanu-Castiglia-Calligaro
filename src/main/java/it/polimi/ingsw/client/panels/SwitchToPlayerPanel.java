@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.panels;
 
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.EndTurn;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +11,10 @@ import java.util.ArrayList;
 
 public class SwitchToPlayerPanel extends JPanel implements ActionListener {
     private ArrayList<PlayerButton> playerButtons;
-
+    private JButton passButton;
     public SwitchToPlayerPanel(){
         setBackground(Color.WHITE);
-        setLayout(new GridLayout(2, GUI.getClient().getTurns().size()));
+        setLayout(new GridLayout(3, GUI.getClient().getTurns().size()));
         this.add(new JLabel("Click a button bellow to change board"));
         for(int i = 0; i < (GUI.getClient().getTurns().size() - 1); i ++) this.add(new JLabel());
         setBounds(0, 700, 600, 50);
@@ -31,9 +32,8 @@ public class SwitchToPlayerPanel extends JPanel implements ActionListener {
         for(PlayerButton button: playerButtons)
             if (e.getSource() == button){
                 GUI.getGamePanel().setPlayerWatched(button.getPlayer());
-                System.out.println("funziona?");
+                GUI.getGamePanel().repaint();
             }
-            GUI.getGamePanel().repaint();
     }
 }
 

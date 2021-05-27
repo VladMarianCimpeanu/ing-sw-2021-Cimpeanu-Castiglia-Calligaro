@@ -79,7 +79,7 @@ public class DevelopmentCardsSetGUI extends DevelopmentCardSetView implements Cl
     public boolean isClicked(int x, int y) {
         for(ArrayList<Integer> deck : decks){
             for(Integer id : deck){
-                if(getCard(id).isClicked(x, y)) return true;
+                if(id!= 0 && getCard(id).isClicked(x, y)) return true;
             }
         }
         return false;
@@ -90,7 +90,7 @@ public class DevelopmentCardsSetGUI extends DevelopmentCardSetView implements Cl
         boolean found = false;
         for(int i = 0; i < decks.size(); i ++){
             for(int j = 0; j < decks.get(0).size() && !found; j ++){
-                if(getCard(decks.get(i).get(j)).isClicked(x, y)) {
+                if(decks.get(i).get(j) != 0 && getCard(decks.get(i).get(j)).isClicked(x, y)) {
                     found = true;
                     getCard(decks.get(i).get(j)).click(x, y);
                 }
