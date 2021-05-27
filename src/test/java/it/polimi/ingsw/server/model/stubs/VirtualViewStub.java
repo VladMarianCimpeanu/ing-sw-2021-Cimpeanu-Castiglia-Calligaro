@@ -6,9 +6,11 @@ import it.polimi.ingsw.server.controller.VirtualView;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.Game;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.benefit.Benefit;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.market.Marble;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -108,5 +110,10 @@ public class VirtualViewStub extends VirtualView {
 
     @Override
     public void updateStrategies(int remaining, int id){
+    }
+
+    @Override
+    public void updateConvertedMarbles(ArrayList<Benefit> resources){
+
     }
 }

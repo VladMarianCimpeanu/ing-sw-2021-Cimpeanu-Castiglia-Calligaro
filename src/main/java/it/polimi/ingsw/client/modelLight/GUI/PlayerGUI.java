@@ -11,6 +11,12 @@ public class PlayerGUI extends PlayerView {
         decks = new DevelopmentCardDecksGUI();
         strongbox = new StrongboxGUI();
         depot = new DepotGUI();
+        if(nickname.equals(GUI.getClient().getNickname())){
+            GUI.getGamePanel().addGameboard((DevelopmentCardDecksGUI) decks);
+            GUI.getGamePanel().addGameboard((StrongboxGUI) strongbox);
+            GUI.getGamePanel().addGameboard((DepotGUI) depot);
+            GUI.getGamePanel().addGameboard((LeaderCardSetGUI)leaderCards);
+        }
     }
 
     @Override

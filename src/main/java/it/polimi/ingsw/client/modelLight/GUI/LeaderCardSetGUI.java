@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LeaderCardSetGUI extends LeaderCardSetView {
+public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
     private static Map<Integer, LeaderCardGUI> cards;
     private final static int startX = 20;
     private final static int startY = 450;
@@ -56,20 +57,13 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
 
     @Override
     public void keep(ArrayList<Integer> idS) {
-        for(int id: playerCards){
-            GUI.getGamePanel().removeGameboard(cards.get(id));
-        }
         super.keep(idS);
-        for(int id: playerCards){
-            GUI.getGamePanel().addGameboard(cards.get(id));
-        }
         updateGUI();
     }
 
     @Override
     public void remove(int idRemove) {
         super.remove(idRemove);
-        GUI.getGamePanel().removeGameboard(cards.get(idRemove));
         updateGUI();
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
     }
@@ -79,7 +73,6 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
         for(int id: playerCards){
             cards.get(id).setShape(new Shape((startX + x), startY, cardWidth, cardHeight));
             x += (cardWidth + margin);
-            GUI.getGamePanel().addGameboard(cards.get(id));
         }
         GUI.getGamePanel().repaint();
     }
@@ -109,5 +102,21 @@ public class LeaderCardSetGUI extends LeaderCardSetView {
 
     public void setLeadersToDefaultStrategy(){
         for(LeaderCardGUI card : cards.values()) card.setStrategyDefault();
+    }
+
+    @Override
+    public boolean isClicked(int x, int y) {
+        for(Integer card : playerCards){
+            if (cards.get(card).isClicked(x, y)) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void click(int x, int y) {
+        for(Integer card : playerCards){
+            LeaderCardGUI leaderCard = cards.get(card);
+            if(leaderCard.isClicked(x, y)) leaderCard.click(x, y);
+        }
     }
 }
