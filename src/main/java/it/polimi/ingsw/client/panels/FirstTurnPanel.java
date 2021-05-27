@@ -1,7 +1,10 @@
 package it.polimi.ingsw.client.panels;
 
+import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
+import it.polimi.ingsw.client.MessageToServer.ChooseFirstResources;
 import it.polimi.ingsw.client.Resource;
+import it.polimi.ingsw.client.modelLight.GUI.DepotGUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,8 +18,8 @@ import java.util.ArrayList;
 
 public class FirstTurnPanel extends ActionPanel{
     private int numberRes;
-    private ArrayList<String> res;
-    private ArrayList<String> pos;
+    private ArrayList<Resource> res;
+    private ArrayList<Integer> pos;
 
     public FirstTurnPanel() {
         super();
@@ -34,10 +37,13 @@ public class FirstTurnPanel extends ActionPanel{
     public void selectRes(int position, int numberRes) {
         this.numberRes = numberRes;
         removeAll();
+        if(numberRes == 0){
+            GUI.getGamePanel().setActionPanel(new DefaultPanel());
+            DepotGUI depotGUI = (DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot();
+            depotGUI.setStrategyMove();
+        }
         if(numberRes > 0){
             add(new JLabel("Select " + numberRes + " resources"));
-
-
 
             //prints the Resources
             for(Resource r: Resource.values()){
@@ -55,9 +61,9 @@ public class FirstTurnPanel extends ActionPanel{
                     JLabel label = new JLabel(x);
                     label.addMouseListener(new MouseAdapter() {
                         public void mouseClicked(MouseEvent e) {
-                            if(res.size() == pos.size() && res.size() < numberRes)
-                                //does it work? (r.name)
-                                res.add(r.name());
+                            if(res.size() == pos.size() && res.size() < numberRes) {
+                                res.add(r);
+                            }
                         }
                     });
                     add(label);
@@ -66,8 +72,19 @@ public class FirstTurnPanel extends ActionPanel{
             revalidate();
         }
     }
-    //TODO: aspetto push di nick
-    public void selectPos(){
 
+    public void selectPos(int shelf){
+        if(pos.size() < res.size() && pos.size() < numberRes) {
+            pos.add(shelf);
+        }
+        if(pos.size() == res.size() && res.size() == numberRes){
+            if(numberRes == 2)
+                GUI.sendMessage(new ChooseFirstResources(res.get(0), res.get(1), pos.get(0), pos.get(1), GUI.getClient().getNickname()));
+            else if(numberRes == 1)
+                GUI.sendMessage(new ChooseFirstResources(res.get(0), pos.get(0), GUI.getClient().getNickname()));
+            GUI.getGamePanel().setActionPanel(new DefaultPanel());
+            DepotGUI depotGUI = (DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot();
+            depotGUI.setStrategyMove();
+        }
     }
 }

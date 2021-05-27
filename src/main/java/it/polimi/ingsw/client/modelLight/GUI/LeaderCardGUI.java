@@ -31,8 +31,6 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     @Override
     public void click(int x, int y) {
         strategy.run();
-        //TODO: up or down
-        GUI.getGamePanel().setActionPanel(new LeaderCardsPanel(ID));
     }
 
     public Shape getShape() {
@@ -62,7 +60,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
 
     public void setStrategyDefault(){
         strategy = () -> {
-
+            GUI.getGamePanel().setActionPanel(new LeaderCardsPanel(ID));
         };
     }
 

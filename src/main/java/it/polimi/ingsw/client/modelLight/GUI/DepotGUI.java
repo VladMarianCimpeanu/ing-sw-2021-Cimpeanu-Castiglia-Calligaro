@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.MessageToServer.TakeResPos;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.DepotView;
+import it.polimi.ingsw.client.panels.FirstTurnPanel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class DepotGUI extends DepotView implements Clickable {
 
     public DepotGUI(){
         super();
-        setStrategyMove();
+        setStrategyFirstTurn();
         shapes = new HashMap<>();
         GUI.getGamePanel().addAction(this);
     }
@@ -91,7 +92,7 @@ public class DepotGUI extends DepotView implements Clickable {
 
     //default
     public void setStrategyMove(){
-        strategy = (resource) -> {
+        strategy = (shelf) -> {
             System.out.println("move strategy");
         };
     }
@@ -107,6 +108,13 @@ public class DepotGUI extends DepotView implements Clickable {
         strategy = (shelf) ->{
             if(whichResource(shelf) == null) return;
             GUI.getClient().send(new TakeResPos(resources[shelf], "depot"));
+        };
+    }
+
+    public void setStrategyFirstTurn(){
+        strategy = (shelf) ->{
+            FirstTurnPanel panel = (FirstTurnPanel) GUI.getGamePanel().getActionPanel();
+            panel.selectPos(shelf);
         };
     }
 }
