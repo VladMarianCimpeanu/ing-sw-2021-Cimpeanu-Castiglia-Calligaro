@@ -123,6 +123,7 @@ public class GameGUI extends GameView {
     @Override
     public void updatedUsedStrategies(int whiteMarbles, int strategy) {
         if(strategy == 0) {
+            GUI.getGamePanel().unlockGameBoard(false);
             GUI.getGamePanel().setActionPanel(new MarketPanel());
             ((LeaderCardSetGUI)players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToMarketStrategy();
         }

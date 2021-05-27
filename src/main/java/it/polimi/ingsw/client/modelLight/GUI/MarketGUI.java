@@ -103,6 +103,5 @@ public class MarketGUI extends MarketView implements Clickable {
 
     public void selectNewMarbles(MessageToServer message){
         GUI.getClient().send(message);
-        GUI.getGamePanel().unlockGameBoard(false);
     }
 }
