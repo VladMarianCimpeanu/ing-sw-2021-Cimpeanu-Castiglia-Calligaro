@@ -2,8 +2,8 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.MessageToServer.*;
 import it.polimi.ingsw.client.modelLight.PlayerView;
-import it.polimi.ingsw.server.model.Color;
-import it.polimi.ingsw.server.model.benefit.Resource;
+import it.polimi.ingsw.client.Color;
+import it.polimi.ingsw.client.Resource;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

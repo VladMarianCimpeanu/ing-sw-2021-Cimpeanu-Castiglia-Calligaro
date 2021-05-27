@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.MessageToServer;
 
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.TurnState;
-import it.polimi.ingsw.server.model.Color;
+import it.polimi.ingsw.client.Color;
 
 import java.util.ArrayList;
 
