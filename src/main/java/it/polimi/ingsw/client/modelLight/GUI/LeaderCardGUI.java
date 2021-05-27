@@ -11,9 +11,12 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
 
     private int ID;
     private String image;
+    private String type;
     private Shape shape;
     private Runnable strategy = () -> GUI.keepLeader(getID());
     private boolean activated = false;
+    private Runnable defaultStrategy = () -> GUI.getGamePanel().setActionPanel(new LeaderCardsPanel(ID));
+
 
     public void setShape(Shape shape) {
         this.shape = shape;
@@ -32,6 +35,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     @Override
     public void click(int x, int y) {
         strategy.run();
+        System.out.println("ciao " + strategy);
     }
 
     public Shape getShape() {
@@ -50,6 +54,12 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     @Override
     public void activate(){
         activated = true;
+        if(type.equals("production")) defaultStrategy = () ->{//TODO: here the default strategy of extra production.
+            System.out.println("extraProduction");};
+        else {
+            defaultStrategy = () -> {};
+            setStrategyDefault();
+        }
         GUI.getGamePanel().repaint();
     }
 
@@ -60,7 +70,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     }
 
     public void setStrategyDefault(){
-        strategy = () -> GUI.getGamePanel().setActionPanel(new LeaderCardsPanel(ID));
+        strategy = defaultStrategy;
     }
 
     public void setMarketStrategy(){
