@@ -10,6 +10,10 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * panel used when a player is logging in to the game.
+ */
 public class LoginPanel extends JPanel implements ActionListener {
     private JButton loginButton;
     private TextField nicknameField;
@@ -42,17 +46,10 @@ public class LoginPanel extends JPanel implements ActionListener {
         this.setLayout(new GridLayout(5, 1, 25, 5));
     }
 
-    //TODO: delete this main, it's just for testing.
-    public static void main(String[] args) {
-        JFrame f = new JFrame("Maestri del rinascimento");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        LoginPanel loginpanel = new LoginPanel();
-        f.add(loginpanel);
-        f.setSize(400, 190);
-        f.setVisible(true);
-    }
-
-
+    /**
+     * get the content of the text field used to catch the nickname of the player.
+     * @return
+     */
     public String getString(){
         return this.nicknameField.getText();
     }
@@ -67,11 +64,18 @@ public class LoginPanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * displays an error to the player.
+     * @param content content of the error.
+     */
     public void setError(String content){
         errorLabel.setText(content);
         nicknameField.setText("");
     }
 
+    /**
+     * asks the player the size of the new game.
+     */
     public void requireMode(){
         this.setVisible(false);
         this.remove(loginButton);

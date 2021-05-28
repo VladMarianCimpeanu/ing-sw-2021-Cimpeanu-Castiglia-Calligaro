@@ -12,6 +12,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * class that manages the input of the player when he is using the command line to play. (CLI mode)
+ */
 public class CLI implements Runnable {
     private Scanner in;
     private PrintWriter out;
@@ -246,10 +249,17 @@ public class CLI implements Runnable {
         }
     }
 
+    /**
+     * sets the nickname of this player.
+     * @param nickname specified nickname chosen by the player.
+     */
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
+    /**
+     * reads and displays all the commands that the player can use while is playing with CLI.
+     */
     private void readHelp(){
         String helpPath = "/help.txt";
         Reader reader = new InputStreamReader(this.getClass().getResourceAsStream(helpPath), StandardCharsets.UTF_8);

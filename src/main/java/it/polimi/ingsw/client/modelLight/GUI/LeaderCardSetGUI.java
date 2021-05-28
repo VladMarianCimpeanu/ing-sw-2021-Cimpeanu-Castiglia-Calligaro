@@ -55,12 +55,20 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
         updateGUI();
     }
 
+    /**
+     * assign leader cards to this player
+     * @param idS array list containing the IDs of the leader cards to assign to this player.
+     */
     @Override
     public void keep(ArrayList<Integer> idS) {
         super.keep(idS);
         updateGUI();
     }
 
+    /**
+     * discards a leader card of the player and refresh the action panel.
+     * @param idRemove
+     */
     @Override
     public void remove(int idRemove) {
         super.remove(idRemove);
@@ -68,6 +76,9 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
     }
 
+    /**
+     * repaint the leader cards owned by the player.
+     */
     private void updateGUI() {
         int x = 0;
         for(int id: playerCards){
@@ -77,6 +88,10 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
         GUI.getGamePanel().repaint();
     }
 
+    /**
+     * activates the specified leader card and change its default behaviour.
+     * @param id ID of the leader card to activate.
+     */
     @Override
     public void activate(int id) {
         cards.get(id).activate();
@@ -88,6 +103,10 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
 
     }
 
+    /**
+     * gives the leader cards owned by the player.
+     * @return an ArrayList of LeaderCardGUI objects owned by the player.
+     */
     public ArrayList<LeaderCardGUI> getCards() {
         ArrayList<LeaderCardGUI> array = new ArrayList<>();
         for(int id: playerCards){
@@ -96,14 +115,26 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
         return array;
     }
 
+    /**
+     * sets all the leader cards to the converting marbles behaviour.
+     */
     public void setLeadersToMarketStrategy(){
         for(LeaderCardGUI card : cards.values()) card.setMarketStrategy();
     }
 
+    /**
+     * sets all the leader cards owned by the player to their default behaviour.
+     */
     public void setLeadersToDefaultStrategy(){
         for(LeaderCardGUI card : cards.values()) card.setStrategyDefault();
     }
 
+    /**
+     * checks if a leader card of the player has been clicked.
+     * @param x
+     * @param y
+     * @return
+     */
     @Override
     public boolean isClicked(int x, int y) {
         for(Integer card : playerCards){
@@ -112,6 +143,11 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
         return false;
     }
 
+    /**
+     * if a LeaderCard of the player has been clicked, it activate the effect of the clicked card.
+     * @param x X coordinate of the click.
+     * @param y Y coordinate of the click.
+     */
     @Override
     public void click(int x, int y) {
         for(Integer card : playerCards){

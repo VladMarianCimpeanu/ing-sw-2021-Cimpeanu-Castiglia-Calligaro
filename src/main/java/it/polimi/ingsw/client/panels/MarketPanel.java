@@ -177,9 +177,9 @@ public class MarketPanel extends ActionPanel implements ActionListener {
     }
 
     /**
-     *
-     * @param URL
-     * @return
+     * given an URL and a size, it returns an ImageIcon with the specified content.
+     * @param URL path of an image taken from resources directory.
+     * @return the ImageIcon with the specified content.
      */
     private ImageIcon convertURL(String URL, int width, int height){
         InputStream url = GamePanel.class.getResourceAsStream("/" + URL);

@@ -29,6 +29,10 @@ public enum Marble {
         return escape;
     }
 
+    /**
+     * gives the image of the marble.
+     * @return the path of the pic representing the marble, starting from resources directory.
+     */
     public String url(){
         return url;
     }

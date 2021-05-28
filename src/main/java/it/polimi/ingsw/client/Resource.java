@@ -1,8 +1,5 @@
 package it.polimi.ingsw.client;
 
-//TODO: ask if these escape characters associated with unicode characters will behave in the same way
-// in different platforms
-
 /**
  * enum representing resources to the client.
  */
@@ -31,6 +28,10 @@ public enum Resource {
         return escape;
     }
 
+    /**
+     * gives the image of the resource.
+     * @return the path of the pic representing the resource, starting from resources directory.
+     */
     public String url(){
         return url;
     }
@@ -47,6 +48,9 @@ public enum Resource {
         return space;
     }
 
+    /**
+     * displays a legend showing how the resources are represented in CLI.
+     */
     public static void showLegend(){
         String upperLegend = "┌──────────────┐";
         System.out.println(upperLegend);
