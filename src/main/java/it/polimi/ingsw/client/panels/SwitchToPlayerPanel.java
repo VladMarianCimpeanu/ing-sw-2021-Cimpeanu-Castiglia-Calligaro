@@ -44,8 +44,6 @@ public class SwitchToPlayerPanel extends JPanel implements ActionListener {
             }
         if(e.getSource() == passButton){
             GUI.sendMessage(new EndTurn());
-            GUI.getGamePanel().setActionPanel(new DefaultPanel());
-            GUI.getGamePanel().unlockGameBoard(false);
         }
         if(e.getSource() == cheatButton) GUI.sendMessage(new CheatResource());
     }
