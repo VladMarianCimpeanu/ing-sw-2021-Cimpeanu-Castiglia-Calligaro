@@ -16,7 +16,7 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         super();
         paddingBoardX = 245;
         paddingY = 210;
-        paddingCards = DevelopmentCardGUI.getWidth() + 35;
+        paddingCards = 35;
     }
 
 
@@ -50,6 +50,7 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         GUI.print(nickname + " has placed a new development card in his " + deckIndex + " deck");
         //TODO remove listeners old action panel?
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
+        setToProduction();
     }
 
 
@@ -75,7 +76,7 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
      */
     private void placeCard(int deckIndex, int ID, String nickname){
         DevelopmentCardGUI newCard = DevelopmentCardsSetGUI.getCard(ID);
-        newCard.setPosition(paddingBoardX + (deckIndex - 1) * paddingCards, paddingY);
+        newCard.setPosition(paddingBoardX + (deckIndex - 1) * (paddingCards+DevelopmentCardGUI.getWidth()), paddingY);
         if(nickname.equals(GUI.getClient().getNickname())) {
             newCard.setToProduction();
         }
@@ -167,7 +168,7 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
                 if(card.isClicked(x, y)) card.click(x, y);
             }
         }
-        //TODO: better discuss
+
         if(isADeckClicked(x,y)) {
             //if it is clicked an empty deck, I assume a place card action is happening
             if (isFirstDeckClicked(x) && playerCards.get(0) == 0) GUI.getClient().send(new PlaceCard(1));

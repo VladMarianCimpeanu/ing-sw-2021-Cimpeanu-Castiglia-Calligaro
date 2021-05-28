@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static it.polimi.ingsw.client.GUI.getClient;
 import static it.polimi.ingsw.client.GUI.getGamePanel;
 
 public class GameGUI extends GameView {
@@ -56,8 +57,10 @@ public class GameGUI extends GameView {
     public void displayResourcesToPay(Map<Resource, Integer> resources) {
         //add a concept of state?
         //how can i know if i am in a production state or buy state
-        if(payPanel.equals("buy"))
+        if(payPanel.equals("buy")) {
             GUI.getGamePanel().setActionPanel(new BuyPanel());
+            ((DevelopmentCardDecksGUI)GUI.getClient().getGameView().getPlayer(getClient().getNickname()).getDecks()).setToReplaceable();
+        }
         else if(payPanel.equals("production")) {
             GUI.getGamePanel().setActionPanel(new DevProductionPanel());
         }
@@ -127,10 +130,13 @@ public class GameGUI extends GameView {
 
     @Override
     public void changeTurn(String player) {
-        if(player.equals(GUI.getClient().getNickname())){
+        if (player.equals(GUI.getClient().getNickname())) {
             GUI.getGamePanel().unlockGameBoard(true);
             dumpMessage("It's your turn!");
-        }else dumpMessage("It's " + player + "'s turn!");
+        } else {
+            dumpMessage("It's " + player + "'s turn!");
+            GUI.getGamePanel().unlockGameBoard(false);
+        }
     }
 
     @Override

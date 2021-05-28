@@ -35,7 +35,6 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     @Override
     public void click(int x, int y) {
         strategy.run();
-        System.out.println("ciao " + strategy);
     }
 
     public Shape getShape() {
