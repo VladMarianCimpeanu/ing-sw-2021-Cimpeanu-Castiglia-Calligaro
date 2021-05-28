@@ -143,6 +143,7 @@ public class GameGUI extends GameView {
     @Override
     public void updateResourcesFromMarket(ArrayList<Resource> resources) {
         ((LeaderCardSetGUI)players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
+        GUI.getGamePanel().removeAction((LeaderCardSetGUI)getPlayer(GUI.getClient().getNickname()).getLeaderCards());
         if(!((MarketPanel)GUI.getGamePanel().getActionPanel()).isTakingResources())
             ((MarketPanel)GUI.getGamePanel().getActionPanel()).setToSelectResources();
         if(resources.isEmpty()) {
@@ -159,10 +160,15 @@ public class GameGUI extends GameView {
     public void updatedUsedStrategies(int whiteMarbles, int strategy) {
         if(strategy == 0) {
             GUI.getGamePanel().unlockGameBoard(false);
+            GUI.getGamePanel().addAction((LeaderCardSetGUI)getPlayer(GUI.getClient().getNickname()).getLeaderCards());
             GUI.getGamePanel().setActionPanel(new MarketPanel());
-            ((LeaderCardSetGUI)players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToMarketStrategy();
+            if(whiteMarbles != 0) {
+                ((LeaderCardSetGUI) players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToMarketStrategy();
+                ((MarketPanel)GUI.getGamePanel().getActionPanel()).updateStrategies(whiteMarbles, strategy);
+            }
         }
         if(whiteMarbles == 0 ) {
+            if(strategy != 0) ((MarketPanel)GUI.getGamePanel().getActionPanel()).updateStrategies(whiteMarbles, strategy);
             ((MarketPanel)GUI.getGamePanel().getActionPanel()).setToSelectResources();
             ((LeaderCardSetGUI)players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
         }

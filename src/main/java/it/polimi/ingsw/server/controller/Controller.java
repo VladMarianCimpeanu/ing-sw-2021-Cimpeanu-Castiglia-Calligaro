@@ -150,7 +150,7 @@ public class Controller {
                 set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.YELLOW, level).getID());
                 set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.PURPLE, level).getID());
             } catch (WrongLevelException | NoCardException e) {
-                e.printStackTrace();
+                set.get(level - 1).add(0);
             }
         }
         return new DevCardSet(set);

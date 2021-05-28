@@ -7,10 +7,14 @@ import it.polimi.ingsw.client.MessageToServer.PutResPos;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.GUI.LeaderCardSetGUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -30,7 +34,7 @@ public class MarketPanel extends ActionPanel implements ActionListener {
     private JLabel errorLabel;
 
     public MarketPanel(){
-        imagesToPrint = null;
+        imagesToPrint = new ArrayList<>();
         resourcesDisplayed = false;
         isTakingResources = false;
         selectedResource = null;
@@ -42,8 +46,8 @@ public class MarketPanel extends ActionPanel implements ActionListener {
         for(Resource res : Resource.values()){
             if (res != Resource.FAITH){
                 ResourceButton button = new ResourceButton(res);
-                button.setText(res + "x0");
-                //button.setIcon(new ImageIcon(res.url()));
+                button.setIcon(convertURL(res.url(), 30, 30));
+                button.setText("x0");
                 resources.put(res, button);
             }
         }
@@ -61,7 +65,10 @@ public class MarketPanel extends ActionPanel implements ActionListener {
      */
     public void setToSelectResources(){
         isTakingResources = true;
-        if (imagesToPrint != null )for(JLabel label : imagesToPrint) this.remove(label);
+        System.out.println(imagesToPrint.size());
+        if (!imagesToPrint.isEmpty()){
+            for(JLabel label : imagesToPrint) this.remove(label);
+        }
         this.remove(errorLabel);
         this.revalidate();
     }
@@ -72,14 +79,17 @@ public class MarketPanel extends ActionPanel implements ActionListener {
      * @param id id of the new leader card used.
      */
     public void updateStrategies(int whiteMarbles, int id){
-        if(imagesToPrint == null) {
-            imagesToPrint = new ArrayList<>();
+        if(imagesToPrint.isEmpty()) {
             this.add(errorLabel);
         }
         textLabel.setText("Remains " + whiteMarbles + " to convert, which leader card do you want to use?");
-        JLabel leaderCard = new JLabel(new ImageIcon(LeaderCardSetGUI.getLeaderCard(id).getImage()));
-        this.add(leaderCard);
+        if(id != 0){
+            JLabel leaderCard = new JLabel(convertURL(LeaderCardSetGUI.getLeaderCard(id).getImage(), 33, 50));
+            this.add(leaderCard);
+            imagesToPrint.add(leaderCard);
+        }
         this.revalidate();
+
     }
 
     /**
@@ -95,7 +105,7 @@ public class MarketPanel extends ActionPanel implements ActionListener {
         System.out.println(buffer);
         clearButtons();
         for (Resource resource : buffer.keySet()){
-            resources.get(resource).setText(resource + "x" + buffer.get(resource).toString());
+            resources.get(resource).setText("x" + buffer.get(resource).toString());
         }
         this.revalidate();
     }
@@ -148,11 +158,13 @@ public class MarketPanel extends ActionPanel implements ActionListener {
                     break;
                 case "discard":
                     GUI.sendMessage(new DiscardResource(selectedResource));
+                    break;
                 default:
                     break;
             }
             selectedResource = null;
             selectionLabel.setText("Nothing has been selected");
+            errorLabel.setText("");
         }
     }
 
@@ -161,8 +173,27 @@ public class MarketPanel extends ActionPanel implements ActionListener {
      */
     private void clearButtons(){
         for(ResourceButton button : resources.values())
-            button.setText(button.getResource().toString() + "x0");
+            button.setText("x0");
     }
+
+    /**
+     *
+     * @param URL
+     * @return
+     */
+    private ImageIcon convertURL(String URL, int width, int height){
+        InputStream url = GamePanel.class.getResourceAsStream("/" + URL);
+        BufferedImage img= null;
+        try {
+            img = ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        Image dimg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(dimg);
+    }
+
 }
 
 /**
