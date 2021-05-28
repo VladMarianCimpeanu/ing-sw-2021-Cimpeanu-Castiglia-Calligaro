@@ -57,8 +57,10 @@ public class GameGUI extends GameView {
     public void displayResourcesToPay(Map<Resource, Integer> resources) {
         //add a concept of state?
         //how can i know if i am in a production state or buy state
-        if(payPanel.equals("buy"))
+        if(payPanel.equals("buy")) {
             GUI.getGamePanel().setActionPanel(new BuyPanel());
+            ((DevelopmentCardDecksGUI)GUI.getClient().getGameView().getPlayer(getClient().getNickname()).getDecks()).setToReplaceable();
+        }
         else if(payPanel.equals("production")) {
             GUI.getGamePanel().setActionPanel(new DevProductionPanel());
         }
