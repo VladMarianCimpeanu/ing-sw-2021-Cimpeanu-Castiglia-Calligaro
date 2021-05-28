@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.MessageToServer.KeepLeaderCard;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
+import it.polimi.ingsw.client.modelLight.GUI.LeaderCardSetGUI;
 import it.polimi.ingsw.client.panels.*;
 
 import javax.swing.*;
@@ -75,6 +76,8 @@ public class GUI {
 
         gamePanel.setPlayerWatched(GUI.getClient().getNickname());
         gamePanel.addOtherPlayersPanel();
+        LeaderCardSetGUI leaderCards = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
+        gamePanel.addAction(leaderCards);
 
         jFrame.setVisible(false);
         jFrame.setVisible(true);

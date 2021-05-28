@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.MessageToServer.ChooseFirstResources;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.GUI.DepotGUI;
+import it.polimi.ingsw.client.modelLight.GUI.LeaderCardSetGUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -35,6 +36,8 @@ public class FirstTurnPanel extends ActionPanel{
     }
 
     public void selectRes(int position, int numberRes) {
+        LeaderCardSetGUI leaderCards = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
+        GUI.getGamePanel().removeAction(leaderCards);
         this.numberRes = numberRes;
         removeAll();
         if(numberRes == 0){
@@ -63,6 +66,8 @@ public class FirstTurnPanel extends ActionPanel{
                         public void mouseClicked(MouseEvent e) {
                             if(res.size() == pos.size() && res.size() < numberRes) {
                                 res.add(r);
+                                DepotGUI depotGUI = (DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot();
+                                GUI.getGamePanel().addAction(depotGUI);
                             }
                         }
                     });
@@ -76,6 +81,8 @@ public class FirstTurnPanel extends ActionPanel{
     public void selectPos(int shelf){
         if(pos.size() < res.size() && pos.size() < numberRes) {
             pos.add(shelf);
+            DepotGUI depotGUI = (DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot();
+            GUI.getGamePanel().removeAction(depotGUI);
         }
         if(pos.size() == res.size() && res.size() == numberRes){
             if(numberRes == 2)
@@ -85,6 +92,7 @@ public class FirstTurnPanel extends ActionPanel{
             GUI.getGamePanel().setActionPanel(new DefaultPanel());
             DepotGUI depotGUI = (DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot();
             depotGUI.setStrategyMove();
+            GUI.getGamePanel().removeAction(depotGUI);
         }
     }
 }

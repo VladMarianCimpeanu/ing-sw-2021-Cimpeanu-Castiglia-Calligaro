@@ -34,7 +34,7 @@ public class GamePanel extends JPanel {
 
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.black));
-        gameBoardClickable = true;
+        gameBoardClickable = false;
         addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
                 activeClick(e.getX(),e.getY());
@@ -196,6 +196,10 @@ public class GamePanel extends JPanel {
     public void addAction(Clickable clickable){
         if(!action.contains(clickable))
             action.add(clickable);
+    }
+
+    public void removeAction(Clickable clickable){
+        action.remove(clickable);
     }
 
     public static int getXBoard(){
