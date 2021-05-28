@@ -137,10 +137,12 @@ public class GameGUI extends GameView {
             dumpMessage("It's " + player + "'s turn!");
             GUI.getGamePanel().unlockGameBoard(false);
         }
+        GUI.getGamePanel().setActionPanel(new DefaultPanel());
     }
 
     @Override
     public void updateResourcesFromMarket(ArrayList<Resource> resources) {
+        ((LeaderCardSetGUI)players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
         if(!((MarketPanel)GUI.getGamePanel().getActionPanel()).isTakingResources())
             ((MarketPanel)GUI.getGamePanel().getActionPanel()).setToSelectResources();
         if(resources.isEmpty()) {
