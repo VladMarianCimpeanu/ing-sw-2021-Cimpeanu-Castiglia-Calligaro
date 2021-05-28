@@ -16,6 +16,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+
+/**
+ * This panel shows the dashboard of the current player watched and contains all the panels used during the game:
+ * a general action panel, SwitchToPlayerPanel and a ScrollPanel.
+ */
 public class GamePanel extends JPanel {
     private ScrollPanel scrollPanel;
     private ActionPanel actionPanel;
@@ -62,6 +67,11 @@ public class GamePanel extends JPanel {
 //        });
     }
 
+    /**
+     * activates a clickable object at (X,Y) coordinates when a click event occurs.
+     * @param x X coordinate of the click event
+     * @param y Y coordinate of the click event
+     */
     private void activeClick(int x, int y){
         for (Clickable c: new ArrayList<>(action)){
             if (c.isClicked(x,y)){
@@ -165,7 +175,7 @@ public class GamePanel extends JPanel {
         g.drawString("Scarta LeaderCard", 1200, 50);
     }
 
-    //TODO public? it would be nicer if the logic around development cards was inside their classes
+
     public static void drawImage(Graphics g, String path, it.polimi.ingsw.client.Shape shape){
         int x = shape.getX();
         int y = shape.getY();
@@ -184,40 +194,73 @@ public class GamePanel extends JPanel {
         g.drawImage(img, x, y, width, height, null);
     }
 
+    /**
+     * adds a clickable object to the game board panel
+     * @param clickable clickable object to be added.
+     */
     public void addGameboard(Clickable clickable){
         if(!gameBoard.contains(clickable))
             gameBoard.add(clickable);
     }
 
+    /**
+     * removes a clickable object from the game board panel
+     * @param clickable clickable object to be removed.
+     */
     public void removeGameboard(Clickable clickable){
         gameBoard.remove(clickable);
     }
 
+    /**
+     * adds a component that can be clicked during a dialog with an action panel
+     * @param clickable specified clickable object to be added
+     */
     public void addAction(Clickable clickable){
         if(!action.contains(clickable))
             action.add(clickable);
     }
 
+    /**
+     * gets the X coordinate of the top left corner of the gameBoard
+     * @return an integer representing the X coordinate of top left corner of the gameBoard
+     */
     public static int getXBoard(){
         return X_board;
     }
 
+    /**
+     * gets the Y coordinate of the top left corner of the gameBoard
+     * @return an integer representing the Y coordinate of top left corner of the gameBoard
+     */
     public static int getYBoard(){
         return Y_board;
     }
 
+    /**
+     * returns the width of the game board.
+     * @return integer representing of the width of the game board.
+     */
     public static int getWidthBoard(){
         return widthBoard;
     }
 
+    /**
+     * returns the height of the game board.
+     * @return integer representing of the height of the game board.
+     */
     public static int getHeightBoard(){
         return heightBoard;
     }
 
+    //TODO: is it necessary?
     public void addOtherPlayersPanel(){
         this.add(new SwitchToPlayerPanel());
     }
 
+    /**
+     * set the dashboard to be watched.
+     * @param player specified player that owns the dashboard to watch.
+     */
     public synchronized void setPlayerWatched(String player){
         playerWatched = player;
         System.out.println(player);
@@ -231,6 +274,10 @@ public class GamePanel extends JPanel {
         gameBoardClickable = unlocked;
     }
 
+    /**
+     * changes the current Action panel of the game panel.
+     * @param panel specified Action panel to set.
+     */
     public void setActionPanel(ActionPanel panel){
         this.remove(actionPanel);
         actionPanel = panel;
@@ -238,9 +285,18 @@ public class GamePanel extends JPanel {
         revalidate();
     }
 
+    /**
+     * gets the current action panel.
+     * @return the current Action panel
+     */
     public ActionPanel getActionPanel(){
         return actionPanel;
     }
+
+    /**
+     * gets the scroll panel used to represent all the update messages during the game.
+     * @return a ScrollPanel.
+     */
     public ScrollPanel getScrollPanel() {
         return scrollPanel;
     }

@@ -80,12 +80,19 @@ public class EchoServerClientHandler implements Runnable {
         out.flush();
     }
 
+    /**
+     * Sends an error message to the client.
+     * @param error specified error message to be sent
+     */
     public void sendError(ErrorMessage error) {
         String outMessage = convert.toJson(new Error(error));
         out.println(outMessage);
         out.flush();
     }
 
+    /**
+     * close the connection with the client.
+     */
     private void closeSocket(){
         try {
             in.close();
@@ -100,6 +107,10 @@ public class EchoServerClientHandler implements Runnable {
         }
     }
 
+    /**
+     * login process.
+     * @return true if the login process ends with success.
+     */
     private boolean login(){
         while(true){
             try{
@@ -157,6 +168,11 @@ public class EchoServerClientHandler implements Runnable {
         return true;
     }
 
+    /**
+     * requires the game mode to the client
+     * @return integer representing the number of the players that will play at the game creation.
+     * @throws CrashException if a player crashes during the mode request.
+     */
     private int requireMode() throws CrashException {
         try{
             send(new ModeRequest());
@@ -192,6 +208,9 @@ public class EchoServerClientHandler implements Runnable {
         }
     }
 
+    /**
+     * reads and parses the messages from the client and communicates with the controller when needed.
+     */
     public void run() {
         //if the client is crashed during login phase
         if (!login()) return;
@@ -243,6 +262,9 @@ public class EchoServerClientHandler implements Runnable {
             }
     }
 
+    /**
+     * close the socket and the connection with the client.
+     */
     public void close(){
         closeSocket();
     }
@@ -257,28 +279,50 @@ public class EchoServerClientHandler implements Runnable {
         return true;
     }
 
-
+    /**
+     * @param myTurn true if it's the turn of the client, otherwise false.
+     */
     public void setMyTurn(boolean myTurn) {
         isMyTurn = myTurn;
     }
 
+    /**
+     * links the client to the current game
+     * @param controller specified controller which points to the game played by this client.
+     */
     public void setController(Controller controller) {
         this.controller = controller;
         isInGame = true;
     }
 
+    /**
+     * returns the controller linked with this client.
+     * @return the controller linked with this client.
+     */
     public Controller getController() {
         return controller;
     }
 
+    /**
+     * @return true if the player is online, otherwise false.
+     */
     public boolean isInGame() {
         return isInGame;
     }
 
+    /**
+     * gives the nickname associated with this client.
+     * @return the nickname associated with this client.
+     */
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     * sets the timer to this socket
+     * @param time specified time after which the socket will rise an exception if there is no message from the client.
+     * @throws SocketException if there is no such socket.
+     */
     public void setSocketTimeOut(int time) throws SocketException {
         if(time < 0) socket.setSoTimeout(0);
         else socket.setSoTimeout(time);

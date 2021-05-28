@@ -39,22 +39,44 @@ public abstract class GameView {
         }
     }
 
+    /**
+     * add players to the current game.
+     * @param nicknames specified nickname of each player that has to be set.
+     */
     public abstract void setPlayers(ArrayList<String> nicknames);
 
+    /**
+     * print a message.
+     * @param content content of the message.
+     */
     public abstract void dumpMessage(String content);
 
+    /**
+     * get the player with the specified nickname
+     * @param nickname nickname of the requested player.
+     * @return PlayerView object that has the specified nickname.
+     */
     public PlayerView getPlayer(String nickname){
         return players.getOrDefault(nickname, null);
     }
 
+    /**
+     * @return the MarketView object associated to this game.
+     */
     public MarketView getMarket(){
         return market;
     }
 
+    /**
+     * @return DevelopmentCardSetView object which has all the information about development cards.
+     */
     public DevelopmentCardSetView getCards(){
         return cards;
     }
 
+    /**
+     * @return an ActionTokenView object.
+     */
     public ActionTokenView getActionTokenView() {
         return actionTokenView;
     }

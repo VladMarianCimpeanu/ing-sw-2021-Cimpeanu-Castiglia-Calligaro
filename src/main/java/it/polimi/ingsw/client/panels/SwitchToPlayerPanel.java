@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * this class displays the players that are playing the current game and let the player to select
+ * which dashboard must be shown.
+ */
 public class SwitchToPlayerPanel extends JPanel implements ActionListener {
     private ArrayList<PlayerButton> playerButtons;
     private JButton passButton;
@@ -49,7 +53,9 @@ public class SwitchToPlayerPanel extends JPanel implements ActionListener {
     }
 }
 
-
+/**
+ * JButton class associated with a string representing a Nickname.
+ */
 class PlayerButton extends JButton{
     private String player;
     PlayerButton(String nickname){
