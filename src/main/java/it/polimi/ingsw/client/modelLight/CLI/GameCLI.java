@@ -110,6 +110,11 @@ public class GameCLI extends GameView {
     }
 
     @Override
+    public void startBaseProd() {
+        System.out.println("Which resources do you want to use for base crafting?");
+    }
+
+    @Override
     public void updateResourcesFromMarket(ArrayList<Resource> resources) {
         String resourcesToDump = "";
         for(Resource res: resources){

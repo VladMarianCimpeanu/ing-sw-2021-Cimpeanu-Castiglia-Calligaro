@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.MessageToServer.ActivateBaseProduction;
 import it.polimi.ingsw.client.MessageToServer.KeepLeaderCard;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
 import it.polimi.ingsw.client.modelLight.GUI.LeaderCardSetGUI;
@@ -78,6 +79,7 @@ public class GUI {
         gamePanel.addOtherPlayersPanel();
         LeaderCardSetGUI leaderCards = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
         gamePanel.addAction(leaderCards);
+        addBaseProd();
 
         jFrame.setVisible(false);
         jFrame.setVisible(true);
@@ -94,5 +96,22 @@ public class GUI {
 
     public static void print(String string){
         gamePanel.getScrollPanel().getMessagesPanel().addMessage(string);
+    }
+
+    private static void addBaseProd(){
+        gamePanel.addGameboard(new Clickable() {
+            @Override
+            public boolean isClicked(int x, int y) {
+                if(150 <= x && x <= 220 && 285 <= y && y <= 355){
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void click(int x, int y) {
+                GUI.getClient().send(new ActivateBaseProduction());
+            }
+        });
     }
 }

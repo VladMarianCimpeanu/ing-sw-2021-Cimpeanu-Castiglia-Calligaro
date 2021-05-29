@@ -15,10 +15,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import it.polimi.ingsw.client.Shape;
+import it.polimi.ingsw.client.modelLight.GUI.GameGUI;
 import it.polimi.ingsw.server.model.benefit.Faith;
 
 public class BaseProdPanel extends ActionPanel{
@@ -49,12 +51,14 @@ public class BaseProdPanel extends ActionPanel{
                     GUI.getClient().send(new SelResIn(resIn.get(0), resIn.get(1)));
                     GUI.getClient().send(new SelResOut(resOut));
                     phase = 1;
+                    ((GameGUI)GUI.getClient().getGameView()).setPayPanel("base");
                 }else {
                     GUI.getClient().send(new ActivateProduction());
                     ((DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
                     GUI.getGamePanel().setActionPanel(new DefaultPanel());
                     clickables.clear(); //not so efficient(remain listening)
                 }
+                repaint();
             }
         });
         button.setBounds(100, 200, button.getPreferredSize().width, button.getPreferredSize().height);
@@ -76,7 +80,12 @@ public class BaseProdPanel extends ActionPanel{
 
     @Override
     public void displayError(ErrorMessage error) {
-
+        if(error == ErrorMessage.productionUsed){
+            ((DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
+            GUI.getGamePanel().setActionPanel(new DefaultPanel());
+            clickables.clear(); //not so efficient(remain listening)
+            GUI.getGamePanel().repaint();
+        }
     }
 
     private void activeClick(int x, int y) {
@@ -88,15 +97,19 @@ public class BaseProdPanel extends ActionPanel{
         int xt = 10;
         int yt = 40;
         if(phase == 0){
-            ArrayList<Resource> resIn = new ArrayList<>();
-            for(Resource resource: GUI.getClient().getGameView().getResBuffer().keySet())
-                for(int i = 0; i<GUI.getClient().getGameView().getResBuffer().get(resource); i++)
-                    resIn.add(resource);
+            Map<Resource, Integer> resources = GUI.getClient().getGameView().getResBuffer();
+
+            int quantity = 0;
+            for(Resource resource: resources.keySet())
+                quantity += resources.get(resource);
 
             for(Resource resource: Resource.values()){
                 if(resource.equals(Resource.FAITH)) continue;
                 if(xt <= x && x <= xt+20 && yt <= y && y <= yt+20){
-                    if(resIn.size() < 2) resIn.add(resource);
+                    if(quantity < 2)
+                        if(resources.containsKey(resource))
+                            resources.put(resource, resources.get(resource)+1);
+                        else resources.put(resource, 1);
                     break;
                 }
                 xt += 30;

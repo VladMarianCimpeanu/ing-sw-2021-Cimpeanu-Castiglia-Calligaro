@@ -169,4 +169,6 @@ public abstract class GameView {
      * @param player player who has just started the turn.
      */
     public abstract void changeTurn(String player);
+
+    public abstract void startBaseProd();
 }

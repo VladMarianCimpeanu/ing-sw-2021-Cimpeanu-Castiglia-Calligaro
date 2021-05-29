@@ -63,6 +63,8 @@ public class GameGUI extends GameView {
         }
         else if(payPanel.equals("production")) {
             GUI.getGamePanel().setActionPanel(new DevProductionPanel());
+        }else if(payPanel.equals("base")){
+
         }
         payPanel = "";
         setResBuffer(resources);
@@ -138,6 +140,12 @@ public class GameGUI extends GameView {
             GUI.getGamePanel().unlockGameBoard(false);
         }
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
+    }
+
+    @Override
+    public void startBaseProd() {
+        GUI.getGamePanel().setActionPanel(new BaseProdPanel());
+        GUI.getGamePanel().repaint();
     }
 
     @Override
