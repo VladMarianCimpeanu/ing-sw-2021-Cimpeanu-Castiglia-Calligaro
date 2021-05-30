@@ -57,8 +57,11 @@ public class GamePanel extends JPanel {
         scrollPanel = new ScrollPanel();
         add(scrollPanel);
 
-        actionPanel = new FirstTurnPanel();
-        add(actionPanel);
+        if(GUI.isFirstTurn()) {
+            actionPanel = new FirstTurnPanel();
+            add(actionPanel);
+        }
+        else add(new DefaultPanel());
 
 //        addMouseMotionListener(new MouseAdapter(){
 //            public void mouseDragged(MouseEvent e){
