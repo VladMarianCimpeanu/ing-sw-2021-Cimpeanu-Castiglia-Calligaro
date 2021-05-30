@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.JsonToLeaderCard;
 import it.polimi.ingsw.server.controller.VirtualView;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
@@ -10,6 +11,8 @@ import it.polimi.ingsw.server.model.market.Market;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * This class gives access to all the global objects of the current game: list of players, market, faithPath and all the development cards that have not been bought yet.
@@ -58,7 +61,7 @@ public abstract class Game {
         return new ArrayList<>(players);
     }
     /**
-     * @return true whether the game is ended or false if it is not.
+     * @return true if the game should end immediately
      */
     public abstract boolean isGameEnded();
 
@@ -87,7 +90,38 @@ public abstract class Game {
         this.virtualView = virtualView;
     }
 
-    public void endTurn() throws NoSuchPlayerException {
+    public void endTurn() throws NoSuchPlayerException, GameEndedException {
+    }
 
+    /**
+     * it calculates points earned by each player.
+     * @return a map containing points of each player.
+     */
+    public abstract Map<String, Integer> calculatePoints();
+
+    /**
+     * calculates the amount of victory points earned by the player at the specified index.
+     * @param indexPlayer index of the specified player.
+     * @return points gained by the player.
+     */
+    protected int calculatePointsOf(int indexPlayer){
+        try {
+            faithPath.assignVictoryPoints(players.get(indexPlayer));
+        } catch (NoSuchPlayerException e) {
+            e.printStackTrace();
+        }
+        int points = players.get(indexPlayer).getVictoryPoints();
+        for(LeaderCard card : players.get(indexPlayer).getActivatedLeader()){
+            points += card.getVictoryPointsAmount();
+        }
+        for(Stack<DevelopmentCard> deck :players.get(indexPlayer).getDashboard().getDevelopmentDecks()){
+            for(DevelopmentCard card : deck){
+                points += card.getVictoryPoints();
+            }
+        }
+        int amountOfResources = players.get(indexPlayer).getDashboard().getStrongbox().getAmountOfResources();
+        amountOfResources += players.get(indexPlayer).getDashboard().getWarehouseDepot().getAmountOfResources();
+        points += (amountOfResources / 5);
+        return points;
     }
 }

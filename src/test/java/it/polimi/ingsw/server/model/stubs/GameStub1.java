@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.market.Market;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GameStub1 extends Game {
     private FaithPathStub1 faithpath;
@@ -36,6 +37,12 @@ public class GameStub1 extends Game {
     public FaithPath getFaithPath() {
         return faithpath;
     }
+
+    @Override
+    public Map<String, Integer> calculatePoints() {
+        return null;
+    }
+
     @Override
     public boolean isGameEnded() {
         return false;

@@ -33,6 +33,7 @@ public class Player {
     //when a player go to market this stack contains chosen strategy for each white marble
     private Stack<MarketStrategy> marketStrategyStack;
     private VirtualView virtualView;
+    private boolean endAfterMarket;
 
     public Player(Identity identity, Game game, ArrayList<LeaderCard> leaderCards, Dashboard dashboard){
         this.identity = identity;
@@ -45,6 +46,7 @@ public class Player {
         developmentCardCost = new HashMap<>();
         discountList = new ArrayList<>();
         marketStrategyStack = new Stack<>();
+        endAfterMarket = false;
     }
 
     /**
@@ -161,7 +163,7 @@ public class Player {
      * number of steps forward on the FaithPath
      * @param faithPoints
      */
-    public void addFaithPoint(int faithPoints){
+    public void addFaithPoint(int faithPoints) throws GameEndedException {
         if(faithPoints > 0){
             try {
                 game.getFaithPath().movePlayer(this, faithPoints);
@@ -175,7 +177,7 @@ public class Player {
      * turn the state of a Leader Card(already owned by the player) to rejected
      * @param leaderCard
      */
-    public void discardLeaderCard(LeaderCard leaderCard) {
+    public void discardLeaderCard(LeaderCard leaderCard) throws GameEndedException {
         if(leaderCard != null && leaderCards.remove(leaderCard)){
             virtualView.updateDiscardLeaderCard(leaderCard.getID());
             addFaithPoint(1);
@@ -309,7 +311,7 @@ public class Player {
      * @param position between 1 and 3
      * @throws WrongLevelException if the card is not placeable at the given position
      */
-    public void placeDevelopmentCard(int position) throws WrongLevelException{
+    public void placeDevelopmentCard(int position) throws WrongLevelException, GameEndedException {
         if(!developmentCardCost.isEmpty()) return;
         if(position < 1 || position > 3) throw new WrongLevelException();
         try {
@@ -318,6 +320,9 @@ public class Player {
         } catch (InvalidDeckPositionException e) {
             e.printStackTrace();
             throw new WrongLevelException();
+        } catch (GameEndedException gameEndedException) {
+            virtualView.updateDevDeck(position, devCardToAdd.getID());
+            throw new GameEndedException();
         }
     }
     /************* BUY A DEVELOPMENT CARD PROCESS **************/
@@ -373,7 +378,11 @@ public class Player {
         for(Benefit b: received){
             if(b.equals(Faith.giveFaith())){
                 System.out.println(received);
-                addFaithPoint(1);
+                try {
+                    addFaithPoint(1);
+                } catch (GameEndedException gameEndedException) {
+                    endAfterMarket = true;
+                }
             }else{
                 receivedFromMarket.add(b);
             }
@@ -385,31 +394,33 @@ public class Player {
     /**
      * Put a resource in warehouse depot
      */
-    public void putInWarehouseDepot(Resource resource, int shelf) throws InvalidResourceException, ExistingResourceException, InvalidShelfPosition, NotEnoughSpaceException {
+    public void putInWarehouseDepot(Resource resource, int shelf) throws InvalidResourceException, ExistingResourceException, InvalidShelfPosition, NotEnoughSpaceException, GameEndedException {
         if(resource == null) throw new InvalidResourceException();
         if(receivedFromMarket.contains(resource)){
             if (dashboard.getWarehouseDepot().addResource(shelf,1,resource) == 1) throw new NotEnoughSpaceException();
             else receivedFromMarket.remove(resource);
         }
         virtualView.updateConvertedMarbles(receivedFromMarket);
+        if(endAfterMarket && receivedFromMarket.isEmpty()) throw new GameEndedException();
     }
 
     /**
      * Put a resource in extra slot
      */
-    public void putInExtraSlot(Resource resource) throws NotEnoughSpaceException, InvalidResourceException, MissingExtraSlot {
+    public void putInExtraSlot(Resource resource) throws NotEnoughSpaceException, InvalidResourceException, MissingExtraSlot, GameEndedException {
         if(resource == null) throw new InvalidResourceException();
         if(receivedFromMarket.contains(resource)){
             if (dashboard.getWarehouseDepot().addExtraResource(resource,1) == 1) throw new NotEnoughSpaceException();
             else receivedFromMarket.remove(resource);
         }
         virtualView.updateConvertedMarbles(receivedFromMarket);
+        if(endAfterMarket && receivedFromMarket.isEmpty()) throw new GameEndedException();
     }
 
     /**
      * Discard a resource
      */
-    public void discardResource(Resource resource) throws InvalidResourceException {
+    public void discardResource(Resource resource) throws InvalidResourceException, GameEndedException {
         if(resource == null) throw new InvalidResourceException();//
         if(receivedFromMarket.contains(resource)){
             receivedFromMarket.remove(resource);
@@ -446,8 +457,8 @@ public class Player {
         }
     }
 
-    public void autoPlace() throws WrongLevelException{
-        for(int i = 0; i < 3; i++){
+    public void autoPlace() throws WrongLevelException, GameEndedException {
+        for(int i = 1; i < 4; i++){
             try {
                 placeDevelopmentCard(i);
                 return;

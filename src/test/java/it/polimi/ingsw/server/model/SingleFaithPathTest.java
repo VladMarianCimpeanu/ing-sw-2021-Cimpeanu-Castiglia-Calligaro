@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.server.model.stubs.PlayerStub2;
@@ -37,7 +38,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking assign victory points can work in edge zones *1*")
-    void assignVictoryPointsTest1() throws NoSuchPlayerException, InvalidStepsException {
+    void assignVictoryPointsTest1() throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -48,7 +49,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking assign victory points can work in edge zones *2*")
-    void assignVictoryPointsTest2() throws NoSuchPlayerException, InvalidStepsException {
+    void assignVictoryPointsTest2() throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -59,7 +60,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking assign victory points can work in edge zones *3*")
-    void assignVictoryPointsTest3() throws NoSuchPlayerException, InvalidStepsException {
+    void assignVictoryPointsTest3() throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -70,7 +71,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking assign victory points can work in edge zones *4*")
-    void assignVictoryPointsTest4() throws NoSuchPlayerException, InvalidStepsException {
+    void assignVictoryPointsTest4() throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -94,7 +95,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can handle negative steps *2*")
-    void moveBackward2() throws InvalidStepsException, NoSuchPlayerException {
+    void moveBackward2() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -132,7 +133,8 @@ class SingleFaithPathTest {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
-        path.movePlayer(player, 30);
+        assertThrows(GameEndedException.class,
+                () -> path.movePlayer(player, 30));
         assertEquals(24, path.getPlayerPosition(player));
 
 
@@ -157,7 +159,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can trigger correctly pope meetings *1*")
-    void movePlayerTest1() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest1() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -168,7 +170,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can trigger correctly pope meetings *2*")
-    void movePlayerTest2() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest2() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -179,7 +181,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can trigger correctly pope meetings *3*")
-    void movePlayerTest3() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest3() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -190,7 +192,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking once a pope meeting is triggered, it can not be triggered again")
-    void movePlayerPopeMeeting1() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerPopeMeeting1() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -204,7 +206,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking once a pope meeting is triggered, it can not be triggered again")
-    void movePlayerPopeMeeting2() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerPopeMeeting2() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -218,7 +220,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking movePlayer can work in normal conditions")
-    void movePlayerTest() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -272,7 +274,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move opponents can handle trigger pope positions *1*")
-    void moveOpponentsPopeMeeting1() throws InvalidStepsException, NoSuchPlayerException {
+    void moveOpponentsPopeMeeting1() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -285,7 +287,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move opponents can handle trigger pope positions *2*")
-    void moveOpponentsPopeMeeting2() throws InvalidStepsException, NoSuchPlayerException {
+    void moveOpponentsPopeMeeting2() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -298,7 +300,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move opponents can handle trigger pope positions *3*")
-    void moveOpponentsPopeMeeting3() throws InvalidStepsException, NoSuchPlayerException {
+    void moveOpponentsPopeMeeting3() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());
@@ -311,7 +313,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move black cross can handle negative steps")
-    void moveBlackCrossBackward()  {
+    void moveBlackCrossBackward() throws GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.moveBlackCross(-1);
@@ -320,7 +322,7 @@ class SingleFaithPathTest {
 
     @Test
     @DisplayName("Checking move black cross can work in normal conditions")
-    void moveBlackCrossTest() {
+    void moveBlackCrossTest() throws GameEndedException {
         Player player = new PlayerStub2(new Identity("Alone"), null);
         SingleFaithPath path = new SingleFaithPath(player);
         path.subscribe(new VirtualViewStub());

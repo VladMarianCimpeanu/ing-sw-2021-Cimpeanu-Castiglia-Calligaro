@@ -72,7 +72,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("Discard a LeaderCard satisfying requirements")
-    void discardLeaderCard() throws RequirementException, IOException, InvalidReadException, NoSuchPlayerException {
+    void discardLeaderCard() throws RequirementException, IOException, InvalidReadException, NoSuchPlayerException, GameEndedException {
         GameStub1 stub = new GameStub1(idS);
         ArrayList<LeaderCard> cards = new ArrayList<>();
         cards.add(new LeaderCardStub1(true));
@@ -128,7 +128,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("Add a non relevant value of faithPoints to the calling player")
-    void addFaithPoint() throws IOException, InvalidReadException, NoSuchPlayerException {
+    void addFaithPoint() throws IOException, InvalidReadException, NoSuchPlayerException, GameEndedException {
         GameStub1 game = new GameStub1(idS);
         Player player = new Player(null, game, null, null );
         player.subscribe(new VirtualViewStub());
@@ -235,7 +235,7 @@ class PlayerTest {
     }
 
     @Test
-    void autoCompletePayment() throws NoSuchPlayerException, IOException, InvalidReadException, InvalidDiscountException, NoCardException, NotEnoughResourcesException, WrongLevelException, InvalidStepsException, NegativeQuantityException {
+    void autoCompletePayment() throws NoSuchPlayerException, IOException, InvalidReadException, InvalidDiscountException, NoCardException, NotEnoughResourcesException, WrongLevelException, InvalidStepsException, NegativeQuantityException, GameEndedException {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity("danilo"));
         identities.add(new Identity("nick"));

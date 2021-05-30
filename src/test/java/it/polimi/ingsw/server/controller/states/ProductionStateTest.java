@@ -1,12 +1,10 @@
 package it.polimi.ingsw.server.controller.states;
 
-import it.polimi.ingsw.client.MessageToServer.EndTurn;
+
 import it.polimi.ingsw.server.EchoServerClientHandler;
-import it.polimi.ingsw.server.JsonToLeaderCard;
 import it.polimi.ingsw.server.MultiEchoServer;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.stubs.EchoStub;
-import it.polimi.ingsw.server.model.Discount;
 import it.polimi.ingsw.server.model.Identity;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.exceptions.*;
@@ -48,9 +46,9 @@ class ProductionStateTest {
     }
 
     @Test
-    void activateDevCard() {
+    void activateDevCard() throws GameEndedException {
         try {
-            controller.getCurrentPlayer().drawDevelopmentCard(BLUE, 1, new ArrayList<Discount>());
+            controller.getCurrentPlayer().drawDevelopmentCard(BLUE, 1, new ArrayList<>());
             controller.getCurrentPlayer().completePayment();
             controller.getCurrentPlayer().placeDevelopmentCard(1);
         } catch (NoCardException | InvalidDiscountException | NotEnoughResourcesException | WrongLevelException e) {

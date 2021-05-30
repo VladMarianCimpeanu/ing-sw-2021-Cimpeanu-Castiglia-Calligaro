@@ -23,7 +23,7 @@ class ExtraProdOutStateTest {
     private Controller controller;
 
     @BeforeEach
-    void init(){
+    void init() throws GameEndedException {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity("A"));
         identities.add(new Identity("B"));

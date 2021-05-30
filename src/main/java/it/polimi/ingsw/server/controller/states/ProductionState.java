@@ -99,6 +99,9 @@ public class ProductionState extends TurnState {
             getController().setCurrentState(new EndTurnState(getController()));
         } catch (NoCardException e) {
             getController().sendError(ErrorMessage.invalidLeaderCardID);
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+            getController().setCurrentState(new EndTurnState(getController()));
         }
     }
 

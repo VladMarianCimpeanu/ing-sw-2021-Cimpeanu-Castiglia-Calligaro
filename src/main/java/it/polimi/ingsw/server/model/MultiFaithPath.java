@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 
@@ -48,7 +49,7 @@ public class MultiFaithPath extends FaithPath{
     }
 
     @Override
-    public void movePlayer(Player player, int steps) throws NoSuchPlayerException, InvalidStepsException {
+    public void movePlayer(Player player, int steps) throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         if(steps < 0) throw new InvalidStepsException("Negative numbers of steps are not allowed. Number found is: "+steps);
         if(player == null) throw new NoSuchPlayerException();
         if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
@@ -59,24 +60,31 @@ public class MultiFaithPath extends FaithPath{
                 //getVirtualView().updateFaithPath(playersPosition);
                 assignPapalPoints();
             }
-            if(i == 24) someoneEnd = true;
+            if(i == 24) {
+                someoneEnd = true;
+                throw new GameEndedException();
+            }
         }
         getVirtualView().updateFaithPath(playersPosition);
     }
 
     @Override
-    public void moveOpponents(Player player) throws NoSuchPlayerException, InvalidStepsException {
+    public void moveOpponents(Player player) throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         if(player == null) throw new NoSuchPlayerException();
         if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
         for (Player p: playersPosition.keySet()) {
             if(p == player) continue;
             int pre_steps  = playersPosition.get(p);
             playersPosition.put(p, pre_steps+1);
-            if(playersPosition.get(p) == 24) someoneEnd = true;
+            if(playersPosition.get(p) == 24) {
+                someoneEnd = true;
+            }
         }
         getVirtualView().updateFaithPath(playersPosition);
-        for (Player p: playersPosition.keySet())
-            if(playersPosition.get(p) == triggerPopePosition.peek()) assignPapalPoints();
+        for (Player p: playersPosition.keySet()) {
+            if (playersPosition.get(p) == triggerPopePosition.peek()) assignPapalPoints();
+        }
+        if(someoneEnd) throw new GameEndedException();
     }
 
     @Override

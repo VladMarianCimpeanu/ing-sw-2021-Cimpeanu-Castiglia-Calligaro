@@ -1,12 +1,15 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.actionToken.ActionToken;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
 
 import static java.util.Collections.shuffle;
 
@@ -32,13 +35,13 @@ public class Singleplayer extends Game{
 
     @Override
     public boolean isGameEnded() {
-        return false;
+        return true;
     }
 
     /**
      * it triggers the effect of the token on top of the deck of action tokens.
      */
-    public void drawToken() throws NoSuchPlayerException {    //any exception?
+    public void drawToken() throws NoSuchPlayerException, GameEndedException {    //any exception?
         ActionToken tempToken = availableActionTokens.pop();
         availableActionTokens.add(0, tempToken);
         System.out.println(tempToken);
@@ -54,8 +57,27 @@ public class Singleplayer extends Game{
     }
 
     @Override
-    public void endTurn() throws NoSuchPlayerException{
-            drawToken();
+    public void endTurn() throws NoSuchPlayerException, GameEndedException {
+        drawToken();
+    }
+
+    /**
+     * if the player wins, blackCross has 0 points whereas the player gains the points calculated with the rules of the game.
+     * if the player loose, blackCross has 1 point, whereas the player gains 0 points.
+     * @return a map which key is a player's nickname and the value is the amount of points earned by the player.
+     */
+    @Override
+    public Map<String, Integer> calculatePoints() {
+        Map<String, Integer> points = new TreeMap<>();
+        if(getDevelopmentCardSet().isAColorMissing() || ((SingleFaithPath)getFaithPath()).getBlackCrossPosition() == 24){
+            points.put("blackCross", 1);
+            points.put(getPlayers().get(0).getNickName(), 0);
+        }
+        else{
+            points.put("blackCross", 0);
+            points.put(getPlayers().get(0).getNickName(), calculatePointsOf(0));
+        }
+        return points;
     }
 
 }

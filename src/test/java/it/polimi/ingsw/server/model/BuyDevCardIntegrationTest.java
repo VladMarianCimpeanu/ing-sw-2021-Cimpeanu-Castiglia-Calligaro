@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BuyDevCardIntegrationTest {
     @Test
-    void buy() throws NoSuchPlayerException, InvalidReadException, InvalidStepsException, IOException, InvalidDiscountException, NoCardException, NotEnoughResourcesException, WrongLevelException, NegativeQuantityException, InvalidShelfPosition, InvalidResourceException, ExistingResourceException, MissingExtraSlot {
+    void buy() throws NoSuchPlayerException, InvalidReadException, InvalidStepsException, IOException, InvalidDiscountException, NoCardException, NotEnoughResourcesException, WrongLevelException, NegativeQuantityException, InvalidShelfPosition, InvalidResourceException, ExistingResourceException, MissingExtraSlot, GameEndedException {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity("danilo"));
         identities.add(new Identity("nick"));
@@ -107,7 +107,7 @@ public class BuyDevCardIntegrationTest {
     }
 
     @Test
-    void BuyWithDiscount() throws NegativeQuantityException, InvalidShelfPosition, InvalidResourceException, ExistingResourceException, MissingExtraSlot, WrongLevelException, NotEnoughResourcesException, NoSuchPlayerException, InvalidReadException, InvalidStepsException, IOException, InvalidDiscountException, NoCardException {
+    void BuyWithDiscount() throws NegativeQuantityException, InvalidShelfPosition, InvalidResourceException, ExistingResourceException, MissingExtraSlot, WrongLevelException, NotEnoughResourcesException, NoSuchPlayerException, InvalidReadException, InvalidStepsException, IOException, InvalidDiscountException, NoCardException, GameEndedException {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity("danilo"));
         identities.add(new Identity("nick"));

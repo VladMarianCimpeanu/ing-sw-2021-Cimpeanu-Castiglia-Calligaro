@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.controller.states;
 import it.polimi.ingsw.server.MessageToClient.Error;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.WrongLevelException;
 
 import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
@@ -25,6 +26,9 @@ public class PlaceDevState extends TurnState {
             controller.setCurrentState(new EndTurnState(controller));
         } catch (WrongLevelException e) {
             controller.sendMessage(new Error(invalidDeck));
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+            controller.setCurrentState(new EndTurnState(controller));
         }
     }
 
@@ -34,6 +38,9 @@ public class PlaceDevState extends TurnState {
             getController().getCurrentPlayer().autoPlace();
         } catch (WrongLevelException e) {
             e.printStackTrace();
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+            getController().nextTurn();
         }
         getController().nextTurn();
     }

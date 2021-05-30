@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.actionToken;
 
 import it.polimi.ingsw.server.model.SingleFaithPath;
 import it.polimi.ingsw.server.model.Singleplayer;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 
 /**
@@ -9,7 +10,7 @@ import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
  */
 public class ShuffleToken implements ActionToken{
 
-    private void stepForward(Singleplayer singleplayer) throws NoSuchPlayerException {
+    private void stepForward(Singleplayer singleplayer) throws NoSuchPlayerException, GameEndedException {
         if(singleplayer == null) throw new NoSuchPlayerException();
         SingleFaithPath singleFaithPath = (SingleFaithPath) (singleplayer.getFaithPath());
         singleFaithPath.moveBlackCross(1);
@@ -24,7 +25,7 @@ public class ShuffleToken implements ActionToken{
      * @param singleplayer the specified player which is playing the current game.
      */
     @Override
-    public void triggerEffect(Singleplayer singleplayer) throws NoSuchPlayerException {
+    public void triggerEffect(Singleplayer singleplayer) throws NoSuchPlayerException, GameEndedException {
         shuffleDeck(singleplayer);
         stepForward(singleplayer);
     }

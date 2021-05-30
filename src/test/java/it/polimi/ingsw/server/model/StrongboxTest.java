@@ -124,4 +124,18 @@ class StrongboxTest {
         int result = strongbox.getResourceQuantity(resource);
         assertTrue(result == 1);
     }
+
+    @Test
+    void amountOfResources() throws NegativeQuantityException {
+        Strongbox strongbox = new Strongbox();
+        strongbox.subscribe(new VirtualViewStub());
+        strongbox.addResource(Resource.COIN, 1);
+        strongbox.addResource(Resource.SERVANT, 2);
+        strongbox.addResource(Resource.STONE, 5);
+        strongbox.addResource(Resource.SHIELD, 2);
+        strongbox.addProduced();
+
+        assertEquals(10, strongbox.getAmountOfResources());
+
+    }
 }

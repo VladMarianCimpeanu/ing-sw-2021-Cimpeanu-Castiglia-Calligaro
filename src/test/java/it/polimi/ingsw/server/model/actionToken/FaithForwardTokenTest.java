@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.actionToken;
 
 import it.polimi.ingsw.server.model.Identity;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.server.model.stubs.SingleFaithPathStub;
@@ -26,7 +27,7 @@ class FaithForwardTokenTest {
     }
 
     @Test
-    void triggerEffect(){
+    void triggerEffect() throws GameEndedException {
         faithPath.cross = 2;
 
         FaithForwardToken token = new FaithForwardToken();

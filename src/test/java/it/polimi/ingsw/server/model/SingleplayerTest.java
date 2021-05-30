@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.actionToken.ActionToken;
 import it.polimi.ingsw.server.model.actionToken.ShuffleToken;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.server.model.stubs.VirtualViewStub;
@@ -28,7 +29,7 @@ class SingleplayerTest {
     }
 
     @Test
-    void drawToken() throws NoSuchPlayerException {
+    void drawToken() throws NoSuchPlayerException, GameEndedException {
         //assuming the card draw out is placed at the bottom of the current set of ActionTokens
         int pre_size = game.getAvailableActionTokens().size();
         ActionToken top = game.getAvailableActionTokens().get(pre_size - 1);

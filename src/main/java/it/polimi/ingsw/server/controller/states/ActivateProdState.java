@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Dashboard;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.NoProductionAvailableException;
 
 /**
@@ -14,7 +15,7 @@ public class ActivateProdState extends TurnState {
     }
 
     @Override
-    public void activateProduction() {
+    public void activateProduction(){
         Controller controller = getController();
         Dashboard dashboard = controller.getCurrentPlayer().getDashboard();
         try {
@@ -23,7 +24,9 @@ public class ActivateProdState extends TurnState {
             controller.getCurrentPlayer().addFaithPoint(faithPoints);
         } catch (NoProductionAvailableException e) {
             e.printStackTrace();
-        }finally {
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+        } finally {
             controller.setCurrentState(new ProductionState(controller));
         }
     }

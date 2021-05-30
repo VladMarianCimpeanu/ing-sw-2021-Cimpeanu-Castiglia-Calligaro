@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.actionToken;
 
 import it.polimi.ingsw.server.model.SingleFaithPath;
 import it.polimi.ingsw.server.model.Singleplayer;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 
 
 /**
@@ -14,7 +15,7 @@ public class FaithForwardToken implements ActionToken{
      * @param singleplayer specified player to apply this effect
      */
     @Override
-    public void triggerEffect(Singleplayer singleplayer) {
+    public void triggerEffect(Singleplayer singleplayer) throws GameEndedException {
         SingleFaithPath singleFaithPath = (SingleFaithPath) singleplayer.getFaithPath();
         singleFaithPath.moveBlackCross(2);
     }

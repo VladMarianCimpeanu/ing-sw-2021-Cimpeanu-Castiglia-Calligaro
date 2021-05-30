@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.actionToken;
 
 import it.polimi.ingsw.server.model.Singleplayer;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 
 /**
@@ -11,6 +12,6 @@ public interface ActionToken {
      * Activate the effect of the ActionToken
      * @param singleplayer use this object to perform the actions of each token
      */
-    void triggerEffect(Singleplayer singleplayer) throws NoSuchPlayerException;
+    void triggerEffect(Singleplayer singleplayer) throws NoSuchPlayerException, GameEndedException;
     int getID();
 }

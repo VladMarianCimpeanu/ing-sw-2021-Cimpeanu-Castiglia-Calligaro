@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.controller.VirtualView;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 
@@ -39,14 +40,14 @@ public abstract class FaithPath {
      * @throws NoSuchPlayerException
      * @throws InvalidStepsException
      */
-    public abstract void movePlayer(Player player, int steps) throws NoSuchPlayerException, InvalidStepsException;
+    public abstract void movePlayer(Player player, int steps) throws NoSuchPlayerException, InvalidStepsException, GameEndedException;
 
     /**
      *it moves all the players one step a part from the specified player and checks if a popeMeeting is triggered.
      * @param player specified player that has not to be moved
      * @throws NoSuchPlayerException
      */
-    public abstract void moveOpponents(Player player) throws NoSuchPlayerException, InvalidStepsException;
+    public abstract void moveOpponents(Player player) throws NoSuchPlayerException, InvalidStepsException, GameEndedException;
 
     /**
      * it adds the amount of victory points earned to the specific player at the end of the game

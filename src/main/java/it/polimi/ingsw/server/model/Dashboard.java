@@ -145,13 +145,14 @@ public class Dashboard {
      * @throws WrongLevelException level of the card on top of the selected deck isn't 1 below the level of cardToAdd
      * @throws InvalidDeckPositionException if deckPosition isn't an integer between 1 and 3
      */
-    public void addDevelopmentCard(DevelopmentCard cardToAdd, int deckPosition) throws InvalidDeckPositionException, WrongLevelException {
+    public void addDevelopmentCard(DevelopmentCard cardToAdd, int deckPosition) throws InvalidDeckPositionException, WrongLevelException, GameEndedException {
         if (deckPosition < 1 || deckPosition > 3) throw new InvalidDeckPositionException();
         else if (cardToAdd == null) throw new NullPointerException();
         else if ((developmentDecks.get(deckPosition - 1).isEmpty() && cardToAdd.getLevel() != 1 ) || (!developmentDecks.get(deckPosition - 1).isEmpty() && developmentDecks.get(deckPosition - 1).lastElement().getLevel() != cardToAdd.getLevel() - 1))
             throw new WrongLevelException();
         else {
             developmentDecks.get(deckPosition - 1).push(cardToAdd);
+            if (countMyCards() == 7) throw new GameEndedException();
         }
     }
 
@@ -508,5 +509,17 @@ public class Dashboard {
             }
         }
         resourcesToPay.clear();
+    }
+
+    /**
+     * count number of cards owned by the player.
+     * @return the number of cards owned by the player.
+     */
+    private int countMyCards(){
+        int cards = 0;
+        for(Stack<DevelopmentCard> deck : developmentDecks){
+            cards += deck.size();
+        }
+        return cards;
     }
 }

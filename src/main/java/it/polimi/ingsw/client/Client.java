@@ -102,6 +102,7 @@ public class Client {
         shapeAdapterFactory.registerSubtype(RejoinPlayer.class, "RejoinPlayer");
         shapeAdapterFactory.registerSubtype(FirstTurnEnded.class, "FirstTurnEnded");
         shapeAdapterFactory.registerSubtype(UpdateStrategyBuffer.class, "UpdateStrategyBuffer");
+        shapeAdapterFactory.registerSubtype(GameEnded.class, "GameEnded");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }

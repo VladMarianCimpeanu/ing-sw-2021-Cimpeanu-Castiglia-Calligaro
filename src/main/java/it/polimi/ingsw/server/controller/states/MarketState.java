@@ -34,6 +34,9 @@ public class MarketState extends TurnState {
             getController().sendError(invalidShelf);
         } catch (NotEnoughSpaceException e) {
             getController().sendError(notEnoughSpace);
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+            if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
         }
     }
 
@@ -48,6 +51,9 @@ public class MarketState extends TurnState {
             getController().sendError(nullResource);
         } catch (MissingExtraSlot missingExtraSlot) {
             getController().sendError(invalidLeaderCardID);
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+            if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
         }
     }
 
@@ -58,6 +64,9 @@ public class MarketState extends TurnState {
             if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
         } catch (InvalidResourceException e) {
             getController().sendError(nullResource);
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+            if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
         }
     }
 
@@ -76,6 +85,9 @@ public class MarketState extends TurnState {
                     player.putInExtraSlot(resource);
                 } catch (NotEnoughSpaceException | InvalidResourceException | MissingExtraSlot e) {
                     e.printStackTrace();
+                } catch (GameEndedException gameEndedException) {
+                    endGame();
+                    getController().nextTurn();
                 }
             }
         }
@@ -93,7 +105,13 @@ public class MarketState extends TurnState {
                         player.discardResource(resource);
                     } catch (InvalidResourceException invalidResourceException) {
                         invalidResourceException.printStackTrace();
+                    } catch (GameEndedException gameEndedException) {
+                        endGame();
+                        getController().nextTurn();
                     }
+                } catch (GameEndedException gameEndedException) {
+                    endGame();
+                    getController().nextTurn();
                 }
             }else{
                 try {
@@ -102,19 +120,22 @@ public class MarketState extends TurnState {
                         player.putInWarehouseDepot(resource, shelf);
                     } catch (InvalidResourceException | ExistingResourceException | NotEnoughSpaceException e) {
                         e.printStackTrace();
+                    } catch (GameEndedException gameEndedException) {
+                        endGame();
+                        getController().nextTurn();
                     }
                 } catch (InvalidShelfPosition invalidShelfPosition) {
                     try {
                         player.discardResource(resource);
                     } catch (InvalidResourceException invalidResourceException) {
                         invalidResourceException.printStackTrace();
+                    } catch (GameEndedException gameEndedException) {
+                        endGame();
+                        getController().nextTurn();
                     }
                 }
-
-
             }
         }
-
         getController().nextTurn();
     }
 }

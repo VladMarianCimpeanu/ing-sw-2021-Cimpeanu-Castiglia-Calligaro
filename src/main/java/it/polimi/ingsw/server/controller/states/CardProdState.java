@@ -4,10 +4,7 @@ import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Dashboard;
 import it.polimi.ingsw.server.model.benefit.Resource;
-import it.polimi.ingsw.server.model.exceptions.InvalidResourceException;
-import it.polimi.ingsw.server.model.exceptions.NoProductionAvailableException;
-import it.polimi.ingsw.server.model.exceptions.NotEnoughResourcesException;
-import it.polimi.ingsw.server.model.exceptions.RequirementsSatisfiedException;
+import it.polimi.ingsw.server.model.exceptions.*;
 
 /**
  * In this state the player has activated a production and can
@@ -58,12 +55,18 @@ public class CardProdState extends TurnState {
         Dashboard playersDashboard = getController().getCurrentPlayer().getDashboard();
         try {
             playersDashboard.automatizePayment();
-            playersDashboard.activateProduction();
+            int faithPoints = playersDashboard.activateProduction();
+            getController().getCurrentPlayer().addFaithPoint(faithPoints);
             playersDashboard.getStrongbox().addProduced();
             playersDashboard.refreshState();
             getController().nextTurn();
         } catch (NoProductionAvailableException e) {
             e.printStackTrace();
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+            playersDashboard.getStrongbox().addProduced();
+            playersDashboard.refreshState();
+            getController().nextTurn();
         }
     }
 }

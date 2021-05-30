@@ -407,4 +407,47 @@ class WarehouseDepotTest {
         assertEquals(2, mySlot.getQuantity());
     }
 
+
+    //------------- TEST GET AMOUNT OF RESOURCES -------------
+    @Test
+    @DisplayName("zero resources")
+    void amount0(){
+        assertEquals(0, depot.getAmountOfResources());
+    }
+
+    @Test
+    @DisplayName("Only shelves")
+    void onlyShelves() throws InvalidResourceException, ExistingResourceException, InvalidShelfPosition {
+        depot.addResource(1, 1 , Resource.COIN);
+        depot.addResource(2, 1, Resource.SERVANT);
+        depot.addResource(3, 3, Resource.SHIELD);
+        assertEquals(5, depot.getAmountOfResources());
+    }
+
+    @Test
+    @DisplayName("Only shelves 2")
+    void onlyShelves2() throws InvalidResourceException, ExistingResourceException, InvalidShelfPosition {
+        depot.addResource(2, 2, Resource.SHIELD);
+        assertEquals(2, depot.getAmountOfResources());
+    }
+
+    @Test
+    @DisplayName("Only leaders")
+    void onlyLeader() throws MissingExtraSlot {
+        depot.addExtraSlot(Resource.STONE, 0);
+        depot.addExtraResource(Resource.STONE, 2);
+        depot.addExtraSlot(Resource.SERVANT, 0);
+        depot.addExtraResource(Resource.SERVANT, 1);
+        depot.addExtraSlot(Resource.COIN, 0);
+
+        assertEquals(3, depot.getAmountOfResources());
+    }
+
+    @Test
+    @DisplayName("EmptyLeader")
+    void emptyLeader(){
+        depot.addExtraSlot(Resource.COIN, 0);
+        depot.addExtraSlot(Resource.SHIELD, 1);
+        assertEquals(0, depot.getAmountOfResources());
+    }
 }

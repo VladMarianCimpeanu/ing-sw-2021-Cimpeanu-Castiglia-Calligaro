@@ -6,10 +6,7 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.stubs.EchoStub;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.benefit.Resource;
-import it.polimi.ingsw.server.model.exceptions.InvalidDeckPositionException;
-import it.polimi.ingsw.server.model.exceptions.NegativeQuantityException;
-import it.polimi.ingsw.server.model.exceptions.NoCardException;
-import it.polimi.ingsw.server.model.exceptions.WrongLevelException;
+import it.polimi.ingsw.server.model.exceptions.*;
 import it.polimi.ingsw.server.model.market.Purple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +59,7 @@ class BuyDevStateTest {
      * @throws InvalidDeckPositionException
      */
     @Test
-    void completeTurn() throws NegativeQuantityException, WrongLevelException, NoCardException, InvalidDeckPositionException {
+    void completeTurn() throws NegativeQuantityException, WrongLevelException, NoCardException, InvalidDeckPositionException, GameEndedException {
         Player player = controller.getCurrentPlayer();
         int quantityToAdd = 50;
         addResources(player.getDashboard().getStrongbox(), quantityToAdd);

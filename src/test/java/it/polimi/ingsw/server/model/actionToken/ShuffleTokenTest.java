@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.actionToken;
 
 import it.polimi.ingsw.server.model.Identity;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidReadException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.server.model.stubs.SingleFaithPathStub;
@@ -26,7 +27,7 @@ class ShuffleTokenTest {
     }
 
     @Test
-    void faithPath() throws NoSuchPlayerException {
+    void faithPath() throws NoSuchPlayerException, GameEndedException {
         faithPath.cross = 2;
 
         ShuffleToken token = new ShuffleToken();
@@ -36,7 +37,7 @@ class ShuffleTokenTest {
     }
 
     @Test
-    void shuffled() throws NoSuchPlayerException {
+    void shuffled() throws NoSuchPlayerException, GameEndedException {
         singleplayer.shuffled = false;
 
         ShuffleToken token = new ShuffleToken();

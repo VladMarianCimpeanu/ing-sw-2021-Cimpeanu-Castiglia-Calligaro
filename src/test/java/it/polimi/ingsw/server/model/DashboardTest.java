@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.controller.VirtualView;
 import it.polimi.ingsw.server.model.benefit.Benefit;
 import it.polimi.ingsw.server.model.benefit.Faith;
 import it.polimi.ingsw.server.model.benefit.Resource;
@@ -8,7 +9,9 @@ import it.polimi.ingsw.server.model.stubs.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -28,7 +31,7 @@ class DashboardTest {
     }
 
     @Test
-    void addDevelopmentCard() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void addDevelopmentCard() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         warehouseDepotStub.content.put(Resource.COIN,10);
 
         DevelopmentCardStub card = new DevelopmentCardStub(1);
@@ -59,7 +62,7 @@ class DashboardTest {
     }
 
     @Test
-    void addTwoDevelopmentCards() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void addTwoDevelopmentCards() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         warehouseDepotStub.content.put(Resource.COIN,10);
 
         DevelopmentCardStub card1 = new DevelopmentCardStub(1,1);
@@ -90,7 +93,7 @@ class DashboardTest {
     }
 
     @Test
-    void twoWrongLevelDevelopmentCards() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void twoWrongLevelDevelopmentCards() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         warehouseDepotStub.content.put(Resource.COIN,10);
 
         DevelopmentCardStub card1 = new DevelopmentCardStub(1,1);
@@ -119,7 +122,7 @@ class DashboardTest {
     }
 
     @Test
-    void checkDevRequirement() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void checkDevRequirement() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         DevelopmentCardStub card = new DevelopmentCardStub(1,1);
         dashboard.addDevelopmentCard(card,3);
 
@@ -127,7 +130,7 @@ class DashboardTest {
     }
 
     @Test
-    void checkDevRequirementFalse() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void checkDevRequirementFalse() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         DevelopmentCardStub card = new DevelopmentCardStub(1,1);
         dashboard.addDevelopmentCard(card,3);
 
@@ -141,7 +144,7 @@ class DashboardTest {
     }
 
     @Test
-    void zeroLevelRequirement() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void zeroLevelRequirement() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         DevelopmentCardStub card1 = new DevelopmentCardStub(1,1);
         DevelopmentCardStub card2 = new DevelopmentCardStub(1,1);
         DevelopmentCardStub card3 = new DevelopmentCardStub(1,2);
@@ -188,7 +191,7 @@ class DashboardTest {
     }
 
     @Test
-    void getActivableDevCards() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void getActivableDevCards() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         warehouseDepotStub.content.put(Resource.COIN,100);
 
         DevelopmentCardStub card1 = new DevelopmentCardStub(1,1);
@@ -234,7 +237,7 @@ class DashboardTest {
     }
 
     @Test
-    void isDevCardPlaceableTest1() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void isDevCardPlaceableTest1() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         DevelopmentCardStub card1 = new DevelopmentCardStub(1, 1);
         DevelopmentCardStub card2 = new DevelopmentCardStub(2, 1);
         DevelopmentCardStub card3 = new DevelopmentCardStub(3, 1);
@@ -249,7 +252,7 @@ class DashboardTest {
     }
 
     @Test
-    void isDevCardPlaceableTest2() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void isDevCardPlaceableTest2() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         DevelopmentCardStub card1 = new DevelopmentCardStub(1, 1);
         DevelopmentCardStub card2 = new DevelopmentCardStub(2, 1);
 
@@ -490,7 +493,7 @@ class DashboardTest {
     }
 
     @Test
-    void emptyDevelopmentDeck() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException {
+    void emptyDevelopmentDeck() throws NoSuchFileException, InvalidDeckPositionException, WrongLevelException, GameEndedException {
         dashboard.addDevelopmentCard((new DevelopmentCardStub(1)), 1);
         assertThrows(NoCardException.class,
                 () -> dashboard.selectCardProduction(2));
@@ -499,7 +502,7 @@ class DashboardTest {
     }
 
     @Test
-    void notEnoughResourcesForDevelopmentCard() throws InvalidDeckPositionException, WrongLevelException {
+    void notEnoughResourcesForDevelopmentCard() throws InvalidDeckPositionException, WrongLevelException, GameEndedException {
         Map<Resource, Integer> resIn = new HashMap<>();
         Map<Benefit, Integer> benefitOut = new HashMap<>();
         resIn.put(Resource.SHIELD, 1);
@@ -517,7 +520,7 @@ class DashboardTest {
     }
 
     @Test
-    void productionAlreadyStartedDevCard() throws InvalidDeckPositionException, WrongLevelException, ResourceCostException, NotEnoughResourcesException, ProductionStartedException, RequirementsSatisfiedException, InvalidResourceException, ProductionUsedException {
+    void productionAlreadyStartedDevCard() throws InvalidDeckPositionException, WrongLevelException, ResourceCostException, NotEnoughResourcesException, ProductionStartedException, RequirementsSatisfiedException, InvalidResourceException, ProductionUsedException, GameEndedException {
         Map<Resource, Integer> resIn = new HashMap<>();
         Map<Benefit, Integer> benefitOut = new HashMap<>();
         Map<Resource, Integer> resBaseProd = new HashMap<>();
@@ -854,5 +857,33 @@ class DashboardTest {
         baseProdIn.put(Resource.SHIELD, 1);
         assertThrows(NotEnoughResourcesException.class,
                 () -> dashboard.selectBaseProduction(baseProdIn, Resource.COIN));
+    }
+
+    @Test
+    void cardPlaceable() throws WrongLevelException, InvalidReadException, IOException, GameEndedException, InvalidDeckPositionException {
+        dashboard.isDevCardPlaceable(1);
+        ArrayList<DevelopmentCard> cards = DevelopmentCardDeck.getDevelopmentCardDeck();
+        dashboard.addDevelopmentCard(cards.get(0), 1);
+    }
+
+    @Test
+    void cardPlaceable2() throws InvalidReadException, IOException, GameEndedException, WrongLevelException, InvalidDeckPositionException {
+        ArrayList<DevelopmentCard> cards = DevelopmentCardDeck.getDevelopmentCardDeck();
+        dashboard.addDevelopmentCard(cards.get(0), 1);
+        dashboard.addDevelopmentCard(cards.get(1),2);
+        dashboard.addDevelopmentCard(cards.get(3),3);
+        assertFalse(dashboard.isDevCardPlaceable(1));
+        assertTrue(dashboard.isDevCardPlaceable(2));
+        assertFalse(dashboard.isDevCardPlaceable(3));
+    }
+
+    @Test
+    void cardPlaceable3() throws InvalidReadException, IOException, GameEndedException, WrongLevelException, InvalidDeckPositionException {
+        ArrayList<DevelopmentCard> cards = DevelopmentCardDeck.getDevelopmentCardDeck();
+        dashboard.addDevelopmentCard(cards.get(0), 1);
+        dashboard.addDevelopmentCard(cards.get(1),2);
+        dashboard.addDevelopmentCard(cards.get(3),3);
+        dashboard.addDevelopmentCard(cards.get(17), 2);
+        assertTrue(dashboard.isDevCardPlaceable(3));
     }
 }

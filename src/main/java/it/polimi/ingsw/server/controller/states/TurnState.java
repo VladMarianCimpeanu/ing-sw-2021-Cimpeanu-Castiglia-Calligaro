@@ -252,7 +252,7 @@ public abstract class TurnState {
     /**
      * complete the turn when the current player crashes.
      */
-    public abstract void completeTurn();
+    public abstract void completeTurn() throws GameEndedException;
 
     /**
      * cheat used during beta testing.
@@ -273,6 +273,17 @@ public abstract class TurnState {
      * cheat used during beta testing: move the player by the specified steps.
      */
     public void activateFaithCheat(int steps) {
-        getController().getCurrentPlayer().addFaithPoint(steps);
+        try {
+            getController().getCurrentPlayer().addFaithPoint(steps);
+        } catch (GameEndedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * starts the last phase of the game.
+     */
+    protected void endGame(){
+        controller.setLastTurns();
     }
 }

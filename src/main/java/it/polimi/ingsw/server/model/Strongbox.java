@@ -90,4 +90,15 @@ public class Strongbox {
     public void subscribe(VirtualView virtualView){
         this.virtualView = virtualView;
     }
+
+    /**
+     * calculate the amount of resources in the strongbox.
+     * @return the amount of resources int the strongbox.
+     */
+    public int getAmountOfResources(){
+        int amount = 0;
+        for(Integer resAmount : content.values())
+            amount += resAmount;
+        return amount;
+    }
 }

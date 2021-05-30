@@ -36,7 +36,7 @@ public class Controller {
     //nicknames in order of turns
     private ArrayList<String> turns;
     private TurnState currentState;
-
+    private Runnable nextTurnMethod;
     public Controller(ArrayList<Identity> users){
         nicknames = new HashMap<>();
         players = new HashMap<>();
@@ -66,6 +66,7 @@ public class Controller {
             players.put(p.getNickName(),p);
         new VirtualView(this);
         setUp();
+        setToNormalGame();
     }
 
 
@@ -330,25 +331,7 @@ public class Controller {
      * seconds.
      */
     public void nextTurn(){
-        if(isAnyoneOnline()) {
-            //endGame: nobody is online
-        }
-        int pos = turns.indexOf(currentUser);
-        pos = (pos+1)%turns.size();
-        currentUser = turns.get(pos);
-        if(!getCurrentPlayer().isOnline()) {
-            nextTurn();
-            return;
-        }
-        sendBroadcast(new ItsYourTurn(currentUser));
-        setTimerPing();
-        nicknames.get(currentUser).setMyTurn(true);
-        setCurrentState(new SelectionState(this));
-        try {
-            game.endTurn();
-        } catch (NoSuchPlayerException e) {
-            sendError(ErrorMessage.generic);
-        }
+        nextTurnMethod.run();
     }
 
     /**
@@ -407,5 +390,66 @@ public class Controller {
                 MultiEchoServer.handleCrash(nicknames.get(currentUser));
             }
         }
+    }
+
+    /**
+     * change the behaviour of nextTurn(): when the last player finishes his turn, the game ends.
+     */
+    public void setLastTurns(){
+        nextTurnMethod = () ->{
+            if (isAnyoneOnline()) {
+                waitForPlayers();
+            }
+            int pos = turns.indexOf(currentUser);
+            pos = (pos + 1) % turns.size();
+            if(pos != 0) {
+                currentUser = turns.get(pos);
+                if (!getCurrentPlayer().isOnline()) {
+                    nextTurn();
+                    return;
+                }
+                sendBroadcast(new ItsYourTurn(currentUser));
+                setTimerPing();
+                nicknames.get(currentUser).setMyTurn(true);
+                setCurrentState(new SelectionState(this));
+            }
+            else sendBroadcast(new GameEnded(game.calculatePoints()));
+            closeTheGame();
+        };
+    }
+
+    private void setToNormalGame() {
+        nextTurnMethod = () -> {
+            if (isAnyoneOnline()) {
+                waitForPlayers();
+            }
+            int pos = turns.indexOf(currentUser);
+            pos = (pos + 1) % turns.size();
+            currentUser = turns.get(pos);
+            if (!getCurrentPlayer().isOnline()) {
+                nextTurn();
+                return;
+            }
+            sendBroadcast(new ItsYourTurn(currentUser));
+            setTimerPing();
+            nicknames.get(currentUser).setMyTurn(true);
+            setCurrentState(new SelectionState(this));
+            try {
+                game.endTurn();
+            } catch (NoSuchPlayerException e) {
+                sendError(ErrorMessage.generic);
+            } catch (GameEndedException gameEndedException) {
+                sendBroadcast(new GameEnded(game.calculatePoints()));
+                closeTheGame();
+            }
+        };
+    }
+
+    private void waitForPlayers(){
+        //TODO
+    }
+
+    private void closeTheGame(){
+        //TODO
     }
 }

@@ -40,6 +40,8 @@ public class SelectionState extends TurnState {
             getController().getCurrentPlayer().discardLeaderCard(leaderCard);
         } catch (NoCardException e) {
             getController().sendError(invalidLeaderCardID);
+        } catch (GameEndedException gameEndedException) {
+            endGame();
         }
 
     }

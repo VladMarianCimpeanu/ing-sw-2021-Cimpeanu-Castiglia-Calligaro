@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.JsonToLeaderCard;
 import it.polimi.ingsw.server.controller.Controller;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.NoCardException;
 import it.polimi.ingsw.server.model.exceptions.RequirementException;
 import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
@@ -47,6 +48,8 @@ public class EndTurnState extends TurnState {
             getController().getCurrentPlayer().discardLeaderCard(leaderCard);
         } catch (NoCardException e) {
             getController().sendError(invalidLeaderCardID);
+        } catch (GameEndedException gameEndedException) {
+            endGame();
         }
 
     }

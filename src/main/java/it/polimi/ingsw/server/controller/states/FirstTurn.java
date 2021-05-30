@@ -97,7 +97,7 @@ public class FirstTurn extends TurnState{
             for (int i = 2; i < getController().getPlayers().size() ; i++) {
                 try {
                     getController().getGame().getFaithPath().movePlayer(getController().getPlayers().get(i), 1);
-                } catch (NoSuchPlayerException | InvalidStepsException e) {
+                } catch (NoSuchPlayerException | InvalidStepsException | GameEndedException e) {
                     e.printStackTrace();
                 }
             }

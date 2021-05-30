@@ -134,7 +134,7 @@ class GoToMarketIntegrationTest {
     }
 
     @Test
-    void positionOnTheRightShelf() throws InvalidDirectionSelection, OutOfBoundColumnsException, OutOfBoundRowException, InvalidStrategyException, InvalidShelfPosition, InvalidResourceException, ExistingResourceException, NotEnoughSpaceException {
+    void positionOnTheRightShelf() throws InvalidDirectionSelection, OutOfBoundColumnsException, OutOfBoundRowException, InvalidStrategyException, InvalidShelfPosition, InvalidResourceException, ExistingResourceException, NotEnoughSpaceException, GameEndedException {
         currPlayer.goToMarket("column", 2);
         currPlayer.passStrategiesToMarket();
         ArrayList<Resource> received = currPlayer.getReceivedFromMarket();
@@ -180,7 +180,7 @@ class GoToMarketIntegrationTest {
     }
 
     @Test
-    void putInExtraSlot() throws InvalidDirectionSelection, OutOfBoundColumnsException, OutOfBoundRowException, InvalidStrategyException, InvalidResourceException, NotEnoughSpaceException, MissingExtraSlot {
+    void putInExtraSlot() throws InvalidDirectionSelection, OutOfBoundColumnsException, OutOfBoundRowException, InvalidStrategyException, InvalidResourceException, NotEnoughSpaceException, MissingExtraSlot, GameEndedException {
         currPlayer.goToMarket("row",1 );
         currPlayer.passStrategiesToMarket();
         int firstSize = currPlayer.getReceivedFromMarket().size();

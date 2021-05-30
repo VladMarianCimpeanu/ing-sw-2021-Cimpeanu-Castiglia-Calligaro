@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 
@@ -48,21 +49,19 @@ public class SingleFaithPath extends FaithPath{
      * It moves the blackCross the specified steps
      * @param steps the blackCross has to be moved
      */
-    public void moveBlackCross(int steps)  {
+    public void moveBlackCross(int steps) throws GameEndedException {
         if(steps <= 0) return;
         steps += blackCross;
         for(int i = blackCross+1; i <= steps && i<25; i++) {
             blackCross = i;
             if (blackCross == triggerPopePosition.peek()) assignPapalPoints();
-            if (blackCross == 24){
-                //end game
-            }
+            if (blackCross == 24) throw new GameEndedException();
         }
         virtualViewUpdate();
     }
 
     @Override
-    public void movePlayer(Player player, int steps) throws NoSuchPlayerException, InvalidStepsException {
+    public void movePlayer(Player player, int steps) throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         if(steps < 0) throw new InvalidStepsException("Negative numbers of steps are not allowed. Number found is: "+steps);
         if(player == null) throw new NoSuchPlayerException();
         if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
@@ -71,6 +70,7 @@ public class SingleFaithPath extends FaithPath{
             playersPosition.put(player, i);
             if (i == triggerPopePosition.peek())
                 assignPapalPoints();
+            if(i == 24) throw new GameEndedException();
         }
         virtualViewUpdate();
     }
@@ -80,7 +80,7 @@ public class SingleFaithPath extends FaithPath{
      * @param player specified player that has not to be moved
      */
     @Override
-    public void moveOpponents(Player player) throws NoSuchPlayerException {
+    public void moveOpponents(Player player) throws NoSuchPlayerException, GameEndedException {
         if(player == null) throw new NoSuchPlayerException();
         if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
         if(!playersPosition.containsKey(player)) return;

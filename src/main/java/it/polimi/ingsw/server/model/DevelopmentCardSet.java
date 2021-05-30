@@ -89,4 +89,14 @@ public class DevelopmentCardSet {
         this.virtualView = virtualView;
     }
 
+    /**
+     * checks if there are no more cards of the same color available.
+     * @return true if there are no more cards of the same color, otherwise returns false.
+     */
+    public boolean isAColorMissing(){
+        for(Color color : Color.values()){
+            if(!availableDevelopmentCards.get(2).get(color.getIndex()).isEmpty()) return false;
+        }
+        return true;
+    }
 }

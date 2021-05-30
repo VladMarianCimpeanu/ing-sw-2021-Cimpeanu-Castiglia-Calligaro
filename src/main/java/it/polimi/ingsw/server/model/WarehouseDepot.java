@@ -465,4 +465,19 @@ public class WarehouseDepot {
     public void subscribe(VirtualView virtualView){
         this.virtualView = virtualView;
     }
+
+    /**
+     * returns the amount in the shelves and the slots.
+     * @return the amount in the shelves and the slots.
+     */
+    public int getAmountOfResources(){
+        int amount = 0;
+        amount += firstQuantity;
+        amount += secondQuantity;
+        amount += thirdQuantity;
+        for(ExtraSlot slot : extraSlotList){
+         amount += slot.getQuantity();
+        }
+        return amount;
+    }
 }

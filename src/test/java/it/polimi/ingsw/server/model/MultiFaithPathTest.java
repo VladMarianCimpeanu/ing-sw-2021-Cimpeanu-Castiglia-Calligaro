@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.InvalidStepsException;
 import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.server.model.stubs.PlayerStub2;
@@ -42,7 +43,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking assign victory points can work in edge zones")
-    void assignVictoryPointsTest1() throws NoSuchPlayerException, InvalidStepsException {
+    void assignVictoryPointsTest1() throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -58,7 +59,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking assign victory points can work in normal situations")
-    void assignVictoryPointsTest2() throws NoSuchPlayerException, InvalidStepsException {
+    void assignVictoryPointsTest2() throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -72,7 +73,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking assign victory points can work in edge zones *3*")
-    void assignVictoryPointsTest3() throws NoSuchPlayerException, InvalidStepsException {
+    void assignVictoryPointsTest3() throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -88,7 +89,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking assign victory points can work in edge zones 4")
-    void assignVictoryPointsTest4() throws NoSuchPlayerException, InvalidStepsException {
+    void assignVictoryPointsTest4() throws NoSuchPlayerException, InvalidStepsException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for(int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -107,7 +108,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can handle negative steps *1*")
-    void moveBackward1() throws InvalidStepsException, NoSuchPlayerException {
+    void moveBackward1() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -120,7 +121,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can handle negative steps *2*")
-    void moveBackward2() throws InvalidStepsException, NoSuchPlayerException {
+    void moveBackward2() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -134,7 +135,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can handle not existing players")
-    void moveNoOne() throws InvalidStepsException, NoSuchPlayerException {
+    void moveNoOne() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -148,7 +149,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can handle null players")
-    void moveNull() throws InvalidStepsException, NoSuchPlayerException {
+    void moveNull() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -162,13 +163,14 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can handle overflow steps")
-    void moveFarAway() throws InvalidStepsException, NoSuchPlayerException {
+    void moveFarAway() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
         path.subscribe(new VirtualViewStub());
         for (int i = 0; i < 3; i++) path.movePlayer(currPlayers.get(i), i * 8);
-        path.movePlayer(currPlayers.get(2), 30);
+        assertThrows(GameEndedException.class,
+                () ->path.movePlayer(currPlayers.get(2), 30));
         assertEquals(24, path.getPlayerPosition(currPlayers.get(2)));
 
 
@@ -193,7 +195,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can trigger correctly pope meetings *1*")
-    void movePlayerTest1() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest1() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -209,7 +211,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can trigger correctly pope meetings *2*")
-    void movePlayerTest2() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest2() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -225,7 +227,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can trigger correctly pope meetings *3*")
-    void movePlayerTest3() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest3() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -242,7 +244,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move player can trigger correctly pope meetings *4*")
-    void movePlayerTest4() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest4() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -259,7 +261,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking once a pope meeting is triggered, it can not be triggered again")
-    void movePlayerTest5() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest5() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -275,7 +277,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking movePlayer can work in normal conditions")
-    void movePlayerTest() throws InvalidStepsException, NoSuchPlayerException {
+    void movePlayerTest() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -316,7 +318,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking moveOpponents can handle not existing player")
-    void moveOpponentsOfNotExistingPlayer() throws InvalidStepsException, NoSuchPlayerException {
+    void moveOpponentsOfNotExistingPlayer() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -335,7 +337,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking moveOpponents can handle null")
-    void moveOpponentsOfNull() throws InvalidStepsException, NoSuchPlayerException {
+    void moveOpponentsOfNull() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -354,7 +356,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move opponents can handle trigger pope positions")
-    void moveOpponentsPopeMeeting1() throws InvalidStepsException, NoSuchPlayerException {
+    void moveOpponentsPopeMeeting1() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -375,7 +377,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move opponents can work in normal conditions")
-    void moveOpponents() throws InvalidStepsException, NoSuchPlayerException {
+    void moveOpponents() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);
@@ -392,7 +394,7 @@ class MultiFaithPathTest {
 
     @Test
     @DisplayName("Checking move opponents can work in normal conditions *2*")
-    void moveOpponents2() throws InvalidStepsException, NoSuchPlayerException {
+    void moveOpponents2() throws InvalidStepsException, NoSuchPlayerException, GameEndedException {
         ArrayList<Player> currPlayers = new ArrayList<>();
         for (int i = 0; i < 3; i ++) currPlayers.add(new PlayerStub2(new Identity(Integer.valueOf(i).toString()), null));
         MultiFaithPath path = new MultiFaithPath(currPlayers);

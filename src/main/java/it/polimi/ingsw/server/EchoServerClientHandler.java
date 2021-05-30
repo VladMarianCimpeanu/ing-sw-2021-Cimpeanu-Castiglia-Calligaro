@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.MessageToClient.Error;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.ErrorMessage;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 
 import java.io.*;
 import java.net.Socket;
@@ -234,8 +235,13 @@ public class EchoServerClientHandler implements Runnable {
                     //client crashed
                     MultiEchoServer.handleCrash(this);
                     //store the current state somewhere?
-                    if (isMyTurn)
-                        controller.getCurrentState().completeTurn();
+                    if (isMyTurn) {
+                        try {
+                            controller.getCurrentState().completeTurn();
+                        } catch (GameEndedException gameEndedException) {
+                            //TODO
+                        }
+                    }
                     break;
                 }
             } catch (SocketTimeoutException e) {
@@ -245,8 +251,13 @@ public class EchoServerClientHandler implements Runnable {
                 //client crashed
                 MultiEchoServer.handleCrash(this);
                 //store the current state somewhere?
-                if (isMyTurn)
-                    controller.getCurrentState().completeTurn();
+                if (isMyTurn) {
+                    try {
+                        controller.getCurrentState().completeTurn();
+                    } catch (GameEndedException gameEndedException) {
+                        //TODO
+                    }
+                }
                 break;
             }
             synchronized (controller) {

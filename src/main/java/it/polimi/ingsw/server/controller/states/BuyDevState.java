@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.benefit.Resource;
+import it.polimi.ingsw.server.model.exceptions.GameEndedException;
 import it.polimi.ingsw.server.model.exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.exceptions.WrongLevelException;
 
@@ -63,6 +64,9 @@ public class BuyDevState extends TurnState {
             getController().getCurrentPlayer().autoPlace();
         } catch (WrongLevelException e) {
             e.printStackTrace();
+        } catch (GameEndedException gameEndedException) {
+            endGame();
+            getController().nextTurn();
         }
         getController().nextTurn();
     }

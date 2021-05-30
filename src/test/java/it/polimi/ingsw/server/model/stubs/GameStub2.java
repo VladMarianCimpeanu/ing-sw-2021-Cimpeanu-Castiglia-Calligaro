@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.exceptions.NoSuchPlayerException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GameStub2 extends Game {
     private ArrayList<ActionToken> availableActionTokens;
@@ -19,5 +20,10 @@ public class GameStub2 extends Game {
     @Override
     public boolean isGameEnded() {
         return false;
+    }
+
+    @Override
+    public Map<String, Integer> calculatePoints() {
+        return null;
     }
 }
