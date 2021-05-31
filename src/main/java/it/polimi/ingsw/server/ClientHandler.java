@@ -67,6 +67,7 @@ public class ClientHandler implements Runnable {
         shapeAdapterFactory.registerSubtype(MoveExtraToWarehouse.class, "MoveExtraToWarehouse");
         shapeAdapterFactory.registerSubtype(CheatResource.class, "CheatResource");
         shapeAdapterFactory.registerSubtype(CheatFaith.class, "CheatFaith");
+        shapeAdapterFactory.registerSubtype(PingFromClient.class, "PingFromClient");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
     }
@@ -270,7 +271,7 @@ public class ClientHandler implements Runnable {
                     System.out.println("[" + nickname + "]:" + "tried to play in another turn");
                 }
             }
-            }
+        }
     }
 
     /**

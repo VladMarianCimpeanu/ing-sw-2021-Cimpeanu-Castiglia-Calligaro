@@ -171,4 +171,6 @@ public abstract class GameView {
     public abstract void changeTurn(String player);
 
     public abstract void startBaseProd();
+
+    public abstract void handleCrash();
 }

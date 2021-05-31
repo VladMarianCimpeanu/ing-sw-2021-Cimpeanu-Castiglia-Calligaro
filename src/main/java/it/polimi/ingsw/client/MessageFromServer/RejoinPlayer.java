@@ -10,7 +10,6 @@ public class RejoinPlayer extends MessageFromServer {
         if(client.getNickname().equals(player)) {
             client.getGameView().dumpMessage("Welcome back " + player + ". We've missed you");
             client.getGameView().startGame();
-            GUI.getGamePanel().setupRejoin();
         }
         else
             client.getGameView().dumpMessage(player+" is back in the game");

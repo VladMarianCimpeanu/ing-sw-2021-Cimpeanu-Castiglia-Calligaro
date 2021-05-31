@@ -103,6 +103,7 @@ public class GameGUI extends GameView {
     @Override
     public void startGame() {
         GUI.goToGame();
+        GUI.getGamePanel().setupRejoin();
     }
 
     @Override
@@ -147,6 +148,12 @@ public class GameGUI extends GameView {
     public void startBaseProd() {
         GUI.getGamePanel().setActionPanel(new BaseProdPanel());
         GUI.getGamePanel().repaint();
+    }
+
+    @Override
+    public void handleCrash() {
+        GUI.getClient().stopTheGame();
+        GUI.closeGame();
     }
 
     @Override

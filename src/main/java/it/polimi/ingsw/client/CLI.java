@@ -31,7 +31,7 @@ public class CLI implements Runnable {
     public void run() {
         Welcome.dump();
 
-        while(true){
+        while(client.isRunning()){
             String line = in.nextLine();
             String[] command = line.split(" ");
             try {
@@ -52,6 +52,10 @@ public class CLI implements Runnable {
                                 break;
                             case "help":
                                 readHelp();
+                                break;
+                            case "quit":
+                                client.getGameView().dumpMessage("Closing the game... Wait a moment");
+                                client.stopTheGame();
                                 break;
                             default:
                                 out.println("Unexpected command.");

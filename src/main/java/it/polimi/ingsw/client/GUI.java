@@ -119,4 +119,10 @@ public class GUI {
             }
         });
     }
+
+    public static void closeGame(){
+        jFrame.dispose();
+        jFrame = new CrashFrame();
+        jFrame.setVisible(true);
+    }
 }

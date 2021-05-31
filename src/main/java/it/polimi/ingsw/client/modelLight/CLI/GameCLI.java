@@ -115,6 +115,11 @@ public class GameCLI extends GameView {
     }
 
     @Override
+    public void handleCrash() {
+        System.out.println("Something strange with the connection happened. Quit the game.");
+    }
+
+    @Override
     public void updateResourcesFromMarket(ArrayList<Resource> resources) {
         String resourcesToDump = "";
         for(Resource res: resources){

@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.MessageFromServer.Error;
 import it.polimi.ingsw.client.MessageFromServer.Rejoin.*;
 import it.polimi.ingsw.client.MessageFromServer.Updates.*;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
+import it.polimi.ingsw.client.MessageToServer.PingFromClient;
 import it.polimi.ingsw.client.modelLight.CLI.DepotCLI;
 import it.polimi.ingsw.client.modelLight.CLI.GameCLI;
 import it.polimi.ingsw.client.modelLight.CLI.MarketCLI;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
@@ -37,8 +40,10 @@ public class Client {
     private String nickname;
     private PlayerView me;
     private GameView gameView;
+    private int timer;
     //nicknames in order
     private ArrayList<String> nicknames;
+    private boolean run;
 
     public Client(String ip, int port, String mode){
         if(mode.equals("cli"))
@@ -51,10 +56,13 @@ public class Client {
             clientSocket = new Socket(ip, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            run = true;
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            System.out.println("Ops... It was not possible to determine the specified IP");
+            run = false;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Ops... It was not possible to connect to the specified IP or port.");
+            run = false;
         }
         shapeAdapterFactory = RuntimeTypeAdapterFactory.of(MessageFromServer.class, "type");
         shapeAdapterFactory.registerSubtype(AskStrategy.class, "AskStrategy");
@@ -105,34 +113,45 @@ public class Client {
         shapeAdapterFactory.registerSubtype(GameEnded.class, "GameEnded");
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
+        timer = 0;
     }
 
     public void start(){
-        if(gui){
-            GUI.setClient(this);
-            GUI.start();
-            gameView = new GameGUI();
-        }else {
-            cli = new CLI(this);
-            gameView = new GameCLI();
-            new Thread(cli).start();
+        if(run){
+            if(gui){
+                GUI.setClient(this);
+                GUI.start();
+                gameView = new GameGUI();
+            }else {
+                cli = new CLI(this);
+                gameView = new GameCLI();
+                new Thread(cli).start();
+            }
+            try {
+                clientSocket.setSoTimeout(3000);
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
         }
-
         String line = null;
-        while(true){
+        while(run){
             try {
                 line = in.readLine();
                 MessageFromServer message = convert.fromJson(line, MessageFromServer.class);
                 message.activateMessage(this);
 
                 //TODO: implement inside activateMessage() of NicknameAccepted
-                if(message instanceof NicknameAccepted){
+                if (message instanceof NicknameAccepted) {
                     nickname = ((NicknameAccepted) message).getNickname();
-                    if(!gui)
+                    if (!gui)
                         cli.setNickname(nickname);
                 }
+            } catch (SocketTimeoutException e) {
+                updateTimer();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Exception");
+                closeSocket();
+                gameView.handleCrash();
                 break;
             }
         }
@@ -140,7 +159,8 @@ public class Client {
 
     public void send(MessageToServer message){
         String outMessage = convert.toJson(message);
-        out.println(outMessage);
+        if(clientSocket != null) out.println(outMessage);
+        else gameView.dumpMessage("There is no connection with the server.");
     }
 
     public static void main(String[] args) {
@@ -168,5 +188,51 @@ public class Client {
      */
     public ArrayList<String> getTurns(){
         return new ArrayList<>(nicknames);
+    }
+
+
+    /**
+     * close the connection with the client.
+     */
+    private void closeSocket(){
+        try {
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        out.close();
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clientSocket = null;
+    }
+
+    /**
+     * stops the game and closes the connection.
+     */
+    public void stopTheGame(){
+        run = false;
+        if (clientSocket != null )closeSocket();
+    }
+
+    /**
+     * checks if the client is still running
+     * @return true if the client is still running, else false.
+     */
+    public boolean isRunning(){
+        return run;
+    }
+
+    /**
+     * checks if 30 seconds are passed, if so, then it sends a ping to server.
+     */
+    private void updateTimer(){
+        timer += 1;
+        if(timer == 10) {
+            send(new PingFromClient());
+            timer = 0;
+        }
     }
 }
