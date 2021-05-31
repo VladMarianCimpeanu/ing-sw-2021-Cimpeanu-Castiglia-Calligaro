@@ -28,7 +28,7 @@ public class CardProdState extends TurnState {
                 case "strongbox":
                     dashboard.takeFromStrongbox(resource);
                     break;
-                case "extraSlot":
+                case "extra":
                     dashboard.takeFromExtraSlot(resource);
                     break;
                 default:

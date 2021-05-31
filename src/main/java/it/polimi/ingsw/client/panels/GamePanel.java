@@ -118,8 +118,6 @@ public class GamePanel extends JPanel {
 
         it.polimi.ingsw.client.Shape shape = new it.polimi.ingsw.client.Shape(X_board, Y_board, widthBoard, heightBoard);
         drawImage(g,"images/board/playerBoard.png", shape);
-        it.polimi.ingsw.client.Shape shape2 = new it.polimi.ingsw.client.Shape(630,28,400,370);
-        //drawImage(g,"images/devCards.png", shape2);
         it.polimi.ingsw.client.Shape shape3 = new it.polimi.ingsw.client.Shape(730,450,200,259);
         drawImage(g,"images/punchboard/portabiglie.png", shape3);
 
@@ -141,6 +139,7 @@ public class GamePanel extends JPanel {
                 );
             }
             drawImage(g, card.getImage(), card.getShape());
+            card.printExtraSlot(g);
         }
 
         MarketGUI marketGUI = (MarketGUI) GUI.getClient().getGameView().getMarket();
@@ -172,10 +171,6 @@ public class GamePanel extends JPanel {
                 drawImage(g, "images/punchboard/blackCross.png", faithPath.getShapes().get(player));
             else
                 drawImage(g, faithPath.getURLCross(player), faithPath.getShapes().get(player));
-
-
-        g.drawString("Attiva LeaderCard", 1200, 20);
-        g.drawString("Scarta LeaderCard", 1200, 50);
     }
 
 

@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.modelLight.CLI;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
 import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
 
@@ -67,5 +68,11 @@ public class LeaderCardSetCLI extends LeaderCardSetView {
     @Override
     public void dumpMessage(String message) {
         System.out.println(message);
+    }
+
+    @Override
+    public void updateExtraSlot(int id, Resource resource, int quantity) {
+        dumpMessage(quantity + " " +  resource + " on leader card " + id);
+        cards.get(id).updateExtraSlot(resource, quantity);
     }
 }

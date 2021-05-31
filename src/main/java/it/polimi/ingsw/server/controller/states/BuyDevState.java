@@ -37,7 +37,7 @@ public class BuyDevState extends TurnState {
                     player.payFromWarehouseDepot(resource);
                 else if (position.equals("strongbox"))
                     player.payFromStrongbox(resource);
-                else if (position.equals("extraSlot"))
+                else if (position.equals("extra"))
                     player.payFromExtraSlot(resource);
                 else {
                     controller.sendMessage(new Error(invalidCommand));

@@ -78,7 +78,12 @@ public class LeaderCardCLI extends LeaderCardView {
             if(type.equals("buyCard")){
                 r2 = Color.BLUE.escape() + "║" + Color.RESET + "       -1" + resource.escape() + Resource.RESET + Color.BLUE.escape() + "       ║  " + Color.RESET;
             }else if(type.equals("depot")){
-                r2 = Color.BLUE.escape() + "║" + Color.RESET + "     [" + resource.escape() + "] [" + resource.escape() + Resource.RESET +  "]     " + Color.BLUE.escape() + "║  " + Color.RESET;
+                if(extraSlot.size() == 0)
+                    r2 = Color.BLUE.escape() + "║" + Color.RESET + "     [" + resource.escape() + Resource.RESET + "] [" + resource.escape() + Resource.RESET +  "]     " + Color.BLUE.escape() + "║  " + Color.RESET;
+                else if(extraSlot.size() == 1)
+                    r2 = Color.BLUE.escape() + "║" + Color.RESET + Color.BLUE.escape() + "     [" + resource.escape() + Color.BLUE.escape() + "]" + Color.RESET + " [" + resource.escape() + Resource.RESET +  "]     " + Color.BLUE.escape() + "║  " + Color.RESET;
+                else
+                    r2 = Color.BLUE.escape() + "║" + Color.RESET + Color.BLUE.escape() + "     [" + resource.escape() + Color.BLUE.escape() + "] [" + resource.escape() + Resource.RESET + Color.BLUE.escape() + "]     " + Color.BLUE.escape() + "║  " + Color.RESET;
             }else if(type.equals("market")){
                 r2 = Color.BLUE.escape() + "║" + Color.RESET + "      " + "@" + " = " + resource.escape() + Resource.RESET + Color.BLUE.escape() + "      ║  " + Color.RESET;
             }else{
@@ -95,7 +100,7 @@ public class LeaderCardCLI extends LeaderCardView {
         if(type.equals("buyCard")){
             r2 = "║       -1" + resource.escape() + Resource.RESET + "       ║  ";
         }else if(type.equals("depot")){
-            r2 = "║     [" + resource.escape() + "] [" + resource.escape() + Resource.RESET +  "]     ║  ";
+            r2 = "║     [" + resource.escape() + Resource.RESET + "] [" + resource.escape() + Resource.RESET +  "]     ║  ";
         }else if(type.equals("market")){
             r2 = "║      " + "@" + " = " + resource.escape() + Resource.RESET + "      ║  ";
         }else{

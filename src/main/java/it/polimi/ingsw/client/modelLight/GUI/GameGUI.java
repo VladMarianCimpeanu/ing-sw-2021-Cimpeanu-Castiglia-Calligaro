@@ -68,7 +68,8 @@ public class GameGUI extends GameView {
         }
         payPanel = "";
         setResBuffer(resources);
-        ((DepotGUI)getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyTake();
+        ((DepotGUI) getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyTake();
+        ((LeaderCardSetGUI) getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToBuyStrategy();
         ActionPanel panel = GUI.getGamePanel().getActionPanel();
         panel.repaint();
     }

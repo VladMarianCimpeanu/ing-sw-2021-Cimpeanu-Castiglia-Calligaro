@@ -30,7 +30,7 @@ public class DevProductionPanel extends ActionPanel{
         clickables = new ArrayList<>();
         clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
         clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
-        //add extraslot
+        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
         activate = new JButton("Activate Production");
         activate.addActionListener(new ActionListener() {
             @Override

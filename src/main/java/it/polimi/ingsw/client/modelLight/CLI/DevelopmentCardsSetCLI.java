@@ -178,24 +178,4 @@ public class DevelopmentCardsSetCLI extends DevelopmentCardSetView {
             System.out.print("\n" + Color.RESET);
         }
     }
-
-
-    //TODO: delete this when all the other CLI components are done: this main is used only to test the development
-    // card set rendering.
-    public static void main(String[] args) {
-        DevelopmentCardsSetCLI myCards = new DevelopmentCardsSetCLI();
-        ArrayList<ArrayList<Integer>> availableDevelopmentCards;
-        availableDevelopmentCards = new ArrayList<>();
-        for (int level = 0; level < 3; level++) {
-            availableDevelopmentCards.add(new ArrayList<>());
-            for(Color color: Color.values())
-                availableDevelopmentCards.get(level).add(0);
-        }
-        ArrayList<DevelopmentCardCLI> tempDeck = myCards.cards;
-        for (DevelopmentCardCLI card : tempDeck) {
-            availableDevelopmentCards.get(card.getLevel() - 1).set(card.getColor().getIndex(), card.getID());
-        }
-        availableDevelopmentCards.get(2).set(Color.BLUE.getIndex(), 0);
-        myCards.setDecks(availableDevelopmentCards);
-    }
 }

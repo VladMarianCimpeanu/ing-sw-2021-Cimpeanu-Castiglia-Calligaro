@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelLight;
 
+import it.polimi.ingsw.client.Resource;
+
 import java.util.ArrayList;
 
 public abstract class LeaderCardSetView {
@@ -27,4 +29,5 @@ public abstract class LeaderCardSetView {
         playerCards.remove((Object) id);
     }
 
+    public abstract void updateExtraSlot(int id, Resource resource, int quantity);
 }

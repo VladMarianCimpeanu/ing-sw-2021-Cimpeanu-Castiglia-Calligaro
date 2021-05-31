@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
 import it.polimi.ingsw.client.panels.DefaultPanel;
@@ -74,6 +75,13 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
         super.remove(idRemove);
         updateGUI();
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
+    }
+
+    @Override
+    public void updateExtraSlot(int id, Resource resource, int quantity) {
+        dumpMessage(quantity + " " +  resource + " on leader card " + id);
+        cards.get(id).updateExtraSlot(resource, quantity);
+        GUI.getGamePanel().repaint();
     }
 
     /**
@@ -154,5 +162,9 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
             LeaderCardGUI leaderCard = cards.get(card);
             if(leaderCard.isClicked(x, y)) leaderCard.click(x, y);
         }
+    }
+
+    public void setLeadersToBuyStrategy(){
+        for(LeaderCardGUI card : cards.values()) card.setBuyStrategy();
     }
 }

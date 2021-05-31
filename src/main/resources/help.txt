@@ -20,14 +20,14 @@
     Market process:
     -strategy pos                       use a market strategy given by the leader card at position pos.
     -discard resource                   discard resource obtained by the market.
-    -put res posLeader|depot [shelf]    put the selected resource obtained by the market on the selected position.
+    -put res extra|depot [shelf]        put the selected resource obtained by the market on the selected position.
 
 
     Buy development cards process:
     -place deck                         put the card bought on your selected deck.
 
-    -take resource strongbox|extra|depot [shelf]    general command to take a resource from a specific place
-                                                    to pay something.
+    -take res strongbox|extra|depot     general command to take a resource from a specific place
+                                        to pay something.
 
     Production process:
     -resIn res1 res2                    select resources res1 & res2 as input of base crafting.
