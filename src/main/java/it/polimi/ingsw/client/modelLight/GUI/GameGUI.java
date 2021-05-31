@@ -103,7 +103,6 @@ public class GameGUI extends GameView {
     @Override
     public void startGame() {
         GUI.goToGame();
-        GUI.getGamePanel().setupRejoin();
     }
 
     @Override
@@ -189,5 +188,11 @@ public class GameGUI extends GameView {
             ((LeaderCardSetGUI)players.get(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
         }
         else if(strategy != 0)((MarketPanel)GUI.getGamePanel().getActionPanel()).updateStrategies(whiteMarbles, strategy);
+    }
+
+    @Override
+    public void rejoinGame(){
+        super.rejoinGame();
+        GUI.getGamePanel().setupRejoin();
     }
 }
