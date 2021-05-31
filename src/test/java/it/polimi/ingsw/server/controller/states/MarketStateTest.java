@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
-import it.polimi.ingsw.server.EchoServerClientHandler;
-import it.polimi.ingsw.server.MultiEchoServer;
+import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.stubs.EchoStub;
 import it.polimi.ingsw.server.model.Identity;
@@ -9,7 +9,6 @@ import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidDirectionSelection;
 import it.polimi.ingsw.server.model.exceptions.OutOfBoundColumnsException;
 import it.polimi.ingsw.server.model.exceptions.OutOfBoundRowException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,9 +24,9 @@ class MarketStateTest {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity("dani"));
         identities.add(new Identity("nick"));
-        EchoServerClientHandler handler = new EchoStub();
-        MultiEchoServer.addNickname("dani", handler);
-        MultiEchoServer.addNickname("nick", handler);
+        ClientHandler handler = new EchoStub();
+        Server.addNickname("dani", handler);
+        Server.addNickname("nick", handler);
         controller = new Controller(identities);
         controller.setCurrentUser("dani");
     }

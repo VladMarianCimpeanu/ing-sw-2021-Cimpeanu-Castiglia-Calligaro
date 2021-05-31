@@ -46,28 +46,11 @@ public class GamePanel extends JPanel {
             }
         });
 
-
-        //Example of absolute positioning
-//        JButton button = new JButton("Cliccami!");
-//        add(button);
-//        Dimension size = button.getPreferredSize();
-//        button.setBounds(200, 200,
-//                size.width, size.height);
-
         scrollPanel = new ScrollPanel();
         add(scrollPanel);
 
-        if(GUI.isFirstTurn()) {
-            actionPanel = new FirstTurnPanel();
-            add(actionPanel);
-        }
-        else add(new DefaultPanel());
-
-//        addMouseMotionListener(new MouseAdapter(){
-//            public void mouseDragged(MouseEvent e){
-//                moveSquare(e.getX(),e.getY());
-//            }
-//        });
+        actionPanel = new FirstTurnPanel();
+        add(actionPanel);
     }
 
     /**
@@ -89,28 +72,6 @@ public class GamePanel extends JPanel {
             }
         }
     }
-
-//    public void addImage(String url){
-//        clickables.add();
-//        repaint();
-//    }
-
-//    private void moveSquare(int x, int y){
-//
-//        // Current square state, stored as final variables
-//        // to avoid repeat invocations of the same methods.
-//        final int CURR_X = redSquare.getX();
-//        final int CURR_Y = redSquare.getY();
-//
-//        if ((CURR_X!=x) || (CURR_Y!=y)) {
-//            // Update coordinates.
-//            redSquare.setX(x);
-//            redSquare.setY(y);
-//
-//            repaint();
-//        }
-//    }
-
 
     @Override
     public synchronized void paintComponent(Graphics g) {
@@ -301,5 +262,15 @@ public class GamePanel extends JPanel {
      */
     public ScrollPanel getScrollPanel() {
         return scrollPanel;
+    }
+
+    /**
+     * setup the panels when a player rejoin after a crash
+     */
+    public void setupRejoin(){
+        setActionPanel(new DefaultPanel());
+        action.clear();
+        LeaderCardSetGUI leaderCardSetGUI = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
+        leaderCardSetGUI.setLeadersToDefaultStrategy();
     }
 }

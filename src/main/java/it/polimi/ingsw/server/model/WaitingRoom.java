@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.controller.Controller;
-import it.polimi.ingsw.server.MultiEchoServer;
 import it.polimi.ingsw.server.model.exceptions.*;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class WaitingRoom {
         waitingUsers.add(new Identity(nickname));
         if(gameMode <= waitingUsers.size()) {
             new Controller(waitingUsers);
-            MultiEchoServer.removeWaitingRoom(this);
+            Server.removeWaitingRoom(this);
         }
     }
 

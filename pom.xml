@@ -124,7 +124,7 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>it.polimi.ingsw.server.MultiEchoServer</mainClass>
+                  <mainClass>it.polimi.ingsw.server.Server</mainClass>
                 </transformer>
               </transformers>
               <finalName>Server</finalName>

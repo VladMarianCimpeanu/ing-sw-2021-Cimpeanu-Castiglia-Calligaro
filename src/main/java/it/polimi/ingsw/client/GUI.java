@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class GUI {
     private static JFrame jFrame;
     private static Client client;
-    private static GamePanel gamePanel = new GamePanel();
     private static LoginPanel loginPanel;
     private static WaitingRoomPanel waitingRoomPanel;
     private static int leaderToKeep = 0;
-    private static boolean isFirstTurn = true;
+    private static GamePanel gamePanel = new GamePanel();
+
 
     public static void setClient(Client client) {
         GUI.client = client;
@@ -73,9 +73,9 @@ public class GUI {
     public static void goToGame(){
         if(waitingRoomPanel != null) {
             jFrame.remove(waitingRoomPanel);
-            isFirstTurn = false;
+        }else{
+            jFrame.remove(loginPanel);
         }
-        else jFrame.remove(loginPanel);
         jFrame.add(gamePanel);
         jFrame.setSize(1280,720);
         jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -83,7 +83,7 @@ public class GUI {
         gamePanel.setPlayerWatched(GUI.getClient().getNickname());
         gamePanel.addOtherPlayersPanel();
         LeaderCardSetGUI leaderCards = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
-        if(isFirstTurn) gamePanel.addAction(leaderCards);
+        gamePanel.addAction(leaderCards);
         addBaseProd();
 
         jFrame.setVisible(false);
@@ -118,9 +118,5 @@ public class GUI {
                 GUI.getClient().send(new ActivateBaseProduction());
             }
         });
-    }
-
-    public static boolean isFirstTurn(){
-        return isFirstTurn;
     }
 }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
-import it.polimi.ingsw.server.EchoServerClientHandler;
-import it.polimi.ingsw.server.MultiEchoServer;
+import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.stubs.EchoStub;
 import it.polimi.ingsw.server.model.Identity;
@@ -9,13 +9,9 @@ import it.polimi.ingsw.server.model.MarketStrategy;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.NoSuchStrategyException;
 import it.polimi.ingsw.server.model.market.Marble;
-import it.polimi.ingsw.server.model.market.Purple;
-import it.polimi.ingsw.server.model.market.White;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.net.Socket;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +24,9 @@ class SelectionStateTest {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity("dani"));
         identities.add(new Identity("nick"));
-        EchoServerClientHandler handler = new EchoStub();
-        MultiEchoServer.addNickname("dani", handler);
-        MultiEchoServer.addNickname("nick", handler);
+        ClientHandler handler = new EchoStub();
+        Server.addNickname("dani", handler);
+        Server.addNickname("nick", handler);
         controller = new Controller(identities);
         controller.setCurrentUser("dani");
     }

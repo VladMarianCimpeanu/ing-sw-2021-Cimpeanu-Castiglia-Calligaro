@@ -22,21 +22,21 @@ import java.util.concurrent.Executors;
 /**
  * Server. It requires 2 params to be executed: the ip address and the port of the server.
  */
-public class MultiEchoServer {
+public class Server {
     private static String ip;
     private static int port;
     //private Controller controller;
-    private static Map<String, EchoServerClientHandler> nicknames = new HashMap<>();
+    private static Map<String, ClientHandler> nicknames = new HashMap<>();
     private static ArrayList<WaitingRoom> waitingRooms = new ArrayList<>();
 
-    public MultiEchoServer(String ip, int port) {
+    public Server(String ip, int port) {
         this.ip = ip;
         this.port = port;
         this.nicknames = new HashMap<>();
         this.waitingRooms = new ArrayList<>();
     }
 
-    public static EchoServerClientHandler getClient(String nickname){
+    public static ClientHandler getClient(String nickname){
         if(nickname != null && nicknames.containsKey(nickname)){
             return nicknames.get(nickname);
         }
@@ -49,7 +49,7 @@ public class MultiEchoServer {
         ArrayList<String> players = new ArrayList<>();
         for(Identity i: idS){
             players.add(i.getNickname());
-            EchoServerClientHandler client = nicknames.get(i.getNickname());
+            ClientHandler client = nicknames.get(i.getNickname());
             client.send(new JoinPlayer(nickname));
         }
         players.add(nickname);
@@ -80,10 +80,10 @@ public class MultiEchoServer {
      * add a nickName and a handler
      * @return false if the nickname is already used
      */
-    public static synchronized boolean addNickname(String nickname, EchoServerClientHandler echoServerClientHandler) {
+    public static synchronized boolean addNickname(String nickname, ClientHandler echoServerClientHandler) {
         if(nicknames.containsKey(nickname)){
             //find out whether the already existing client is still connected
-            EchoServerClientHandler oppositeClient = nicknames.get(nickname);
+            ClientHandler oppositeClient = nicknames.get(nickname);
             if(oppositeClient.isInGame()) {
                 if (oppositeClient.getController().getPlayer(nickname).isOnline()) {
                     oppositeClient.send(new Ping());
@@ -110,9 +110,9 @@ public class MultiEchoServer {
 
     /**
      * called by clientHandler when crashes
-     * @param client references to EchoServerClientHandler
+     * @param client references to ClientHandler
      */
-    public static void handleCrash(EchoServerClientHandler client){
+    public static void handleCrash(ClientHandler client){
         if(client != null){
             if(!client.isInGame()){
                 nicknames.remove(client.getNickname());
@@ -130,7 +130,7 @@ public class MultiEchoServer {
                 //Send an update to all other waiting clients
                 ArrayList<Identity> idS = containingClient.getWaitingUsers();
                 for(Identity i: idS){
-                    EchoServerClientHandler waitingClient = nicknames.get(i.getNickname());
+                    ClientHandler waitingClient = nicknames.get(i.getNickname());
                     waitingClient.send(new CrashedPlayer(client.getNickname()));
                 }
                 System.out.println(client.getNickname() + " crashed");
@@ -141,7 +141,7 @@ public class MultiEchoServer {
                 for(Player p: players){
                     Identity i = p.getIdentity();
                     if(i.isOnline()){
-                        EchoServerClientHandler waitingClient = nicknames.get(i.getNickname());
+                        ClientHandler waitingClient = nicknames.get(i.getNickname());
                         waitingClient.send(new CrashedPlayer(client.getNickname()));
                     }
                 }
@@ -172,7 +172,7 @@ public class MultiEchoServer {
                 Socket socket = serverSocket.accept();
                 System.out.println("New connection accepted");
 //                if(controller == null || controller.isFull()) controller = new Controller();
-                EchoServerClientHandler currentClientHandler = new EchoServerClientHandler(socket);
+                ClientHandler currentClientHandler = new ClientHandler(socket);
                 executor.submit(currentClientHandler);
 //                controller.addClient(currentClientHandler);
             } catch(IOException e) {
@@ -183,7 +183,7 @@ public class MultiEchoServer {
     }
 
     public static void main(String[] args) {
-        MultiEchoServer echoServer = new MultiEchoServer(args[0], Integer.parseInt(args[1]));
+        Server echoServer = new Server(args[0], Integer.parseInt(args[1]));
         echoServer.startServer();
     }
 }

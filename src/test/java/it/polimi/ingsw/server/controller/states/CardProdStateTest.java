@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
-import it.polimi.ingsw.server.EchoServerClientHandler;
-import it.polimi.ingsw.server.MultiEchoServer;
+import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.stubs.EchoStub;
 import it.polimi.ingsw.server.model.Dashboard;
@@ -28,9 +28,9 @@ class CardProdStateTest {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity("A"));
         identities.add(new Identity("B"));
-        EchoServerClientHandler handler = new EchoStub();
-        MultiEchoServer.addNickname("A", handler);
-        MultiEchoServer.addNickname("B", handler);
+        ClientHandler handler = new EchoStub();
+        Server.addNickname("A", handler);
+        Server.addNickname("B", handler);
         controller = new Controller(identities);
         controller.setCurrentUser("A");
         state = new CardProdState(controller);

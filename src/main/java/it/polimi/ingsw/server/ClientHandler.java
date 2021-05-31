@@ -19,7 +19,7 @@ import java.net.SocketTimeoutException;
  * Handler of the client.
  * It converts all the messages from client in actions on the controller.
  */
-public class EchoServerClientHandler implements Runnable {
+public class ClientHandler implements Runnable {
     private String nickname;
     private Socket socket;
     private Controller controller;
@@ -30,7 +30,7 @@ public class EchoServerClientHandler implements Runnable {
     private PrintWriter out;
     private Gson convert;
 
-    public EchoServerClientHandler(Socket socket) {
+    public ClientHandler(Socket socket) {
         this.socket = socket;
         isMyTurn = true;
         isInGame = false;
@@ -130,12 +130,12 @@ public class EchoServerClientHandler implements Runnable {
                         System.out.println(nick + " is not permitted");
                         continue;
                     }
-                    if(MultiEchoServer.addNickname(nick, this)){
+                    if(Server.addNickname(nick, this)){
                         this.nickname = nick;
                         send(new NicknameAccepted(nick));
-                        if(!MultiEchoServer.addToWaitingRoom(nick)) {
+                        if(!Server.addToWaitingRoom(nick)) {
                             int mode = requireMode();
-                            MultiEchoServer.newWaitingRoom(nick, mode);
+                            Server.newWaitingRoom(nick, mode);
                         }
                         break;
                     }else{
@@ -159,7 +159,7 @@ public class EchoServerClientHandler implements Runnable {
                 System.out.println("Error: wrong json format");
             }catch(IOException e){
                 System.out.println("Player disconnected in login phase");
-                MultiEchoServer.handleCrash(this);
+                Server.handleCrash(this);
                 closeSocket();
                 return false;
             } catch (CrashException e) {
@@ -181,7 +181,7 @@ public class EchoServerClientHandler implements Runnable {
                 try{
                     String line = in.readLine();
                     if(line == null){
-                        MultiEchoServer.removeNickname(nickname);
+                        Server.removeNickname(nickname);
                         System.out.println("Player disconnected in login phase: " + nickname);
                         //handle crash closing the socket
                         closeSocket();
@@ -201,7 +201,7 @@ public class EchoServerClientHandler implements Runnable {
             }
         }
         } catch (IOException e) {
-            MultiEchoServer.removeNickname(nickname);
+            Server.removeNickname(nickname);
             System.out.println("Player disconnected in login phase: " + nickname);
             //handle crash closing the socket
             closeSocket();
@@ -223,7 +223,7 @@ public class EchoServerClientHandler implements Runnable {
 //                }
 //
 //            } catch (NoSuchElementException | IOException e) {
-//                MultiEchoServer.handleCrash(this);
+//                Server.handleCrash(this);
 //                closeSocket();
 //                return;
 //            }
@@ -233,7 +233,7 @@ public class EchoServerClientHandler implements Runnable {
                 line = in.readLine();
                 if (line == null) {
                     //client crashed
-                    MultiEchoServer.handleCrash(this);
+                    Server.handleCrash(this);
                     //store the current state somewhere?
                     if (isMyTurn) {
                         try {
@@ -249,7 +249,7 @@ public class EchoServerClientHandler implements Runnable {
                 continue;
             } catch (IOException e) {
                 //client crashed
-                MultiEchoServer.handleCrash(this);
+                Server.handleCrash(this);
                 //store the current state somewhere?
                 if (isMyTurn) {
                     try {

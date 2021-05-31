@@ -1,11 +1,9 @@
 package it.polimi.ingsw.server.controller.stubs;
 
-import it.polimi.ingsw.server.EchoServerClientHandler;
+import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.controller.Controller;
 
-import java.net.Socket;
-
-public class EchoStub extends EchoServerClientHandler {
+public class EchoStub extends ClientHandler {
     public EchoStub() {
         super(new SocketStub());
     }

@@ -1,13 +1,12 @@
 package it.polimi.ingsw.server.controller.states;
 
-import it.polimi.ingsw.server.EchoServerClientHandler;
-import it.polimi.ingsw.server.MultiEchoServer;
+import it.polimi.ingsw.server.ClientHandler;
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.stubs.EchoStub;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
-import it.polimi.ingsw.server.model.market.Purple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -25,9 +24,9 @@ class BuyDevStateTest {
         ArrayList<Identity> identities = new ArrayList<>();
         identities.add(new Identity("ThreadPitt"));
         identities.add(new Identity("RomCruise"));
-        EchoServerClientHandler handler = new EchoStub();
-        MultiEchoServer.addNickname("ThreadPitt", handler);
-        MultiEchoServer.addNickname("RomCruise", handler);
+        ClientHandler handler = new EchoStub();
+        Server.addNickname("ThreadPitt", handler);
+        Server.addNickname("RomCruise", handler);
         controller = new Controller(identities);
         controller.startGame();
         controller.setCurrentState(new SelectionState(controller));

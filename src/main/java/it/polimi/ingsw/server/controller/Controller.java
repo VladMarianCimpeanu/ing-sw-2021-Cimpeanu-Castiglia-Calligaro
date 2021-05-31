@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.server.EchoServerClientHandler;
+import it.polimi.ingsw.server.ClientHandler;
 import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.MessageToClient.Rejoin.*;
 import it.polimi.ingsw.server.MessageToClient.Updates.UpdateFaithpath;
-import it.polimi.ingsw.server.MultiEchoServer;
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.FirstTurn;
 import it.polimi.ingsw.server.controller.states.SelectionState;
@@ -31,7 +31,7 @@ public class Controller {
     private String currentUser;
     private boolean isFirstTurn;
 
-    private Map<String, EchoServerClientHandler> nicknames;
+    private Map<String, ClientHandler> nicknames;
     private Map<String, Player> players;
     //nicknames in order of turns
     private ArrayList<String> turns;
@@ -54,7 +54,7 @@ public class Controller {
         }
         for(Identity i: identities){
             String nick = i.getNickname();
-            EchoServerClientHandler client = MultiEchoServer.getClient(nick);
+            ClientHandler client = Server.getClient(nick);
             client.setController(this);
             nicknames.put(nick, client);
             turns.add(nick);
@@ -125,10 +125,10 @@ public class Controller {
 
     /**
      * rejoin a client that disconnected, sending him all the information of the current game.
-     * @param client EchoServerClientHandler of the specified player that has rejoined.
+     * @param client ClientHandler of the specified player that has rejoined.
      * @param nickname specified nickname of the player that rejoins the game.
      */
-    public void rejoinClient(EchoServerClientHandler client, String nickname) {
+    public void rejoinClient(ClientHandler client, String nickname) {
         nicknames.remove(nickname);
         nicknames.put(nickname, client);
         players.get(nickname).getIdentity().setOnline(true);
@@ -286,7 +286,7 @@ public class Controller {
      * @param message specific message to send.
      */
     public void sendBroadcast(MessageToClient message){
-        for(EchoServerClientHandler client : nicknames.values()) {
+        for(ClientHandler client : nicknames.values()) {
             client.send(message);
         }
     }
@@ -379,7 +379,7 @@ public class Controller {
         try {
             nicknames.get(currentUser).setSocketTimeOut(30*1000);
         } catch (SocketException e) {
-            MultiEchoServer.handleCrash(nicknames.get(currentUser));
+            Server.handleCrash(nicknames.get(currentUser));
         }
         for(String user: turns) {
             if (user.equals(currentUser)) continue;
@@ -387,7 +387,7 @@ public class Controller {
                 nicknames.get(user).setMyTurn(false);
                 nicknames.get(user).setSocketTimeOut(0);
             } catch (SocketException e) {
-                MultiEchoServer.handleCrash(nicknames.get(currentUser));
+                Server.handleCrash(nicknames.get(currentUser));
             }
         }
     }
