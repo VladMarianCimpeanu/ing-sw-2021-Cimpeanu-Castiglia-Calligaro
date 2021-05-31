@@ -37,10 +37,13 @@ public class Controller {
     private ArrayList<String> turns;
     private TurnState currentState;
     private Runnable nextTurnMethod;
+    private final Object waitForPlayer;
+
     public Controller(ArrayList<Identity> users){
         nicknames = new HashMap<>();
         players = new HashMap<>();
         turns = new ArrayList<>();
+        waitForPlayer = new Object();
         currentUser = null;
         ArrayList<Identity> identities = new ArrayList<>(users);
         System.out.print("A new Game has started. Players: ");
@@ -397,7 +400,7 @@ public class Controller {
      */
     public void setLastTurns(){
         nextTurnMethod = () ->{
-            if (isAnyoneOnline()) {
+            if (!isAnyoneOnline()) {
                 waitForPlayers();
             }
             int pos = turns.indexOf(currentUser);
@@ -418,15 +421,21 @@ public class Controller {
         };
     }
 
+    /**
+     * sets the turn management to normal: if the last player ends the turn, the next player will be the first.
+     */
     private void setToNormalGame() {
         nextTurnMethod = () -> {
-            if (isAnyoneOnline()) {
+            int pos = 0;
+            if (!isAnyoneOnline()) {
                 waitForPlayers();
             }
-            int pos = turns.indexOf(currentUser);
+            System.out.println("here");
+            pos = turns.indexOf(currentUser);
             pos = (pos + 1) % turns.size();
             currentUser = turns.get(pos);
             if (!getCurrentPlayer().isOnline()) {
+                System.out.println("off");
                 nextTurn();
                 return;
             }
@@ -445,11 +454,21 @@ public class Controller {
         };
     }
 
-    private void waitForPlayers(){
-        //TODO
+    /**
+     * blocks the thread until a player rejoin the game.
+     */
+    private synchronized void waitForPlayers(){
+        try {
+            System.out.println("waiting for players");
+            wait();
+            System.out.println("awaken");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void closeTheGame(){
         //TODO
     }
+
 }
