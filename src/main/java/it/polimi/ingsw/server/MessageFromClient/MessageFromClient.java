@@ -9,4 +9,8 @@ public abstract class MessageFromClient {
     public String toString() {
         return getClass().getSimpleName();
     }
+
+    public boolean isPing(){
+        return false;
+    }
 }

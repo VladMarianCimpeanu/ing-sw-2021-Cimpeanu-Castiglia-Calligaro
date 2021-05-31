@@ -7,4 +7,8 @@ public class PingFromClient extends MessageFromClient{
     public void activate(Controller controller) {
         System.out.println("Ping");
     }
+    @Override
+    public boolean isPing(){
+        return true;
+    }
 }

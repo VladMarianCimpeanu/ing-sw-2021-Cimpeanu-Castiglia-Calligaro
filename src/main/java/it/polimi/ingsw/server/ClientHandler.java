@@ -146,6 +146,7 @@ public class ClientHandler implements Runnable {
                             isMyTurn = false;
                             send(new NicknameAccepted(nick));
                             controller.rejoinClient(this, nickname);
+                            awakeController();
                             break;
                         }
                         sendError(ErrorMessage.usedNickname);
@@ -263,7 +264,7 @@ public class ClientHandler implements Runnable {
             }
             synchronized (controller) {
                 MessageFromClient message = convert.fromJson(line, MessageFromClient.class);
-                if (isMyTurn) {
+                if (isMyTurn || message.isPing()) {
                     System.out.println("[" + nickname + "]:" + message);
                     message.activate(controller);
                 } else {
@@ -338,6 +339,20 @@ public class ClientHandler implements Runnable {
     public void setSocketTimeOut(int time) throws SocketException {
         if(time < 0) socket.setSoTimeout(0);
         else socket.setSoTimeout(time);
+    }
+
+    /**
+     * notify the controller that at least one player is online.
+     */
+    private void awakeController(){
+        synchronized (controller) {
+            try {
+                System.out.println("try");
+                controller.notifyAll();
+                System.out.println("done");
+            } catch(IllegalMonitorStateException e){
+            }
+        }
     }
 }
 
