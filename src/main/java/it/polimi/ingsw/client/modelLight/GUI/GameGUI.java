@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelLight.GUI;
 
+import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
@@ -126,6 +127,7 @@ public class GameGUI extends GameView {
     @Override
     public void lastProduced(Map<Resource, Integer> resources, String player) {
         ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
+        ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
         //GUI.getGamePanel().getActionPanel().getClickable().clear(); //not so efficient(remain listening)
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         GUI.getGamePanel().repaint();

@@ -2,12 +2,17 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.MoveResource;
+import it.polimi.ingsw.client.MessageToServer.MoveWarehouseToExtra;
 import it.polimi.ingsw.client.MessageToServer.Strategy;
 import it.polimi.ingsw.client.MessageToServer.TakeResPos;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardView;
+import it.polimi.ingsw.client.modelLight.PlayerView;
+import it.polimi.ingsw.client.panels.DefaultPanel;
 import it.polimi.ingsw.client.panels.GamePanel;
 import it.polimi.ingsw.client.panels.LeaderCardsPanel;
+import it.polimi.ingsw.client.panels.MoveExtraPanel;
 
 import java.awt.*;
 
@@ -64,11 +69,26 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
         activated = true;
         if(type.equals("production")) defaultStrategy = () ->{//TODO: here the default strategy of extra production.
             System.out.println("extraProduction");};
+        else if(type.equals("depot")) defaultStrategy = () -> {
+            PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
+            if(((DepotGUI)player.getDepot()).getShelfFrom() == -1){
+                GUI.getGamePanel().setActionPanel(new MoveExtraPanel(extraSlot.size()));
+                ((DepotGUI)player.getDepot()).setExtraFromMove(this);
+            }else{
+                int shelf = ((DepotGUI)player.getDepot()).getShelfFrom();
+                GUI.getClient().send(new MoveWarehouseToExtra(shelf, ID, ((DepotGUI)player.getDepot()).getQuantity(shelf)));
+                ((DepotGUI)player.getDepot()).resetShelfFrom();
+                GUI.getGamePanel().setActionPanel(new DefaultPanel());
+                GUI.getGamePanel().removeAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
+                GUI.getGamePanel().unlockGameBoard(true);
+            }
+            GUI.getGamePanel().repaint();
+        };
         else {
-            defaultStrategy = () -> {};
-            setStrategyDefault();
+            defaultStrategy = () -> { };
         }
-        GUI.getGamePanel().repaint();
+        setStrategyDefault();
+
     }
 
     public void setStrategyFirst(){

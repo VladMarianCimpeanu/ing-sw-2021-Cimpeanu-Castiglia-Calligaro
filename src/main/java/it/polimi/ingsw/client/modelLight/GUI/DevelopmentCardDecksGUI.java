@@ -17,6 +17,7 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         paddingBoardX = 245;
         paddingY = 210;
         paddingCards = 35;
+        GUI.getGamePanel().addGameboard(this);
     }
 
 
@@ -51,6 +52,8 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         //TODO remove listeners old action panel?
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         setToProduction();
+        ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
+        ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
     }
 
 

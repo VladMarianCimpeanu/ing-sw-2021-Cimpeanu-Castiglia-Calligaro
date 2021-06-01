@@ -59,12 +59,13 @@ public class GamePanel extends JPanel {
      * @param y Y coordinate of the click event
      */
     private void activeClick(int x, int y){
+        boolean isNowClickable = gameBoardClickable;
         for (Clickable c: new ArrayList<>(action)){
             if (c.isClicked(x,y)){
                 c.click(x, y);
             }
         }
-        if (gameBoardClickable) {
+        if (isNowClickable) {
             for (Clickable c : new ArrayList<>(gameBoard)) {
                 if (c.isClicked(x, y)) {
                     c.click(x, y);

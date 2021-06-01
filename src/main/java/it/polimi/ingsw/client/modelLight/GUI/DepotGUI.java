@@ -2,12 +2,17 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.MessageToServer.MoveExtraToWarehouse;
+import it.polimi.ingsw.client.MessageToServer.MoveResource;
 import it.polimi.ingsw.client.MessageToServer.PutResPos;
 import it.polimi.ingsw.client.MessageToServer.TakeResPos;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.DepotView;
+import it.polimi.ingsw.client.panels.DefaultPanel;
 import it.polimi.ingsw.client.panels.FirstTurnPanel;
+import it.polimi.ingsw.client.panels.MoveExtraPanel;
+import it.polimi.ingsw.client.panels.MoveResPanel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,11 +25,28 @@ public class DepotGUI extends DepotView implements Clickable {
     private final int deltapixel = 23;
     private final int heightRes = 20;
     private final int widthRes = 20;
+    private int shelfFrom;
+    private LeaderCardGUI extraFromMove;
 
     public DepotGUI(){
         super();
         setStrategyFirstTurn();
         shapes = new HashMap<>();
+        GUI.getGamePanel().addGameboard(this);
+        shelfFrom = -1;
+        extraFromMove = null;
+    }
+
+    public int getShelfFrom() {
+        return shelfFrom;
+    }
+
+    public void resetShelfFrom(){
+        shelfFrom = -1;
+    }
+
+    public void setExtraFromMove(LeaderCardGUI extraFromMove) {
+        this.extraFromMove = extraFromMove;
     }
 
     public Map<Resource, Shape> getShapes() {
@@ -33,6 +55,10 @@ public class DepotGUI extends DepotView implements Clickable {
 
     public int getDeltapixel() {
         return deltapixel;
+    }
+
+    public int getQuantity(int shelf){
+        return quantity[shelf-1];
     }
 
     @Override
@@ -92,7 +118,27 @@ public class DepotGUI extends DepotView implements Clickable {
     //default
     public void setStrategyMove(){
         strategy = (shelf) -> {
-            System.out.println("move strategy");
+            if(extraFromMove != null){
+                int howMany = ((MoveExtraPanel)GUI.getGamePanel().getActionPanel()).getHowMany();
+                GUI.getClient().send(new MoveExtraToWarehouse(shelf, extraFromMove.getID(), howMany));
+                this.extraFromMove = null;
+                GUI.getGamePanel().setActionPanel(new DefaultPanel());
+                GUI.getGamePanel().removeAction(this);
+                GUI.getGamePanel().unlockGameBoard(true);
+                GUI.getGamePanel().repaint();
+            }else if(shelfFrom != -1){
+                GUI.getClient().send(new MoveResource(shelfFrom, shelf));
+                this.shelfFrom = -1;
+                GUI.getGamePanel().setActionPanel(new DefaultPanel());
+                GUI.getGamePanel().removeAction(this);
+                GUI.getGamePanel().removeAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
+                GUI.getGamePanel().unlockGameBoard(true);
+                GUI.getGamePanel().repaint();
+            }else{
+                this.shelfFrom = shelf;
+                GUI.getGamePanel().setActionPanel(new MoveResPanel());
+                GUI.getGamePanel().repaint();
+            }
         };
     }
 
