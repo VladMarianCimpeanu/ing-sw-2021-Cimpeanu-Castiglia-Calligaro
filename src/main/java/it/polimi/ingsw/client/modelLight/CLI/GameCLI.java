@@ -125,6 +125,12 @@ public class GameCLI extends GameView {
     }
 
     @Override
+    public void endGame(Map<String, Integer> ranks, Map<String, Integer> resources) {
+        System.out.println(ranks);
+        System.out.println(resources);
+    }
+
+    @Override
     public void updateResourcesFromMarket(ArrayList<Resource> resources) {
         String resourcesToDump = "";
         for(Resource res: resources){

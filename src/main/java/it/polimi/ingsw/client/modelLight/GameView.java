@@ -4,7 +4,9 @@ import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -178,5 +180,36 @@ public abstract class GameView {
 
     public void rejoinGame(){
         startGame();
+    }
+
+    public abstract void endGame(Map<String, Integer> ranks, Map<String, Integer> resources);
+
+    protected ArrayList<String> orderPlayers(Map<String, Integer> ranks, Map<String, Integer> resources){
+        ArrayList<Integer> order = new ArrayList<>(ranks.values());
+        Collections.sort(order, Collections.reverseOrder());
+        ArrayList<String> result = new ArrayList<>();
+
+        for(int i: order){
+            ArrayList<String> sameValue = new ArrayList<>();
+            for(String s: new ArrayList<>(ranks.keySet()))
+                if (ranks.get(s) == i){
+                    sameValue.add(s);
+                    ranks.remove(s);
+                }
+
+            while(!sameValue.isEmpty()){
+                int max = -1;
+                String name = null;
+                for (String s: sameValue){
+                    if(resources.get(s) > max){
+                        max = resources.get(s);
+                        name = s;
+                    }
+                }
+                result.add(name);
+                sameValue.remove(name);
+            }
+        }
+        return result;
     }
 }

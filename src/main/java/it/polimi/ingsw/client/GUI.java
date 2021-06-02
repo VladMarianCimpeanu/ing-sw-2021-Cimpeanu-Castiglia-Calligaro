@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.panels.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GUI {
     private static JFrame jFrame;
@@ -121,6 +122,12 @@ public class GUI {
     public static void closeGame(){
         jFrame.dispose();
         jFrame = new CrashFrame();
+        jFrame.setVisible(true);
+    }
+
+    public static void showPoints(ArrayList<String> order, Map<String, Integer> ranks){
+        jFrame.dispose();
+        jFrame = new LeaderboardFrame(order, ranks);
         jFrame.setVisible(true);
     }
 }

@@ -234,4 +234,10 @@ public class GameGUI extends GameView {
         super.rejoinGame();
         GUI.getGamePanel().setupRejoin();
     }
+
+    @Override
+    public void endGame(Map<String, Integer> ranks, Map<String, Integer> resources) {
+        ArrayList<String> order = orderPlayers(ranks, resources);
+        GUI.showPoints(order, ranks);
+    }
 }

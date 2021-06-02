@@ -63,7 +63,7 @@ public class MultiFaithPath extends FaithPath{
             if(i == 24) someoneEnd = true;
         }
         getVirtualView().updateFaithPath(playersPosition);
-        throw new GameEndedException();
+        if(someoneEnd)throw new GameEndedException();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MultiFaithPath extends FaithPath{
         }
         getVirtualView().updateFaithPath(playersPosition);
         for (Player p: playersPosition.keySet()) {
-            if (playersPosition.get(p) == triggerPopePosition.peek()) assignPapalPoints();
+            if (!triggerPopePosition.isEmpty() && playersPosition.get(p) == triggerPopePosition.peek()) assignPapalPoints();
         }
         if(someoneEnd) throw new GameEndedException();
     }

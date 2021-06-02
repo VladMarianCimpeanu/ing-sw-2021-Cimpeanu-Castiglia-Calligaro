@@ -44,6 +44,7 @@ public class Client {
     //nicknames in order
     private ArrayList<String> nicknames;
     private boolean run;
+    private boolean isEnded;
 
     public Client(String ip, int port, String mode){
         if(mode.equals("cli"))
@@ -114,6 +115,11 @@ public class Client {
 
         convert = new GsonBuilder().registerTypeAdapterFactory(shapeAdapterFactory).create();
         timer = 0;
+        isEnded = false;
+    }
+
+    public void setEnded(boolean ended) {
+        isEnded = ended;
     }
 
     public void start(){
@@ -139,7 +145,7 @@ public class Client {
                 line = in.readLine();
                 if(line == null){
                     closeSocket();
-                    gameView.handleCrash();
+                    if(!isEnded)gameView.handleCrash();
                     break;
                 }
                 MessageFromServer message = convert.fromJson(line, MessageFromServer.class);
@@ -155,7 +161,7 @@ public class Client {
                 updateTimer();
             } catch (IOException e) {
                 closeSocket();
-                gameView.handleCrash();
+                if(!isEnded)gameView.handleCrash();
                 break;
             }
         }
