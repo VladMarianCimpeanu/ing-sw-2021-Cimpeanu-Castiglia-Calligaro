@@ -23,20 +23,18 @@ import java.util.Map;
 public class DevProductionPanel extends ActionPanel{
     private JButton activate;
     private JLabel title;
-    private ArrayList<Clickable> clickables;
     public DevProductionPanel(){
         super();
         setLayout(null);
-        clickables = new ArrayList<>();
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
+        GUI.getGamePanel().unlockGameBoard(false);
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
         activate = new JButton("Activate Production");
         activate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GUI.getClient().send(new ActivateProduction());
-
             }
         });
         activate.setBounds(100, 100, activate.getPreferredSize().width, activate.getPreferredSize().height);
@@ -44,24 +42,12 @@ public class DevProductionPanel extends ActionPanel{
         title = new JLabel("Take these resources from your stocks");
         title.setBounds(10, 20, title.getPreferredSize().width, title.getPreferredSize().height);
         add(title);
-        addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent e){
-                activeClick(e.getX(),e.getY());
-            }
-        });
     }
 
     @Override
     public void displayError(ErrorMessage error) {
     }
 
-    private void activeClick(int x, int y) {
-        for (Clickable c : new ArrayList<>(clickables)) {
-            if (c.isClicked(x, y)) {
-                c.click(x, y);
-            }
-        }
-    }
 
 
     public void paintComponent(Graphics g) {

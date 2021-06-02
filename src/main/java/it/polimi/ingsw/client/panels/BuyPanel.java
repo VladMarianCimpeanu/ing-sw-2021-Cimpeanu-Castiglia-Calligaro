@@ -18,23 +18,17 @@ import java.util.Map;
 
 public class BuyPanel extends ActionPanel{
     private JLabel title;
-    private ArrayList<Clickable> clickables;
     public BuyPanel(){
         super();
         setLayout(null);
-        clickables = new ArrayList<>();
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks());
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
+        GUI.getGamePanel().unlockGameBoard(false);
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks());
         title = new JLabel("Take these resources from your stocks");
         title.setBounds(10, 20, title.getPreferredSize().width, title.getPreferredSize().height);
         add(title);
-        addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent e){
-                activeClick(e.getX(),e.getY());
-            }
-        });
         //((DevelopmentCardDecksGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks()).setToReplaceable();
     }
 
@@ -42,13 +36,6 @@ public class BuyPanel extends ActionPanel{
     public void displayError(ErrorMessage error) {
     }
 
-    private void activeClick(int x, int y) {
-        for (Clickable c : new ArrayList<>(clickables)) {
-            if (c.isClicked(x, y)) {
-                c.click(x, y);
-            }
-        }
-    }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);

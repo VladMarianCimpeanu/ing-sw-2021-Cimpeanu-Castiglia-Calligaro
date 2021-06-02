@@ -2,10 +2,7 @@ package it.polimi.ingsw.client.modelLight.GUI;
 
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
-import it.polimi.ingsw.client.MessageToServer.MoveResource;
-import it.polimi.ingsw.client.MessageToServer.MoveWarehouseToExtra;
-import it.polimi.ingsw.client.MessageToServer.Strategy;
-import it.polimi.ingsw.client.MessageToServer.TakeResPos;
+import it.polimi.ingsw.client.MessageToServer.*;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardView;
 import it.polimi.ingsw.client.modelLight.PlayerView;
@@ -67,8 +64,10 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     @Override
     public void activate(){
         activated = true;
-        if(type.equals("production")) defaultStrategy = () ->{//TODO: here the default strategy of extra production.
-            System.out.println("extraProduction");};
+        if(type.equals("production")) defaultStrategy = () ->{
+            GUI.getClient().send(new ActivateExtraProduction(ID));
+            ((GameGUI)GUI.getClient().getGameView()).setProdPanel("extra");
+        };
         else if(type.equals("depot")) defaultStrategy = () -> {
             PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
             if(((DepotGUI)player.getDepot()).getShelfFrom() == -1){
@@ -105,7 +104,6 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
         strategy = () -> {
             if(extraSlot.size() > 0)
                 GUI.getClient().send(new TakeResPos(extraSlot.get(0), "extra"));
-            setStrategyDefault();
         };
     }
 

@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import static it.polimi.ingsw.server.model.benefit.Resource.COIN;
+
 
 /**
  * Dashboard is formed by a warehouse depot, strongbox and a set of development cards owned by the player.
@@ -356,14 +358,23 @@ public class Dashboard {
      */
     public int activateProduction() throws NoProductionAvailableException {
         if(benefitsToProduce.isEmpty() || !resourcesToPay.isEmpty() ) throw new NoProductionAvailableException();
+        boolean onlyFaith = true;
         for(Resource resource : Resource.values())
             if (benefitsToProduce.containsKey(resource)) {
                 try {
                     strongbox.addResource(resource, benefitsToProduce.get(resource));
+                    onlyFaith = false;
                 } catch (NegativeQuantityException e) {
                     e.printStackTrace();
                 }
             }
+        if(onlyFaith) {
+            try {
+                strongbox.addResource(COIN, 0);
+            } catch (NegativeQuantityException e) {
+                e.printStackTrace();
+            }
+        }
         isProducing = false;
         return benefitsToProduce.getOrDefault(Faith.giveFaith(), 0);
     }

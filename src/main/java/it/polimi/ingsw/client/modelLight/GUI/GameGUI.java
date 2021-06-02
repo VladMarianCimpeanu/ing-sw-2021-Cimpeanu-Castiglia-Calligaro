@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenGUI;
 import it.polimi.ingsw.client.modelLight.GameView;
+import it.polimi.ingsw.client.modelLight.PlayerView;
 import it.polimi.ingsw.client.panels.ActionPanel;
 import it.polimi.ingsw.client.panels.BaseProdPanel;
 import it.polimi.ingsw.client.panels.BuyPanel;
@@ -27,15 +28,22 @@ import static it.polimi.ingsw.client.GUI.getGamePanel;
 
 public class GameGUI extends GameView {
     private String payPanel;
+    private String prodPanel;
+
     public GameGUI() {
         market = new MarketGUI();
         cards = new DevelopmentCardsSetGUI();
         faithPath = new FaithPathGUI();
-        payPanel = null;
+        payPanel = "";
+        prodPanel = "";
     }
 
     public void setPayPanel(String payPanel) {
         this.payPanel = payPanel;
+    }
+
+    public void setProdPanel(String prodPanel) {
+        this.prodPanel = prodPanel;
     }
 
     @Override
@@ -59,13 +67,20 @@ public class GameGUI extends GameView {
         //add a concept of state?
         //how can i know if i am in a production state or buy state
         if(payPanel.equals("buy")) {
+            PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
+            ((DepotGUI)player.getDepot()).setStrategyTake();
+            ((LeaderCardSetGUI)player.getLeaderCards()).setLeadersToBuyStrategy();
             GUI.getGamePanel().setActionPanel(new BuyPanel());
             ((DevelopmentCardDecksGUI)GUI.getClient().getGameView().getPlayer(getClient().getNickname()).getDecks()).setToReplaceable();
-        }
-        else if(payPanel.equals("production")) {
+        }else if(payPanel.equals("production")) {
+            PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
+            ((DepotGUI)player.getDepot()).setStrategyTake();
+            ((LeaderCardSetGUI)player.getLeaderCards()).setLeadersToBuyStrategy();
             GUI.getGamePanel().setActionPanel(new DevProductionPanel());
         }else if(payPanel.equals("base")){
-
+            ((BaseProdPanel)GUI.getGamePanel().getActionPanel()).setPhase(1);
+        }else if(payPanel.equals("extra")){
+            ((ExtraProdPanel)GUI.getGamePanel().getActionPanel()).setPhase(1);
         }
         payPanel = "";
         setResBuffer(resources);
@@ -126,9 +141,14 @@ public class GameGUI extends GameView {
 
     @Override
     public void lastProduced(Map<Resource, Integer> resources, String player) {
-        ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
-        ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
-        //GUI.getGamePanel().getActionPanel().getClickable().clear(); //not so efficient(remain listening)
+        if(!player.equals(GUI.getClient().getNickname())) return;
+        ((DepotGUI)GUI.getClient().getGameView().getPlayer(player).getDepot()).setStrategyMove();
+        ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(player).getLeaderCards()).setLeadersToDefaultStrategy();
+        PlayerView p = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
+        GUI.getGamePanel().removeAction((Clickable) p.getLeaderCards());
+        GUI.getGamePanel().removeAction((Clickable) p.getDepot());
+        GUI.getGamePanel().removeAction((Clickable) p.getStrongbox());
+        GUI.getGamePanel().unlockGameBoard(true);
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         GUI.getGamePanel().repaint();
     }
@@ -147,8 +167,24 @@ public class GameGUI extends GameView {
 
     @Override
     public void startBaseProd() {
+        PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
+        ((DepotGUI)player.getDepot()).setStrategyTake();
+        ((LeaderCardSetGUI)player.getLeaderCards()).setLeadersToBuyStrategy();
         GUI.getGamePanel().setActionPanel(new BaseProdPanel());
         GUI.getGamePanel().repaint();
+        prodPanel = "";
+    }
+
+    @Override
+    public void startExtraProd() {
+        if(prodPanel.equals("extra")){
+            PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
+            ((DepotGUI)player.getDepot()).setStrategyTake();
+            ((LeaderCardSetGUI)player.getLeaderCards()).setLeadersToBuyStrategy();
+            GUI.getGamePanel().setActionPanel(new ExtraProdPanel());
+            GUI.getGamePanel().repaint();
+            prodPanel = "";
+        }
     }
 
     @Override

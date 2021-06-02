@@ -115,6 +115,11 @@ public class GameCLI extends GameView {
     }
 
     @Override
+    public void startExtraProd() {
+        System.out.println("Which resource do you want to craft?");
+    }
+
+    @Override
     public void handleCrash() {
         System.out.println("Something strange with the connection happened. Quit the game.");
     }

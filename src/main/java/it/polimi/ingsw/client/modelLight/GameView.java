@@ -172,6 +172,8 @@ public abstract class GameView {
 
     public abstract void startBaseProd();
 
+    public abstract void startExtraProd();
+
     public abstract void handleCrash();
 
     public void rejoinGame(){

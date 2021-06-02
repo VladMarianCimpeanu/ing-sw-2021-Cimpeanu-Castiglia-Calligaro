@@ -4,6 +4,7 @@ package it.polimi.ingsw.client.modelLight.GUI;
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.MessageToServer.PlaceCard;
+import it.polimi.ingsw.client.modelLight.PlayerView;
 import it.polimi.ingsw.client.panels.DefaultPanel;
 import it.polimi.ingsw.client.panels.GamePanel;
 import it.polimi.ingsw.client.modelLight.DevelopmentCardDecksView;
@@ -54,6 +55,12 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         setToProduction();
         ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
         ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDefaultStrategy();
+        PlayerView p = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
+        GUI.getGamePanel().removeAction((Clickable) p.getLeaderCards());
+        GUI.getGamePanel().removeAction((Clickable) p.getDepot());
+        GUI.getGamePanel().removeAction((Clickable) p.getStrongbox());
+        GUI.getGamePanel().removeAction((Clickable) p.getDecks());
+        GUI.getGamePanel().unlockGameBoard(true);
     }
 
 

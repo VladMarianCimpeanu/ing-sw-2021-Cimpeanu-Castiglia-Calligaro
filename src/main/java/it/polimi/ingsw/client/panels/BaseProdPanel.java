@@ -27,17 +27,16 @@ public class BaseProdPanel extends ActionPanel{
     private JButton button;
     private JLabel title1;
     private JLabel title2;
-    private ArrayList<Clickable> clickables;
     private Resource resOut;
     private int phase;
 
     public BaseProdPanel(){
         super();
         setLayout(null);
-        clickables = new ArrayList<>();
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
-        clickables.add((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
-        //add extraslot
+        GUI.getGamePanel().unlockGameBoard(false);
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
+        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
         button = new JButton("Go to payment");
         button.addActionListener(new ActionListener() {
             @Override
@@ -50,13 +49,11 @@ public class BaseProdPanel extends ActionPanel{
                 if(phase == 0){
                     GUI.getClient().send(new SelResIn(resIn.get(0), resIn.get(1)));
                     GUI.getClient().send(new SelResOut(resOut));
-                    phase = 1;
                     ((GameGUI)GUI.getClient().getGameView()).setPayPanel("base");
                 }else {
                     GUI.getClient().send(new ActivateProduction());
                     ((DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
                     GUI.getGamePanel().setActionPanel(new DefaultPanel());
-                    clickables.clear(); //not so efficient(remain listening)
                 }
                 repaint();
             }
@@ -78,22 +75,20 @@ public class BaseProdPanel extends ActionPanel{
         phase = 0;
     }
 
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
+
     @Override
     public void displayError(ErrorMessage error) {
         if(error == ErrorMessage.productionUsed){
             ((DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
             GUI.getGamePanel().setActionPanel(new DefaultPanel());
-            clickables.clear(); //not so efficient(remain listening)
             GUI.getGamePanel().repaint();
         }
     }
 
     private void activeClick(int x, int y) {
-        for (Clickable c : new ArrayList<>(clickables)) {
-            if (c.isClicked(x, y)) {
-                c.click(x, y);
-            }
-        }
         int xt = 10;
         int yt = 40;
         if(phase == 0){
