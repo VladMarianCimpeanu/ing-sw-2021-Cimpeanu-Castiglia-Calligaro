@@ -34,9 +34,11 @@ public class DevelopmentCardsSetGUI extends DevelopmentCardSetView implements Cl
         int leftPadding = GamePanel.getXBoard() + GamePanel.getWidthBoard() + padding;
         for(int level = 0; level < decks.size(); level ++){
             for(int color = 0; color < decks.get(0).size(); color ++){
-                DevelopmentCardGUI card = cards.get(decks.get(level).get(color) - 1);
-                card.setToBuyable();
-                card.setPosition(leftPadding + color * (padding + DevelopmentCardGUI.getWidth()), padding + level * (DevelopmentCardGUI.getHeight() + padding));
+                if(decks.get(level).get(color) != 0){
+                    DevelopmentCardGUI card = cards.get(decks.get(level).get(color) - 1);
+                    card.setToBuyable();
+                    card.setPosition(leftPadding + color * (padding + DevelopmentCardGUI.getWidth()), padding + level * (DevelopmentCardGUI.getHeight() + padding));
+                }
             }
         }
         GUI.getGamePanel().addGameboard(this);

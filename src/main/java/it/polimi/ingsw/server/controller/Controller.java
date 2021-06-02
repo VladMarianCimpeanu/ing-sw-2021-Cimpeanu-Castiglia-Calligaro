@@ -37,13 +37,11 @@ public class Controller {
     private ArrayList<String> turns;
     private TurnState currentState;
     private Runnable nextTurnMethod;
-    private final Object waitForPlayer;
 
     public Controller(ArrayList<Identity> users){
         nicknames = new HashMap<>();
         players = new HashMap<>();
         turns = new ArrayList<>();
-        waitForPlayer = new Object();
         currentUser = null;
         ArrayList<Identity> identities = new ArrayList<>(users);
         System.out.print("A new Game has started. Players: ");
@@ -150,8 +148,20 @@ public class Controller {
             set.add(new ArrayList<>());
             try {
                 set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.GREEN, level).getID());
+            } catch (WrongLevelException | NoCardException e) {
+                set.get(level - 1).add(0);
+            }
+            try {
                 set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.BLUE, level).getID());
+            } catch (WrongLevelException | NoCardException e) {
+                set.get(level - 1).add(0);
+            }
+            try {
                 set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.YELLOW, level).getID());
+            } catch (WrongLevelException | NoCardException e) {
+                set.get(level - 1).add(0);
+            }
+            try {
                 set.get(level - 1).add(game.getDevelopmentCardSet().peekCard(Color.PURPLE, level).getID());
             } catch (WrongLevelException | NoCardException e) {
                 set.get(level - 1).add(0);
