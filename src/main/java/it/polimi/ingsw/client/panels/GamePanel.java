@@ -49,7 +49,7 @@ public class GamePanel extends JPanel {
         scrollPanel = new ScrollPanel();
         add(scrollPanel);
 
-        actionPanel = new FirstTurnPanel();
+        actionPanel = new DefaultPanel();
         add(actionPanel);
     }
 

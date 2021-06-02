@@ -9,10 +9,7 @@ import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
 import it.polimi.ingsw.server.model.market.Market;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * This class gives access to all the global objects of the current game: list of players, market, faithPath and all the development cards that have not been bought yet.
@@ -119,9 +116,21 @@ public abstract class Game {
                 points += card.getVictoryPoints();
             }
         }
-        int amountOfResources = players.get(indexPlayer).getDashboard().getStrongbox().getAmountOfResources();
-        amountOfResources += players.get(indexPlayer).getDashboard().getWarehouseDepot().getAmountOfResources();
+        int amountOfResources = getResources(indexPlayer);
         points += (amountOfResources / 5);
         return points;
+    }
+
+    public Map<String, Integer> getAmountResources(){
+        Map<String, Integer> resources = new TreeMap<>();
+        for(int indexPlayer = 0; indexPlayer < players.size(); indexPlayer ++)
+            resources.put(players.get(indexPlayer).getNickName(), getResources(indexPlayer));
+        return resources;
+    }
+
+    protected int getResources(int indexPlayer){
+        int amountOfResources = players.get(indexPlayer).getDashboard().getStrongbox().getAmountOfResources();
+        amountOfResources += players.get(indexPlayer).getDashboard().getWarehouseDepot().getAmountOfResources();
+        return amountOfResources;
     }
 }

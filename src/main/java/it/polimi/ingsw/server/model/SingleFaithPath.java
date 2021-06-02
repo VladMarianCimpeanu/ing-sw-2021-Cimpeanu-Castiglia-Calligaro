@@ -54,10 +54,10 @@ public class SingleFaithPath extends FaithPath{
         steps += blackCross;
         for(int i = blackCross+1; i <= steps && i<25; i++) {
             blackCross = i;
-            if (blackCross == triggerPopePosition.peek()) assignPapalPoints();
-            if (blackCross == 24) throw new GameEndedException();
+            if (!triggerPopePosition.isEmpty() && blackCross == triggerPopePosition.peek()) assignPapalPoints();
         }
         virtualViewUpdate();
+        if (blackCross == 24) throw new GameEndedException();
     }
 
     @Override
@@ -70,9 +70,9 @@ public class SingleFaithPath extends FaithPath{
             playersPosition.put(player, i);
             if (i == triggerPopePosition.peek())
                 assignPapalPoints();
-            if(i == 24) throw new GameEndedException();
         }
         virtualViewUpdate();
+        if(playersPosition.get(player) == 24) throw new GameEndedException();
     }
 
     /**
@@ -83,9 +83,7 @@ public class SingleFaithPath extends FaithPath{
     public void moveOpponents(Player player) throws NoSuchPlayerException, GameEndedException {
         if(player == null) throw new NoSuchPlayerException();
         if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
-        if(!playersPosition.containsKey(player)) return;
         moveBlackCross(1);
-        virtualViewUpdate();
     }
 
     @Override

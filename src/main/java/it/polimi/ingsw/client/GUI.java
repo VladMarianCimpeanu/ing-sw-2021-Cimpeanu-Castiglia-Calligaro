@@ -82,8 +82,6 @@ public class GUI {
 
         gamePanel.setPlayerWatched(GUI.getClient().getNickname());
         gamePanel.addOtherPlayersPanel();
-        LeaderCardSetGUI leaderCards = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
-        gamePanel.addAction(leaderCards);
         addBaseProd();
 
         jFrame.setVisible(false);

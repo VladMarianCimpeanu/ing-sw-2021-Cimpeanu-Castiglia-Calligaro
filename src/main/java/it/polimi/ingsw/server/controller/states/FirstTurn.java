@@ -1,13 +1,12 @@
 package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.JsonToLeaderCard;
+import it.polimi.ingsw.server.MessageToClient.*;
 import it.polimi.ingsw.server.MessageToClient.Error;
-import it.polimi.ingsw.server.MessageToClient.FirstTurnEnded;
-import it.polimi.ingsw.server.MessageToClient.SelectedLeadercards;
-import it.polimi.ingsw.server.MessageToClient.TurnOrder;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
+import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,6 +120,21 @@ public class FirstTurn extends TurnState{
     @Override
     public void moveWarehouseToExtra(int shelf, int leaderId, int quantityToMove) {
         getController().sendError(invalidCommand);
+    }
+
+    public void rejoinPlayer(String nickname){
+        if(waitingForLeaderCards.contains(nickname)) {
+            ArrayList<LeaderCard> cards = getController().getPlayer(nickname).getLeaderCards();
+            ArrayList<Integer> ids = new ArrayList<>();
+            for(LeaderCard card : cards)
+                ids.add(card.getID());
+            getController().sendMessage(nickname, new KeepLeadercards(ids));
+        }
+        else if(firstTurnResources.containsKey(nickname)){
+            int position = getController().getTurns().indexOf(nickname);
+            int resNum = firstTurnResources.getOrDefault(nickname, 0);
+            getController().sendMessage(nickname, new TurnOrder(position, resNum));
+        }
     }
 }
 

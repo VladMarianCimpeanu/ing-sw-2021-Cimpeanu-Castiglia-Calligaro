@@ -68,6 +68,14 @@ public class Controller {
         new VirtualView(this);
         setUp();
         setToNormalGame();
+        isFirstTurn = true;
+        for(ClientHandler handler : nicknames.values()) {
+            try {
+                handler.setSocketTimeOut(30*1000);
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -135,6 +143,14 @@ public class Controller {
         players.get(nickname).getIdentity().setOnline(true);
         client.setController(this);
         reSetUp(nickname);
+        if(isFirstTurn) {
+            ((FirstTurn)currentState).rejoinPlayer(nickname);
+            try {
+                nicknames.get(nickname).setSocketTimeOut(30 * 1000);
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -351,6 +367,7 @@ public class Controller {
      * start the first turn of the game: now only the first player can change the model and the states of the game.
      */
     public void startGame(){
+        isFirstTurn = false;
         currentUser = turns.get(0);
         sendBroadcast(new ItsYourTurn(currentUser));
         for(int i = 1; i < turns.size(); i++){
@@ -410,9 +427,7 @@ public class Controller {
      */
     public void setLastTurns(){
         nextTurnMethod = () ->{
-            if (!isAnyoneOnline()) {
-                waitForPlayers();
-            }
+            if (!isAnyoneOnline()) waitForPlayers();
             int pos = turns.indexOf(currentUser);
             pos = (pos + 1) % turns.size();
             if(pos != 0) {
@@ -426,7 +441,6 @@ public class Controller {
                 nicknames.get(currentUser).setMyTurn(true);
                 setCurrentState(new SelectionState(this));
             }
-            else sendBroadcast(new GameEnded(game.calculatePoints()));
             closeTheGame();
         };
     }
@@ -437,9 +451,7 @@ public class Controller {
     private void setToNormalGame() {
         nextTurnMethod = () -> {
             int pos = 0;
-            if (!isAnyoneOnline()) {
-                waitForPlayers();
-            }
+            if (!isAnyoneOnline()) waitForPlayers();
             System.out.println("here");
             pos = turns.indexOf(currentUser);
             pos = (pos + 1) % turns.size();
@@ -458,7 +470,6 @@ public class Controller {
             } catch (NoSuchPlayerException e) {
                 sendError(ErrorMessage.generic);
             } catch (GameEndedException gameEndedException) {
-                sendBroadcast(new GameEnded(game.calculatePoints()));
                 closeTheGame();
             }
         };
@@ -478,7 +489,17 @@ public class Controller {
     }
 
     private void closeTheGame(){
-        //TODO
+        Map<String, Integer> rankings = game.calculatePoints();
+        Map<String, Integer> resources = game.getAmountResources();
+        for(ClientHandler handler : nicknames.values())
+            handler.endConnection(new GameEnded(rankings, resources));
     }
 
+    /**
+     * checks if the players are still in the first turn
+     * @return true if the players are still in the first turn, else false.
+     */
+    public boolean isFirstTurn(){
+        return isFirstTurn;
+    }
 }

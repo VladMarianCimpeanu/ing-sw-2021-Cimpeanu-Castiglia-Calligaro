@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardSetView;
 import it.polimi.ingsw.client.panels.DefaultPanel;
+import it.polimi.ingsw.client.panels.FirstTurnPanel;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -63,6 +64,9 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
     @Override
     public void keep(ArrayList<Integer> idS) {
         super.keep(idS);
+        GUI.getGamePanel().setActionPanel(new FirstTurnPanel());
+        GUI.getGamePanel().addAction(this);
+        setLeadersToFirstTurn();
         updateGUI();
     }
 
@@ -135,6 +139,10 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
      */
     public void setLeadersToDefaultStrategy(){
         for(LeaderCardGUI card : cards.values()) card.setStrategyDefault();
+    }
+
+    public void setLeadersToFirstTurn(){
+        for(LeaderCardGUI card : cards.values()) card.setStrategyFirst();
     }
 
     /**

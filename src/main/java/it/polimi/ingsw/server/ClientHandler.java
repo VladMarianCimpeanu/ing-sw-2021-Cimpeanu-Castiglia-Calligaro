@@ -35,6 +35,7 @@ public class ClientHandler implements Runnable {
         isMyTurn = true;
         isInGame = false;
         nickname = null;
+
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
@@ -97,16 +98,16 @@ public class ClientHandler implements Runnable {
      */
     private void closeSocket(){
         try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         out.close();
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -143,7 +144,8 @@ public class ClientHandler implements Runnable {
                         //when disconnected player tries to rejoin the game
                         if(isInGame){
                             this.nickname = nick;
-                            isMyTurn = false;
+                            if(controller.isFirstTurn())isMyTurn = true;
+                            else isMyTurn = false;
                             send(new NicknameAccepted(nick));
                             controller.rejoinClient(this, nickname);
                             awakeController();
@@ -215,51 +217,21 @@ public class ClientHandler implements Runnable {
      * reads and parses the messages from the client and communicates with the controller when needed.
      */
     public void run() {
-        //if the client is crashed during login phase
         if (!login()) return;
-//            is this part still needed, since we include the first turn in the state pattern
-//            try {
-//                String line = in.readLine();
-//                if (isInGame) {
-//
-//                }
-//
-//            } catch (NoSuchElementException | IOException e) {
-//                Server.handleCrash(this);
-//                closeSocket();
-//                return;
-//            }
         while (true) {
             String line = null;
             try {
                 line = in.readLine();
                 if (line == null) {
-                    //client crashed
-                    Server.handleCrash(this);
-                    //store the current state somewhere?
-                    if (isMyTurn) {
-                        try {
-                            controller.getCurrentState().completeTurn();
-                        } catch (GameEndedException gameEndedException) {
-                            //TODO
-                        }
-                    }
+                    handleCrash();
                     break;
                 }
             } catch (SocketTimeoutException e) {
                 send(new Ping());
                 continue;
             } catch (IOException e) {
-                //client crashed
-                Server.handleCrash(this);
-                //store the current state somewhere?
-                if (isMyTurn) {
-                    try {
-                        controller.getCurrentState().completeTurn();
-                    } catch (GameEndedException gameEndedException) {
-                        //TODO
-                    }
-                }
+                System.out.println("closing the socket");
+                if(!socket.isClosed()) handleCrash();
                 break;
             }
             synchronized (controller) {
@@ -273,23 +245,6 @@ public class ClientHandler implements Runnable {
                 }
             }
         }
-    }
-
-    /**
-     * close the socket and the connection with the client.
-     */
-    public void close(){
-        closeSocket();
-    }
-
-    public boolean waitForPong(){
-        try {
-            String line = in.readLine();
-            if(line == null) return false;
-        } catch (IOException e) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -347,14 +302,28 @@ public class ClientHandler implements Runnable {
     private void awakeController(){
         synchronized (controller) {
             try {
-                System.out.println("try");
                 controller.notifyAll();
-                System.out.println("done");
-            } catch(IllegalMonitorStateException e){
-            }
+            } catch(IllegalMonitorStateException e){ }
         }
     }
-}
 
+    public void endConnection(GameEnded points){
+        send(points);
+        closeSocket();
+        Server.removeNickname(nickname);
+    }
+
+    private void handleCrash(){
+        Server.handleCrash(this);
+        if (isMyTurn) {
+            try {
+                controller.getCurrentState().completeTurn();
+            } catch (GameEndedException gameEndedException) {
+                controller.setLastTurns();
+            }
+        }
+        closeSocket();
+    }
+}
 class CrashException extends Exception {
 }

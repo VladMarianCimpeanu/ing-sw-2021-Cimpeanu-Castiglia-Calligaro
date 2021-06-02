@@ -60,12 +60,10 @@ public class MultiFaithPath extends FaithPath{
                 //getVirtualView().updateFaithPath(playersPosition);
                 assignPapalPoints();
             }
-            if(i == 24) {
-                someoneEnd = true;
-                throw new GameEndedException();
-            }
+            if(i == 24) someoneEnd = true;
         }
         getVirtualView().updateFaithPath(playersPosition);
+        throw new GameEndedException();
     }
 
     @Override

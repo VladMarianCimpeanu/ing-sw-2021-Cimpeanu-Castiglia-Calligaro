@@ -19,7 +19,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     private String image;
     private String type;
     private Shape shape;
-    private Runnable strategy = () -> GUI.keepLeader(getID());
+    private Runnable strategy = () ->{};
     private boolean activated = false;
     private Runnable defaultStrategy = () -> GUI.getGamePanel().setActionPanel(new LeaderCardsPanel(ID));
     private static final int extraSlotWidth = 20;

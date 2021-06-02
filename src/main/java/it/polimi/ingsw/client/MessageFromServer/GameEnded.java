@@ -6,8 +6,10 @@ import java.util.Map;
 
 public class GameEnded extends MessageFromServer{
     private Map<String, Integer> ranks;
+    private Map<String, Integer> resources;
     @Override
     public void activateMessage(Client client) {
-
+        System.out.println(ranks);
+        System.out.println(resources);
     }
 }

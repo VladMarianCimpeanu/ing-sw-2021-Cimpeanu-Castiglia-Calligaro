@@ -276,7 +276,7 @@ public abstract class TurnState {
         try {
             getController().getCurrentPlayer().addFaithPoint(steps);
         } catch (GameEndedException e) {
-            e.printStackTrace();
+            endGame();
         }
     }
 

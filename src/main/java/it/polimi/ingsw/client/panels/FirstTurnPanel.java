@@ -95,4 +95,9 @@ public class FirstTurnPanel extends ActionPanel{
             GUI.getGamePanel().removeAction(depotGUI);
         }
     }
+
+    @Override
+    public boolean isFirstTurn(){
+        return true;
+    }
 }

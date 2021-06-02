@@ -28,4 +28,8 @@ public abstract class ActionPanel extends JPanel {
 
     public abstract void displayError(ErrorMessage error);
 
+    public boolean isFirstTurn(){
+        return false;
+    }
+
 }

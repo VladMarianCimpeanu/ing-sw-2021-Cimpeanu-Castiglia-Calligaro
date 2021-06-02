@@ -128,7 +128,7 @@ public class Client {
                 new Thread(cli).start();
             }
             try {
-                clientSocket.setSoTimeout(3000);
+                clientSocket.setSoTimeout(30 *  1000);
             } catch (SocketException e) {
                 e.printStackTrace();
             }
@@ -137,6 +137,11 @@ public class Client {
         while(run){
             try {
                 line = in.readLine();
+                if(line == null){
+                    closeSocket();
+                    gameView.handleCrash();
+                    break;
+                }
                 MessageFromServer message = convert.fromJson(line, MessageFromServer.class);
                 message.activateMessage(this);
 
@@ -149,7 +154,6 @@ public class Client {
             } catch (SocketTimeoutException e) {
                 updateTimer();
             } catch (IOException e) {
-                System.out.println("Exception");
                 closeSocket();
                 gameView.handleCrash();
                 break;
@@ -196,16 +200,16 @@ public class Client {
      */
     private void closeSocket(){
         try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         out.close();
-        try {
-            clientSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         clientSocket = null;
     }
 
