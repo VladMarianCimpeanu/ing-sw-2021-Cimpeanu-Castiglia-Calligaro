@@ -64,7 +64,7 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
      */
     @Override
     public void reloadCard(int deckIndex, int ID, String nickname) {
-        if(playerCards.get(deckIndex - 1) != 0) placeCard(deckIndex, ID, nickname);
+        if (ID != 0) addCard(deckIndex, ID, nickname);
     }
 
     @Override

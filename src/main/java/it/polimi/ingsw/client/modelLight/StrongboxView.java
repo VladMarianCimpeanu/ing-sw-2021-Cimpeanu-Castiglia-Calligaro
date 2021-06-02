@@ -4,11 +4,12 @@ import it.polimi.ingsw.client.Resource;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class StrongboxView {
     protected Map<Resource, Integer> content;
     public StrongboxView(){
-        content = new HashMap<>();
+        content = new TreeMap<>();
         for(Resource resource: Resource.values())
             if(resource != Resource.FAITH)
                 content.put(resource, 0);
