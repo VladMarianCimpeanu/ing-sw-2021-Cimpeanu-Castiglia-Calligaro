@@ -109,4 +109,8 @@ public class FaithPathGUI extends FaithPathView {
                 break;
         }
     }
+
+    public Map<String, String> getCrosses() {
+        return crosses;
+    }
 }

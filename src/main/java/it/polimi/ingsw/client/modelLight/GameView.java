@@ -91,6 +91,13 @@ public abstract class GameView {
     }
 
     /**
+     * @return the FaithPath
+     */
+    public FaithPathView getFaithPath() {
+        return faithPath;
+    }
+
+    /**
      * @return an ActionTokenView object.
      */
     public ActionTokenView getActionTokenView() {

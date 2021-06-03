@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.panels;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.MessageToServer.CheatResource;
 import it.polimi.ingsw.client.MessageToServer.EndTurn;
+import it.polimi.ingsw.client.modelLight.GUI.FaithPathGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,6 +60,24 @@ public class SwitchToPlayerPanel extends JPanel implements ActionListener {
 class PlayerButton extends JButton{
     private String player;
     PlayerButton(String nickname){
+        FaithPathGUI faithPathGUI = (FaithPathGUI) GUI.getClient().getGameView().getFaithPath();
+        String color = faithPathGUI.getCrosses().get(nickname);
+        Color buttonColor = Color.WHITE;
+        switch(color){
+            case "images/punchboard/faith.png":
+                buttonColor = Color.RED;
+                break;
+            case "images/punchboard/faithGreen.png":
+                buttonColor = new Color(11, 85, 11);
+                break;
+            case "images/punchboard/faithBlue.png":
+                buttonColor = Color.BLUE;
+                break;
+            case "images/punchboard/faithYellow.png":
+                buttonColor = Color.YELLOW;
+                break;
+        }
+        setForeground(buttonColor);
         setText(nickname + "'s board");
         player = nickname;
     }

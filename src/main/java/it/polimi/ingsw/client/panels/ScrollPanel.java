@@ -16,17 +16,6 @@ public class ScrollPanel extends JPanel {
         add(scrollable);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Debug");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 200);
-
-        ScrollPanel scrollPanel = new ScrollPanel();
-        frame.add(scrollPanel);
-
-        frame.setVisible(true);
-    }
-
     public MessagesPanel getMessagesPanel() {
         return messagesPanel;
     }

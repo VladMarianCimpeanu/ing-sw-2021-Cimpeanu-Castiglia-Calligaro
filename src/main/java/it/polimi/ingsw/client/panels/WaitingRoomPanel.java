@@ -35,16 +35,6 @@ public class WaitingRoomPanel extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     }
 
-    //TODO: delete this main, it's just for testing.
-    public static void main(String[] args) {
-        JFrame f = new JFrame("Maestri del rinascimento");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        WaitingRoomPanel waitingRoomPanel = new WaitingRoomPanel(4, new ArrayList<>());
-        f.add(waitingRoomPanel);
-        f.setSize(400, 190);
-        f.setVisible(true);
-    }
-
     public void addNickname(String nickname){
         nicknames.add(nickname);
         String list = "Players: ";
