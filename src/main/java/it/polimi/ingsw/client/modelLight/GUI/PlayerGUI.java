@@ -11,6 +11,9 @@ public class PlayerGUI extends PlayerView {
         decks = new DevelopmentCardDecksGUI();
         strongbox = new StrongboxGUI();
         depot = new DepotGUI();
+        popeMeetings = new boolean[3];
+        for(int i = 0; i<3; i++)
+            popeMeetings[i] = false;
 
         if(nickname.equals(GUI.getClient().getNickname())){
             GUI.getGamePanel().addGameboard((DevelopmentCardDecksGUI) decks);
@@ -28,5 +31,21 @@ public class PlayerGUI extends PlayerView {
         else
             row = (nickname);
         GUI.print(row + "'s "+ objectUpdated +" has changed into:  ");
+    }
+
+    @Override
+    public void attendPopeMeeting(int victoryPoints) {
+        switch(victoryPoints){
+            case 2:
+                popeMeetings[0] = true;
+                break;
+            case 3:
+                popeMeetings[1] = true;
+                break;
+            case 4:
+                popeMeetings[2] = true;
+                break;
+            default:
+        }
     }
 }

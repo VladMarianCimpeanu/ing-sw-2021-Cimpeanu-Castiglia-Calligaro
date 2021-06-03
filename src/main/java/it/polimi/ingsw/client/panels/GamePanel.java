@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.GUI.*;
+import it.polimi.ingsw.client.Shape;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -123,7 +124,7 @@ public class GamePanel extends JPanel {
         for(Resource resource: depot.getShapes().keySet())
             for(int i = 0; i<depot.howMany(resource); i++) {
                 it.polimi.ingsw.client.Shape s = depot.getShapes().get(resource);
-                drawImage(g, resource.url(), new it.polimi.ingsw.client.Shape(s.getX()+i*deltaShelf, s.getY(), s.getWidth(), s.getHeight()));
+                drawImage(g, resource.url(), new Shape(s.getX()+i*deltaShelf, s.getY(), s.getWidth(), s.getHeight()));
             }
 
         //FaithPath
@@ -133,6 +134,20 @@ public class GamePanel extends JPanel {
                 drawImage(g, "images/punchboard/blackCross.png", faithPath.getShapes().get(player));
             else
                 drawImage(g, faithPath.getURLCross(player), faithPath.getShapes().get(player));
+
+        //Pope meetings
+        if(GUI.getClient().getGameView().getPlayer(playerWatched).hasAttended(1))
+            drawImage(g, "images/punchboard/pope/pope_favor1_front.png", new Shape(149, 63, 40, 40));
+        else
+            drawImage(g, "images/punchboard/pope/pope_favor1_back.png", new Shape(149, 63, 40, 40));
+        if(GUI.getClient().getGameView().getPlayer(playerWatched).hasAttended(2))
+            drawImage(g, "images/punchboard/pope/pope_favor2_front.png", new Shape(295, 35, 40, 40));
+        else
+            drawImage(g, "images/punchboard/pope/pope_favor2_back.png", new Shape(295, 35, 40, 40));
+        if(GUI.getClient().getGameView().getPlayer(playerWatched).hasAttended(3))
+            drawImage(g, "images/punchboard/pope/pope_favor3_front.png", new Shape(470, 63, 40, 40));
+        else
+            drawImage(g, "images/punchboard/pope/pope_favor3_back.png", new Shape(472, 63, 40, 40));
     }
 
 

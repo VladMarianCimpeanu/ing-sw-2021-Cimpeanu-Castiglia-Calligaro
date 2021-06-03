@@ -23,4 +23,9 @@ public class PlayerCLI extends PlayerView {
             System.out.print(nickname);
         System.out.print("'s "+ objectUpdated +" has changed into:  ");
     }
+
+    @Override
+    public void attendPopeMeeting(int victoryPoints) {
+
+    }
 }

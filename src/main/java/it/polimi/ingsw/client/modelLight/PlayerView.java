@@ -7,6 +7,7 @@ public abstract class PlayerView {
     protected StrongboxView strongbox;
     protected String nickname;
     protected LeaderCardSetView leaderCards;
+    protected boolean[] popeMeetings;
 
     public String getNickname() {
         return nickname;
@@ -29,5 +30,12 @@ public abstract class PlayerView {
     public LeaderCardSetView getLeaderCards() {
         return leaderCards;
     }
+
+    public boolean hasAttended(int i){
+        return popeMeetings[i-1];
+    }
+
+    public abstract void attendPopeMeeting(int victoryPoints);
+
 
 }
