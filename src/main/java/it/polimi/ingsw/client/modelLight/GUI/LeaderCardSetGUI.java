@@ -134,6 +134,10 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
         for(LeaderCardGUI card : cards.values()) card.setMarketStrategy();
     }
 
+    public void setLeadersToDiscountStrategy(){
+        for(LeaderCardGUI card : cards.values()) card.setDiscountStrategy();
+    }
+
     /**
      * sets all the leader cards owned by the player to their default behaviour.
      */
@@ -144,6 +148,7 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
     public void setLeadersToFirstTurn(){
         for(LeaderCardGUI card : cards.values()) card.setStrategyFirst();
     }
+
 
     /**
      * checks if a leader card of the player has been clicked.

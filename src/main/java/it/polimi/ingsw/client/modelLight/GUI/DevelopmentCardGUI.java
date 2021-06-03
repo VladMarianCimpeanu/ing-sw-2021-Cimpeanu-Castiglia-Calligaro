@@ -10,6 +10,7 @@ import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.DevelopmentCardView;
 import it.polimi.ingsw.client.panels.BuyPanel;
 import it.polimi.ingsw.client.panels.DevProductionPanel;
+import it.polimi.ingsw.client.panels.DiscountPanel;
 
 public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable {
     private Shape shape;
@@ -37,7 +38,12 @@ public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable
 
         actionOnClick = () -> {
             ((GameGUI)GUI.getClient().getGameView()).setPayPanel("buy");
-            GUI.sendMessage(new BuyDevCard(Level, Color));
+            ((LeaderCardSetGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards()).setLeadersToDiscountStrategy();
+            DiscountPanel panel = new DiscountPanel();
+            GUI.getGamePanel().setActionPanel(panel);
+            panel.setColor(Color);
+            panel.setLevel(Level);
+            GUI.getGamePanel().repaint();
         };
     }
 

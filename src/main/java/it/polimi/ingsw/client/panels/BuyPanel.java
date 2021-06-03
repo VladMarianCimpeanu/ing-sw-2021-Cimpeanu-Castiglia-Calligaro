@@ -21,10 +21,8 @@ public class BuyPanel extends ActionPanel{
     public BuyPanel(){
         super();
         setLayout(null);
-        GUI.getGamePanel().unlockGameBoard(false);
         GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
         GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
-        GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
         GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks());
         title = new JLabel("Take these resources from your stocks");
         title.setBounds(10, 20, title.getPreferredSize().width, title.getPreferredSize().height);

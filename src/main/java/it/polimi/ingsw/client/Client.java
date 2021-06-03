@@ -150,7 +150,6 @@ public class Client {
                 }
                 MessageFromServer message = convert.fromJson(line, MessageFromServer.class);
                 message.activateMessage(this);
-
                 //TODO: implement inside activateMessage() of NicknameAccepted
                 if (message instanceof NicknameAccepted) {
                     nickname = ((NicknameAccepted) message).getNickname();

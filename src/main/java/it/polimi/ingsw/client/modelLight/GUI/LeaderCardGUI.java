@@ -6,10 +6,7 @@ import it.polimi.ingsw.client.MessageToServer.*;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.LeaderCardView;
 import it.polimi.ingsw.client.modelLight.PlayerView;
-import it.polimi.ingsw.client.panels.DefaultPanel;
-import it.polimi.ingsw.client.panels.GamePanel;
-import it.polimi.ingsw.client.panels.LeaderCardsPanel;
-import it.polimi.ingsw.client.panels.MoveExtraPanel;
+import it.polimi.ingsw.client.panels.*;
 
 import java.awt.*;
 
@@ -109,6 +106,14 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
 
     public void setMarketStrategy(){
         strategy = () -> GUI.getClient().send(new Strategy(ID));
+    }
+
+    public void setDiscountStrategy(){
+        strategy = () -> {
+            if(type.equals("buyCard") && isActivated()) {
+                ((DiscountPanel) GUI.getGamePanel().getActionPanel()).addDiscount(ID);
+            }
+        };
     }
 
     public boolean isActivated(){
