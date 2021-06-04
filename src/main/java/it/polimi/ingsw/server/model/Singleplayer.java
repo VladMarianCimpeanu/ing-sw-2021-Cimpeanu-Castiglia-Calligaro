@@ -76,17 +76,13 @@ public class Singleplayer extends Game{
     @Override
     public Map<String, Integer> calculatePoints() {
         Map<String, Integer> points = new TreeMap<>();
-        try {
-            if(getDevelopmentCardSet().isAColorMissing() || getFaithPath().getPlayerPosition(getPlayers().get(0)) != 24){
-                points.put("blackCross", 1);
-                points.put(getPlayers().get(0).getNickName(), 0);
-            }
-            else{
-                points.put("blackCross", 0);
-                points.put(getPlayers().get(0).getNickName(), calculatePointsOf(0));
-            }
-        } catch (NoSuchPlayerException e) {
-            e.printStackTrace();
+        if(getDevelopmentCardSet().isAColorMissing() || ((SingleFaithPath)getFaithPath()).getBlackCrossPosition() == 24){
+            points.put("blackCross", 1);
+            points.put(getPlayers().get(0).getNickName(), 0);
+        }
+        else{
+            points.put("blackCross", 0);
+            points.put(getPlayers().get(0).getNickName(), calculatePointsOf(0));
         }
         return points;
     }

@@ -43,6 +43,11 @@ public class Server {
         return null;
     }
 
+    /**
+     * Tries to join the specified player to a waiting room.
+     * @param nickname nickname of the new client.
+     * @return false if there are no waiting room available, else true.
+     */
     public static synchronized boolean addToWaitingRoom(String nickname) {
         if(waitingRooms.isEmpty()) return false;
         ArrayList<Identity> idS = waitingRooms.get(0).getWaitingUsers();
@@ -59,6 +64,11 @@ public class Server {
         return true;
     }
 
+    /**
+     * creates a new waiting room of the specified size and adds the specified client as a host.
+     * @param nickname nickname of the client that creates the waiting room.
+     * @param mode size of the waiting room.
+     */
     public static void newWaitingRoom(String nickname, int mode){
         WaitingRoom newWaiting = new WaitingRoom(mode);
         waitingRooms.add(newWaiting);
@@ -69,6 +79,10 @@ public class Server {
         newWaiting.addUser(nickname);
     }
 
+    /**
+     * deletes a waiting room.
+     * @param waitingRoom specified waiting room to delete.
+     */
     public static void removeWaitingRoom(WaitingRoom waitingRoom){
         if(waitingRoom != null && waitingRooms.contains(waitingRoom)){
             waitingRooms.remove(waitingRoom);
@@ -150,6 +164,9 @@ public class Server {
         }
     }
 
+    /**
+     * make the server able to accept new connections from the clients.
+     */
     public static void startServer() {
         //to set an address != localhost
         InetAddress addr = null;
@@ -176,7 +193,7 @@ public class Server {
                 executor.submit(currentClientHandler);
 //                controller.addClient(currentClientHandler);
             } catch(IOException e) {
-                break; // Entrerei qui se serverSocket venisse chiuso
+                break; //here if the server socket is closed
             }
         }
         executor.shutdown();

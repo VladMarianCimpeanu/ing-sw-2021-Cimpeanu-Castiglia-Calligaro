@@ -82,6 +82,10 @@ class PlayerButton extends JButton{
         player = nickname;
     }
 
+    /**
+     * gives the nickname associated with this button.
+     * @return the nickname associated with this button.
+     */
     String getPlayer(){
         return player;
     }

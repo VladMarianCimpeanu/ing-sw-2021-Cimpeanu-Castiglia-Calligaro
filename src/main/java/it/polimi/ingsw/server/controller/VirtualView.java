@@ -160,6 +160,10 @@ public class VirtualView {
         controller.sendBroadcast(new UpdateActiveLeaderCard(controller.getCurrentPlayer().getNickName(), id));
     }
 
+    /**
+     * this method is used to notify the virtual view when an action token is drawn
+     * @param id id of the token drawn.
+     */
     public void updateDrawToken(int id){
         controller.sendBroadcast(new UpdateDrawToken(id));
     }

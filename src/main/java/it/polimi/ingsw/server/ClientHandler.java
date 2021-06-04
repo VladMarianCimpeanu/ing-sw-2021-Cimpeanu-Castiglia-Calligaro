@@ -307,12 +307,22 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * sends the results of the game to the client.
+     * closes the socket and removes the nickname from the server's nickname list: when a player will retry to join with
+     * the nickname used by this client, he will join a new game.
+     * @param points specified message with the information about the end of the game.
+     */
     public void endConnection(GameEnded points){
         send(points);
         closeSocket();
         Server.removeNickname(nickname);
     }
 
+    /**
+     * closes the socket of this player.
+     * If the player has crashed during his turn, it autocompletes his turn.
+     */
     private void handleCrash(){
         Server.handleCrash(this);
         if (isMyTurn) {

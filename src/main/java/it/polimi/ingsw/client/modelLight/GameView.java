@@ -225,10 +225,11 @@ public abstract class GameView {
                 int max = -1;
                 String name = null;
                 for (String s: sameValue){
-                    if(resources.get(s) > max){
+                    if(!s.equals("blackCross") && resources.get(s) > max){
                         max = resources.get(s);
                         name = s;
                     }
+                    if(s.equals("blackCross")) name = "blackCross";
                 }
                 result.add(name);
                 sameValue.remove(name);

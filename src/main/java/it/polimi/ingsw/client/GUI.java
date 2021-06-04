@@ -3,7 +3,6 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.MessageToServer.ActivateBaseProduction;
 import it.polimi.ingsw.client.MessageToServer.KeepLeaderCard;
 import it.polimi.ingsw.client.MessageToServer.MessageToServer;
-import it.polimi.ingsw.client.modelLight.GUI.LeaderCardSetGUI;
 import it.polimi.ingsw.client.panels.*;
 
 import javax.swing.*;
@@ -43,7 +42,6 @@ public class GUI {
         loginPanel = new LoginPanel();
         jFrame.add(loginPanel);
         jFrame.setSize(400, 190);
-
         jFrame.setVisible(true);
     }
 
@@ -119,12 +117,20 @@ public class GUI {
         });
     }
 
+    /**
+     * closes the current frame and displays an error with the connection.
+     */
     public static void closeGame(){
         jFrame.dispose();
         jFrame = new CrashFrame();
         jFrame.setVisible(true);
     }
 
+    /**
+     * closes the current frame and it opens a new frame containing scores of the players.
+     * @param order an array of nicknames ordered by the amount of points scored
+     * @param ranks a map containing the amount of points earned by each player.
+     */
     public static void showPoints(ArrayList<String> order, Map<String, Integer> ranks){
         jFrame.dispose();
         jFrame = new LeaderboardFrame(order, ranks);

@@ -3,6 +3,9 @@ package it.polimi.ingsw.client.panels;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * frame used when a connection error occurs.
+ */
 public class CrashFrame extends JFrame {
     public CrashFrame(){
         this.setTitle("Maestri del Rinascimento");

@@ -118,6 +118,10 @@ public class Client {
         isEnded = false;
     }
 
+    /**
+     * sets the phase of the game.
+     * @param ended true if the game is going to end, else false.
+     */
     public void setEnded(boolean ended) {
         isEnded = ended;
     }
@@ -166,6 +170,10 @@ public class Client {
         }
     }
 
+    /**
+     * sends the specified message to the server.
+     * @param message specified MessageToServer to send to the server.
+     */
     public void send(MessageToServer message){
         String outMessage = convert.toJson(message);
         if(clientSocket != null) out.println(outMessage);
@@ -177,15 +185,28 @@ public class Client {
         client.start();
     }
 
+
+    /**
+     * gives the gameView class of the current game.
+     * @return the gameView class of the current game.
+     */
     public GameView getGameView() {
         return gameView;
     }
 
+    /**
+     * saves the nicknames of the opponents and initializes the player's views
+     * @param nicknames array list of strings containing the nicknames of the players that are playing the current game.
+     */
     public void setNicknames(ArrayList<String> nicknames) {
         this.nicknames = new ArrayList<>(nicknames);
         gameView.setPlayers(nicknames);
     }
 
+    /**
+     * gives the nickname chosen by this client.
+     * @return a string containing the nickname chosen by this client.
+     */
     public String getNickname() {
         return nickname;
     }

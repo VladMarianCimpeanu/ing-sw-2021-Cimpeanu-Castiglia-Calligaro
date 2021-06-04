@@ -2,6 +2,9 @@ package it.polimi.ingsw.client;
 
 import static it.polimi.ingsw.client.Color.*;
 
+/**
+ * class used to welcome the player when he starts the cli game.
+ */
 public class Welcome {
     private static final String title1 = "█▀▄▀█ ██      ▄▄▄▄▄      ▄▄▄▄▀ ▄███▄   █▄▄▄▄   ▄▄▄▄▄       ████▄ ▄████      █▄▄▄▄ ▄███▄      ▄   ██   ▄█    ▄▄▄▄▄    ▄▄▄▄▄   ██      ▄   ▄█▄    ▄███▄   ";
     private static final String title2 = "█ █ █ █ █    █     ▀▄ ▀▀▀ █    █▀   ▀  █  ▄▀  █     ▀▄     █   █ █▀   ▀     █  ▄▀ █▀   ▀      █  █ █  ██   █     ▀▄ █     ▀▄ █ █      █  █▀ ▀▄  █▀   ▀  ";
@@ -11,6 +14,9 @@ public class Welcome {
     private static final String title6 = "  ▀     █                               ▀                          ▀         ▀            █   ██   █                           █  █   ██                ";
     private static final String title7 = "       ▀                                                                                          ▀                           ▀           ";
 
+    /**
+     * dumps a welcome message.
+     */
     public static void dump() {
         System.out.println(BLUE.escape() + title1);
         System.out.println(title2);

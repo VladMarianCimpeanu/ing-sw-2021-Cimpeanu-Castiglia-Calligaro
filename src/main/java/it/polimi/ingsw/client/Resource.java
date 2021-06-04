@@ -36,11 +36,22 @@ public enum Resource {
         return url;
     }
 
+    /**
+     * given a string, it calculates how many spaces it needs to append in order to have a standard width for
+     * the representation inside a dumped box
+     * @param content
+     * @return
+     */
     private static int calculateSpace(String content){
         int size = "┌──────────────┐".length() - 2;
         return size - content.length() + Resource.COIN.escape.length();
     }
 
+    /**
+     * creates a string containing 'n' desired strings
+     * @param times specified number of spaces that the string should contains.
+     * @return returns a string containing 'times' spaces.
+     */
     private static String multiplySpaces(int times){
         String space = "";
         for(int i = 0; i < times; i++)

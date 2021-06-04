@@ -5,6 +5,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * frame containing that displays the game's result.
+ */
 public class LeaderboardFrame extends JFrame {
     public LeaderboardFrame(ArrayList<String> order, Map<String, Integer> ranks){
         this.setTitle("Maestri del Rinascimento");

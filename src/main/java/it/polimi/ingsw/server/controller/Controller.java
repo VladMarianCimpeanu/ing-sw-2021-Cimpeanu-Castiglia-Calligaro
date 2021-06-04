@@ -488,6 +488,9 @@ public class Controller {
         }
     }
 
+    /**
+     * calculates the points of each player and closes the connection with each client.
+     */
     private void closeTheGame(){
         Map<String, Integer> rankings = game.calculatePoints();
         Map<String, Integer> resources = game.getAmountResources();
