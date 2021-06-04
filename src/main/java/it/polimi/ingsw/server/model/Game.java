@@ -83,6 +83,10 @@ public abstract class Game {
         return faithPath;
     }
 
+    /**
+     * subscribes a virtualView as an observer of this game
+     * @param virtualView specified virtual view that observes this game.
+     */
     public void subscribe(VirtualView virtualView){
         this.virtualView = virtualView;
     }
@@ -121,6 +125,11 @@ public abstract class Game {
         return points;
     }
 
+    /**
+     * calculates the amount of resources owned by each player that is playing this game.
+     * @return a map which strings are the nicknames of the players and values are integers representing the amount
+     * of resources owned by each player.
+     */
     public Map<String, Integer> getAmountResources(){
         Map<String, Integer> resources = new TreeMap<>();
         for(int indexPlayer = 0; indexPlayer < players.size(); indexPlayer ++)
@@ -128,6 +137,11 @@ public abstract class Game {
         return resources;
     }
 
+    /**
+     * calculates the amount of resources owned by the specified player
+     * @param indexPlayer index of the specified player.
+     * @return amount of the resources owned.
+     */
     protected int getResources(int indexPlayer){
         int amountOfResources = players.get(indexPlayer).getDashboard().getStrongbox().getAmountOfResources();
         amountOfResources += players.get(indexPlayer).getDashboard().getWarehouseDepot().getAmountOfResources();

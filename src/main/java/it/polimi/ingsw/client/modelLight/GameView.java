@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.MessageFromServer.ErrorMessage;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -183,27 +182,45 @@ public abstract class GameView {
 
     public abstract void startExtraProd();
 
+    /**
+     * displays that something wrong happened with the connection.
+     */
     public abstract void handleCrash();
 
+    /**
+     * restart the game from where it ended last time.
+     */
     public void rejoinGame(){
         startGame();
     }
 
+    /**
+     * displays the end of the game and the scores.
+     * @param ranks A map which keys are the nicknames of each player whereas the values are the scores of each player.
+     * @param resources A map which keys are the nicknames of each player whereas the values are the resources owned of each player.
+     */
     public abstract void endGame(Map<String, Integer> ranks, Map<String, Integer> resources);
 
+    /**
+     * Orders the players by their scores: the first element will be the player with the highest score. If more players has
+     * the same score, the order will be given by the amount of resources owned by each player.
+     * @param ranks A map which keys are the nicknames of each player whereas the values are the scores of each player.
+     * @param resources A map which keys are the nicknames of each player whereas the values are the resources owned of each player.
+     * @return a list of nicknames ordered by the scores of each player.
+     */
     protected ArrayList<String> orderPlayers(Map<String, Integer> ranks, Map<String, Integer> resources){
         ArrayList<Integer> order = new ArrayList<>(ranks.values());
         Collections.sort(order, Collections.reverseOrder());
         ArrayList<String> result = new ArrayList<>();
-
         for(int i: order){
+            //finds the remaining players with the highest score.
             ArrayList<String> sameValue = new ArrayList<>();
             for(String s: new ArrayList<>(ranks.keySet()))
                 if (ranks.get(s) == i){
                     sameValue.add(s);
                     ranks.remove(s);
                 }
-
+            //orders the found player by the amount of resources owned.
             while(!sameValue.isEmpty()){
                 int max = -1;
                 String name = null;

@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
@@ -126,8 +127,16 @@ public class GameCLI extends GameView {
 
     @Override
     public void endGame(Map<String, Integer> ranks, Map<String, Integer> resources) {
-        System.out.println(ranks);
-        System.out.println(resources);
+        ArrayList<String> order = orderPlayers(ranks, resources);
+        if(order.contains("blackCross")){
+            if(order.get(0).equals("blackCross"))
+                System.out.println("You're a looser");
+            else
+                dumpMessage("You've won and your score is: "+ranks.get(order.get(0)));
+        }else{
+            for(String name: order)
+                dumpMessage((order.indexOf(name)+1)+")"+name+" "+ranks.get(name));
+        }
     }
 
     @Override

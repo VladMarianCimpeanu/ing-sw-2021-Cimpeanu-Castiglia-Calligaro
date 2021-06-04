@@ -231,7 +231,7 @@ public class GameGUI extends GameView {
 
     @Override
     public void endGame(Map<String, Integer> ranks, Map<String, Integer> resources) {
-        ArrayList<String> order = orderPlayers(ranks, resources);
+        ArrayList<String> order = orderPlayers(new HashMap<>(ranks), resources);
         GUI.showPoints(order, ranks);
     }
 }

@@ -40,8 +40,10 @@ public class Singleplayer extends Game{
 
     /**
      * it triggers the effect of the token on top of the deck of action tokens.
+     * @throws NoSuchPlayerException
+     * @throws GameEndedException if the games ends after an action token is drawn.
      */
-    public void drawToken() throws NoSuchPlayerException, GameEndedException {    //any exception?
+    public void drawToken() throws NoSuchPlayerException, GameEndedException {
         ActionToken tempToken = availableActionTokens.pop();
         availableActionTokens.add(0, tempToken);
         System.out.println(tempToken);
@@ -56,6 +58,11 @@ public class Singleplayer extends Game{
         shuffle(availableActionTokens);
     }
 
+    /**
+     * draws an action token
+     * @throws NoSuchPlayerException
+     * @throws GameEndedException if the games ends after an action token is drawn.
+     */
     @Override
     public void endTurn() throws NoSuchPlayerException, GameEndedException {
         drawToken();
@@ -69,13 +76,17 @@ public class Singleplayer extends Game{
     @Override
     public Map<String, Integer> calculatePoints() {
         Map<String, Integer> points = new TreeMap<>();
-        if(getDevelopmentCardSet().isAColorMissing() || ((SingleFaithPath)getFaithPath()).getBlackCrossPosition() == 24){
-            points.put("blackCross", 1);
-            points.put(getPlayers().get(0).getNickName(), 0);
-        }
-        else{
-            points.put("blackCross", 0);
-            points.put(getPlayers().get(0).getNickName(), calculatePointsOf(0));
+        try {
+            if(getDevelopmentCardSet().isAColorMissing() || getFaithPath().getPlayerPosition(getPlayers().get(0)) != 24){
+                points.put("blackCross", 1);
+                points.put(getPlayers().get(0).getNickName(), 0);
+            }
+            else{
+                points.put("blackCross", 0);
+                points.put(getPlayers().get(0).getNickName(), calculatePointsOf(0));
+            }
+        } catch (NoSuchPlayerException e) {
+            e.printStackTrace();
         }
         return points;
     }
