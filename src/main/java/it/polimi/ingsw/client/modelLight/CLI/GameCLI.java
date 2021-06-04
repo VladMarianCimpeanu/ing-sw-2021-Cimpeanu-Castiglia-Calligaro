@@ -6,12 +6,7 @@ import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenCLI;
 import it.polimi.ingsw.client.modelLight.GameView;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class GameCLI extends GameView {
     public GameCLI() {
@@ -127,7 +122,7 @@ public class GameCLI extends GameView {
 
     @Override
     public void endGame(Map<String, Integer> ranks, Map<String, Integer> resources) {
-        ArrayList<String> order = orderPlayers(ranks, resources);
+        ArrayList<String> order = orderPlayers(new HashMap<>(ranks), resources);
         if(order.contains("blackCross")){
             if(order.get(0).equals("blackCross"))
                 System.out.println("You're a looser");
