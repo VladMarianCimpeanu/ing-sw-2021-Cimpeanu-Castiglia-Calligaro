@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * GUI class, created when a client starts the Client with "gui" argument
+ */
 public class GUI {
     private static JFrame jFrame;
     private static Client client;
@@ -17,15 +20,20 @@ public class GUI {
     private static int leaderToKeep = 0;
     private static GamePanel gamePanel = new GamePanel();
 
-
     public static void setClient(Client client) {
         GUI.client = client;
     }
 
+    /**
+     * send a message to the server
+     */
     public static void sendMessage(MessageToServer message){
         client.send(message);
     }
 
+    /**
+     * creates on a separate thread the GUI using Swing
+     */
     public static void start(){
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -61,6 +69,11 @@ public class GUI {
         return waitingRoomPanel;
     }
 
+    /**
+     * Change the login window, with the waiting room window
+     * @param size Size of the waiting room
+     * @param players List of players currently waiting in the lobby
+     */
     public static void goToWaitingRoom(int size, ArrayList<String> players){
         jFrame.remove(loginPanel);
         waitingRoomPanel = new WaitingRoomPanel(size, players);
@@ -69,6 +82,9 @@ public class GUI {
         jFrame.setVisible(true);
     }
 
+    /**
+     * Change the waiting room window, with the game window
+     */
     public static void goToGame(){
         if(waitingRoomPanel != null) {
             jFrame.remove(waitingRoomPanel);
@@ -87,6 +103,11 @@ public class GUI {
         jFrame.setVisible(true);
     }
 
+    /**
+     * Store the selected leaderCards to keep:
+     * when they are 2, sends the KeepLeaderCard Message to the server.
+     * @param id of the selected leaderCard
+     */
     public static void keepLeader(int id){
         if(leaderToKeep == 0){
             leaderToKeep = id;
@@ -96,6 +117,9 @@ public class GUI {
         }
     }
 
+    /**
+     * @param string String to print
+     */
     public static void print(String string){
         gamePanel.getScrollPanel().getMessagesPanel().addMessage(string);
     }

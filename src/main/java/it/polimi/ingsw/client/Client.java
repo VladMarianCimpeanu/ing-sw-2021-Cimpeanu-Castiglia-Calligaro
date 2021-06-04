@@ -29,6 +29,9 @@ import java.util.ArrayList;
 
 import static it.polimi.ingsw.client.Resource.*;
 
+/**
+ * This class represents a Client, it starts the View in GUI or CLI.
+ */
 public class Client {
     private boolean gui;
     private Socket clientSocket;
@@ -126,6 +129,10 @@ public class Client {
         isEnded = ended;
     }
 
+    /**
+     * Starts on a new thread, the CLI or the GUI
+     * and remains listening from server messages
+     */
     public void start(){
         if(run){
             if(gui){
@@ -180,6 +187,13 @@ public class Client {
         else gameView.dumpMessage("There is no connection with the server.");
     }
 
+    /**
+     * Starts the Client
+     * @param args 3 argument needed:
+     *             + Server Ip Address
+     *             + Server Port
+     *             + Mode: cli/gui
+     */
     public static void main(String[] args) {
         Client client = new Client(args[0], Integer.parseInt(args[1]), args[2]);
         client.start();

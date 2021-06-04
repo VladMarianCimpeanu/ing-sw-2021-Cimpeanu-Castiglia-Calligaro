@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Generates a colored FaithPath using Ascii Art
+ * randomly assign a colored cross to each player
+ */
 public class AsciiFaithPath {
     private Map<String, Integer> positions;
     private Map<String, String> playerColors;
@@ -235,6 +239,9 @@ public class AsciiFaithPath {
         }
     }
 
+    /**
+     * prints the faithPath
+     */
     public void print(){
         for(int i = 0; i < heigth; i++){
             for(int j = 0; j < length; j++){
@@ -244,6 +251,10 @@ public class AsciiFaithPath {
         }
     }
 
+    /**
+     * updates the player positions on the faithPath
+     * @param newPositions for each player: nickname and position
+     */
     public void update(Map<String, Integer> newPositions){
         if(positions.size() == 0){
             positions = new HashMap<>(newPositions);
