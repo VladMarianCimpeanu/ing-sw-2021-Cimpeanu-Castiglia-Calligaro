@@ -14,6 +14,10 @@ import java.util.Map;
 
 import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
 
+/**
+ * This identifies the first phase of the game where all the related players are asked to choose which leaderCards keep
+ * and, if necessary, which resources they want to receive
+ */
 public class FirstTurn extends TurnState{
     private ArrayList<String> waitingForLeaderCards;
     private Map<String, Integer> firstTurnResources;
@@ -26,6 +30,12 @@ public class FirstTurn extends TurnState{
             firstTurnResources.put(controller.getTurns().get(i-1), i/2);
     }
 
+    /**
+     * It allows a specific player to keep the specified leaderCards and discard the other he is owning
+     * @param nickname nickname of the player that did the choice.
+     * @param id1 ID of a a specific leader card to keep.
+     * @param id2 ID of a a specific leader card to keep.
+     */
     @Override
     public void keepLeaderCards(String nickname, int id1, int id2){
         if(!waitingForLeaderCards.contains(nickname)) {
@@ -46,6 +56,14 @@ public class FirstTurn extends TurnState{
         endPhase();
     }
 
+    /**
+     * It allows a specific player to choose 1 or 2 resources (whether is needed) to put into the WarehouseDepot
+     * @param nickname nickname of the player that did the choice.
+     * @param res1 specific resource to put in depot.
+     * @param res2 additional resource to put in depot: if the player is not allowed to choose a second resource, set it to null.
+     * @param shelf1 specific shelf to put the first resource.
+     * @param shelf2 specific shelf to put the additional resource: if the player is not allowed to choose a second resource, set it to null.
+     */
     @Override
     public synchronized void selectResources(String nickname, Resource res1, Resource res2, int shelf1, int shelf2) {
         if (!firstTurnResources.containsKey(nickname)) {
@@ -90,7 +108,10 @@ public class FirstTurn extends TurnState{
         //The First Turn has to be completed by each player in order to start the game
     }
 
-
+    /**
+     * Whether all the players have finished the first phase of the game, this method make the game move on to the
+     * turn-based phase
+     */
     private void endPhase(){
         if(waitingForLeaderCards.isEmpty() && firstTurnResources.isEmpty()){
             for (int i = 2; i < getController().getPlayers().size() ; i++) {
@@ -122,6 +143,11 @@ public class FirstTurn extends TurnState{
         getController().sendError(invalidCommand);
     }
 
+    /**
+     * It sends to the specified player all the data relative to the first phase of the game
+     * It is mainly used for the reconnection of previously disconnected players
+     * @param nickname nickname of the player reconnected to the game
+     */
     public void rejoinPlayer(String nickname){
         if(waitingForLeaderCards.contains(nickname)) {
             ArrayList<LeaderCard> cards = getController().getPlayer(nickname).getLeaderCards();

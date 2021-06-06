@@ -28,6 +28,10 @@ public class ExtraProdOutState extends TurnState {
         this.firstProduction = firstProduction;
     }
 
+    /**
+     * Select the resource wanted to the production's output
+     * @param resource specified resource to take after the production.
+     */
     @Override
     public void selectOutput(Resource resource) {
         Controller controller = getController();

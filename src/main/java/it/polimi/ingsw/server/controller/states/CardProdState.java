@@ -16,6 +16,12 @@ public class CardProdState extends TurnState {
         super(controller);
     }
 
+    /**
+     * It allows the player to specify, once per time, the place where a resource is meant to be removed in order to
+     * activate the production
+     * @param resource specified resource chosen for the payment.
+     * @param position specified place from which the resource must be taken. Positions admitted are: 'extraSlot',
+     */
     @Override
     public void pay(Resource resource, String position) {
         Controller controller = getController();

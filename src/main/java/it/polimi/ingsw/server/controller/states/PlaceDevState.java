@@ -10,13 +10,16 @@ import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
 
 /**
  * This state follows the resources payment needed for the purchase of a development card.
- * It allows the player to choose on which deck the player wants to place the card just drawn
  */
 public class PlaceDevState extends TurnState {
     public PlaceDevState(Controller controller) {
         super(controller);
     }
 
+    /**
+     * It allows the player to choose on which deck the player wants to place the card just drawn
+     * @param deck between 1 and 3
+     */
     @Override
     public void placeDevCard(int deck) {
         Controller controller = getController();

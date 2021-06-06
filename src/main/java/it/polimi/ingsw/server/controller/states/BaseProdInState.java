@@ -15,6 +15,11 @@ public class BaseProdInState extends TurnState {
         this.firstProduction = firstProduction;
     }
 
+    /**
+     * Sets the input resources related to a base production
+     * @param res1 first resource to take as input for the production
+     * @param res2 second resource to take as input for the production
+     */
     @Override
     public void selectInput(Resource res1, Resource res2) {
         Controller controller = getController();

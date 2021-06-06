@@ -28,6 +28,10 @@ public class BaseProdOutState extends TurnState {
         this.firstProduction = firstProduction;
     }
 
+    /**
+     * Sets the output resource related to a base production
+     * @param resourceOut output resource selected
+     */
     @Override
     public void selectOutput(Resource resourceOut) {
         Controller controller = getController();

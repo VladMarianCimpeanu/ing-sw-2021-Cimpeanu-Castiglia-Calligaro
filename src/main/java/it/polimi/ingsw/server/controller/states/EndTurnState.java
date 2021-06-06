@@ -19,6 +19,9 @@ public class EndTurnState extends TurnState {
         super(controller);
     }
 
+    /**
+     * Finalize the current turn, passing it to the next player
+     */
     @Override
     public void end() {
         getController().nextTurn();
@@ -29,6 +32,10 @@ public class EndTurnState extends TurnState {
         end();
     }
 
+    /**
+     * Activate a leaderCard
+     * @param id leaderCard's ID
+     */
     @Override
     public void activateLeaderCard(int id) {
         try {
@@ -41,6 +48,10 @@ public class EndTurnState extends TurnState {
         }
     }
 
+    /**
+     * Discard a leaderCard
+     * @param id leaderCard's ID
+     */
     @Override
     public void discardLeaderCard(int id) {
         try {

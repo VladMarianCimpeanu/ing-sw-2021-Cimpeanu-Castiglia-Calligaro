@@ -14,6 +14,10 @@ public class ActivateProdState extends TurnState {
         super(controller);
     }
 
+    /**
+     * Activate the last phase of a generic production putting produced resources in the strongbox and adding faith
+     * points (whether is specified by the production) to the current turn's player
+     */
     @Override
     public void activateProduction(){
         Controller controller = getController();
