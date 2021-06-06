@@ -374,6 +374,7 @@ public class Player {
         ArrayList<Benefit> received;
         if(marketStrategies.isEmpty()) received = game.getMarket().convertMarbles();
         else received = game.getMarket().convertMarbles(marketStrategyStack);
+        marketStrategyStack.clear();
         receivedFromMarket = new ArrayList<>();
         for(Benefit b: received){
             if(b.equals(Faith.giveFaith())){

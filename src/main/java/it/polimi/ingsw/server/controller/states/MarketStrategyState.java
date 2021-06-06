@@ -109,6 +109,7 @@ public class MarketStrategyState extends TurnState {
                     while(whiteMarbles > 0 && !placed1){
                         if(quantity1 == 0)
                             shelf1 = depot.getFreeShelf(3);
+                        player.addInMarketStrategyStack(strategies.get(0));
                         whiteMarbles--;
                         quantity1++;
                         if(quantity1 == shelf1) break;
@@ -118,6 +119,7 @@ public class MarketStrategyState extends TurnState {
                         if(quantity2 == 0)
                             if(!placed1)
                                 shelf2 = depot.getFreeShelf(shelf1-1);
+                        player.addInMarketStrategyStack(strategies.get(1));
                         whiteMarbles--;
                         quantity2++;
                         if(quantity2 == shelf2) break;
