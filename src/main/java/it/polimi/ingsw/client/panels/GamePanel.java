@@ -3,8 +3,10 @@ package it.polimi.ingsw.client.panels;
 import it.polimi.ingsw.client.Clickable;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.Resource;
+import it.polimi.ingsw.client.modelLight.ActionToken.ActionTokenGUI;
 import it.polimi.ingsw.client.modelLight.GUI.*;
 import it.polimi.ingsw.client.Shape;
+import it.polimi.ingsw.client.exceptions.NoUrlException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -148,6 +150,16 @@ public class GamePanel extends JPanel {
             drawImage(g, "images/punchboard/pope/pope_favor3_front.png", new Shape(470, 63, 40, 40));
         else
             drawImage(g, "images/punchboard/pope/pope_favor3_back.png", new Shape(472, 63, 40, 40));
+
+        //Action token
+        if(GUI.getClient().getTurns().size() == 1){
+            ActionTokenGUI actionTokenGUI = (ActionTokenGUI) GUI.getClient().getGameView().getActionTokenView();
+            try {
+                drawImage(g, actionTokenGUI.getUrl(), actionTokenGUI.getShape());
+            } catch (NoUrlException e) {
+                //don't do anything
+            }
+        }
     }
 
 
