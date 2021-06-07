@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
 
 /**
- * A player is in this state when he must chose which leader card to use to convert the white marbles obtained by the market.
- * The player will remains here till all the white marbles are covered by a leader card.
+ * A player is in this state when he must choose which leader card to use to convert the white marbles obtained by the market.
+ * The player will remain here until all the white marbles are covered by a leader card.
  */
 public class MarketStrategyState extends TurnState {
     private int whiteMarbles;
@@ -26,6 +26,10 @@ public class MarketStrategyState extends TurnState {
         this.whiteMarbles = whiteMarbles;
     }
 
+    /**
+     * Cover a white marble with a leader card that can convert it to a resource
+     * @param id leaderCard's ID
+     */
     @Override
     public void addStrategy(int id) {
         try {

@@ -22,6 +22,10 @@ public class ProductionState extends TurnState {
         super(controller);
     }
 
+    /**
+     * Activate
+     * @param deckIndex index of the selected development card (from 1 to 3).
+     */
     @Override
     public void activateDevCard(int deckIndex) {
         Controller controller = getController();
@@ -44,6 +48,9 @@ public class ProductionState extends TurnState {
         }
     }
 
+    /**
+     * Activate base production
+     */
     @Override
     public void activateBase() {
         Controller controller = getController();
@@ -51,6 +58,10 @@ public class ProductionState extends TurnState {
         controller.setCurrentState(new BaseProdInState(controller, false));
     }
 
+    /**
+     * Activate an extra production
+     * @param id ID of the selected leaderCard.
+     */
     @Override
     public void activateExtra(int id) {
         Controller controller = getController();

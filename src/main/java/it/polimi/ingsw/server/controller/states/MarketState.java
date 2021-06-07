@@ -21,6 +21,11 @@ public class MarketState extends TurnState {
         super(controller);
     }
 
+    /**
+     * Whether the destination of the selected resource is a WarehouseDepot's shelf
+     * @param resource specified resource to place in depot.
+     * @param shelf specified depot's shelf to place the resource.
+     */
     @Override
     public void putWarehouse(Resource resource, int shelf) {
         try {
@@ -40,6 +45,10 @@ public class MarketState extends TurnState {
         }
     }
 
+    /**
+     * Whether the destination of the selected resource is an ExtraSlot
+     * @param resource specified resource to place in an extraSlot.
+     */
     @Override
     public void putExtraSlot(Resource resource) {
         try {
@@ -57,6 +66,10 @@ public class MarketState extends TurnState {
         }
     }
 
+    /**
+     * Discard the selected resource
+     * @param resource specified resource to discard.
+     */
     @Override
     public void discardRes(Resource resource) {
         try {
@@ -69,6 +82,7 @@ public class MarketState extends TurnState {
             if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
         }
     }
+
 
     @Override
     public void completeTurn() {

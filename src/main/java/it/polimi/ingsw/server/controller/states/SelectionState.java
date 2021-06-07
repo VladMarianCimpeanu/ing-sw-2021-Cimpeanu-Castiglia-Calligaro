@@ -16,6 +16,14 @@ import it.polimi.ingsw.server.model.market.Marble;
 
 import java.util.ArrayList;
 
+/**
+ * Enter in this state when a player's turn ends and the game moves on to the next player's turn
+ * Here the current player can:
+ * - Activate/Discard a leader card
+ * - Activate a production
+ * - Go to the market
+ * - Buy a development card
+ */
 public class SelectionState extends TurnState {
     public SelectionState(Controller controller) {
         super(controller);
