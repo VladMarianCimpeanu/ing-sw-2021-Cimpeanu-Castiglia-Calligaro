@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Action panel showed when the player is making a development card production
+ */
 public class DevProductionPanel extends ActionPanel{
     private JButton activate;
     private JLabel title;

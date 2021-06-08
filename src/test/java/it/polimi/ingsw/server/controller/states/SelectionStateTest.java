@@ -37,7 +37,7 @@ class SelectionStateTest {
         controller.getCurrentState().goToMarket("row",2);
         if(controller.getCurrentPlayer().isMarketResourcesUnavailable())
             assertEquals(controller.getCurrentState().getClass(), EndTurnState.class);
-        assertEquals(controller.getCurrentState().getClass(), MarketState.class);
+        else assertEquals(controller.getCurrentState().getClass(), MarketState.class);
     }
 
     @Test

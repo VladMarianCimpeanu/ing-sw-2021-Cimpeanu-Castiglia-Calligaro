@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Action panel showed when the player is moving some resources from an extra slot to somewhere
+ */
 
 public class MoveExtraPanel extends ActionPanel implements ActionListener{
     private int howMany;
@@ -31,6 +34,9 @@ public class MoveExtraPanel extends ActionPanel implements ActionListener{
         else howMany = 1;
     }
 
+    /**
+     * @return how many resources the player has selected to move
+     */
     public int getHowMany() {
         return howMany;
     }

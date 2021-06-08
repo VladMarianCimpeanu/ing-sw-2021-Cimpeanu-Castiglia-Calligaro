@@ -21,6 +21,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Action panel showed when the player is making an extra production
+ */
 public class ExtraProdPanel extends ActionPanel{
     private JLabel title1;
     private JButton button;
@@ -60,6 +63,12 @@ public class ExtraProdPanel extends ActionPanel{
         add(title1);
     }
 
+    /**
+     * Allows to set the phase of the base production. This can be:
+     * - 0: the user is choosing the output resource
+     * - 1: the user is paying the input resources
+     * @param phase
+     */
     public void setPhase(int phase) {
         this.phase = phase;
     }
@@ -70,6 +79,11 @@ public class ExtraProdPanel extends ActionPanel{
             GUI.getClient().getGameView().lastProduced(null, GUI.getClient().getNickname());
     }
 
+    /**
+     * Action triggered after the mouse click on the Action panel
+     * @param x x axis value of the click
+     * @param y y axis value of the click
+     */
     public void activeClick(int x, int y){
         int xt = 10;
         int yt = 40;

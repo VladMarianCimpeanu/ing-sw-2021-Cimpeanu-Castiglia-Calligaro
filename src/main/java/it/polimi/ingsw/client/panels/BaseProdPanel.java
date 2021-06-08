@@ -23,6 +23,9 @@ import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.GUI.GameGUI;
 import it.polimi.ingsw.server.model.benefit.Faith;
 
+/**
+ * Action panel showed when the player is making a base production
+ */
 public class BaseProdPanel extends ActionPanel{
     private JButton button;
     private JLabel title1;
@@ -75,6 +78,12 @@ public class BaseProdPanel extends ActionPanel{
         phase = 0;
     }
 
+    /**
+     * Allows to set the phase of the base production. This can be:
+     * - 0: the user is choosing the input and output resources
+     * - 1: the user is paying the input resources
+     * @param phase
+     */
     public void setPhase(int phase) {
         this.phase = phase;
     }
@@ -88,6 +97,11 @@ public class BaseProdPanel extends ActionPanel{
         }
     }
 
+    /**
+     * Action triggered after the mouse click on the Action panel
+     * @param x x axis value of the click
+     * @param y y axis value of the click
+     */
     private void activeClick(int x, int y) {
         int xt = 10;
         int yt = 40;

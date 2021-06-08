@@ -8,6 +8,9 @@ import it.polimi.ingsw.client.modelLight.PlayerView;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Action panel showed when the player is moving some resources from a shelf of the warehouse depot to somewhere
+ */
 public class MoveResPanel extends ActionPanel{
     public MoveResPanel(){
         GUI.getGamePanel().unlockGameBoard(false);
