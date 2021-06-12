@@ -38,7 +38,7 @@ public class Strongbox {
      * to do that you need to call addProduced() method
      * @param resource type of resources required
      * @param quantity number of resources, of the specified type, that have to be added to the Strongbox
-     * @throws NegativeQuantityException if quantity < 0
+     * @throws NegativeQuantityException if quantity is negative.
      */
     public void addResource(Resource resource, int quantity) throws NegativeQuantityException{
         if(resource == null) return;
@@ -52,7 +52,7 @@ public class Strongbox {
      *
      * @param resource type of resources required
      * @param quantity number of resources, of the specified type, that have to be removed from the Strongbox
-     * @throws NegativeQuantityException if quantity < 0
+     * @throws NegativeQuantityException if quantity is less than 0
      */
     public int removeResource(Resource resource, int quantity) throws NegativeQuantityException{
         if(resource == null) throw new NullPointerException();

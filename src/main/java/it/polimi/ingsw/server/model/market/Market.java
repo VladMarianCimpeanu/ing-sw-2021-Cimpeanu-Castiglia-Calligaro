@@ -59,7 +59,7 @@ public class Market {
      *selects the specified row in the market and gets back the number of white marbles in the selected row.
      * @param row specific row to select in the market: the row on the top is 0.
      * @return the number of white Marbles gotten after the selection
-     * @throws OutOfBoundRowException when row < 0 or row > 2
+     * @throws OutOfBoundRowException when row is negative or row is greater than 2
      */
     public int selRow(int row) throws OutOfBoundRowException {
         if(row < 0 || row >= rows) throw new OutOfBoundRowException(Integer.toString(row));
@@ -82,7 +82,7 @@ public class Market {
      * selects the specified column in the market and gets back the number of white marbles in the selected column.
      * @param column specific column to select in the market: the column on the left is 0.
      * @return the number of white Marbles gotten after the selection
-     * @throws OutOfBoundColumnsException when column < 0 or column > 3
+     * @throws OutOfBoundColumnsException when column is less than 0 or column is greater than 3
      */
     public int selColumn(int column) throws OutOfBoundColumnsException {
         if(column < 0 || column >= columns) throw new OutOfBoundColumnsException(Integer.toString(column));

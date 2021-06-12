@@ -78,7 +78,7 @@ public class DevelopmentCardSet {
      * @param color of the cards belonging to the deck
      * @param level of the cards belonging to the deck
      * @return the number of cards inside to the specified deck
-     * @throws WrongLevelException if level < 1 or level > 3
+     * @throws WrongLevelException if level is less than 1 or level is greater than 3
      */
     public int getAvailableQuantity(Color color, int level) throws WrongLevelException{
         if (level < 1 || level > 3) throw new WrongLevelException();

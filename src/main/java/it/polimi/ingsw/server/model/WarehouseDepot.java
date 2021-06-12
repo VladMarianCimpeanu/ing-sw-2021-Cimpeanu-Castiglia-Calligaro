@@ -356,7 +356,7 @@ public class WarehouseDepot {
      * It moves a specified quantity of resources from a specified a shelf to an extra slot.
      * @param shelf the specified shelf from which resources are supposed to be moved: the first shelf starts with 1
      * @param quantity quantity of resources to be moved : if quantity is higher than the actual quantity on the shelf, it will be considered to move all the resources that are on the shelf.
-     * @throws InvalidShelfPosition if shelf < 1 or shelf > 3
+     * @throws InvalidShelfPosition if shelf is less than 1 or shelf is greater 3
      * @throws NotEnoughSpaceException if there is not enough space to store all the required resources into the extra slot
      * @throws MissingExtraSlot if does not exist an extra slot that can store the specified resource
      */
@@ -410,7 +410,7 @@ public class WarehouseDepot {
      * @param resource the specified type of resources that have to be moved from an extra slot
      * @param quantity quantity of resources to be moved : if quantity is higher than the actual quantity in the extra slot, it will be considered to move all the resources that are in the extra slot.
      * @param shelf the specified shelf where the resources are supposed to be moved: the first shelf starts with 1
-     * @throws InvalidShelfPosition if shelf < 1 or shelf > 3
+     * @throws InvalidShelfPosition if shelf is less than 1 or shelf is greater than 3
      * @throws ExistingResourceException if there are already a few resources inside of the specified shelf which type is different from the required one
      * @throws InvalidResourceException if there is no extra slot that stores the type of resources required
      * @throws NotEnoughSpaceException  if there is not enough space to store all the required resources into the shelf

@@ -145,7 +145,7 @@ public class JsonToDevCard {
 
     /**
      * This method is used to read a Map which keys are Resources and values are integers.
-     * @param reader Json reader which points to a Map<Resource, Integer>.
+     * @param reader Json reader which points to a Map which keys are Resource, whereas values are Integer>.
      * @return the Map read by 'reader'.
      * @throws IOException if a general error occurred reading the specified file.
      */
@@ -186,7 +186,7 @@ public class JsonToDevCard {
 
     /**
      * This method is used to read a Map which keys are Benefits and values are integers.
-     * @param reader Json reader which points to a Map<Benefit, Integer>.
+     * @param reader Json reader which points to a Map which keys are Benefits, whereas values are Integer.
      * @return the Map read by 'reader'.
      * @throws IOException if a general error occurred reading the specified file.
      */

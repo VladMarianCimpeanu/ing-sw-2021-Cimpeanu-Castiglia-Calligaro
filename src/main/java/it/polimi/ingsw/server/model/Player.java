@@ -335,8 +335,8 @@ public class Player {
      * @param directionSelection
      * @param position
      * @return the number of White Marbles picked
-     * @throws OutOfBoundColumnsException when position < 0 && position > 3
-     * @throws OutOfBoundRowException when position < 0 && position > 2
+     * @throws OutOfBoundColumnsException when column position is negative or column position is greater 3
+     * @throws OutOfBoundRowException when row position is negative or row position is greater than 2
      * @throws InvalidDirectionSelection
      */
     public int goToMarket(String directionSelection, int position) throws OutOfBoundColumnsException, OutOfBoundRowException, InvalidDirectionSelection {
