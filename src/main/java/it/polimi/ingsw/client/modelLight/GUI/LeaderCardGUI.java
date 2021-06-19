@@ -112,6 +112,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
         strategy = () -> {
             if(type.equals("buyCard") && isActivated()) {
                 ((DiscountPanel) GUI.getGamePanel().getActionPanel()).addDiscount(ID);
+                setStrategyDefault();
             }
         };
     }

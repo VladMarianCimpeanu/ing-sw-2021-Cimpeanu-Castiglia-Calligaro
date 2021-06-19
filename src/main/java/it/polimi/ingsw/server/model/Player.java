@@ -238,17 +238,21 @@ public class Player {
         if(!dashboard.isDevCardPlaceable(level)) throw new WrongLevelException();
 
         if(discounts != null && !discounts.isEmpty()){
-            for(Discount discount: discounts){
-                if(!discountList.contains(discount)){
-                    throw new InvalidDiscountException();
-                }else{
-                    if(cost.containsKey(discount.getResource())){
-                        removeOne(cost, discount.getResource());
-                    }
+        ArrayList<Discount> uniqueDiscounts = new ArrayList<>();
+        for(Discount discount: discounts)
+            if(!uniqueDiscounts.contains(discount)) uniqueDiscounts.add(discount);
+
+        discounts = uniqueDiscounts;
+        for(Discount discount: discounts){
+            if(!discountList.contains(discount)){
+                throw new InvalidDiscountException();
+            }else{
+                if(cost.containsKey(discount.getResource())){
+                    removeOne(cost, discount.getResource());
+                }
                 }
             }
         }
-
         if(!dashboard.checkResources(cost)) throw new NotEnoughResourcesException();
 
         devCardToAdd = set.drawCard(color, level);
