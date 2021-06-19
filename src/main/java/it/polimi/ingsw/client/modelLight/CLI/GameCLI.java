@@ -43,10 +43,13 @@ public class GameCLI extends GameView {
     @Override
     public void displayResourcesToPay(Map<Resource, Integer> resources) {
         String content = "You have to pay the following resources: ";
-        for(Resource res: resources.keySet()){
-            content += resources.get(res).toString() + " " + res.escape() + Color.RESET + " ";
+        if(resources.isEmpty()) dumpMessage("All the resources have been paid.");
+        else {
+            for (Resource res : resources.keySet()) {
+                content += resources.get(res).toString() + " " + res.escape() + Color.RESET + " ";
+            }
+            dumpMessage(content);
         }
-        dumpMessage(content);
     }
 
     @Override

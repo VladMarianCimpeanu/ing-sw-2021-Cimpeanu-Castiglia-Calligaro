@@ -180,4 +180,13 @@ public class LeaderCardSetGUI extends LeaderCardSetView implements Clickable {
     public void setLeadersToBuyStrategy(){
         for(LeaderCardGUI card : cards.values()) card.setBuyStrategy();
     }
+
+    /**
+     * adds all the activated cards that offers a slot effect to the clickable objects of the current dialog.
+     */
+    public void setSlotsClickable(){
+        for(LeaderCardGUI card : getCards()){
+            card.addSlot();
+        }
+    }
 }

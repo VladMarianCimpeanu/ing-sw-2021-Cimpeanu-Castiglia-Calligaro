@@ -14,11 +14,17 @@ import java.util.ArrayList;
  * Action panel showed when the player is moving some resources from an extra slot to somewhere
  */
 
-public class MoveExtraPanel extends ActionPanel implements ActionListener{
+public class MoveExtraPanel extends ActionPanel implements ActionListener, MovePanel{
     private int howMany;
+    private ActionPanel lastPanel;
+    private boolean boardUnlocked;
+    private ArrayList<Clickable> lastClickable;
     private JComboBox<String> comboBox;
 
-    public MoveExtraPanel(int max){
+    public MoveExtraPanel(int max, ActionPanel lastPanel){
+        this.lastPanel = lastPanel;
+        lastClickable = GUI.getGamePanel().getAction();
+        boardUnlocked = GUI.getGamePanel().isGameBoardClickable();
         GUI.getGamePanel().unlockGameBoard(false);
         PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
         GUI.getGamePanel().addAction((Clickable) player.getDepot());
@@ -50,5 +56,21 @@ public class MoveExtraPanel extends ActionPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == comboBox)
             howMany = Integer.parseInt((String)comboBox.getSelectedItem());
+    }
+
+    @Override
+    public boolean wasBoardUnlocked() {
+        return boardUnlocked;
+    }
+
+    @Override
+    public ActionPanel getLastPanel(){
+        return lastPanel;
+    }
+
+    @Override
+    public void restoreClickable() {
+        GUI.getGamePanel().removeAllActions();
+        for(Clickable clickable: lastClickable) GUI.getGamePanel().addAction(clickable);
     }
 }

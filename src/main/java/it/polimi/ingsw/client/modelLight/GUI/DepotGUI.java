@@ -9,10 +9,7 @@ import it.polimi.ingsw.client.MessageToServer.TakeResPos;
 import it.polimi.ingsw.client.Resource;
 import it.polimi.ingsw.client.Shape;
 import it.polimi.ingsw.client.modelLight.DepotView;
-import it.polimi.ingsw.client.panels.DefaultPanel;
-import it.polimi.ingsw.client.panels.FirstTurnPanel;
-import it.polimi.ingsw.client.panels.MoveExtraPanel;
-import it.polimi.ingsw.client.panels.MoveResPanel;
+import it.polimi.ingsw.client.panels.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,24 +119,29 @@ public class DepotGUI extends DepotView implements Clickable {
                 int howMany = ((MoveExtraPanel)GUI.getGamePanel().getActionPanel()).getHowMany();
                 GUI.getClient().send(new MoveExtraToWarehouse(shelf, extraFromMove.getID(), howMany));
                 this.extraFromMove = null;
-                GUI.getGamePanel().setActionPanel(new DefaultPanel());
-                GUI.getGamePanel().removeAction(this);
-                GUI.getGamePanel().unlockGameBoard(true);
+                revalidateActionPanel();
                 GUI.getGamePanel().repaint();
             }else if(shelfFrom != -1){
                 GUI.getClient().send(new MoveResource(shelfFrom, shelf));
                 this.shelfFrom = -1;
-                GUI.getGamePanel().setActionPanel(new DefaultPanel());
-                GUI.getGamePanel().removeAction(this);
-                GUI.getGamePanel().removeAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
-                GUI.getGamePanel().unlockGameBoard(true);
+                revalidateActionPanel();
                 GUI.getGamePanel().repaint();
             }else{
                 this.shelfFrom = shelf;
-                GUI.getGamePanel().setActionPanel(new MoveResPanel());
+                GUI.getGamePanel().setActionPanel(new MoveResPanel(GUI.getGamePanel().getActionPanel()));
                 GUI.getGamePanel().repaint();
             }
         };
+    }
+
+    /**
+     * resets the last panel used before a move action.
+     */
+    private void revalidateActionPanel(){
+        MovePanel currentPanel = (MovePanel)GUI.getGamePanel().getActionPanel();
+        currentPanel.restoreClickable();
+        GUI.getGamePanel().unlockGameBoard(currentPanel.wasBoardUnlocked());
+        GUI.getGamePanel().setActionPanel(currentPanel.getLastPanel());
     }
 
     public void setStrategyPut(){

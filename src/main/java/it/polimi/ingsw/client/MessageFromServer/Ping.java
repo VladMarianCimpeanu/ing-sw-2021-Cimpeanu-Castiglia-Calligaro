@@ -6,6 +6,5 @@ public class Ping extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("ping from server.");
     }
 }

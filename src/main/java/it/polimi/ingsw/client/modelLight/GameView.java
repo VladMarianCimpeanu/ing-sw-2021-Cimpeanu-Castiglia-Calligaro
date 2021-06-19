@@ -108,7 +108,7 @@ public abstract class GameView {
      * @param resources resources to pay that should be displayed.
      */
     public abstract void displayResourcesToPay(Map<Resource, Integer> resources);
-    //TODO: content from the server, why? discuss.
+
     public abstract void notifyJoin(String content, int size, ArrayList<String> players);
 
     /**

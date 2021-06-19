@@ -207,8 +207,19 @@ public class GamePanel extends JPanel {
             action.add(clickable);
     }
 
+    /**
+     * removes a clickable object that could be clicked during a dialog.
+     * @param clickable specified clickable object to delete.
+     */
     public void removeAction(Clickable clickable){
         action.remove(clickable);
+    }
+
+    /**
+     * removes all the clickable objects that could be clicked during a dialog.
+     */
+    public void removeAllActions(){
+        action.clear();
     }
 
     /**
@@ -266,6 +277,14 @@ public class GamePanel extends JPanel {
     }
 
     /**
+     * checks if the clickable objects of the game board can be clicked.
+     * @return true if the game board is clickable, else false.
+     */
+    public boolean isGameBoardClickable(){
+        return gameBoardClickable;
+    }
+
+    /**
      * changes the current Action panel of the game panel.
      * @param panel specified Action panel to set.
      */
@@ -300,5 +319,13 @@ public class GamePanel extends JPanel {
         action.clear();
         LeaderCardSetGUI leaderCardSetGUI = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
         leaderCardSetGUI.setLeadersToDefaultStrategy();
+    }
+
+    /**
+     * gets all the clickable objects during the current dialog.
+     * @return an ArrayList containing all the clickable objects during the current dialog.
+     */
+    public ArrayList<Clickable> getAction(){
+        return new ArrayList<>(action);
     }
 }

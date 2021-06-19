@@ -68,15 +68,13 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
         else if(type.equals("depot")) defaultStrategy = () -> {
             PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
             if(((DepotGUI)player.getDepot()).getShelfFrom() == -1){
-                GUI.getGamePanel().setActionPanel(new MoveExtraPanel(extraSlot.size()));
+                GUI.getGamePanel().setActionPanel(new MoveExtraPanel(extraSlot.size(), GUI.getGamePanel().getActionPanel()));
                 ((DepotGUI)player.getDepot()).setExtraFromMove(this);
             }else{
                 int shelf = ((DepotGUI)player.getDepot()).getShelfFrom();
                 GUI.getClient().send(new MoveWarehouseToExtra(shelf, ID, ((DepotGUI)player.getDepot()).getQuantity(shelf)));
                 ((DepotGUI)player.getDepot()).resetShelfFrom();
-                GUI.getGamePanel().setActionPanel(new DefaultPanel());
-                GUI.getGamePanel().removeAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
-                GUI.getGamePanel().unlockGameBoard(true);
+                revalidateActionPanel();
             }
             GUI.getGamePanel().repaint();
         };
@@ -108,6 +106,14 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
         strategy = () -> GUI.getClient().send(new Strategy(ID));
     }
 
+    /**
+     * if this card is activated and offers a depot effect, than it is added to the clickable objects of the current
+     * dialog
+     */
+    public void addSlot(){
+        if (activated && this.type.equals("depot")) GUI.getGamePanel().addAction(this);
+    }
+
     public void setDiscountStrategy(){
         strategy = () -> {
             if(type.equals("buyCard") && isActivated()) {
@@ -115,6 +121,16 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
                 setStrategyDefault();
             }
         };
+    }
+
+    /**
+     * resets the last panel used before a move action.
+     */
+    private void revalidateActionPanel(){
+        MovePanel currentPanel = (MovePanel)GUI.getGamePanel().getActionPanel();
+        currentPanel.restoreClickable();
+        GUI.getGamePanel().unlockGameBoard(currentPanel.wasBoardUnlocked());
+        GUI.getGamePanel().setActionPanel(currentPanel.getLastPanel());
     }
 
     public boolean isActivated(){
