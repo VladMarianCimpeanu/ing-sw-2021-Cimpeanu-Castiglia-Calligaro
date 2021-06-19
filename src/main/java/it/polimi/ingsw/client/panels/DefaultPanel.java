@@ -18,16 +18,25 @@ public class DefaultPanel extends ActionPanel{
     }
     @Override
     public void displayError(ErrorMessage error) {
-        System.out.println(error);
         if(error == ErrorMessage.notEnoughResources)
             setNotEnoughResource();
+        if(error == ErrorMessage.productionUsed)
+            setProductionUsed();
     }
 
     /**
      * Set the error label for a resource requirement not satisfied
      */
     public void setNotEnoughResource(){
-        errorLabel.setText("You don't have enough resources to afford this purchase!");
+        errorLabel.setText("You don't have enough resources to afford this!");
+        repaint();
+    }
+
+    /**
+     * Set the error label for a production already used in that turn
+     */
+    public void setProductionUsed(){
+        errorLabel.setText("You have already used this production in this turn!");
         repaint();
     }
     public void paintComponent(Graphics g) {

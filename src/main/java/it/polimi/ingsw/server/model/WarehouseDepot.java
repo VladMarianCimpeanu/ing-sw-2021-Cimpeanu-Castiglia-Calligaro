@@ -190,10 +190,12 @@ public class WarehouseDepot {
                 if(getShelfQuantity(shelf)+quantity > 1){
                     quantity -= 1-getShelfQuantity(shelf);
                     firstQuantity = 1;
+                    insertMissing();
                     virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                     return quantity;
                 }else{
                     firstQuantity = getShelfQuantity(shelf)+quantity;
+                    insertMissing();
                     virtualView.updateWarehouseDepot(1, firstShelf, firstQuantity);
                     return 0;
                 }
@@ -201,10 +203,12 @@ public class WarehouseDepot {
                 if(getShelfQuantity(shelf)+quantity > 2){
                     quantity -= 2-getShelfQuantity(shelf);
                     secondQuantity = 2;
+                    insertMissing();
                     virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                     return quantity;
                 }else{
                     secondQuantity = getShelfQuantity(shelf)+quantity;
+                    insertMissing();
                     virtualView.updateWarehouseDepot(2, secondShelf, secondQuantity);
                     return 0;
                 }
@@ -212,15 +216,16 @@ public class WarehouseDepot {
                 if(getShelfQuantity(shelf)+quantity > 3){
                     quantity -= 3-getShelfQuantity(shelf);
                     thirdQuantity = 3;
+                    insertMissing();
                     virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                     return quantity;
                 }else{
                     thirdQuantity = getShelfQuantity(shelf)+quantity;
+                    insertMissing();
                     virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                     return 0;
                 }
         }
-
         return 0;
     }
 
@@ -479,5 +484,36 @@ public class WarehouseDepot {
          amount += slot.getQuantity();
         }
         return amount;
+    }
+
+    /**
+     * It figures out a resource that does not appear on any shelf, then assign it to shelves having quantity = 0
+     */
+    private void insertMissing(){
+        Resource availableRes = null;
+        for(Resource res: Resource.values()) {
+            try {
+                if(     ((getShelfQuantity(1) == 0)||(getShelfQuantity(1) != 0 && !getShelfResource(1).equals(res))) &&
+                        ((getShelfQuantity(2) == 0)||(getShelfQuantity(2) != 0 && !getShelfResource(2).equals(res))) &&
+                        ((getShelfQuantity(3) == 0)||(getShelfQuantity(3) != 0 && !getShelfResource(3).equals(res)))) {
+                    availableRes = res;
+                    break;
+                }
+            } catch (InvalidShelfPosition invalidShelfPosition) {
+                invalidShelfPosition.printStackTrace();
+            }
+
+        }
+
+        try {
+            if(getShelfQuantity(1) == 0)
+                firstShelf = availableRes;
+            if(getShelfQuantity(2) == 0)
+                secondShelf = availableRes;
+            if(getShelfQuantity(3) == 0)
+                thirdShelf = availableRes;
+        } catch (InvalidShelfPosition invalidShelfPosition) {
+            invalidShelfPosition.printStackTrace();
+        }
     }
 }

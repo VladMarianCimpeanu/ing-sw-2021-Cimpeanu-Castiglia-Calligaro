@@ -131,6 +131,7 @@ public class MarketState extends TurnState {
                 try {
                     int shelf = depot.getFreeShelf(3);
                     try {
+
                         player.putInWarehouseDepot(resource, shelf);
                     } catch (InvalidResourceException | ExistingResourceException | NotEnoughSpaceException e) {
                         e.printStackTrace();

@@ -73,10 +73,22 @@ public class ExtraProdPanel extends ActionPanel{
         this.phase = phase;
     }
 
+//    @Override
+//    public void displayError(ErrorMessage error) {
+//        if(error == ErrorMessage.productionUsed)
+//            GUI.getClient().getGameView().lastProduced(null, GUI.getClient().getNickname());
+//    }
+
     @Override
     public void displayError(ErrorMessage error) {
-        if(error == ErrorMessage.productionUsed)
-            GUI.getClient().getGameView().lastProduced(null, GUI.getClient().getNickname());
+        if(error == ErrorMessage.productionUsed || error == ErrorMessage.notEnoughResources){
+            ((DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
+            DefaultPanel defaultPanel = new DefaultPanel();
+            if(error == ErrorMessage.notEnoughResources)
+                GUI.getGamePanel().setActionPanel(defaultPanel);
+            defaultPanel.setNotEnoughResource();
+            GUI.getGamePanel().repaint();
+        }
     }
 
     /**
