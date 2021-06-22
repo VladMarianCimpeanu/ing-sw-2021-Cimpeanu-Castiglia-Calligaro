@@ -40,6 +40,7 @@ public class BaseProdPanel extends ActionPanel{
         GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
         GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());
         GUI.getGamePanel().addAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards());
+        GUI.getClient().getGameView().getResBuffer().clear();
         button = new JButton("Go to payment");
         button.addActionListener(new ActionListener() {
             @Override

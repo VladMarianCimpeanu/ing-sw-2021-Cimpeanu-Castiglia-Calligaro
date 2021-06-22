@@ -70,12 +70,8 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
             if(((DepotGUI)player.getDepot()).getShelfFrom() == -1){
                 GUI.getGamePanel().setActionPanel(new MoveExtraPanel(extraSlot.size(), GUI.getGamePanel().getActionPanel()));
                 ((DepotGUI)player.getDepot()).setExtraFromMove(this);
-            }else{
-                int shelf = ((DepotGUI)player.getDepot()).getShelfFrom();
-                GUI.getClient().send(new MoveWarehouseToExtra(shelf, ID, ((DepotGUI)player.getDepot()).getQuantity(shelf)));
-                ((DepotGUI)player.getDepot()).resetShelfFrom();
-                revalidateActionPanel();
-            }
+            }else
+                GUI.getGamePanel().setActionPanel(new MoveToExtraPanel(this, ((MovePanel)GUI.getGamePanel().getActionPanel()).getLastPanel()));
             GUI.getGamePanel().repaint();
         };
         else {
@@ -126,7 +122,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
     /**
      * resets the last panel used before a move action.
      */
-    private void revalidateActionPanel(){
+    public void revalidateActionPanel(){
         MovePanel currentPanel = (MovePanel)GUI.getGamePanel().getActionPanel();
         currentPanel.restoreClickable();
         GUI.getGamePanel().unlockGameBoard(currentPanel.wasBoardUnlocked());
