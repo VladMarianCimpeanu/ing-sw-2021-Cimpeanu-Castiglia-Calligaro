@@ -127,6 +127,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
         currentPanel.restoreClickable();
         GUI.getGamePanel().unlockGameBoard(currentPanel.wasBoardUnlocked());
         GUI.getGamePanel().setActionPanel(currentPanel.getLastPanel());
+        GUI.getGamePanel().repaint();
     }
 
     public boolean isActivated(){

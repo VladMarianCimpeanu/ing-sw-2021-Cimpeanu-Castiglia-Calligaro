@@ -48,7 +48,7 @@ public abstract class LeaderCard {
         return true;
     }
 
-    protected Resource getResource() {
+    public Resource getResource() {
         return resource;
     }
 

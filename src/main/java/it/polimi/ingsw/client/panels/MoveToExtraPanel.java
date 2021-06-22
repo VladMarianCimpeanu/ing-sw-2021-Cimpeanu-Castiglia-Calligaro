@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Action panel showed when the player is moving some resources from a shelf to a extra slot and has to choose the number of resources to move
+ */
 public class MoveToExtraPanel extends ActionPanel implements ActionListener, MovePanel {
     private JComboBox<String> comboBox;
     private LeaderCardGUI card;

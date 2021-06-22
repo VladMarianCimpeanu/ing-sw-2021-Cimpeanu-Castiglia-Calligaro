@@ -1,10 +1,12 @@
 package it.polimi.ingsw.server.controller.states;
 
+import it.polimi.ingsw.server.JsonToLeaderCard;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Color;
 import it.polimi.ingsw.server.model.Strongbox;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
+import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
 
 import java.util.ArrayList;
 
@@ -70,10 +72,14 @@ public abstract class TurnState {
      */
     public void moveWarehouseToExtra(int shelf, int leaderId, int quantityToMove) {
         try {
+            if(!JsonToLeaderCard.getLeaderCard(leaderId).getResource().equals(getController().getCurrentPlayer().getDashboard().getWarehouseDepot().getShelfResource(shelf))){
+                controller.sendError(invalidLeaderCardID);
+                return;
+            }
             controller.getCurrentPlayer().getDashboard().getWarehouseDepot().moveFromShelfToSlot(shelf, quantityToMove);
         } catch (NotEnoughSpaceException e) {
             controller.sendError(notEnoughSpace);
-        } catch (MissingExtraSlot missingExtraSlot) {
+        } catch (MissingExtraSlot | NoCardException missingExtraSlot) {
             controller.sendError(invalidLeaderCardID);
         } catch (InvalidShelfPosition e) {
             controller.sendError(invalidShelf);
