@@ -78,7 +78,7 @@ public class LeaderCardGUI extends LeaderCardView implements Clickable {
             defaultStrategy = () -> { };
         }
         setStrategyDefault();
-
+        GUI.getGamePanel().repaint();
     }
 
     public void setStrategyFirst(){
