@@ -39,6 +39,14 @@ public class DefaultPanel extends ActionPanel{
         errorLabel.setText("You have already used this production in this turn!");
         repaint();
     }
+
+    /**
+     * Set error label for trying to buy a card that cannot be placed on any deck
+     */
+    public void setWrongLevel(){
+        errorLabel.setText("You cannot buy a card of this level!");
+        repaint();
+    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
     }

@@ -59,6 +59,7 @@ public class DiscountPanel extends ActionPanel implements ActionListener {
             DefaultPanel panel = new DefaultPanel();
             GUI.getGamePanel().setActionPanel(panel);
             if(error == ErrorMessage.notEnoughResources) panel.setNotEnoughResource();
+            else if(error == ErrorMessage.wrongLevel) panel.setWrongLevel();
             GUI.getGamePanel().repaint();
             GUI.getGamePanel().removeAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot());
             GUI.getGamePanel().removeAction((Clickable) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getStrongbox());

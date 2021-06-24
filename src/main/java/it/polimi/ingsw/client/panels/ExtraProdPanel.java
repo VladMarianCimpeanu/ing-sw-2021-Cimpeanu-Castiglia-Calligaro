@@ -56,10 +56,10 @@ public class ExtraProdPanel extends ActionPanel{
                     GUI.getClient().send(new ActivateProduction());
             }
         });
-        button.setBounds(100, 200, button.getPreferredSize().width, button.getPreferredSize().height);
+        button.setBounds(100, 200, 150, button.getPreferredSize().height);
         add(button);
         title1 = new JLabel("Choose the Resource to craft!");
-        title1.setBounds(10, 20, title1.getPreferredSize().width, title1.getPreferredSize().height);
+        title1.setBounds(10, 20, 200, title1.getPreferredSize().height);
         add(title1);
     }
 
