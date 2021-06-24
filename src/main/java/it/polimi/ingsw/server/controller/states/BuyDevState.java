@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.MessageToClient.Error;
 import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
+import it.polimi.ingsw.server.MessageToClient.SelectPlaceCard;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.benefit.Resource;
@@ -48,7 +49,10 @@ public class BuyDevState extends TurnState {
                     return;
                 }
                 controller.sendMessage(new ResourceToPay(controller.getCurrentPlayer().getDevelopmentCardCost()));
-                if (player.getDevelopmentCardCost().isEmpty()) controller.setCurrentState(new PlaceDevState(controller));
+                if (player.getDevelopmentCardCost().isEmpty()) {
+                    controller.sendMessage(new SelectPlaceCard());
+                    controller.setCurrentState(new PlaceDevState(controller));
+                }
             }catch(NotEnoughResourcesException e){
                 controller.sendMessage(new Error(notEnoughResources));
             }
