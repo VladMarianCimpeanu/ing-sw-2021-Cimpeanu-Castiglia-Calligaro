@@ -3,8 +3,12 @@ package it.polimi.ingsw.client.MessageFromServer.Updates;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+/**
+ * Message from the server: it notifies that a specified leader card has been activated by specific player.
+ * It contains the ID of the leader card and the nickname of the player who performed the activation.
+ */
 
 public class UpdateActiveLeaderCard extends MessageFromServer {
     private String player;

@@ -4,6 +4,9 @@ import it.polimi.ingsw.server.MessageToClient.MessageToClient;
 
 import java.util.ArrayList;
 
+/**
+ * Message to client: it contains all the marbles inside the column that has just been changed and the new outer marble.
+ */
 public class UpdateMarketColumn implements MessageToClient {
     private String type;
     private ArrayList<String> newColumn;

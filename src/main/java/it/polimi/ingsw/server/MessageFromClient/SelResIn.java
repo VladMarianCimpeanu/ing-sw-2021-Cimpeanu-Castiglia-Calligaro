@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
+/**
+ * Message from client: it contains the input resources for base or extra production.
+ */
 public class SelResIn extends MessageFromClient {
     private Resource res1, res2;
     @Override

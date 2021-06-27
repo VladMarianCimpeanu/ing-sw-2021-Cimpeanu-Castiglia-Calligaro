@@ -8,6 +8,12 @@ import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Message containing all the leader cards owned by a specified player in his depot.
+ * If the player is not the same that is rejoining, he will receive only the already activated cards.
+ * This message is received from the server when the player tries to join an already started game.
+ */
+
 public class RejoinLeaderCards extends MessageFromServer {
     private String nickname;
     private Map<Integer, Boolean> active;

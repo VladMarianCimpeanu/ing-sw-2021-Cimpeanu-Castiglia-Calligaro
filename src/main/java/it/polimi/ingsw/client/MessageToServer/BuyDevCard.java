@@ -6,6 +6,9 @@ import it.polimi.ingsw.client.Color;
 
 import java.util.ArrayList;
 
+/**
+ * Message to server: it contains the level, color and IDs used to buy a certain development card.
+ */
 public class BuyDevCard implements MessageToServer {
     private String type;
     private int level;

@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.model.market.Marble;
 
 import java.util.ArrayList;
 
+/**
+ * Message to client: it contains the remaining resources to redeem from market.
+ */
 public class ConvertedMarbles implements MessageToClient{
     private String type;
     private ArrayList<Resource> resources;

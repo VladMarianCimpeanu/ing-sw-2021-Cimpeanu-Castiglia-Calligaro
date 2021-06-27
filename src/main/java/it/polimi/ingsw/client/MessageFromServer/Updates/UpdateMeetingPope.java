@@ -6,6 +6,11 @@ import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 import java.util.ArrayList;
 import java.util.Map;
 
+
+/**
+ * Message from server: it is sent when someone reaches a meeting pope position. It contains the points earned by each
+ * player during the meeting pope. If someone earns 0 points, it means that he did not join the meeting.
+ */
 public class UpdateMeetingPope extends MessageFromServer {
     private Map<String, Integer> deltaVictoryPoints;
 

@@ -4,19 +4,21 @@ package it.polimi.ingsw.client;
  * enum representing resources to the client.
  */
 public enum Resource {
-    FAITH("\u001B[31m┼", "images/punchboard/faith.png"),
-    COIN("\u001B[33m©", "images/punchboard/coin.png"),
-    SHIELD("\u001B[34m█", "images/punchboard/shield.png"),
-    STONE("\u001B[90m░", "images/punchboard/stone.png"),
-    SERVANT("\u001B[95m§", "images/punchboard/servant.png");
+    FAITH("\u001B[31m┼", "images/punchboard/faith.png", "faith"),
+    COIN("\u001B[33m©", "images/punchboard/coin.png", "coin"),
+    SHIELD("\u001B[34m█", "images/punchboard/shield.png", "shield"),
+    STONE("\u001B[90m░", "images/punchboard/stone.png", "stone"),
+    SERVANT("\u001B[95m§", "images/punchboard/servant.png", "servant");
     public static final String RESET = "\u001B[0m";
 
     private final String escape;
     private final String url;
+    private final String name;
 
-    Resource(String escape, String url) {
+    Resource(String escape, String url, String name) {
         this.escape = escape;
         this.url = url;
+        this.name = name;
     }
 
     /**
@@ -34,6 +36,14 @@ public enum Resource {
      */
     public String url(){
         return url;
+    }
+
+    /**
+     * gives the name of the specified resource.
+     * @return a string with the name of the resource.
+     */
+    public String getName(){
+        return name;
     }
 
     /**

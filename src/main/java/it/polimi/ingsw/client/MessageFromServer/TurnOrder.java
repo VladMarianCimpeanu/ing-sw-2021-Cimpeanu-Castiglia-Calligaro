@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.MessageFromServer;
 
 import it.polimi.ingsw.client.Client;
 
+//TODO: players order?
 public class TurnOrder extends MessageFromServer {
     private int position;
     private int numberOfResources;

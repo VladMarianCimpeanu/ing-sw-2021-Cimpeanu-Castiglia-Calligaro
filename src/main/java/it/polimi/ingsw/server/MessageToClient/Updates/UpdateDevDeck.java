@@ -2,6 +2,11 @@ package it.polimi.ingsw.server.MessageToClient.Updates;
 
 import it.polimi.ingsw.server.MessageToClient.MessageToClient;
 
+
+/**
+ * Message to client: it contains the ID of the development card just bought by the specified player and the position
+ * in which has been placed.
+ */
 public class UpdateDevDeck implements MessageToClient {
     private String type;
     private String player;

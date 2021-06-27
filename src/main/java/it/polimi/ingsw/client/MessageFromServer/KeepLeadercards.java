@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.Client;
 
 import java.util.ArrayList;
 
+/**
+ * Message from server: it contains the IDs of leader cards given by the game to the client that receives this message.
+ */
 public class KeepLeadercards extends MessageFromServer {
     private ArrayList<Integer> leaderIds;
 

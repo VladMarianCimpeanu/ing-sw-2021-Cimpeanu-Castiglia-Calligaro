@@ -7,6 +7,9 @@ import it.polimi.ingsw.client.Resource;
 
 import java.util.Map;
 
+/**
+ * Message from server: contains all the resources owned by a specified player in his strongbox.
+ */
 public class UpdateStrongbox extends MessageFromServer {
     private String player;
     private Map<Resource, Integer> deltaResources;

@@ -4,6 +4,11 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 import it.polimi.ingsw.client.Resource;
 
+/**
+ * Message from server: it contains type and quantity of resources placed by a specified player in a specific
+ * leader card (ID).
+ */
+
 public class UpdateExtraSlot extends MessageFromServer {
     private String player;
     private Resource resource;

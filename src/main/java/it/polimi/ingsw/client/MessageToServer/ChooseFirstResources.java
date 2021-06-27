@@ -4,6 +4,9 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.client.Resource;
 
+/**
+ * Message to server: it contains the resources selected at the beginning of the game and where to place them.
+ */
 public class ChooseFirstResources implements MessageToServer {
     private String type;
     private Resource res1, res2;

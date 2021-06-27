@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.TurnState;
 import it.polimi.ingsw.server.model.benefit.Resource;
 
+/**
+ * Message from client: it contains the resources selected at the beginning of the game and where to place them.
+ */
 public class ChooseFirstResources extends MessageFromClient {
     private Resource res1, res2;
     private int shelf1, shelf2;

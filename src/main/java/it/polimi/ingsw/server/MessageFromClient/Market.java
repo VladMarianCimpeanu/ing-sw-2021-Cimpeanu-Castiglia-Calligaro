@@ -4,6 +4,9 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.TurnState;
 
+/**
+ * Message from client: it contains the row/ column of the market selected by the client.
+ */
 public class Market extends MessageFromClient {
     private String direction;
     private int position;

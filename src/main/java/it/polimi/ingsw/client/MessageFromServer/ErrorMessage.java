@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.MessageFromServer;
 
+/**
+ * This class translates all the key word errors that can be received from server.
+ */
 public enum ErrorMessage {
     invalidCommand("You are not allowed to perform this action"),
     invalidLeaderCardID("Not such leader card..."),
@@ -36,6 +39,10 @@ public enum ErrorMessage {
         this.caption = caption;
     }
 
+    /**
+     * It translates the key word error into a specific caption describing what happened.
+     * @return a string containing the error description.
+     */
     public String getCaption(){
         return caption;
     }

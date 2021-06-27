@@ -3,6 +3,9 @@ package it.polimi.ingsw.client.MessageToServer;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.TurnState;
 
+/**
+ * Message to server: it contains the ids of the leader cards selected by the specified player at the beginning of the game.
+ */
 public class KeepLeaderCard implements MessageToServer {
     private String type;
     private int id1, id2;

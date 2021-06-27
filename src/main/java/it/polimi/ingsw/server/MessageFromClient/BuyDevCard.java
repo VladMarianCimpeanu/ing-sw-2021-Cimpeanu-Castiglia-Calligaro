@@ -7,6 +7,9 @@ import it.polimi.ingsw.server.model.Color;
 
 import java.util.ArrayList;
 
+/**
+ * Message from client: it contains the level, color and IDs used to buy a certain development card.
+ */
 public class BuyDevCard extends MessageFromClient {
     private int level;
     private Color color;

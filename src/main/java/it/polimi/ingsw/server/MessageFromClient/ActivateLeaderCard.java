@@ -4,6 +4,9 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.controller.states.ErrorMessage;
 import it.polimi.ingsw.server.controller.states.TurnState;
 
+/**
+ * Message from client: it contains the id of the leader card selected by the player to activate.
+ */
 public class ActivateLeaderCard extends MessageFromClient {
     private int id;
     @Override

@@ -5,6 +5,9 @@ import it.polimi.ingsw.client.Resource;
 
 import java.util.ArrayList;
 
+/**
+ * Message from server: it contains the remaining resources to redeem from market.
+ */
 public class ConvertedMarbles extends MessageFromServer{
     private ArrayList<Resource> resources;
 

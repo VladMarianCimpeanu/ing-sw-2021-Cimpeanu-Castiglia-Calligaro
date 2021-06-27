@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.model.benefit.Resource;
 
 import java.util.Map;
 
+/**
+ * Message to client: contains all the resources owned by a specified player in his strongbox.
+ */
 public class UpdateStrongbox implements MessageToClient {
     private String type;
     private String player;

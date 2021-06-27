@@ -43,8 +43,8 @@ public class GUI {
     }
 
     private static void createAndShowGUI() {
-        System.out.println("Created GUI on EDT? "+
-                SwingUtilities.isEventDispatchThread());
+        //System.out.println("Created GUI on EDT? "+
+        //       SwingUtilities.isEventDispatchThread());
         jFrame = new JFrame("Maestri del rinascimento");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginPanel = new LoginPanel();

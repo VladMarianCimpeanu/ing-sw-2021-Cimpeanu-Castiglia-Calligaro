@@ -4,7 +4,9 @@ package it.polimi.ingsw.client.MessageFromServer;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.Marble;
 
-
+/**
+ * Message from server: it contains a matrix with all the marbles in the market and which marble is out.
+ */
 public class MarketGrid extends MessageFromServer {
     private String[][] market;
     private String outerMarble;

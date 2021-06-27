@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.MessageToClient;
 
 import java.util.ArrayList;
 
+/**
+ * Message to client: it contains the IDs of the leader cards selected by the client at the beginning of the game.
+ */
 public class SelectedLeadercards implements MessageToClient {
     private String type;
     private int id1;

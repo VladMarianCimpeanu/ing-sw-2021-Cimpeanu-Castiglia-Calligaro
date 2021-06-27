@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.Client;
 
 import java.util.ArrayList;
 
+/**
+ * Message from server: it contains marbles obtained by the market.
+ */
 public class SelectedMarbles extends MessageFromServer{
     private ArrayList<String> marbles;
 

@@ -5,6 +5,10 @@ import it.polimi.ingsw.client.MessageFromServer.MessageFromServer;
 import it.polimi.ingsw.server.MessageToClient.MessageToClient;
 import it.polimi.ingsw.client.Resource;
 
+/**
+ * Message containing all the resources owned by a specified player in his depot.
+ * This message is received from the server when the player tries to join an already started game.
+ */
 public class RejoinDepot extends MessageFromServer {
     private String player;
     private int shelf;
