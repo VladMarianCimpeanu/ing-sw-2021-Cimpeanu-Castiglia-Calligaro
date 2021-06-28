@@ -25,7 +25,8 @@ For the implementation of this game, Java 15 was used: it is not garanteed that 
 Server and GUI client can run on all operative systems, whereas CLI run correctly on Linux or MacOS. For Windows users WSL is suggested in order to be able to play with CLI.
 
 ## How to build
-//TODO
+There are two different jars, one for the Client and one for the Server.
+To build them, use the classic `package` Maven command, both jars will be generated in the `target` folder.
 
 ## How to Play
 ### Server
