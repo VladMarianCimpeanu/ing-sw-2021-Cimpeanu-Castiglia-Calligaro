@@ -8,8 +8,8 @@ Game can be played with both GUI and CLI.
 For this project two advanced features were implemented: resilience to disconnections and mulitple games.
 ### Multiple games
 Multiple games can run simultaneously. When the server starts, it waits for a player to create a waiting room: when a player connects to the server, if there
-are no waiting rooms available, it will ask him how many players should play the game and then it will creates a new waiting room. In oreder to avoid players waiting for the creation
-of a waiting room, if there are no waiting rooms availble, the server will always ask for the mode to the new connected player, so theoretically there could be more than one 
+are no waiting rooms available, it will ask him how many players should play the game and then it will creates a new waiting room. In order to avoid players waiting for the creation
+of a waiting room, if there are no waiting rooms available, the server will always ask for the mode to the new connected player, so theoretically there could be more than one 
 waiting room: in that case new players will join the oldest waiting room created.
 ### Resilience to disconnections
 If a player crashes or quits, he can rejoin the game using the same nickname used during the last game: while
