@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server.MessageToClient;
 
+/**
+ * Message to client: notify the client how many resources can redeem at beginning of the game.
+ */
 public class TurnOrder implements MessageToClient{
     private String type;
     private int position;
