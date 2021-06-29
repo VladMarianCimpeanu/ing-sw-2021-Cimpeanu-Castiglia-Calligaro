@@ -29,7 +29,6 @@ public class DepotGUI extends DepotView implements Clickable {
         super();
         setStrategyFirstTurn();
         shapes = new HashMap<>();
-        GUI.getGamePanel().addGameboard(this);
         shelfFrom = -1;
         extraFromMove = null;
     }

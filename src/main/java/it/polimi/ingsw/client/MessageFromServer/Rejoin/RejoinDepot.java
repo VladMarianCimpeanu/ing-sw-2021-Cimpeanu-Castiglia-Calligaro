@@ -18,5 +18,6 @@ public class RejoinDepot extends MessageFromServer {
     @Override
     public void activateMessage(Client client) {
         client.getGameView().getPlayer(player).getDepot().update(shelf, resource, quantity);
+        client.getGameView().getPlayer(player).getDepot().showUpdate();
     }
 }
