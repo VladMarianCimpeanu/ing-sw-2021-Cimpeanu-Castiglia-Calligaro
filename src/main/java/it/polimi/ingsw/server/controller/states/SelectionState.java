@@ -1,20 +1,23 @@
 package it.polimi.ingsw.server.controller.states;
 
 import it.polimi.ingsw.server.JsonToLeaderCard;
-import it.polimi.ingsw.server.MessageToClient.*;
+import it.polimi.ingsw.server.MessageToClient.ResourceToPay;
+import it.polimi.ingsw.server.MessageToClient.SelectResourceIn;
+import it.polimi.ingsw.server.MessageToClient.SelectResourceOut;
+import it.polimi.ingsw.server.MessageToClient.SelectedMarbles;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Color;
+import it.polimi.ingsw.server.model.Dashboard;
+import it.polimi.ingsw.server.model.DevelopmentCard;
 import it.polimi.ingsw.server.model.Discount;
 import it.polimi.ingsw.server.model.benefit.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 import it.polimi.ingsw.server.model.leaderCards.LeaderCard;
-
-import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
-import it.polimi.ingsw.server.model.Dashboard;
-import it.polimi.ingsw.server.model.DevelopmentCard;
 import it.polimi.ingsw.server.model.market.Marble;
 
 import java.util.ArrayList;
+
+import static it.polimi.ingsw.server.controller.states.ErrorMessage.*;
 
 /**
  * Enter in this state when a player's turn ends and the game moves on to the next player's turn
@@ -72,7 +75,6 @@ public class SelectionState extends TurnState {
                 if(getController().getCurrentPlayer().isMarketResourcesUnavailable()) getController().setCurrentState(new EndTurnState(getController()));
                 else {
                     ArrayList<Resource> resources = getController().getCurrentPlayer().getReceivedFromMarket();
-                    getController().sendMessage(new ConvertedMarbles(resources));
                     getController().setCurrentState(new MarketState(getController()));
                 }
             }

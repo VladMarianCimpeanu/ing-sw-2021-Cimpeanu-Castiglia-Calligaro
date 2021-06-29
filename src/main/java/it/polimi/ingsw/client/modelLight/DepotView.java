@@ -22,7 +22,6 @@ public abstract class DepotView {
         //exceptions?
         resources[shelf-1] = resource;
         quantity[shelf-1] = many;
-        showUpdate();
     }
 
     public int howMany(Resource resource){

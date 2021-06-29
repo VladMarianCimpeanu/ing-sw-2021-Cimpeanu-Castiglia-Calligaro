@@ -29,10 +29,12 @@ public class DepotCLI extends DepotView {
 
     @Override
     public void showUpdate() {
+        int empty = 0;
         for(int i = 0; i<3; i++)
             if(quantity[i] != 0){
                 System.out.print(quantity[i]+"x"+resources[i].toString()+" ");
-            }
+            }else empty ++;
+        if(empty == 3) System.out.print("*empty*");
         System.out.println();
     }
 }
