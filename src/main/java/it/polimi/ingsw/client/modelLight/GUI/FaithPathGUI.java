@@ -29,7 +29,7 @@ public class FaithPathGUI extends FaithPathView {
 
     @Override
     public void show() {
-        int inX = -6;
+        int inX = -5;
         int inY = 84;
         int dimCell = 29;
         ArrayList<Integer> pos = new ArrayList<>();

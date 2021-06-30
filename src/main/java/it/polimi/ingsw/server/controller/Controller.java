@@ -440,8 +440,7 @@ public class Controller {
                 setTimerPing();
                 nicknames.get(currentUser).setMyTurn(true);
                 setCurrentState(new SelectionState(this));
-            }
-            closeTheGame();
+            }else closeTheGame();
         };
     }
 

@@ -29,7 +29,7 @@ public class PlayerGUI extends PlayerView {
         if(player.equals(nickname))
             row = ("Your");
         else
-            row = (player);
+            row = (nickname);
         GUI.print(row + "'s "+ objectUpdated +" has changed into:  ");
     }
 

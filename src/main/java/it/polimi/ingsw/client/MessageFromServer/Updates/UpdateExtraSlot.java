@@ -17,7 +17,7 @@ public class UpdateExtraSlot extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().getPlayer(client.getNickname()).dumpPlayer(player, "Extra Slot");
+        client.getGameView().getPlayer(player).dumpPlayer(client.getNickname(), "Extra Slot");
         client.getGameView().getPlayer(player).getLeaderCards().updateExtraSlot(id, resource, quantity);
     }
 }
