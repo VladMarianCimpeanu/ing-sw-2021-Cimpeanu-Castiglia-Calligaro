@@ -452,12 +452,10 @@ public class Controller {
         nextTurnMethod = () -> {
             int pos = 0;
             if (!isAnyoneOnline()) waitForPlayers();
-            System.out.println("here");
             pos = turns.indexOf(currentUser);
             pos = (pos + 1) % turns.size();
             currentUser = turns.get(pos);
             if (!getCurrentPlayer().isOnline()) {
-                System.out.println("off");
                 nextTurn();
                 return;
             }
@@ -480,9 +478,9 @@ public class Controller {
      */
     private synchronized void waitForPlayers(){
         try {
-            System.out.println("waiting for players");
+            System.out.println("Waiting for players");
             wait();
-            System.out.println("awaken");
+            System.out.println("Awaken");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,54 @@
+-- help:
+    -login nickname                     connect to the server with the selected nickname.
+    -mode number                        open a waiting room with the selected number of players.
+
+    At the beginning of the game use the following commands:
+    -keep pos1, pos2                    choose between the leader cards shown, which card you want, using their position
+                                        in which they are shown.
+    -choose resource shelf              choose a resource and place it on the selected shelf.
+
+    During the first phase of your turn you can use the following commands:
+    -activateLeader position            activate the leader card at the selected position.
+    -discardLeader position             discard the leader card at the selected position.
+    -produceBase                        select a base production.
+    -produce deck                       select the development card production on the specified deck.
+    -produceExtra pos                   select the extra production offered by the leader card in pos.
+    -market row|column pos              put the outer marble at the position pos on the selected direction.
+    -buy lv color [pos]                 buy a development card of level lv and selected color. Optional:
+                                        discounts offered by leader cards at position pos.
+
+    Market process:
+    -strategy pos                       use a market strategy given by the leader card at position pos.
+    -discard resource                   discard resource obtained by the market.
+    -put res extra|depot [shelf]        put the selected resource obtained by the market on the selected position.
+
+
+    Buy development cards process:
+    -place deck                         put the card bought on your selected deck.
+
+    -take res strongbox|extra|depot     general command to take a resource from a specific place
+                                        to pay something.
+
+    Production process:
+    -resIn res1 res2                    select resources res1 & res2 as input of base crafting.
+    -resOut res                         select res resource as output of extra|base crafting.
+    -take resource place                pay with resource at a specific place.
+    -activateProduction                 to activate the selected production.
+
+    During your turn you can always perform the following commands:
+    -move shelf1 shelf2                 switch the resources of the selected shelves.
+    -moveFromExtra posLeader shelf qty  move qty resources from extra slot to the selected shelf.
+    -moveToExtra shelf posLeader qty    move from the selected shelf qty resources to extra slot.
+
+    At the end of your turn you can:
+    -pass                               end your turn
+    discard or activate leader cards with the previous commands.
+
+    At anytime you can:
+    -show me                            show your dashboard
+    -show nickname                      show nickname's dashboard
+    -show faith                         show faith path
+    -show market                        show market
+    -show depot                         show depot
+    -show leadercards                   show your leader cards
+    -show cards                         show cards available

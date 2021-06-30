@@ -65,7 +65,6 @@ public class MarketPanel extends ActionPanel implements ActionListener {
      */
     public void setToSelectResources(){
         isTakingResources = true;
-        System.out.println(imagesToPrint.size());
         if (!imagesToPrint.isEmpty()){
             for(JLabel label : imagesToPrint) this.remove(label);
         }
@@ -102,7 +101,6 @@ public class MarketPanel extends ActionPanel implements ActionListener {
         }
         textLabel.setText("Resources to take");
         Map<Resource, Integer> buffer = GUI.getClient().getGameView().getResBuffer();
-        System.out.println(buffer);
         clearButtons();
         for (Resource resource : buffer.keySet()){
             resources.get(resource).setText("x" + buffer.get(resource).toString());

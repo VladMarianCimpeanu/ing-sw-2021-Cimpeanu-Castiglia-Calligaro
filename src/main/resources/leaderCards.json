@@ -1,0 +1,294 @@
+[
+  {
+    "ID" : 1,
+    "type" : "buyCard",
+    "image" : "images/leader/leader1.png",
+    "resource" : "SERVANT",
+    "victoryPoints" : "2",
+    "type_req" : "development",
+    "requirements" :
+  [
+    {
+      "numberCards" : 1,
+      "levelCard" : 0,
+      "color" : "YELLOW"
+    },
+    {
+      "numberCards" : 1,
+      "levelCard" : 0,
+      "color" : "GREEN"
+    }
+  ]
+  }
+, {
+  "ID" : 2,
+  "type" : "buyCard",
+  "image" : "images/leader/leader2.png",
+  "resource" : "SHIELD",
+  "victoryPoints" : "2",
+  "type_req" : "development",
+  "requirements" :
+  [
+    {
+      "numberCards" : 1,
+      "levelCard" : 0,
+      "color" : "BLUE"
+    },
+    {
+      "numberCards" : 1,
+      "levelCard" : 0,
+      "color" : "PURPLE"
+    }
+  ]
+},
+  {
+    "ID" : 3,
+    "type" : "buyCard",
+    "image" : "images/leader/leader3.png",
+    "resource" : "STONE",
+    "victoryPoints" : "2",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "color" : "GREEN"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "color" : "BLUE"
+      }
+    ]
+},
+  {
+    "ID" : 4,
+    "type" : "buyCard",
+    "image" : "images/leader/leader4.png",
+    "resource" : "COIN",
+    "victoryPoints" : "2",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "color" : "YELLOW"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "color" : "PURPLE"
+      }
+    ]
+},
+  {
+    "ID" : 5,
+    "type" : "depot",
+    "image" : "images/leader/leader5.png",
+    "resource" : "STONE",
+    "victoryPoints" : "3",
+    "type_req" : "resource",
+    "requirements" :
+    [
+      {
+        "numberResource" : 5,
+        "resource" : "COIN"
+      }
+    ]
+  },
+  {
+    "ID" : 6,
+    "type" : "depot",
+    "image" : "images/leader/leader6.png",
+    "resource" : "SERVANT",
+    "victoryPoints" : "3",
+    "type_req" : "resource",
+    "requirements" :
+    [
+      {
+        "numberResource" : 5,
+        "resource" : "STONE"
+      }
+    ]
+  },
+  {
+    "ID" : 7,
+    "type" : "depot",
+    "image" : "images/leader/leader7.png",
+    "resource" : "SHIELD",
+    "victoryPoints" : "3",
+    "type_req" : "resource",
+    "requirements" :
+    [
+      {
+        "numberResource" : 5,
+        "resource" : "SERVANT"
+      }
+    ]
+  },
+  {
+    "ID" : 8,
+    "type" : "depot",
+    "image" : "images/leader/leader8.png",
+    "resource" : "COIN",
+    "victoryPoints" : "3",
+    "type_req" : "resource",
+    "requirements" :
+    [
+      {
+        "numberResource" : 5,
+        "resource" : "SHIELD"
+      }
+    ]
+  },
+  {
+    "ID" : 9,
+    "type" : "market",
+    "image" : "images/leader/leader9.png",
+    "resource" : "SERVANT",
+    "victoryPoints" : "5",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 2,
+        "levelCard" : 0,
+        "color" : "YELLOW"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "color" : "BLUE"
+      }
+    ]
+  },
+  {
+    "ID" : 10,
+    "type" : "market",
+    "image" : "images/leader/leader10.png",
+    "resource" : "SHIELD",
+    "victoryPoints" : "5",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 2,
+        "levelCard" : 0,
+        "color" : "GREEN"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "color" : "PURPLE"
+      }
+    ]
+  },
+  {
+    "ID" : 11,
+    "type" : "market",
+    "image" : "images/leader/leader11.png",
+    "resource" : "STONE",
+    "victoryPoints" : "5",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 2,
+        "levelCard" : 0,
+        "color" : "BLUE"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "color" : "YELLOW"
+      }
+    ]
+  },
+  {
+    "ID" : 12,
+    "type" : "market",
+    "image" : "images/leader/leader12.png",
+    "resource" : "COIN",
+    "victoryPoints" : "5",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 2,
+        "levelCard" : 0,
+        "color" : "PURPLE"
+      },
+      {
+        "numberCards" : 1,
+        "levelCard" : 0,
+        "color" : "GREEN"
+      }
+    ]
+  },
+  {
+    "ID" : 13,
+    "type" : "production",
+    "image" : "images/leader/leader13.png",
+    "resource" : "SHIELD",
+    "victoryPoints" : "4",
+    "type_req" : "development",
+    "requirements" :
+    [
+    {
+      "numberCards" : 1,
+      "levelCard" : 2,
+      "color" : "YELLOW"
+    }
+  ]
+},
+  {
+    "ID" : 14,
+    "type" : "production",
+    "image" : "images/leader/leader14.png",
+    "resource" : "SERVANT",
+    "victoryPoints" : "4",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 2,
+        "color" : "BLUE"
+      }
+    ]
+  },
+  {
+    "ID" : 15,
+    "type" : "production",
+    "image" : "images/leader/leader15.png",
+    "resource" : "STONE",
+    "victoryPoints" : "4",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 2,
+        "color" : "PURPLE"
+      }
+    ]
+  },
+  {
+    "ID" : 16,
+    "type" : "production",
+    "image" : "images/leader/leader16.png",
+    "resource" : "COIN",
+    "victoryPoints" : "4",
+    "type_req" : "development",
+    "requirements" :
+    [
+      {
+        "numberCards" : 1,
+        "levelCard" : 2,
+        "color" : "GREEN"
+      }
+    ]
+  }
+]

@@ -265,7 +265,6 @@ public class GamePanel extends JPanel {
      */
     public synchronized void setPlayerWatched(String player){
         playerWatched = player;
-        System.out.println(player);
     }
 
     /**

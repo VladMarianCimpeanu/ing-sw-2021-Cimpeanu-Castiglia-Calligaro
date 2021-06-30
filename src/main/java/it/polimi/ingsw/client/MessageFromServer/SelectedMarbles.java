@@ -12,6 +12,6 @@ public class SelectedMarbles extends MessageFromServer{
 
     @Override
     public void activateMessage(Client client) {
-        System.out.println("You have received:\n" + marbles);
+        client.getGameView().dumpMessage("You have received:\n" + marbles);
     }
 }
