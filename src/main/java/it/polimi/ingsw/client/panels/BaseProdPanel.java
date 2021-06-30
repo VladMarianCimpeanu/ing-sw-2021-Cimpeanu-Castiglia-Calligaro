@@ -91,12 +91,16 @@ public class BaseProdPanel extends ActionPanel{
 
     @Override
     public void displayError(ErrorMessage error) {
-        if(error == ErrorMessage.productionUsed || error == ErrorMessage.notEnoughResources){
+        if(error == ErrorMessage.notEnoughResources || error == ErrorMessage.productionUsed) {
             ((DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
             DefaultPanel defaultPanel = new DefaultPanel();
+            GUI.getGamePanel().setActionPanel(defaultPanel);
             if(error == ErrorMessage.notEnoughResources)
-                GUI.getGamePanel().setActionPanel(defaultPanel);
-            defaultPanel.setNotEnoughResource();
+                defaultPanel.setNotEnoughResource();
+            else
+                defaultPanel.setProductionUsed();
+            GUI.getGamePanel().removeAllActions();
+            GUI.getGamePanel().unlockGameBoard(true);
             GUI.getGamePanel().repaint();
         }
     }

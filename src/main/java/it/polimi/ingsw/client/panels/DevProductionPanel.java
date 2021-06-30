@@ -40,10 +40,10 @@ public class DevProductionPanel extends ActionPanel{
                 GUI.getClient().send(new ActivateProduction());
             }
         });
-        activate.setBounds(100, 100, activate.getPreferredSize().width, activate.getPreferredSize().height);
+        activate.setBounds(100, 100, 200, activate.getPreferredSize().height);
         add(activate);
         title = new JLabel("Take these resources from your stocks");
-        title.setBounds(10, 20, title.getPreferredSize().width, title.getPreferredSize().height);
+        title.setBounds(10, 20, 300, title.getPreferredSize().height);
         add(title);
     }
 
@@ -57,7 +57,7 @@ public class DevProductionPanel extends ActionPanel{
         super.paintComponent(g);
         Map<Resource, Integer> notPayed = GUI.getClient().getGameView().getResBuffer();
         int x = 10;
-        int y = 50;
+        int y = 60;
         for(Resource resource: notPayed.keySet()){
             g.drawString(notPayed.get(resource)+"x", x, y);
             x+= 10;

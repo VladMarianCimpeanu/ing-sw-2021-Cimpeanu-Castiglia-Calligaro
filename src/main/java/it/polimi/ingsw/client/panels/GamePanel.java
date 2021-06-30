@@ -254,7 +254,6 @@ public class GamePanel extends JPanel {
         return heightBoard;
     }
 
-    //TODO: is it necessary?
     public void addOtherPlayersPanel(){
         this.add(new SwitchToPlayerPanel());
     }
@@ -318,6 +317,14 @@ public class GamePanel extends JPanel {
         action.clear();
         LeaderCardSetGUI leaderCardSetGUI = (LeaderCardSetGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getLeaderCards();
         leaderCardSetGUI.setLeadersToDefaultStrategy();
+    }
+
+    /**
+     * Checks the owner of the dashboard currently watched.
+     * @return string containing the nickname of the owner of the dashboard currently watched
+     */
+    public String getPlayerWatched(){
+        return playerWatched;
     }
 
     /**
