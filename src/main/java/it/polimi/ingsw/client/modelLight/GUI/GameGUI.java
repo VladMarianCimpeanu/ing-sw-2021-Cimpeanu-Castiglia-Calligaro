@@ -107,7 +107,11 @@ public class GameGUI extends GameView {
 
     @Override
     public void crashedWaitingPlayer(String player) {
-        GUI.getWaitingRoomPanel().removeNickname(player);
+        WaitingRoomPanel panel =  GUI.getWaitingRoomPanel();
+        if(panel != null)
+            panel.removeNickname(player);
+        else
+            GUI.print(player + " has left the game.");
     }
 
     @Override

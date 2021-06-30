@@ -91,9 +91,12 @@ public class GUI {
         }else{
             jFrame.remove(loginPanel);
         }
+
         jFrame.add(gamePanel);
         jFrame.setSize(1280,720);
         jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        waitingRoomPanel = null;
 
         gamePanel.setPlayerWatched(GUI.getClient().getNickname());
         gamePanel.addOtherPlayersPanel();

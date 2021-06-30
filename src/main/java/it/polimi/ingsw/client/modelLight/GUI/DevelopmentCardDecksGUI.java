@@ -50,7 +50,6 @@ public class DevelopmentCardDecksGUI extends DevelopmentCardDecksView implements
         placeCard(deckIndex, ID, nickname);
         GUI.getGamePanel().repaint();
         GUI.print(nickname + " has placed a new development card in his " + deckIndex + " deck");
-        //TODO remove listeners old action panel?
         GUI.getGamePanel().setActionPanel(new DefaultPanel());
         setToProduction();
         ((DepotGUI)GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
