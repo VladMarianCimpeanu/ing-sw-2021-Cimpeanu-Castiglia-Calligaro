@@ -32,7 +32,7 @@ public class FirstTurnPanel extends ActionPanel{
 
     @Override
     public void displayError(ErrorMessage error) {
-        //TODO
+
     }
 
     public void selectRes(int position, int numberRes) {

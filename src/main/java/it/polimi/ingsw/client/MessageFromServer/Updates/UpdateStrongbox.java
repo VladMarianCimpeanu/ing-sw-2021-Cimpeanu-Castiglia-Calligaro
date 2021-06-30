@@ -16,7 +16,6 @@ public class UpdateStrongbox extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        //TODO
         PlayerView p = client.getGameView().getPlayer(client.getNickname());
         p.dumpPlayer(player, "Strongbox");
         client.getGameView().getPlayer(player).getStrongbox().update(deltaResources);

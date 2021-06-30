@@ -55,7 +55,7 @@ public class DevelopmentCardGUI extends DevelopmentCardView implements Clickable
         };
     }
 
-    //TODO
+
     public void setToReplaceable(){
         actionOnClick = () -> {
             int pos = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDecks().getPos(ID);
