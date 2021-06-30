@@ -2,7 +2,9 @@ package it.polimi.ingsw.client.modelLight;
 
 import it.polimi.ingsw.client.Marble;
 
-
+/**
+ * This class contains all the information about the current market of a specific game, in order to display it.
+ */
 public abstract class MarketView {
     protected Marble marketGrid[][];
     protected Marble outerMarble;

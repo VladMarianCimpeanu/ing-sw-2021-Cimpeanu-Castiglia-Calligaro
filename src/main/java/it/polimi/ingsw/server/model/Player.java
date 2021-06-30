@@ -435,7 +435,9 @@ public class Player {
         } catch (NoSuchPlayerException | InvalidStepsException e) {
             e.printStackTrace();
         }
-        virtualView.updateConvertedMarbles(receivedFromMarket);
+        finally {
+            virtualView.updateConvertedMarbles(receivedFromMarket);
+        }
     }
     /***************** GO TO MARKET PROCESS ********************/
 

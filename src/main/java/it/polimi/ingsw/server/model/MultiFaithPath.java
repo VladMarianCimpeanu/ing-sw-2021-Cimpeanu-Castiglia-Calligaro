@@ -72,8 +72,8 @@ public class MultiFaithPath extends FaithPath{
         if(!playersPosition.containsKey(player)) throw new NoSuchPlayerException();
         for (Player p: playersPosition.keySet()) {
             if(p == player) continue;
-            int pre_steps  = playersPosition.get(p);
-            playersPosition.put(p, pre_steps+1);
+            int pre_steps  = playersPosition.get(p) < 24 ? playersPosition.get(p) + 1 : playersPosition.get(p);
+            playersPosition.put(p, pre_steps);
             if(playersPosition.get(p) == 24) {
                 someoneEnd = true;
             }

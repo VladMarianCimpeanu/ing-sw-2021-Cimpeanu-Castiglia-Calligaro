@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * This class has all the information about a player's strongbox client side.
+ */
 public abstract class StrongboxView {
     protected Map<Resource, Integer> content;
     public StrongboxView(){

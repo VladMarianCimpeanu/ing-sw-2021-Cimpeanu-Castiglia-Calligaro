@@ -2,6 +2,9 @@ package it.polimi.ingsw.client.modelLight;
 
 import it.polimi.ingsw.client.Resource;
 
+/**
+ * this class contains all the information needed to represent the depot of a specific player.
+ */
 public abstract class DepotView {
     protected int[] quantity;
     protected Resource[] resources;

@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.Resource;
 
 import java.util.ArrayList;
 
+/**
+ * This class gives access to all the leader cards owned by the player, in order to display it.
+ */
 public abstract class LeaderCardSetView {
     protected ArrayList<Integer> playerCards;
 

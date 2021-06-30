@@ -10,7 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * class that gives access to all the information of the light model.
+ * Class that gives access to all the information of the light model.
+ * This class is the View controller.
  */
 public abstract class GameView {
     protected Map<String, PlayerView> players;
@@ -119,7 +120,7 @@ public abstract class GameView {
 
     /**
      * update the waiting room with a new player.
-     * @param player
+     * @param player to add to waiting room
      */
     public abstract void newWaitingPlayer(String player);
 

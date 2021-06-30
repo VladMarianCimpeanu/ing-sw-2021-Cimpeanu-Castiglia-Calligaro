@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.modelLight;
 
-
+/**
+ * This class has all the information about a specified player client side.
+ */
 public abstract class PlayerView {
     protected DevelopmentCardDecksView decks;
     protected DepotView depot;
