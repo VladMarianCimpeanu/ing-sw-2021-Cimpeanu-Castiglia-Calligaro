@@ -62,13 +62,13 @@ public class BaseProdPanel extends ActionPanel{
                 repaint();
             }
         });
-        button.setBounds(100, 200, button.getPreferredSize().width, button.getPreferredSize().height);
+        button.setBounds(100, 200, 150, button.getPreferredSize().height);
         add(button);
         title1 = new JLabel("Choose 2 input resources!");
-        title1.setBounds(10, 20, title1.getPreferredSize().width, title1.getPreferredSize().height);
+        title1.setBounds(10, 20, 300, title1.getPreferredSize().height);
         add(title1);
         title2 = new JLabel("Choose the output resource!");
-        title2.setBounds(10, 110, title2.getPreferredSize().width, title2.getPreferredSize().height);
+        title2.setBounds(10, 110, 200, title2.getPreferredSize().height);
         add(title2);
         addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){
@@ -181,6 +181,7 @@ public class BaseProdPanel extends ActionPanel{
 
                 break;
             case 1: //take from stock to pay
+                y+=20;
                 Map<Resource, Integer> notPayed = GUI.getClient().getGameView().getResBuffer();
                 button.setText("Activate Production");
                 title1.setText("Take these resources from your stocks");

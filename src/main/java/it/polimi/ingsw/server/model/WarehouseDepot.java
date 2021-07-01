@@ -423,12 +423,17 @@ public class WarehouseDepot {
     public void moveFromSlotToShelf(Resource resource, int quantity, int shelf) throws InvalidShelfPosition, ExistingResourceException, InvalidResourceException, NotEnoughSpaceException {
         if(shelf < 1 || shelf > 3) throw new InvalidShelfPosition();
         ExtraSlot slot = null;
-        for(ExtraSlot s : extraSlotList)
-            if(s.getResource().equals(resource)) slot = s;
+        for(ExtraSlot s : extraSlotList) {
+            if (s.getResource() == resource) slot = s;
+        }
         if(slot == null) throw new InvalidResourceException();
         if(quantity <= 0) return;
         if(quantity > slot.getQuantity()) quantity = slot.getQuantity();
-        if(getResourceShelf(resource) != shelf && getResourceQuantity(resource) != 0) throw new ExistingResourceException();
+        try {
+            if (getResourceShelf(resource) != shelf && getResourceQuantity(resource) != 0)
+                throw new ExistingResourceException();
+        }catch(InvalidResourceException e){
+        }
         boolean a = false;
         switch (shelf){
             case 1:
