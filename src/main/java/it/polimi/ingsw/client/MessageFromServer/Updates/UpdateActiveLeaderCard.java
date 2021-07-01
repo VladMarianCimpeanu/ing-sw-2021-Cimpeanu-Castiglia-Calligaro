@@ -16,7 +16,7 @@ public class UpdateActiveLeaderCard extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().getPlayer(client.getNickname()).dumpPlayer(player, "LeaderCards");
+        client.getGameView().getPlayer(player).dumpPlayer(client.getNickname(), "LeaderCards");
         client.getGameView().getPlayer(player).getLeaderCards().dumpMessage("Activated a LeaderCard.");
 
         if(client.getNickname().equals(player)) {

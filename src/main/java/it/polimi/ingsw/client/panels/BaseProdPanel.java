@@ -49,12 +49,13 @@ public class BaseProdPanel extends ActionPanel{
                 for(Resource resource: GUI.getClient().getGameView().getResBuffer().keySet())
                     for(int i = 0; i<GUI.getClient().getGameView().getResBuffer().get(resource); i++)
                         resIn.add(resource);
-                if(resIn.size() != 2 && resOut == null) return;
                 if(phase == 0){
+                    if(resIn.size() != 2 || resOut == null) return;
                     GUI.getClient().send(new SelResIn(resIn.get(0), resIn.get(1)));
                     GUI.getClient().send(new SelResOut(resOut));
                     ((GameGUI)GUI.getClient().getGameView()).setPayPanel("base");
                 }else {
+                    if(!resIn.isEmpty()) return;
                     GUI.getClient().send(new ActivateProduction());
                     ((DepotGUI) GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname()).getDepot()).setStrategyMove();
                     GUI.getGamePanel().setActionPanel(new DefaultPanel());
