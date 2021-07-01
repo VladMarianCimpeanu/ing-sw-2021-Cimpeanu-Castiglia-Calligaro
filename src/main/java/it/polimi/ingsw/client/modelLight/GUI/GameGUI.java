@@ -127,6 +127,7 @@ public class GameGUI extends GameView {
     @Override
     public void chooseResources(int position, int number) {
         ActionPanel panel = GUI.getGamePanel().getActionPanel();
+        ((DepotGUI)players.get(GUI.getClient().getNickname()).getDepot()).setStrategyFirstTurn(); //TODO ok?
         if(!panel.isFirstTurn()) GUI.getGamePanel().setActionPanel(new FirstTurnPanel());
         ((FirstTurnPanel)GUI.getGamePanel().getActionPanel()).selectRes(position, number);
     }

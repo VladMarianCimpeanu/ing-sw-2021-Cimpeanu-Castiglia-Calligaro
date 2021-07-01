@@ -47,7 +47,6 @@ public class SwitchToPlayerPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for(PlayerButton button: playerButtons)
             if (e.getSource() == button){
-                manageBoard(button.getPlayer());
                 GUI.getGamePanel().setPlayerWatched(button.getPlayer());
                 GUI.getGamePanel().repaint();
             }
@@ -55,29 +54,6 @@ public class SwitchToPlayerPanel extends JPanel implements ActionListener {
             GUI.sendMessage(new EndTurn());
         }
         if(e.getSource() == cheatButton) GUI.sendMessage(new CheatResource());
-    }
-
-    /**
-     * If the player was watching his board and tries to watch another board, the method saves the game panel state( it
-     * remembers if the board was clickable and all the action objects clickable). Once the state is stored, it locks the
-     * game board and removes all the action objects clickable.
-     * If the player was watching someone else's board and tries to watch his own board, it restores the game panel, restoring
-     * all the action that were clickable before the board switch and restores the lock to the board.
-     * @param playerClicked nickname of the player to watch.
-     */
-    private void manageBoard(String playerClicked){
-        String clientNickname = GUI.getClient().getNickname();
-        if(GUI.getGamePanel().getPlayerWatched().equals(clientNickname) && !playerClicked.equals(clientNickname)){
-            gameBoardUnlocked = GUI.getGamePanel().isGameBoardClickable();
-            lastActionClickable = GUI.getGamePanel().getAction();
-            GUI.getGamePanel().removeAllActions();
-            GUI.getGamePanel().unlockGameBoard(false);
-        }
-        else if(!GUI.getGamePanel().getPlayerWatched().equals(clientNickname) && playerClicked.equals(clientNickname)){
-            for(Clickable clickable : lastActionClickable)
-                GUI.getGamePanel().addAction(clickable);
-            GUI.getGamePanel().unlockGameBoard(gameBoardUnlocked);
-        }
     }
 }
 

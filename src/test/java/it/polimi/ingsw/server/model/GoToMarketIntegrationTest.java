@@ -167,12 +167,18 @@ class GoToMarketIntegrationTest {
         currPlayer.addMarketStrategy(new MarketStrategy(Resource.COIN, 1));
         boolean foundWhite = false;
         int column = 0;
+        int selectedColumn = 0;
         for(; column < 4 && !foundWhite; column ++){
             for(int row = 0; row < 3 && !foundWhite; row ++) {
-                if(grid[row][column].isWhite()) foundWhite = true;
+                if(grid[row][column].isWhite()) {
+                    foundWhite = true;
+                    selectedColumn = column;
+                }
             }
         }
-        int white = currPlayer.goToMarket("column", column);
+        System.out.println("column " + column);
+        System.out.println("selected " + selectedColumn);
+        int white = currPlayer.goToMarket("column", selectedColumn); //outofboundexception
         long coins = white + market.getSelectedMarbles().stream().filter(x -> x instanceof Yellow).count();
         for(int added = 0; added < white; added ++) currPlayer.addInMarketStrategyStack(currPlayer.getMarketStrategies().get(0));
         currPlayer.passStrategiesToMarket();

@@ -28,7 +28,7 @@ public enum ErrorMessage {
     invalidNickname("You are not allowed to use this nickname."),
     usedNickname("There is already someone else who is using this nickname, try again."),
     expectedLogin("Wrong command, you must login before."),
-    invalidJson("Something strange happened... Please notify the developers."),
+    invalidJson("wrong command"),
     invalidMode("This game can not support di game mode."),
     notYouTurn("This is not your turn, wait yours."),
     invalidStorage("You have tried to access to a not existing storage.");

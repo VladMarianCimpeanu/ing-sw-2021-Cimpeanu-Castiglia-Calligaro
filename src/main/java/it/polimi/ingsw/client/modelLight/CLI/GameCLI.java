@@ -126,6 +126,7 @@ public class GameCLI extends GameView {
     @Override
     public void endGame(Map<String, Integer> ranks, Map<String, Integer> resources) {
         ArrayList<String> order = orderPlayers(new HashMap<>(ranks), resources);
+        dumpMessage("\nThe game is ended");
         if(order.contains("blackCross")){
             if(order.get(0).equals("blackCross"))
                 System.out.println("You're a looser");

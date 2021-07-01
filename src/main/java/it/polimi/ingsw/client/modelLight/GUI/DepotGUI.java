@@ -27,7 +27,7 @@ public class DepotGUI extends DepotView implements Clickable {
 
     public DepotGUI(){
         super();
-        setStrategyFirstTurn();
+        setStrategyMove(); //TODO ok?
         shapes = new HashMap<>();
         shelfFrom = -1;
         extraFromMove = null;

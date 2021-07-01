@@ -19,7 +19,7 @@ public abstract class FaithPathView {
     public abstract void addPlayer(String player);
 
     /**
-     * It updates the faith path with the current postions of each player.
+     * It updates the faith path with the current positions of each player.
      * @param positions positions' key is the nickname of the player, whereas positions' values represents the position of the player.
      */
     public void update(Map<String, Integer> positions){
