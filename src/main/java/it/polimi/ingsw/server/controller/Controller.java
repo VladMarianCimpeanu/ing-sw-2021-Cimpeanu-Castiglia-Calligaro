@@ -383,7 +383,7 @@ public class Controller {
      */
     private boolean isAnyoneOnline(){
         for(String p: turns)
-            if(players.get(p).isOnline()) return true;
+            if (players.get(p).isOnline()) return true;
         return false;
     }
 
@@ -413,11 +413,12 @@ public class Controller {
         }
         for(String user: turns) {
             if (user.equals(currentUser)) continue;
+            if(!players.get(user).isOnline()) continue;
             try {
                 nicknames.get(user).setMyTurn(false);
                 nicknames.get(user).setSocketTimeOut(0);
             } catch (SocketException e) {
-                Server.handleCrash(nicknames.get(currentUser));
+                Server.handleCrash(nicknames.get(user));
             }
         }
     }
@@ -459,6 +460,7 @@ public class Controller {
                 return;
             }
             sendBroadcast(new ItsYourTurn(currentUser));
+
             setTimerPing();
             nicknames.get(currentUser).setMyTurn(true);
             setCurrentState(new SelectionState(this));

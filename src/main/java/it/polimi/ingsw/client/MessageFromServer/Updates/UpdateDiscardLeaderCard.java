@@ -13,7 +13,7 @@ public class UpdateDiscardLeaderCard extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
-        client.getGameView().getPlayer(client.getNickname()).dumpPlayer(player, "LeaderCards");
+        client.getGameView().getPlayer(player).dumpPlayer(client.getNickname(), "LeaderCards");
         client.getGameView().getPlayer(player).getLeaderCards().dumpMessage("Discarded a LeaderCard.");
 
         if(client.getNickname().equals(player)) {
