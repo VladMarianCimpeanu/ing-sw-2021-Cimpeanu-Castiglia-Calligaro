@@ -28,8 +28,8 @@ public class MoveToExtraPanel extends ActionPanel implements ActionListener, Mov
         GUI.getGamePanel().unlockGameBoard(false);
         PlayerView player = GUI.getClient().getGameView().getPlayer(GUI.getClient().getNickname());
         GUI.getGamePanel().addAction((Clickable) player.getDepot());
-        lastClickable = GUI.getGamePanel().getAction();
-        boardUnlocked = GUI.getGamePanel().isGameBoardClickable();
+        lastClickable = ((MovePanel)GUI.getGamePanel().getActionPanel()).getLastClickable();
+        boardUnlocked = ((MovePanel)GUI.getGamePanel().getActionPanel()).wasBoardUnlocked();
         JLabel label1 = new JLabel("Choose how many resources you want to move");
         add(label1);
         String[] possibleChoices;
@@ -77,5 +77,10 @@ public class MoveToExtraPanel extends ActionPanel implements ActionListener, Mov
     public void restoreClickable() {
         GUI.getGamePanel().removeAllActions();
         for(Clickable clickable: lastClickable) GUI.getGamePanel().addAction(clickable);
+    }
+
+    @Override
+    public ArrayList<Clickable> getLastClickable() {
+        return lastClickable;
     }
 }

@@ -428,6 +428,7 @@ public class WarehouseDepot {
         if(slot == null) throw new InvalidResourceException();
         if(quantity <= 0) return;
         if(quantity > slot.getQuantity()) quantity = slot.getQuantity();
+        if(getResourceShelf(resource) != shelf && getResourceQuantity(resource) != 0) throw new ExistingResourceException();
         boolean a = false;
         switch (shelf){
             case 1:
@@ -464,6 +465,7 @@ public class WarehouseDepot {
                 virtualView.updateWarehouseDepot(3, thirdShelf, thirdQuantity);
                 break;
         }
+        insertMissing();
         if(a) throw new NotEnoughSpaceException();
     }
 

@@ -1,5 +1,10 @@
 package it.polimi.ingsw.client.panels;
 
+import it.polimi.ingsw.client.Clickable;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public interface MovePanel {
 
     /**
@@ -18,4 +23,9 @@ public interface MovePanel {
      * all the objects that were clickable during the last dialog are clickable again.
      */
     void restoreClickable();
+
+    /**
+     * @return all clickable objects related to the action panel used before this panel was created
+     */
+    ArrayList<Clickable> getLastClickable();
 }

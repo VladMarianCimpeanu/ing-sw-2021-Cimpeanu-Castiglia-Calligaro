@@ -73,4 +73,9 @@ public class MoveExtraPanel extends ActionPanel implements ActionListener, MoveP
         GUI.getGamePanel().removeAllActions();
         for(Clickable clickable: lastClickable) GUI.getGamePanel().addAction(clickable);
     }
+
+    @Override
+    public ArrayList<Clickable> getLastClickable() {
+        return lastClickable;
+    }
 }

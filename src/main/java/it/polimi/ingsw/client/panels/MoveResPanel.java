@@ -53,4 +53,9 @@ public class MoveResPanel extends ActionPanel implements MovePanel{
         GUI.getGamePanel().removeAllActions();
         for(Clickable clickable: lastClickable) GUI.getGamePanel().addAction(clickable);
     }
+
+    @Override
+    public ArrayList<Clickable> getLastClickable() {
+        return lastClickable;
+    }
 }

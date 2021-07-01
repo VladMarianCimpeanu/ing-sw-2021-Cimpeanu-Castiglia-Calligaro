@@ -16,5 +16,6 @@ public class RejoinExtraSlot extends MessageFromServer {
 
     @Override
     public void activateMessage(Client client) {
+        client.getGameView().getPlayer(player).getLeaderCards().updateExtraSlot(id, resource, quantity);
     }
 }
