@@ -1,4 +1,7 @@
 # Master of Renaissance: software engineering project
+## Licence
+
+The project has been developed for the Software Engineering final examination project at Politecnico of Milan; all rights to the Masters of Renaissance game are owned by Cranio Games, which provided the graphical resources used for **educational purposes only**.
 
 ## Summary
 Here a table to summarise the work done:
